@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pessoa extends Model
 {
@@ -22,8 +23,8 @@ class Pessoa extends Model
         'telefone_trabalho'
     ];
 
-    public function inquilino(): HasOne
+    public function inquilino(): HasMany
     {
-        return $this->hasOne(Inquilino::class);
+        return $this->hasMany(Inquilino::class,'pessoaCodigo', 'id');
     }
 }
