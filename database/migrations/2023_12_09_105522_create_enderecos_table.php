@@ -20,10 +20,10 @@ class CreateEnderecosTable extends Migration
             $table->string('bairro', 30);
             $table->integer('numero');
             $table->string('cep', 9);
-            $table->string('pontodereferencia', 100);
-            $table->string('complemento', 100);
-            $table->integer('quadra');
-            $table->integer('lote');
+            $table->string('pontodereferencia', 100)->nullable();
+            $table->string('complemento', 100)->nullable();
+            $table->integer('quadra')->nullable();
+            $table->integer('lote')->nullable();
             $table->string('uf', 2);
             $table->timestamps();
         });

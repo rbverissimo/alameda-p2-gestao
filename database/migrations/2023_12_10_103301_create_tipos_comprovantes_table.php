@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImoveisTable extends Migration
+class CreateTiposComprovantesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateImoveisTable extends Migration
      */
     public function up()
     {
-        Schema::create('imoveis', function (Blueprint $table) {
+        Schema::create('tipos_comprovantes', function (Blueprint $table) {
             $table->id();
-            $table->string('nomefantasia', 100);
-            $table->integer('qtdecasas')->nullable();
+            $table->string('codigosistema', 10);
+            $table->string('tipo', 100);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateImoveisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('imoveis');
+        Schema::dropIfExists('tipos_comprovantes');
     }
 }

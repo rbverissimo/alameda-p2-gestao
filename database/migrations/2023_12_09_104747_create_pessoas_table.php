@@ -17,10 +17,10 @@ class CreatePessoasTable extends Migration
             $table->id();
             $table->string('nome', 50);
             $table->string('cpf', 14);
-            $table->string('profissao', 100);
+            $table->string('profissao', 100)->nullable();
             $table->string('telefone_celular', 15);
-            $table->string('telefone_fixo', 15);
-            $table->string('telefone_trabalho', 15);
+            $table->string('telefone_fixo', 15)->nullable();
+            $table->string('telefone_trabalho', 15)->nullable();
             $table->timestamps();
         });
     }
