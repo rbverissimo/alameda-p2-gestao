@@ -15,7 +15,7 @@ class CreateInquilinosTable extends Migration
     {
         Schema::create('inquilinos', function (Blueprint $table) {
             $table->id();
-            $table->decimal('valorAluguel', 8,2);
+            $table->double('valorAluguel');
             $table->integer('pessoacodigo');
             $table->string('situacao')->default('A');
             $table->integer('salacodigo');
@@ -38,7 +38,7 @@ class CreateInquilinosTable extends Migration
             $table->dropForeign('inquilinos_pessoacodigo_foreign');
             $table->dropForeign('inquilinos_salacodigo_foreign');
         });
-        
+
         Schema::dropIfExists('inquilinos');
     }
 }

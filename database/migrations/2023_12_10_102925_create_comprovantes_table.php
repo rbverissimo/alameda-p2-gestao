@@ -15,8 +15,8 @@ class CreateComprovantesTable extends Migration
     {
         Schema::create('comprovantes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('valor', 8,2);
-            $table->timestampsTz('dataComprovante');
+            $table->double('valor');
+            $table->string('dataComprovante', 9);
             $table->integer('referencia');
             $table->string('descricao', 300)->nullable();
             $table->integer('inquilino');
