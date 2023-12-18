@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ImovelController extends Controller
+class PainelPrincipalController extends Controller
 {
     //
 }
