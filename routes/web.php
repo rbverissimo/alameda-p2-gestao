@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CalculoContasController;
+use App\Http\Controllers\ComprovantesTransferenciaController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\PessoaController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,10 @@ Route::get('/calculo-contas', [CalculoContasController::class, 'calculoContas'])
 
 Route::post('/calculo-contas', [CalculoContasController::class, 'calculoContas'])
 ->name('calculo-contas');
+
+
+Route::get('/comprovantes-transferencia', [ComprovantesTransferenciaController::class, 'index'])
+->name('comprovantes-transferencia');
 
 
 
