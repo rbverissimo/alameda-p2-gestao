@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-      <head>
-            <title>Painel</title>
-      </head>
-      <body>
-            
-      </body>
-</html>
+@extends('app.layouts.template-basico')
+
+@section('conteudo')
+
+@endsection

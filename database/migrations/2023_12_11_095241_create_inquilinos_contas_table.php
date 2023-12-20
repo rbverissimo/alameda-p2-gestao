@@ -16,8 +16,8 @@ class CreateInquilinosContasTable extends Migration
         Schema::create('inquilinos_contas', function (Blueprint $table) {
             
             $table->id();
-            $table->integer('inquilinocodigo');
-            $table->integer('contacodigo');
+            $table->unsignedBigInteger('inquilinocodigo');
+            $table->unsignedBigInteger('contacodigo');
             $table->double('valorinquilino');
             $table->double('fatorDivisor');
             $table->string('dataVencimento')->nullable();
