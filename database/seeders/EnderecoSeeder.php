@@ -18,7 +18,7 @@ class EnderecoSeeder extends Seeder
             'cidade' => 'Goiânia',
             'logradouro' => 'Alameda P-2',
             'bairro' => 'Setor dos Funcionários',
-            'numero' => '657',
+            'numero' => 657,
             'cep' => '74543-030',
             'uf' => 'GO'
         ]);

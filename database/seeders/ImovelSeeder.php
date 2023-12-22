@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Endereco;
 use App\Models\Imovel;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +18,9 @@ class ImovelSeeder extends Seeder
         $imovel = new Imovel();
         $imovel->nomeFantasia = 'Alameda P2';
         $imovel->qtdeCasas = 3;
-        
+        $imovel->endereco = 1;
+
+        $imovel->save();
+
     }
 }
