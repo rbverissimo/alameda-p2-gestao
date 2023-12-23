@@ -9,5 +9,5 @@ class TipoPrestador extends Model
 {
     use HasFactory;
     protected $table = 'tipos_prestadores';
-    protected $fillabel = ['codigoSistema', 'tipo'];
+    protected $fillable = ['codigoSistema', 'tipo'];
 }
