@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Sala extends Model
 {
     use HasFactory;
+    protected $fillable = ['imovelCodigo', 'nomeSala', 'qtdeFamilias', 'qtdeMoradores'];
 
     public function imovel(): BelongsTo
     {
