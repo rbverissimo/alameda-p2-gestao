@@ -15,7 +15,7 @@ class AlterComprovantesTable extends Migration
     public function up()
     {
         Schema::table('comprovantes', function(Blueprint $table){
-            $table->integer('tipocomprovante');
+            $table->integer('tipocomprovante')->nullable();
 
             $table->foreign('tipocomprovante')->references('id')->on('tipos_comprovantes');
         });

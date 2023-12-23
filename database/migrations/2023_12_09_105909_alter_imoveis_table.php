@@ -14,7 +14,7 @@ class AlterImoveisTable extends Migration
     public function up()
     {
         Schema::table('imoveis', function(Blueprint $table){
-            $table->integer('endereco');
+            $table->integer('endereco')->nullable();
 
             $table->foreign('endereco')->references('id')->on('enderecos');
             $table->unique('endereco');

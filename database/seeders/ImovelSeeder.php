@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Endereco;
 use App\Models\Imovel;
 use Illuminate\Database\Seeder;
 

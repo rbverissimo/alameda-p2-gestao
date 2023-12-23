@@ -14,7 +14,7 @@ class AlterContasImoveisTable extends Migration
     public function up()
     {
         Schema::table('contas_imoveis', function(Blueprint $table){
-            $table->integer('tipocodigo');
+            $table->integer('tipocodigo')->nullable();
 
             $table->foreign('tipocodigo')->references('id')->on('tipocontas');
         });
