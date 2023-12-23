@@ -10,6 +10,8 @@ class Inquilino extends Model
 {
     use HasFactory;
 
+    
+
     public function sala(): HasOne
     {
         return $this->hasOne(Sala::class, 'salacodigo');

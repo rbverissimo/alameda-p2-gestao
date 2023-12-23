@@ -16,11 +16,11 @@ class TipoContaSeeder extends Seeder
     {
         $t1 = new TipoConta();
         $t1->codigo = 1000;
-        $t1->descrica = 'Água - Saneago';
+        $t1->descricao = 'Água - Saneago';
 
         $t2 = new TipoConta();
         $t2->codigo = 1001;
-        $t2->descrica = 'Energia - Equatorial';
+        $t2->descricao = 'Energia - Equatorial';
 
         $t1->save();
         $t2->save();

@@ -16,13 +16,10 @@ class ContaImovel extends Model
         return $this->hasOne(TipoConta::class, 'tipocodigo');
     }
 
-    public function imovel(): HasOne 
-    {
-        return $this->hasOne(Imovel::class, 'imovelcodigo');
-    }
-
     public function sala(): HasOne {
         return $this->hasOne(Sala::class, 'salacodigo');
     }
+
+
 
 }

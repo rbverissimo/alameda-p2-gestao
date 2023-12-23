@@ -27,7 +27,6 @@ class CreateContasImoveisTable extends Migration
             $table->integer('salacodigo');
             $table->timestamps();
 
-            $table->foreign('imovelcodigo')->references('id')->on('imoveis');
             $table->foreign('salacodigo')->references('id')->on('salas');
 
         });
@@ -43,7 +42,6 @@ class CreateContasImoveisTable extends Migration
 
         Schema::table('contas_imoveis', function(Blueprint $table){
             
-            $table->dropForeign('contas_imoveis_imovelcodigo_foreign');
             $table->dropForeign('contas_imoveis_salacodigo_foreign');
 
         });

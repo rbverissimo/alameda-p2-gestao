@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pessoa extends Model
+class TipoPrestador extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'cpf', 'profissão',
-        'telefone_celular', 'telefone_fixo', 'telefone_trabalho'];
+    protected $table = 'tipos_prestadores';
+    protected $fillabel = ['codigoSistema', 'tipo'];
 }
