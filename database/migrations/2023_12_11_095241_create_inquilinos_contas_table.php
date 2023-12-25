@@ -19,7 +19,7 @@ class CreateInquilinosContasTable extends Migration
             $table->unsignedBigInteger('inquilinocodigo');
             $table->unsignedBigInteger('contacodigo');
             $table->double('valorinquilino');
-            $table->double('fatorDivisor');
+            $table->double('fatorDivisor')->nullable();
             $table->string('dataVencimento')->nullable();
             $table->string('dataPagamento');
             $table->string('quitada', 1)->default('N');

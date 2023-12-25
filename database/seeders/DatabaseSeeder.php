@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
             SalaSeeder::class,
             InquilinoSeeder::class
         ]);
+
+        $this->call([InquilinoFatorDivisorSeeder::class]);
     }
 }
