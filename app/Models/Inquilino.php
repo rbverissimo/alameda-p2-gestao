@@ -16,4 +16,9 @@ class Inquilino extends Model
     {
         return $this->hasOne(Sala::class, 'salacodigo');
     }
+
+    public function pessoa(): HasOne
+    {
+        return $this->hasOne(Pessoa::class, 'pessoacodigo');
+    }
 }

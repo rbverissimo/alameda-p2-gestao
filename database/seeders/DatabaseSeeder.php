@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\TipoPrestador;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +18,9 @@ class DatabaseSeeder extends Seeder
             ImovelSeeder::class,
             PessoaSeeder::class,
             TipoContaSeeder::class,
-            TipoPrestadorSeeder::class
+            TipoPrestadorSeeder::class,
+            SalaSeeder::class,
+            InquilinoSeeder::class
         ]);
     }
 }
