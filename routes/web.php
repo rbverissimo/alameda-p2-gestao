@@ -34,4 +34,8 @@ Route::get('/comprovantes-transferencia', [ComprovantesTransferenciaController::
 ->name('comprovantes-transferencia');
 
 
+Route::post('/comprovantes-transferencia', [ComprovantesTransferenciaController::class, 'index'])
+->name('comprovantes-transferencia');
+
+
 
