@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([InquilinoFatorDivisorSeeder::class]);
+
+        $this->call([TipoComprovanteSeeder::class]);
     }
 }
