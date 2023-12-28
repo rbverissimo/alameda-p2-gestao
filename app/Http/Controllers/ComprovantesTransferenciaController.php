@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inquilino;
+use App\Models\TipoComprovante;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
@@ -12,6 +14,13 @@ class ComprovantesTransferenciaController extends Controller
 
             
         }
+
+        $titulo = 'Comprovantes de Transferência';
+        $tipos_comprovantes = TipoComprovante::all();
+        $inquilinos = Inquilino::select('pessoas.nome')
+            ->join('pessoas', 'pessoas.id', '=', 'inquilinos.codigopessoa')
+            ->where('inquilinos.situacao', '=', 'A')
+            ->get();
 
         return view('app.comprovantes-transferencia');
     }
