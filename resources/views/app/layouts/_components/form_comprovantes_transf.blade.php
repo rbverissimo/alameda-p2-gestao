@@ -14,11 +14,11 @@
       <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: ">
       </textarea>
       <select name="inquilino">
-            <option value="1">Agmar</option>
-            <option value="2">Branca</option>
-            <option value="3">Ezequias</option>
-            <option value="4">Igor</option>
-            <option value="5">Agmar</option>
+            @isset($inquilinos)
+                  @foreach ($inquilinos as $inquilino )
+                        <option value="1">{{$inquilino}}</option>
+                  @endforeach
+            @endisset
       </select>
       <br>
       <input name="data-comprovante" type="text" placeholder="Data formato AAAA-mm-dd: ">
