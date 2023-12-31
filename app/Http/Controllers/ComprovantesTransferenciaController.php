@@ -17,12 +17,13 @@ class ComprovantesTransferenciaController extends Controller
 
         $titulo = 'Comprovantes de Transferência';
         $tipos_comprovantes = TipoComprovante::all();
-        $inquilinos = Inquilino::select('pessoas.nome')
+
+        $inquilinos = Inquilino::select('inquilinos.id', 'pessoas.nome')
             ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
             ->where('inquilinos.situacao', '=', 'A')
             ->get();
 
         return view('app.comprovantes-transferencia', 
-            ['inquilinos'=>$inquilinos, 'titulo'=>$titulo]);
+            ['inquilinos'=>$inquilinos, 'titulo'=>$titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
     }
 }

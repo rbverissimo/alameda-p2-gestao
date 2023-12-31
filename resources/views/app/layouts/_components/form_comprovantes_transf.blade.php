@@ -4,22 +4,24 @@
       <br>
       <input name="referencia" type="text" placeholder="ano e mês da referência: ">
       <br>
-      <select name="tipo-comprovante">
-            <option value="1000">Pagamento TOTAL de contas da referência</option>
-            <option value="1001">Pagamento PARCIAL de contas da referência</option>
-            <option value="1002">Pagamento APENAS de aluguel da Referência</option>
-            <option value="1003">Pagamento APENAS de contas de água e luz da referência</option>
-      </select>
+      @isset($tipos_comprovantes)
+            <select name="tipo-comprovante">
+                  @foreach ($tipos_comprovantes as $tipo)    
+                  <option value="{{$tipo->codigosistema}}">{{$tipo->tipo}}</option>
+                  @endforeach
+            </select>
+      @endisset
       <br>
       <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: ">
       </textarea>
-      <select name="inquilino">
-            @isset($inquilinos)
-                  @foreach ($inquilinos as $inquilino )
-                        <option value="1">{{$inquilino}}</option>
-                  @endforeach
-            @endisset
-      </select>
+      @isset($inquilinos)
+            <select name="inquilino">                 
+                        @foreach ($inquilinos as $inquilino)
+                              <option value="{{$inquilino->id}}">
+                                    {{$inquilino->nome}}</option>
+                        @endforeach               
+            </select>
+      @endisset
       <br>
       <input name="data-comprovante" type="text" placeholder="Data formato AAAA-mm-dd: ">
       <br>
