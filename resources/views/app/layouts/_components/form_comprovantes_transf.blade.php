@@ -2,8 +2,6 @@
       @csrf
       <input name="valor-comprovante" type="text" placeholder="Valor do comprovante: ">
       <br>
-      <input name="referencia" type="text" placeholder="ano e mês da referência: ">
-      <br>
       @isset($tipos_comprovantes)
             <select name="tipo-comprovante">
                   @foreach ($tipos_comprovantes as $tipo)    

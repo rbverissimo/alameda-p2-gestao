@@ -58,7 +58,9 @@ class CalculoContasController extends Controller
 
             $c_agua->save();
         }
+
+        $titulo = 'Calcular Contas';
         
-        return view('app.calculo-contas');
+        return view('app.calculo-contas', compact('titulo'));
     }
 }
