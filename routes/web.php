@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CalculoContasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
+use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\PessoaController;
 use Illuminate\Support\Facades\Route;
@@ -23,11 +24,16 @@ Route::get('/', function () {
 
 Route::get('/painel-principal', [PainelPrincipalController::class, 'index'])->name('painel-principal');
 
-Route::get('/calculo-contas', [CalculoContasController::class, 'calculoContas'])
-->name('calculo-contas');
+Route::get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])->name('listar-inquilinos');
 
-Route::post('/calculo-contas', [CalculoContasController::class, 'calculoContas'])
-->name('calculo-contas');
+
+Route::controller(CalculoContasController::class)->group(function(){
+    Route::get('/calculo-contas', 'calculoContas')
+    ->name('calculo-contas');
+    Route::post('/calculo-contas', 'calculoContas')
+    ->name('calculo-contas');
+});
+
 
 
 Route::get('/comprovantes-transferencia', [ComprovantesTransferenciaController::class, 'index'])
