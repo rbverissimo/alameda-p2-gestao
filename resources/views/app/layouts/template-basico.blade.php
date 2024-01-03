@@ -6,6 +6,7 @@
             <link href="{{asset('css/styles.css')}}" rel="stylesheet">
       </head>
       <body>
+            @include('app.layouts._partials.topo-nav')
             @yield('conteudo')
       </body>
 </html>
