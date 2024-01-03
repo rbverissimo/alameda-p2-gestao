@@ -12,8 +12,10 @@ class PainelInquilinoController extends Controller
         $inquilino = Inquilino::select('pessoas.nome', 'inquilinos.id')
         ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
         ->where('inquilinos.id', $id)
-        ->get();
+        ->first();
 
-        return view('app.painel-inquilino', compact('inquilino', 'id'));
+        $titulo = 'Painel do Inquilino: '.$inquilino->nome;
+
+        return view('app.painel-inquilino', compact('inquilino', 'titulo'));
     }
 }
