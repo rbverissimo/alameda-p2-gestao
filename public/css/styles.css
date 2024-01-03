@@ -1,0 +1,8 @@
+tr {
+      border-bottom: 1px solid #222222;
+}
+
+.table-row:hover {
+      background-color: #D6EEEE;
+      cursor: pointer;
+}

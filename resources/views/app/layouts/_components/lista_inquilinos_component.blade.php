@@ -6,7 +6,7 @@
             <th>Valor do Aluguel</th>
       </tr>
       @foreach ($inquilinos_ativos as $inquilino)
-            <tr>
+            <tr class="table-row">
                   <td>{{$inquilino->id}}</td>
                   <td>{{$inquilino->nome}}</td>
                   <td>{{$inquilino->telefone_celular}}</td>
