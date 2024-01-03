@@ -2,4 +2,8 @@
 
 @section('conteudo')
 
+@isset($inquilino)
+      <div>{{$inquilino->nome}}</div>
+@endisset
+
 @endsection

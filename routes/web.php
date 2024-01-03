@@ -3,6 +3,8 @@
 use App\Http\Controllers\CalculoContasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
 use App\Http\Controllers\ListaInquilinosController;
+use App\Http\Controllers\PainelInquilino;
+use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\PessoaController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,8 @@ Route::controller(CalculoContasController::class)->group(function(){
     Route::post('/calculo-contas', 'calculoContas')
     ->name('calculo-contas');
 });
+
+Route::get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquilino'])->name('painel-inquilino');
 
 
 
