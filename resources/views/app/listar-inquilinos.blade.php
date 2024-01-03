@@ -7,6 +7,9 @@
 <h4>Inquilinos ativos: </h4>
       <div>
             <div>
+                  @component('app.layouts._components.lista_inquilinos_component',
+                  compact('inquilinos_ativos'))
+                  @endcomponent
             </div>
       </div>
 @endsection
