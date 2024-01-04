@@ -9,9 +9,9 @@ class PainelInquilinoController extends Controller
 {
     public function painel_inquilino($id){
 
-        $inquilino = Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomeSala',
+        $inquilino = Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
         'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 'inquilinos.valorAluguel',
-        'inquilinos.telefone_celular')
+        'pessoas.telefone_celular')
         ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
         ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
         ->where('inquilinos.id', $id)

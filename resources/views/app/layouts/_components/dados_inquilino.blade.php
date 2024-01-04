@@ -1,9 +1,9 @@
 <div>
       <h3>Dados do Inquilino: </h3>
       <br>
-      <div><p>Nome: </p>{{$inquilino->nome}}</div>
-      <div><p>Valor do Aluguel: </p>{{$inquilino->valorAluguel}}</div>
-      <div><p>Contato: </p>{{$inquilino->telefone_celular}}</div>
-      <div><p>Casa: </p>{{$inquilino->salaCodigo}} - {{$inquilino->$nomeSala}}</div>
-      <div><p>Qtde pessoas no imóvel: </p>{{$inquilino->qtdePessoasFamilia}}</div>
+      <div><p>Nome: {{$inquilino->nome}}</p></div>
+      <div><p>Valor do Aluguel: {{$inquilino->valorAluguel}}</p></div>
+      <div><p>Contato: {{$inquilino->telefone_celular}}</p></div>
+      <div><p>Casa: {{$inquilino->salacodigo}} - {{$inquilino->nomesala}}</p></div>
+      <div><p>Qtde pessoas no imóvel: {{$inquilino->qtdePessoasFamilia}}</p></div>
 </div>
