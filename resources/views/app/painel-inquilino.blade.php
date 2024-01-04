@@ -2,8 +2,9 @@
 
 @section('conteudo')
 
-@isset($inquilino)
-      <div>{{$inquilino->nome}}</div>
-@endisset
+<div>
+      @component('app.layouts._components.dados_inquilino', compact('inquilino'))
+      @endcomponent
+</div>
 
 @endsection

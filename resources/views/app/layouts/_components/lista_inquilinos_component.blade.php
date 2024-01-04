@@ -7,10 +7,18 @@
       </tr>
       @foreach ($inquilinos_ativos as $inquilino)
             <tr class="table-row">
-                  <td><a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->id}}</a></td>
-                  <td>{{$inquilino->nome}}</td>
-                  <td>{{$inquilino->telefone_celular}}</td>
-                  <td>{{$inquilino->valorAluguel}}</td>
+                  <td>
+                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->id}}</a>
+                  </td>
+                  <td>
+                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->nome}}</a>
+                  </td>
+                  <td>
+                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->telefone_celular}}</a>
+                  </td>
+                  <td>
+                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->valorAluguel}}</a>
+                  </td>
             </tr>
       @endforeach
 </table>
