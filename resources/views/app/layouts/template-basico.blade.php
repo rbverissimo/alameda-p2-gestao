@@ -8,5 +8,6 @@
       <body>
             @include('app.layouts._partials.topo-nav')
             @yield('conteudo')
+            @yield('scripts')
       </body>
 </html>
