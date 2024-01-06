@@ -12,8 +12,11 @@
             request.responseType = "json";
             request.onload = () => {
                   if(request.readyState == 4 && request.status == 200){
-                        const data = request.response;
+                        let data = request.response;
                         console.log(data);
+                        data = JSON.stringify(data)
+
+                        document.querySelector('#show').innerHTML = data;
                   } else {
                         console.log(`Erro: ${request.status}`);
                   }
