@@ -7,6 +7,3 @@
       <div><p>Casa: {{$inquilino->salacodigo}} - {{$inquilino->nomesala}}</p></div>
       <div><p>Qtde pessoas no imóvel: {{$inquilino->qtdePessoasFamilia}}</p></div>
 </div>
-<div id="show">
-      <span></span>
-</div>
