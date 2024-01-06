@@ -14,9 +14,20 @@
                   if(request.readyState == 4 && request.status == 200){
                         let data = request.response;
                         console.log(data);
-                        data = JSON.stringify(data)
+                        // data = JSON.stringify(data)
+                        const table = document.getElementById('lista-comprovantes');
+                        data.forEach(function(object){
+                              let tr = document.createElement('tr');
+                              tr.innerHTML = '<td>' + object.id + '</td>' +
+                              '<td>' + object.valor + '</td>' +
+                              '<td>' + object.dataComprovante + '</td>' +
+                              '<td>' + object.referencia + '</td>' +
+                              '<td>' + object.tipocomprovante + '</td>';
+                              table.appendChild(tr);
+                        });
 
-                        document.querySelector('#show').innerHTML = data;
+
+                        
                   } else {
                         console.log(`Erro: ${request.status}`);
                   }
