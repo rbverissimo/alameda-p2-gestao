@@ -12,9 +12,7 @@
             request.responseType = "json";
             request.onload = () => {
                   if(request.readyState == 4 && request.status == 200){
-                        let data = request.response;
-                        console.log(data);
-                        // data = JSON.stringify(data)
+                        const data = request.response;
                         const table = document.getElementById('lista-comprovantes');
                         data.forEach(function(object){
                               let tr = document.createElement('tr');
