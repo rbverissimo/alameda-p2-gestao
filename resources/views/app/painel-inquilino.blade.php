@@ -7,8 +7,10 @@
       @endcomponent
 </div>
 <div>
-      <button type="button">Ver comprovantes</button>
+      <button onclick="carregarComprovantes()" type="button">Ver comprovantes</button>
       <button type="button">Ver situação financeira mensal</button>
 </div>
 
 @endsection
+
+@include('app.scripts.script-lista-comprovantes')

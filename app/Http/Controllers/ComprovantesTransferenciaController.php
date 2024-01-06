@@ -11,8 +11,6 @@ class ComprovantesTransferenciaController extends Controller
 {
     public function index(Request $request){
 
-        
-
         if($request->isMethod('post')){
 
             $comprovante = new Comprovante();
@@ -37,5 +35,11 @@ class ComprovantesTransferenciaController extends Controller
 
         return view('app.comprovantes-transferencia', 
             ['inquilinos'=>$inquilinos, 'titulo'=>$titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
+    }
+
+    public function comprovantesPorInquilino($id){
+
+        $comprovantes = Comprovante::where('inquilino', $id)->get();
+        return $comprovantes;
     }
 }

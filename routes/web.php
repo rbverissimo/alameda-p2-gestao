@@ -40,12 +40,19 @@ Route::get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquili
 
 
 
-Route::get('/comprovantes-transferencia', [ComprovantesTransferenciaController::class, 'index'])
-->name('comprovantes-transferencia');
+Route::controller(ComprovantesTransferenciaController::class)->group(function(){
+    Route::get('/comprovantes-transferencia',  'index')
+    ->name('comprovantes-transferencia');
+    Route::get('/comprovantes-transferencia/{id}', 'comprovantesPorInquilino')
+    ->name('comprovantes-inquilino');
+    Route::post('/comprovantes-transferencia', 'index')
+    ->name('comprovantes-transferencia');
+});
 
 
-Route::post('/comprovantes-transferencia', [ComprovantesTransferenciaController::class, 'index'])
-->name('comprovantes-transferencia');
+
+
+
 
 
 
