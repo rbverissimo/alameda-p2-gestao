@@ -5,5 +5,6 @@
             <th>Data</th>
             <th>Referência</th>
             <th>Tipo</th>
+            <th>Ações</th>
       </tr>
 </table>

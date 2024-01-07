@@ -12,6 +12,7 @@
 </div>
 
 @include('app.layouts._components.lista_comprovantes')
+@include('app.layouts._components.situacao_financeira_inquilino')
 
 @endsection
 
