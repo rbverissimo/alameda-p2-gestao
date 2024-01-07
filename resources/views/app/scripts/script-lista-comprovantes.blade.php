@@ -24,10 +24,28 @@
                               table.appendChild(tr);
                         });
 
+                        addClickHandlersParaCadaRow();
+
 
                         
                   } else {
                         console.log(`Erro: ${request.status}`);
+                  }
+            }
+      }
+
+      function addClickHandlersParaCadaRow(){
+            const table = document.getElementById('lista-comprovantes');
+            const rows = table.getElementsByTagName('tr');
+
+            if((rows !== null || rows !== undefined) && rows.length > 0){
+                  for(i = 0; i < rows.length; i++){
+                        let currentRow = table.rows[i];
+                        currentRow.addEventListener("click", function (){
+                              const id = currentRow.getElementsByTagName('td')[0].innerHTML;
+                              console.log('clicked row id:' + id);
+                              // implementar a navegação para outra view do blade com os dados para a edição do comprovante; 
+                        });
                   }
             }
       }
