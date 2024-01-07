@@ -5,14 +5,19 @@
       */
       var isListaComprovantesVisivel = undefined;
       var isListaJaCarregada = false;
+
       var isSituacaoFinanceiraVisivel = undefined;
+      var isSituacaoFinanceiraJaCarregada = false; 
 
       const inquilino = @json($inquilino);
       const id = inquilino['id'];
       
-
+      /*
+      * SCRIPTS LIGADOS AO CARREGAMENTO DA LISTA DE COMPROVANTES
+      */
       function carregarComprovantes(){
             isSituacaoFinanceiraVisivel = false;
+            showListaComprovantes();
             if(!isListaJaCarregada){
                   const request = new XMLHttpRequest();
                   request.open("GET", "/comprovantes-transferencia/"+ id);
@@ -40,6 +45,8 @@
                         }
                   }
             }
+
+            hideSituacaoFinanceira();
       }
 
       function addClickHandlersParaCadaRow(){
@@ -57,5 +64,29 @@
                   }
             }
       }
+
+      function showListaComprovantes(){
+            document.getElementById('lista-comprovantes').style.visibility = "visible";
+      }
+
+      function hideSituacaoFinanceira(){
+            document.getElementById('situacao-financeira-wrapper').style.visibility = "hidden";
+      }
+
+      /*
+      * SCRIPTS LIGADOS AO CARREGAMENTO DA SITUAÇÃO FINANCEIRA
+      */
+      function carregarSituacaoFinanceira(){
+            hideListaComprovantes();
+
+      }
+
+      function showSituacaoFinanceira(){
+            document.getElementById('situacao-financeira-wrapper').style.visibility = "visible";
+      }
+      function hideListaComprovantes(){
+            document.getElementById('lista-comprovantes').style.visibility = "hidden";
+      }
+
 </script>
 @endsection

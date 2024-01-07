@@ -8,7 +8,7 @@
 </div>
 <div>
       <button onclick="carregarComprovantes()" type="button">Ver comprovantes</button>
-      <button type="button">Ver situação financeira mensal</button>
+      <button onclick="carregarSituacaoFinanceira()" type="button">Ver situação financeira mensal</button>
 </div>
 
 @include('app.layouts._components.lista_comprovantes')

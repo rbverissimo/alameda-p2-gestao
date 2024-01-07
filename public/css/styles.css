@@ -11,3 +11,11 @@ tr {
       color: inherit;
       text-decoration: none;
 }
+
+#lista-comprovantes {
+      visibility:  hidden;
+}
+
+#situacao-financeira-wrapper {
+      visibility: hidden;
+}
