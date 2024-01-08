@@ -78,12 +78,11 @@
                         });
                         
                         currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
+                              window.location='{{route("comprovante-editar", 'id')}}';
                               console.log('CLICKED ICON EDITAR id: ' + id);
                         });
                   }
             }            
-
-
       }
 
       function showListaComprovantes(){

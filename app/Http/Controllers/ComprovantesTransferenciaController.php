@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
 {
+
+    private $titulo = 'Comprovantes de Transferência';
+
     public function index(Request $request){
 
         if($request->isMethod('post')){
@@ -25,7 +28,6 @@ class ComprovantesTransferenciaController extends Controller
 
         }
 
-        $titulo = 'Comprovantes de Transferência';
         $tipos_comprovantes = TipoComprovante::all();
 
         $inquilinos = Inquilino::select('inquilinos.id', 'pessoas.nome')
@@ -34,12 +36,17 @@ class ComprovantesTransferenciaController extends Controller
             ->get();
 
         return view('app.comprovantes-transferencia', 
-            ['inquilinos'=>$inquilinos, 'titulo'=>$titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
+            ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
     }
 
     public function comprovantesPorInquilino($id){
-
+        //IMPLEMENTAR A PAGINAÇÃO AQUI
         $comprovantes = Comprovante::where('inquilino', $id)->get();
         return $comprovantes;
+    }
+
+    public function editarComprovante($id){
+        $titulo = $this->titulo;
+        return view('app.comprovantes-transferencia', compact('id', 'titulo'));
     }
 }

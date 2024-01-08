@@ -2,6 +2,7 @@
 
 @section('conteudo')
 <h4>Declare um comprovante </h4>
+      @isset($inquilinos)
       <div>
             <div>
                   @component('app.layouts._components.form_comprovantes_transf',
@@ -9,4 +10,14 @@
                   @endcomponent
             </div>
       </div>
+      @endisset
+
+      @isset($id)
+      <div>
+            <div>
+                  @component('app.layouts._components.editar_comprovante')
+                  @endcomponent
+            </div>
+      </div>
+      @endisset
 @endsection
