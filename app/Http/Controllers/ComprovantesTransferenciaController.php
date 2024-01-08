@@ -49,4 +49,9 @@ class ComprovantesTransferenciaController extends Controller
         $titulo = $this->titulo;
         return view('app.comprovantes-transferencia', compact('id', 'titulo'));
     }
+
+    public function deletarComprovante($id){
+        $comprovantes_deletados=Comprovante::where('id', $id)->delete();
+        
+    }
 }

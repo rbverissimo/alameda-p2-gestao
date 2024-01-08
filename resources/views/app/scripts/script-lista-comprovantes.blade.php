@@ -74,6 +74,7 @@
                         const secondToLastIndex = currentRow.getElementsByTagName('td').length - 2;
                         const id = currentRow.getElementsByTagName('td')[0].innerHTML;
                         currentRow.lastChild.addEventListener("click", function(){
+                              window.location='{{route("comprovante-deletar", 'id')}}';
                               console.log('CLICKED ICON EXCLUIR id: ' + id);
                         });
                         
