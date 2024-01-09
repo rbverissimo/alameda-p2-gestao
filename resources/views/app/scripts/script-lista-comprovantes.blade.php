@@ -99,8 +99,8 @@
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
                               const data = request.response;
-                              console.log(data);
-                              //implementar o método que limpa a row da view
+                              isListaJaCarregada = false;
+                              carregarComprovantes();
                               
                         } else {
                               console.log(`Erro: ${request.status}`);
