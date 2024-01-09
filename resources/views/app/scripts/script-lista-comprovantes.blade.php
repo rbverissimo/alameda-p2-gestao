@@ -33,11 +33,13 @@
                                     '<td>' + object.valor + '</td>' +
                                     '<td>' + object.dataComprovante + '</td>' +
                                     '<td>' + object.referencia + '</td>' +
-                                    '<td>' + object.tipocomprovante + '</td>';
+                                    '<td>' + object.tipocomprovante + '</td>' +
+                                    '<td>' + 'EDITAR' + '</td>' +
+                                    '<td>' + 'EXCLUIR' + '</td>';
                                     table.appendChild(tr);
                               });
 
-                              addClickHandlersParaCadaRow();
+                              setTimeout(addClickEditarExcluir, 900);
                               isListaJaCarregada = true;
                               
                         } else {
@@ -45,8 +47,6 @@
                         }
                   }
             }
-
-            hideSituacaoFinanceira();
       }
 
       function addClickHandlersParaCadaRow(){
@@ -65,11 +65,29 @@
             }
       }
 
-      function showListaComprovantes(){
-            document.getElementById('lista-comprovantes').style.visibility = "visible";
+      function addClickEditarExcluir(){
+            const table = document.getElementById('lista-comprovantes');
+            const rows = table.getElementsByTagName('tr');
+            if((rows !== null || rows !== undefined) && rows.length > 0){
+                  for(i = 1; i < rows.length; i++){
+                        let currentRow = rows[i];
+                        const secondToLastIndex = currentRow.getElementsByTagName('td').length - 2;
+                        const id = currentRow.getElementsByTagName('td')[0].innerHTML;
+                        currentRow.lastChild.addEventListener("click", function(){
+                              window.location='{{route("comprovante-deletar", 'id')}}';
+                              console.log('CLICKED ICON EXCLUIR id: ' + id);
+                        });
+                        
+                        currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
+                              window.location='{{route("comprovante-editar", 'id')}}';
+                              console.log('CLICKED ICON EDITAR id: ' + id);
+                        });
+                  }
+            }            
       }
 
-      function hideSituacaoFinanceira(){
+      function showListaComprovantes(){
+            document.getElementById('lista-comprovantes').style.visibility = "visible";
             document.getElementById('situacao-financeira-wrapper').style.visibility = "hidden";
       }
 
@@ -77,14 +95,12 @@
       * SCRIPTS LIGADOS AO CARREGAMENTO DA SITUAÇÃO FINANCEIRA
       */
       function carregarSituacaoFinanceira(){
-            hideListaComprovantes();
+            showSituacaoFinanceira();
 
       }
 
       function showSituacaoFinanceira(){
             document.getElementById('situacao-financeira-wrapper').style.visibility = "visible";
-      }
-      function hideListaComprovantes(){
             document.getElementById('lista-comprovantes').style.visibility = "hidden";
       }
 
