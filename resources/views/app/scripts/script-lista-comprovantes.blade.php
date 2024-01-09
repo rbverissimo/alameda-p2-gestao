@@ -39,7 +39,7 @@
                                     table.appendChild(tr);
                               });
 
-                              setTimeout(addClickEditarExcluir, 900);
+                              setTimeout(addClickEditarExcluir, 500);
                               isListaJaCarregada = true;
                               
                         } else {
@@ -74,7 +74,7 @@
                         const secondToLastIndex = currentRow.getElementsByTagName('td').length - 2;
                         const id = currentRow.getElementsByTagName('td')[0].innerHTML;
                         currentRow.lastChild.addEventListener("click", function(){
-                              window.location='{{route("comprovante-deletar", 'id')}}';
+                              requestDeletarRow(id);
                               console.log('CLICKED ICON EXCLUIR id: ' + id);
                         });
                         
@@ -89,6 +89,24 @@
       function showListaComprovantes(){
             document.getElementById('lista-comprovantes').style.visibility = "visible";
             document.getElementById('situacao-financeira-wrapper').style.visibility = "hidden";
+      }
+
+      function requestDeletarRow(id) {
+            const request = new XMLHttpRequest();
+                  request.open("GET", "/comprovantes-transferencia/delete/"+ id);
+                  request.send();
+                  request.responseType = "json";
+                  request.onload = () => {
+                        if(request.readyState == 4 && request.status == 200){
+                              const data = request.response;
+                              console.log(data);
+                              //implementar o método que limpa a row da view
+                              
+                        } else {
+                              console.log(`Erro: ${request.status}`);
+                        }
+                  }
+
       }
 
       /*

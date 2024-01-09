@@ -52,6 +52,7 @@ class ComprovantesTransferenciaController extends Controller
 
     public function deletarComprovante($id){
         $comprovantes_deletados=Comprovante::where('id', $id)->delete();
+        return $comprovantes_deletados;
         
     }
 }
