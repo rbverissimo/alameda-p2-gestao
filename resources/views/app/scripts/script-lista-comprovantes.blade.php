@@ -109,6 +109,22 @@
 
       }
 
+      function limparTabela(){
+            let counter = 0
+            const table = document.getElementById('lista-comprovantes');
+            const rows = table.getElementsByTagName('tr');
+            if((rows !== null || rows !== undefined) && rows.length > 0){
+                  while(rows.length > 1){
+                        let currentRow = rows[1];
+                        rows.remove();
+                        counter++;
+                  }
+            }
+            
+            console.log('Linhas removidas da tabela:' + counter);
+
+      }
+
       /*
       * SCRIPTS LIGADOS AO CARREGAMENTO DA SITUAÇÃO FINANCEIRA
       */
