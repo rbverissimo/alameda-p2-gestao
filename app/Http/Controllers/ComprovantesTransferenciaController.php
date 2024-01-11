@@ -41,7 +41,7 @@ class ComprovantesTransferenciaController extends Controller
 
     public function comprovantesPorInquilino($id){
         //IMPLEMENTAR A PAGINAÇÃO AQUI
-        $comprovantes = Comprovante::where('inquilino', $id)->get();
+        $comprovantes = Comprovante::where('inquilino', $id)->paginate(15);
         return $comprovantes;
     }
 
