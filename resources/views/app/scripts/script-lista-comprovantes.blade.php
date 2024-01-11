@@ -75,12 +75,10 @@
                         const id = currentRow.getElementsByTagName('td')[0].innerHTML;
                         currentRow.lastChild.addEventListener("click", function(){
                               requestDeletarRow(id);
-                              console.log('CLICKED ICON EXCLUIR id: ' + id);
                         });
                         
                         currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
                               window.location='{{route("comprovante-editar", 'id')}}';
-                              console.log('CLICKED ICON EDITAR id: ' + id);
                         });
                   }
             }            
@@ -117,12 +115,10 @@
             if((rows !== null || rows !== undefined) && rows.length > 0){
                   while(rows.length > 1){
                         let currentRow = rows[1];
-                        rows.remove();
+                        currentRow.remove();
                         counter++;
                   }
             }
-            
-            console.log('Linhas removidas da tabela:' + counter);
 
       }
 

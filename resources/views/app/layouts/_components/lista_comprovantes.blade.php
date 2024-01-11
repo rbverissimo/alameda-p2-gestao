@@ -9,3 +9,6 @@
             <th></th>
       </tr>
 </table>
+<div id="paginator-state">
+      @include('app.layouts._partials.paginator')
+</div>
