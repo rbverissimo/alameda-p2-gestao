@@ -27,7 +27,7 @@
                         if(request.readyState == 4 && request.status == 200){
                               const data = request.response;
                               const jsonArray = data['data'];
-                              console.log(jsonArray);
+                              console.log(data);
                               const table = document.getElementById('lista-comprovantes');
 
                               jsonArray.forEach(function(object){
@@ -43,6 +43,7 @@
                               });
 
                               setTimeout(addClickEditarExcluir, 500);
+                              setTimeout(AddClickHandlerNextPage(data), 500);
                               isListaJaCarregada = true;
                               
                         } else {
@@ -88,7 +89,13 @@
       }
 
       function AddClickHandlerNextPage(data) {
-            
+            // next
+            const lastIndex = data['links'].length - 1;
+
+            const next = document.getElementById('next-page');
+            next.addEventListener("click", function(){
+                  console.log(data['links'][lastIndex]['url']);
+            }); 
 
       }
 
