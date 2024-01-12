@@ -28,20 +28,7 @@
                               const data = request.response;
                               const jsonArray = data['data'];
                               console.log(data);
-                              const table = document.getElementById('lista-comprovantes');
-
-                              jsonArray.forEach(function(object){
-                                    let tr = document.createElement('tr');
-                                    tr.innerHTML = '<td>' + object.id + '</td>' +
-                                    '<td>' + object.valor + '</td>' +
-                                    '<td>' + object.dataComprovante + '</td>' +
-                                    '<td>' + object.referencia + '</td>' +
-                                    '<td>' + object.tipocomprovante + '</td>' +
-                                    '<td>' + 'EDITAR' + '</td>' +
-                                    '<td>' + 'EXCLUIR' + '</td>';
-                                    table.appendChild(tr);
-                              });
-
+                              criarRowsJson(jsonArray);
                               setTimeout(addClickEditarExcluir, 500);
                               setTimeout(AddClickHandlerNextPage(data), 500);
                               isListaJaCarregada = true;
@@ -53,20 +40,22 @@
             }
       }
 
-      function addClickHandlersParaCadaRow(){
+      function criarRowsJson(jsonArray){
+            
             const table = document.getElementById('lista-comprovantes');
-            const rows = table.getElementsByTagName('tr');
-
-            if((rows !== null || rows !== undefined) && rows.length > 0){
-                  for(i = 1; i < rows.length; i++){
-                        let currentRow = rows[i];
-                        currentRow.addEventListener("click", function (){
-                              const id = currentRow.getElementsByTagName('td')[0].innerHTML;
-                              console.log('clicked row id:' + id);
-                              // implementar a navegação para outra view do blade com os dados para a edição do comprovante; 
-                        });
-                  }
-            }
+            
+            jsonArray.forEach(function(object){
+                  let tr = document.createElement('tr');
+                  tr.innerHTML = '<td>' + object.id + '</td>' +
+                  '<td>' + object.valor + '</td>' +
+                  '<td>' + object.dataComprovante + '</td>' +
+                  '<td>' + object.referencia + '</td>' +
+                  '<td>' + object.tipocomprovante + '</td>' +
+                  '<td>' + 'EDITAR' + '</td>' +
+                  '<td>' + 'EXCLUIR' + '</td>';
+                  table.appendChild(tr);
+            });
+            
       }
 
       function addClickEditarExcluir(){
@@ -94,6 +83,7 @@
 
             const next = document.getElementById('next-page');
             next.addEventListener("click", function(){
+                  requestAvancarPagina(data['links'][lastIndex]['url']);
                   console.log(data['links'][lastIndex]['url']);
             }); 
 
@@ -122,6 +112,26 @@
                         }
                   }
 
+      }
+
+      function requestAvancarPagina(url){
+
+            const request = new XMLHttpRequest();
+                  request.open("GET", url);
+                  request.send();
+                  request.responseType = "json";
+                  request.onload = () => {
+                        if(request.readyState == 4 && request.status == 200){
+                              const data = request.response;
+                              jsonArray = data['data'];
+                              limparTabela();
+                              criarRowsJson(jsonArray);
+                              setTimeout(addClickEditarExcluir, 500);
+                              setTimeout(AddClickHandlerNextPage(data), 500);
+                        } else {
+                              console.log(`Erro: ${request.status}`);
+                        }
+                  }
       }
 
       function limparTabela(){
