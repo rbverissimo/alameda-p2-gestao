@@ -26,8 +26,11 @@
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
                               const data = request.response;
+                              const jsonArray = data['data'];
+                              console.log(jsonArray);
                               const table = document.getElementById('lista-comprovantes');
-                              data.forEach(function(object){
+
+                              jsonArray.forEach(function(object){
                                     let tr = document.createElement('tr');
                                     tr.innerHTML = '<td>' + object.id + '</td>' +
                                     '<td>' + object.valor + '</td>' +
@@ -84,8 +87,14 @@
             }            
       }
 
+      function AddClickHandlerNextPage(data) {
+            
+
+      }
+
       function showListaComprovantes(){
             document.getElementById('lista-comprovantes').style.visibility = "visible";
+            document.getElementById('script-page').style.visibility = "visible"
             document.getElementById('situacao-financeira-wrapper').style.visibility = "hidden";
       }
 

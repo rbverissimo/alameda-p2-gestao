@@ -51,6 +51,10 @@ Route::controller(ComprovantesTransferenciaController::class)->group(function(){
     ->name('comprovantes-transferencia');
 });
 
+Route::fallback(function () {
+    return redirect()->route('painel-principal');
+});
+
 
 
 
