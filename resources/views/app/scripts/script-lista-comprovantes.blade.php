@@ -25,18 +25,25 @@
                   request.responseType = "json";
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
-                              const data = request.response;
-                              const jsonArray = data['data'];
-                              console.log(data);
-                              criarRowsJson(jsonArray);
-                              setTimeout(addClickEditarExcluir, 500);
-                              setTimeout(AddClickHandlerNextPage(data), 500);
+                              processarRequestTableRows(request);
                               isListaJaCarregada = true;
                               
                         } else {
                               console.log(`Erro: ${request.status}`);
                         }
                   }
+            }
+      }
+
+      function processarRequestTableRows(request){
+            const data = request.response;
+            const jsonArray = data['data'];
+            console.log(data);
+            criarRowsJson(jsonArray);
+            setTimeout(addClickEditarExcluir, 500);
+            setTimeout(AddClickHandlerNextPage(data), 500);
+            if(data.current_page > 1){
+                  setTimeout(AddClickHandlerPreviousPage(data), 500);
             }
       }
 
@@ -80,13 +87,18 @@
       function AddClickHandlerNextPage(data) {
             // next
             const lastIndex = data['links'].length - 1;
-
             const next = document.getElementById('next-page');
             next.addEventListener("click", function(){
-                  requestAvancarPagina(data['links'][lastIndex]['url']);
-                  console.log(data['links'][lastIndex]['url']);
+                  requestTrocarPagina(data['links'][lastIndex]['url']);
             }); 
 
+      }
+
+      function AddClickHandlerPreviousPage(data) {
+            const previous = document.getElementById('previous-page');
+            previous.addEventListener("click", function(){
+                  requestTrocarPagina(data['links'][0]['url']);
+            })
       }
 
       function showListaComprovantes(){
@@ -114,20 +126,15 @@
 
       }
 
-      function requestAvancarPagina(url){
-
+      function requestTrocarPagina(url){
             const request = new XMLHttpRequest();
                   request.open("GET", url);
                   request.send();
                   request.responseType = "json";
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
-                              const data = request.response;
-                              jsonArray = data['data'];
                               limparTabela();
-                              criarRowsJson(jsonArray);
-                              setTimeout(addClickEditarExcluir, 500);
-                              setTimeout(AddClickHandlerNextPage(data), 500);
+                              processarRequestTableRows(request);
                         } else {
                               console.log(`Erro: ${request.status}`);
                         }
