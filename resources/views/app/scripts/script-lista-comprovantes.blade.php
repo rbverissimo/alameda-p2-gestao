@@ -100,11 +100,13 @@
             // next
             const lastIndex = data['links'].length - 1;
             const next = document.getElementById('next-page');
-            next.addEventListener("click", function clickNext(){
-                  requestTrocarPagina(data['links'][lastIndex]['url']);
-                  nextPageListener = true;
-            }); 
+            next.addEventListener("click", clickNext(data, lastIndex)); 
 
+      }
+
+      function clickNext(data, lastIndex){
+            requestTrocarPagina(data['links'][lastIndex]['url']);
+            nextPageListener = true;
       }
 
       function removeClickHandlerNextPage() {
