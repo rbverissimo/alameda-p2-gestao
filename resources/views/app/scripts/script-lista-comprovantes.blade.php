@@ -9,6 +9,9 @@
       var isSituacaoFinanceiraVisivel = undefined;
       var isSituacaoFinanceiraJaCarregada = false; 
 
+      var nextPageListener = false;
+      var prevPageListener = false; 
+
       const inquilino = @json($inquilino);
       const id = inquilino['id'];
       
@@ -40,6 +43,15 @@
             const jsonArray = data['data'];
             console.log(data);
             criarRowsJson(jsonArray);
+
+            if(nextPageListener){
+                  removeClickHandlerNextPage();
+            }
+
+            if(prevPageListener){
+                  removeClickHandlerPreviousPage();
+            }
+
             setTimeout(addClickEditarExcluir, 500);
             setTimeout(AddClickHandlerNextPage(data), 500);
             if(data.current_page > 1){
@@ -88,17 +100,29 @@
             // next
             const lastIndex = data['links'].length - 1;
             const next = document.getElementById('next-page');
-            next.addEventListener("click", function(){
+            next.addEventListener("click", function clickNext(){
                   requestTrocarPagina(data['links'][lastIndex]['url']);
+                  nextPageListener = true;
             }); 
 
       }
 
+      function removeClickHandlerNextPage() {
+            const next = document.getElementById('next-page');
+            next.removeEventListener("click", clickNext);
+      }
+
       function AddClickHandlerPreviousPage(data) {
             const previous = document.getElementById('previous-page');
-            previous.addEventListener("click", function(){
+            previous.addEventListener("click", function clickPrev(){
                   requestTrocarPagina(data['links'][0]['url']);
+                  prevPageListener = true;
             })
+      }
+
+      function removeClickHandlerPreviousPage() {
+            const next = document.getElementById('previous-page');
+            next.removeEventListener("click", clickPrev);
       }
 
       function showListaComprovantes(){
