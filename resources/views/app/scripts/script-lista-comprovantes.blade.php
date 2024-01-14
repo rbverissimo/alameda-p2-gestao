@@ -12,6 +12,9 @@
       var nextPageListener = false;
       var prevPageListener = false; 
 
+      var next_page_url = '';
+      var last_page_url = '';
+
       const inquilino = @json($inquilino);
       const id = inquilino['id'];
       
@@ -41,16 +44,20 @@
       function processarRequestTableRows(request){
             const data = request.response;
             const jsonArray = data['data'];
+            next_page_url = data['next_page_url'];
+            last_page_url = data['links'][0]['url'];
             console.log(data);
             criarRowsJson(jsonArray);
 
             if(nextPageListener){
                   removeClickHandlerNextPage();
+                  console.log(nextPageListener);
+                  console.log('Next page click removido')
             }
 
-            if(prevPageListener){
+            /* if(prevPageListener){
                   removeClickHandlerPreviousPage();
-            }
+            } */
 
             setTimeout(addClickEditarExcluir, 500);
             setTimeout(AddClickHandlerNextPage(data), 500);
@@ -97,35 +104,36 @@
       }
 
       function AddClickHandlerNextPage(data) {
-            // next
-            const lastIndex = data['links'].length - 1;
+            
+            const handler = function clickNext(){
+                  requestTrocarPagina(next_page_url);
+                  document.getElementById('next-page').removeEventListener("click", handler);    
+            };
+
             const next = document.getElementById('next-page');
-            next.addEventListener("click", clickNext(data, lastIndex)); 
+            next.addEventListener("click", handler, { capture: true, once: true }); 
 
       }
 
-      function clickNext(data, lastIndex){
-            requestTrocarPagina(data['links'][lastIndex]['url']);
-            nextPageListener = true;
-      }
 
-      function removeClickHandlerNextPage() {
+
+      /* function removeClickHandlerNextPage() {
             const next = document.getElementById('next-page');
-            next.removeEventListener("click", clickNext);
-      }
+            next.removeEventListener("click", handler);
+      } */
 
       function AddClickHandlerPreviousPage(data) {
             const previous = document.getElementById('previous-page');
-            previous.addEventListener("click", function clickPrev(){
-                  requestTrocarPagina(data['links'][0]['url']);
-                  prevPageListener = true;
-            })
+            previous.addEventListener("click", function(){
+                  requestTrocarPagina(last_page_url);
+                  
+            }, { capture: true, once: true } );
       }
 
-      function removeClickHandlerPreviousPage() {
+      /* function removeClickHandlerPreviousPage() {
             const next = document.getElementById('previous-page');
             next.removeEventListener("click", clickPrev);
-      }
+      } */
 
       function showListaComprovantes(){
             document.getElementById('lista-comprovantes').style.visibility = "visible";
@@ -153,6 +161,7 @@
       }
 
       function requestTrocarPagina(url){
+            console.log('request trocar pagina chamado'); 
             const request = new XMLHttpRequest();
                   request.open("GET", url);
                   request.send();
