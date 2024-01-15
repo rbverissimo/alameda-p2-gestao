@@ -9,9 +9,6 @@
       var isSituacaoFinanceiraVisivel = undefined;
       var isSituacaoFinanceiraJaCarregada = false; 
 
-      var nextPageListener = false;
-      var prevPageListener = false; 
-
       var next_page_url = '';
       var last_page_url = '';
 
@@ -48,16 +45,6 @@
             last_page_url = data['links'][0]['url'];
             console.log(data);
             criarRowsJson(jsonArray);
-
-            if(nextPageListener){
-                  removeClickHandlerNextPage();
-                  console.log(nextPageListener);
-                  console.log('Next page click removido')
-            }
-
-            /* if(prevPageListener){
-                  removeClickHandlerPreviousPage();
-            } */
 
             setTimeout(addClickEditarExcluir, 500);
             setTimeout(AddClickHandlerNextPage(data), 500);
@@ -104,36 +91,24 @@
       }
 
       function AddClickHandlerNextPage(data) {
-            
-            const handler = function clickNext(){
-                  requestTrocarPagina(next_page_url);
-                  document.getElementById('next-page').removeEventListener("click", handler);    
-            };
-
             const next = document.getElementById('next-page');
-            next.addEventListener("click", handler, { capture: true, once: true }); 
-
+            next.addEventListener("click", clickNext, true); 
       }
 
-
-
-      /* function removeClickHandlerNextPage() {
-            const next = document.getElementById('next-page');
-            next.removeEventListener("click", handler);
-      } */
+      function clickNext(){
+                  requestTrocarPagina(next_page_url);
+                  document.getElementById('next-page').removeEventListener("click", clickNext, true);    
+            };
 
       function AddClickHandlerPreviousPage(data) {
             const previous = document.getElementById('previous-page');
-            previous.addEventListener("click", function(){
-                  requestTrocarPagina(last_page_url);
-                  
-            }, { capture: true, once: true } );
+            previous.addEventListener("click", clickPrev, true);
       }
 
-      /* function removeClickHandlerPreviousPage() {
-            const next = document.getElementById('previous-page');
-            next.removeEventListener("click", clickPrev);
-      } */
+      function clickPrev(){
+                  requestTrocarPagina(last_page_url);
+                  document.getElementById('previous-page').removeEventListener("click", clickPrev, true);
+            }
 
       function showListaComprovantes(){
             document.getElementById('lista-comprovantes').style.visibility = "visible";
