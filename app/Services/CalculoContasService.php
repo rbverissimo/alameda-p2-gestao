@@ -11,13 +11,13 @@ class CalculoContasService {
 
     public function calcularContasInquilinos(){
 
-        $conta_agua = ContaImovel::where('tipocodigo', 1)->orderByDesc('id')->limit(1);
+        $conta_agua = ContaImovel::where('tipocodigo', 1)->orderByDesc('id')->limit(1)->first();
 
-        $conta_luz_sala1 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 1)->orderByDesc('id')->limit(1)->get();
+        $conta_luz_sala1 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 1)->orderByDesc('id')->limit(1)->first();
 
-        $conta_luz_sala2 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 2)->orderByDesc('id')->limit(1)->get();
+        $conta_luz_sala2 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 2)->orderByDesc('id')->limit(1)->first();
 
-        $conta_luz_sala3 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 3)->orderByDesc('id')->limit(1)->get();
+        $conta_luz_sala3 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 3)->orderByDesc('id')->limit(1)->first();
 
         $fator_casa_3 = $this->getFatorCasa3($conta_luz_sala3->valor);
 
@@ -25,7 +25,7 @@ class CalculoContasService {
 
         foreach($inquilinos as $inquilino){
 
-            $fator_divisor = InquilinoFatorDivisor::where('id', $inquilino->id)->orderByDesc('id')->limit(1)->get();
+            $fator_divisor = InquilinoFatorDivisor::where('inquilino_id', $inquilino->id)->orderByDesc('id')->limit(1)->first();
             
             switch($inquilino->salacodigo){
                 case 1:

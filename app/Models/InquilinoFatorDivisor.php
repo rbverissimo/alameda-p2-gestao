@@ -10,6 +10,8 @@ class InquilinoFatorDivisor extends Model
 {
     use HasFactory;
 
+    protected $table = 'inquilinos_fator_divisor';
+
     public function inquilino(): HasOne {
         return $this->hasOne(Inquilino::class, 'inquilino_id');
     }
