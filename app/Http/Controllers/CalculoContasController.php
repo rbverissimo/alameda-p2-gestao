@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
+use App\Services\CalculoContasService;
 use Illuminate\Http\Request;
 
 class CalculoContasController extends Controller
@@ -57,6 +58,9 @@ class CalculoContasController extends Controller
             $c_agua->tipocodigo = 1;
 
             $c_agua->save();
+
+            $calculo_contas_service = new CalculoContasService();
+            $calculo_contas_service->calcularContasInquilinos();
         }
 
         $titulo = 'Calcular Contas';

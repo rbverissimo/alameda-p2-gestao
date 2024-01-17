@@ -33,14 +33,30 @@ class CalculoContasService {
                     InquilinoConta::create([
                         'inquilinocodigo' => $inquilino->id,
                         'contacodigo'=>$conta_luz_sala1->id,
-                        'valorInquilino'=>$valor_conta
+                        'valorInquilino'=>$valor_conta,
+                        'dataVencimento'=>$conta_luz_sala1->dataVencimento
                     ]);
                     break;
                 case 2:
-                    break;
+                    $valor_conta = $this->calculoEnergiaCasa2($conta_luz_sala2->valor, $fator_casa_3, $fator_divisor);
+                    InquilinoConta::create([
+                        'inquilinocodigo' => $inquilino->id,
+                        'contacodigo'=>$conta_luz_sala2->id,
+                        'valorInquilino'=>$valor_conta,
+                        'dataVencimento'=>$conta_luz_sala2->dataVencimento
+                    ]);
+                break;
                 case 3:
                     break;
             }
+
+            $valor_conta_agua = $this->calculoAgua($conta_agua, $fator_divisor);
+            Inquilino::create([
+                'inquilinocodigo' => $inquilino->id,
+                'contacodigo'=>$conta_agua->id,
+                'valorInquilino'=>$valor_conta_agua,
+                'dataVencimento'=>$conta_agua->dataVencimento
+            ]);
         }
 
         // Como é feito o cálculo no billing_app
@@ -80,8 +96,16 @@ class CalculoContasService {
         return $valor_casa_3 / 3;
     }
 
-    private function calculoEnergiaCasa1($energia_casa_1, $fator_casa_3, $fator_corretivo){
-        return  (($energia_casa_1 / 3) * $fator_corretivo) + $fator_casa_3;
+    private function calculoEnergiaCasa1($energia_casa_1, $fator_casa_3, $fator_divisor){
+        return  (($energia_casa_1 / 3) * $fator_divisor) + $fator_casa_3;
+    }
+
+    private function calculoEnergiaCasa2($energia_casa_2, $fator_casa_3, $fator_divisor){
+        return  (($energia_casa_2 / 3) * $fator_divisor) + $fator_casa_3;
+    }
+
+    private function calculoAgua($conta_agua, $fator_divisor){
+        return ($conta_agua / 5) * $fator_divisor;
     }
 
 }
