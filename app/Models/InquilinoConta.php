@@ -10,6 +10,7 @@ class InquilinoConta extends Model
 {
     use HasFactory;
     protected $table = 'inquilinos_contas';
+    protected $fillable = ['inquilinocodigo', 'contacodigo', 'valorinquilino', 'dataVencimento', 'dataPagamento', 'quitada'];
 
     public function conta_imovel(): HasOne
     {
