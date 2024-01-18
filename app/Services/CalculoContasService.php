@@ -11,13 +11,13 @@ class CalculoContasService {
 
     public function calcularContasInquilinos(){
 
-        $conta_agua = ContaImovel::where('tipocodigo', 1)->orderByDesc('id')->limit(1)->first();
+        $conta_agua = ContaImovel::where('tipocodigo', 1)->orderByDesc('id')->first();
 
-        $conta_luz_sala1 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 1)->orderByDesc('id')->limit(1)->first();
+        $conta_luz_sala1 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 1)->orderByDesc('id')->first();
 
-        $conta_luz_sala2 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 2)->orderByDesc('id')->limit(1)->first();
+        $conta_luz_sala2 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 2)->orderByDesc('id')->first();
 
-        $conta_luz_sala3 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 3)->orderByDesc('id')->limit(1)->first();
+        $conta_luz_sala3 = ContaImovel::where('tipocodigo', 2)->where('salacodigo', 3)->orderByDesc('id')->first();
 
         $fator_casa_3 = $this->getFatorCasa3($conta_luz_sala3->valor);
 
@@ -29,20 +29,20 @@ class CalculoContasService {
             
             switch($inquilino->salacodigo){
                 case 1:
-                    $valor_conta = $this->calculoEnergiaCasa1($conta_luz_sala1->valor, $fator_casa_3, $fator_divisor);
+                    $valor_conta = $this->calculoEnergiaCasa1($conta_luz_sala1->valor, $fator_casa_3, $fator_divisor->fatorDivisor);
                     InquilinoConta::create([
                         'inquilinocodigo' => $inquilino->id,
                         'contacodigo'=>$conta_luz_sala1->id,
-                        'valorInquilino'=>$valor_conta,
+                        'valorinquilino'=>$valor_conta,
                         'dataVencimento'=>$conta_luz_sala1->dataVencimento
                     ]);
                     break;
                 case 2:
-                    $valor_conta = $this->calculoEnergiaCasa2($conta_luz_sala2->valor, $fator_casa_3, $fator_divisor);
+                    $valor_conta = $this->calculoEnergiaCasa2($conta_luz_sala2->valor, $fator_casa_3, $fator_divisor->fatorDivisor);
                     InquilinoConta::create([
                         'inquilinocodigo' => $inquilino->id,
                         'contacodigo'=>$conta_luz_sala2->id,
-                        'valorInquilino'=>$valor_conta,
+                        'valorinquilino'=>$valor_conta,
                         'dataVencimento'=>$conta_luz_sala2->dataVencimento
                     ]);
                 break;
@@ -50,11 +50,11 @@ class CalculoContasService {
                     break;
             }
 
-            $valor_conta_agua = $this->calculoAgua($conta_agua, $fator_divisor);
-            Inquilino::create([
+            $valor_conta_agua = $this->calculoAgua($conta_agua->valor, $fator_divisor->fatorDivisor);
+            InquilinoConta::create([
                 'inquilinocodigo' => $inquilino->id,
                 'contacodigo'=>$conta_agua->id,
-                'valorInquilino'=>$valor_conta_agua,
+                'valorinquilino'=>$valor_conta_agua,
                 'dataVencimento'=>$conta_agua->dataVencimento
             ]);
         }
@@ -101,7 +101,7 @@ class CalculoContasService {
     }
 
     private function calculoEnergiaCasa2($energia_casa_2, $fator_casa_3, $fator_divisor){
-        return  (($energia_casa_2 / 3) * $fator_divisor) + $fator_casa_3;
+        return  (($energia_casa_2 / 2) * $fator_divisor) + $fator_casa_3;
     }
 
     private function calculoAgua($conta_agua, $fator_divisor){
