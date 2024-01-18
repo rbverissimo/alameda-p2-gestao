@@ -58,38 +58,6 @@ class CalculoContasService {
                 'dataVencimento'=>$conta_agua->dataVencimento
             ]);
         }
-
-        // Como é feito o cálculo no billing_app
-        /* double calculoEnergiaCasa1(double energiaCasa1, double fatorCasa3, double fatorCorretivo){
-	
-            double divisaoDaConta = ((energiaCasa1 / 3) * fatorCorretivo) + fatorCasa3; 
-            
-            return divisaoDaConta;
-                
-        }
-        
-        double calculoEnergiaCasa2(double energiaCasa2, double fatorCasa3, double fatorCorretivo) {
-            
-            double divisaoDaConta = ((energiaCasa2 / 2) * fatorCorretivo) + fatorCasa3;
-            
-            return divisaoDaConta;
-            
-        }
-        
-        // fator da casa 3
-        double divisaoCasa3(double energiaCasa3) {
-            
-            double divisaoDaConta = energiaCasa3 / 5; 
-            
-            return divisaoDaConta; 
-        }
-        
-        double calculoAgua(double contaAgua, double fatorCorretivo){
-            
-            double divisaoDaConta = (contaAgua / 5) * fatorCorretivo; 
-            
-            return divisaoDaConta;
-        } */
     }
 
     private function getFatorCasa3($valor_casa_3){
