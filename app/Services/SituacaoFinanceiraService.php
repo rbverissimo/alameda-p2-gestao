@@ -10,17 +10,27 @@ class SituacaoFinanceiraService {
 
             // inquilino
             // referencia
-            //quebrar a referência em ano e mês
+            $ano = ProjectUtils::getAnoFromReferencia($referencia);
+            $mes = ProjectUtils::getMesFromReferencia($referencia);
 
 
             // descobrir a sala do inquilino 
             $sala_inquilino = Inquilino::select('salacodigo')->where('id', $inquilino_id);
 
-            //Buscar uma collection de contas
-            $contas = ContaImovel::where('salacodigo', $sala_inquilino)
-                  ->where('ano', 2023)->where('mes', 12)
+            //Buscar uma collection de contas daquele ano-mês
+            $contas = ContaImovel::where('ano', $ano)->where('mes', $mes)
                   ->orderByDesc('id')
                   ->get();
+            
+            $contas_agua = ProjectUtils::getContasByTipo($contas, 1);
+            
+            $contas_luz = ContasUtils::create($contas)
+                  ->filterByParam('tipocodigo', 2)
+                  ->filterByParam('salacodigo', $sala_inquilino)
+                  ->getContas();
+
+            $max_id_agua = ProjectUtils::getMaxID($contas_agua);
+            $max_id_luz = ProjectUtils::getMaxID($contas_luz);
 
             // buscar todas as contas do imóvel do mês com id máximo para aquela referência
             
