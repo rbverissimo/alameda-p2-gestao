@@ -17,8 +17,7 @@ class ContasUtils {
       }
 
       public function filterByParam($paramName, $paramValue){
-            $this->contas = array_filter($this->contas, function($conta) use
-            ($paramName, $paramValue)
+            $this->contas = array_filter($this->contas, function($conta) use ($paramName, $paramValue)
             {
                   return $conta->{$paramName} === $paramValue;
             });
