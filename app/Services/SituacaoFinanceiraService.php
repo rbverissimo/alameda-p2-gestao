@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comprovante;
 use App\Models\ContaImovel;
 use App\Models\Inquilino;
 use App\Models\InquilinoConta;
@@ -42,8 +43,13 @@ class SituacaoFinanceiraService {
             return $aluguel + $conta_luz + $conta_agua;
       }
 
-      private function isReferenciaQuitada(){
+      private function isReferenciaQuitada($inquilino_id, $referencia, $total){
+            $comprovantes_valores = Comprovante::select('valor')
+            ->where('inquilino', $inquilino_id)
+            ->where('referencia', $referencia)
+            ->get();
 
+            
       }
 
       private function somaSaldo(){
