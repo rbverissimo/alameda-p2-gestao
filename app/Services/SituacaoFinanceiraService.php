@@ -11,6 +11,8 @@ class SituacaoFinanceiraService {
             $ano = ProjectUtils::getAnoFromReferencia($referencia);
             $mes = ProjectUtils::getMesFromReferencia($referencia);
 
+
+            $aluguel = $this->getAluguelInquilino($inquilino_id);
             $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes);
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
 
@@ -30,6 +32,22 @@ class SituacaoFinanceiraService {
                   ->where('contas_imoveis.mes', $mes)
                   ->orderByDesc('contas_imoveis.id')
                   ->first();
+      }
+
+      private function getAluguelInquilino($inquilino_id) {
+            return Inquilino::select('valorAluguel')->where('id', $inquilino_id);
+      }
+
+      private function somarContas($aluguel, $conta_luz, $conta_agua){
+            return $aluguel + $conta_luz + $conta_agua;
+      }
+
+      private function isReferenciaQuitada(){
+
+      }
+
+      private function somaSaldo(){
+
       }
 
 }

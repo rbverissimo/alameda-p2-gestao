@@ -7,6 +7,10 @@ class ProjectUtils {
             return date('Y-m-d');
       }
 
+      public static function getAnoMesSistemaSemMascara(){
+            return str_replace('-', '', ProjectUtils::getAnoMesSistema());
+      }
+
       public static function getAnoMesSistema(){
             return date('Y-m');
       }
@@ -17,6 +21,13 @@ class ProjectUtils {
 
       public static function getMesFromReferencia($referencia){
             return $referencia % 100; 
+      }
+
+      public static function adicionarMascaraReferencia($referencia){
+            $ano = substr($referencia, 0, 4);
+            $mes = substr($referencia, 4, 2);
+
+            return $ano.'-'.$mes;
       }
 
       public static function getMaxID($collection){
