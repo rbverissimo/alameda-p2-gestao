@@ -25,7 +25,7 @@ class CalculoContasService {
 
         foreach($inquilinos as $inquilino){
 
-            $fator_divisor = InquilinoFatorDivisor::where('inquilino_id', $inquilino->id)->orderByDesc('id')->limit(1)->first();
+            $fator_divisor = InquilinoFatorDivisor::where('inquilino_id', $inquilino->id)->orderByDesc('id')->first();
             
             switch($inquilino->salacodigo){
                 case 1:
