@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
-use Illuminate\Http\Request;
-use ProjectUtils;
-use SituacaoFinanceiraService;
+use App\Services\SituacaoFinanceiraService;
+use App\Utils\ProjectUtils;
 
 class PainelInquilinoController extends Controller
 {
@@ -24,6 +23,6 @@ class PainelInquilinoController extends Controller
         $situacao_financeira_service = new SituacaoFinanceiraService();
         $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, ProjectUtils::getAnoMesSistemaSemMascara());
 
-        return view('app.painel-inquilino', compact('inquilino', 'titulo'));
+        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira'));
     }
 }

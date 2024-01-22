@@ -1,5 +1,7 @@
 <?php
 
+namespace App\ValueObjects;
+
 class SituacaoFinanceiraVO {
       public $referencia;
       public $aluguel;

@@ -13,5 +13,8 @@
                   <input type="checkbox" name="quitado" value="" disabled>
                   <label for="quitado">Referência quitada?</label>
             </div>
+            <div>
+                  <p>Saldo: {{$situacao_financeira->saldo}}</p>
+            </div>
       @endisset
 </div>

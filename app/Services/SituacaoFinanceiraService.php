@@ -1,12 +1,20 @@
 <?php
 
+namespace App\Services;
+
 use App\Models\Comprovante;
-use App\Models\ContaImovel;
 use App\Models\Inquilino;
 use App\Models\InquilinoConta;
 use App\Models\InquilinoSaldo;
+use App\Utils\ProjectUtils;
+use App\ValueObjects\SituacaoFinanceiraVO;
 
 class SituacaoFinanceiraService {
+
+      public function __construct()
+      {
+            
+      }
 
       public function buscarSituacaoFinanceira($inquilino_id, $referencia){
 
@@ -15,13 +23,21 @@ class SituacaoFinanceiraService {
 
 
             $aluguel = $this->getAluguelInquilino($inquilino_id);
-            $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes);
-            $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
+
+            $conta_luz = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes));
+
+            $conta_agua = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes));
+
             $total = $this->somarContas($aluguel, $conta_luz, $conta_agua);
             $quitado = $this->isReferenciaQuitada($inquilino_id, $referencia, $total);
 
+            $saldo = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getSaldo($total, $inquilino_id, $referencia));
 
-            $situacao_financeira = new SituacaoFinanceiraVO($referencia, $aluguel, $conta_luz, $conta_agua, $total, $quitado, 0.0);
+            $situacao_financeira = new SituacaoFinanceiraVO($referencia, 
+            $aluguel, 
+            $conta_luz, 
+            $conta_agua, 
+            $total, $quitado, $saldo);
 
             return $situacao_financeira;
 
@@ -60,14 +76,13 @@ class SituacaoFinanceiraService {
             return $comprovantes_valores >= $total; 
       }
 
-      private function saldoMes(){
-
-      }
-
-      private function somaSaldo(){
+      private function getSaldo($total, $inquilino_id, $referencia){
             $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
+            $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
 
-            return 0.0;
+            $saldo_mes = $total - $valores_mes; 
+
+            return $inquilino_saldo->saldo_atual ??= 0.0 + $saldo_mes;
       }
 
 }
