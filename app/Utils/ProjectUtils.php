@@ -30,6 +30,10 @@ class ProjectUtils {
             return $ano.'-'.$mes;
       }
 
+      public static function arrendondarParaDuasCasasDecimais($valor){
+            return number_format($valor, 2);
+      }
+
       public static function getMaxID($collection){
             return max(array_map(function($item) {
                   return $item->id;

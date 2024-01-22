@@ -7,10 +7,10 @@ class SituacaoFinanceiraVO {
       public $agua;
       public $total;
       public $quitado;
-      public $debito;
-      public $credito;
+      public $saldo;
+      
 
-      public function __construct($referencia, $aluguel, $luz, $agua, $total, $quitado, $debito, $credito)
+      public function __construct($referencia, $aluguel, $luz, $agua, $total, $quitado, $saldo)
       {
             $this->referencia = $referencia;
             $this->aluguel = $aluguel;
@@ -18,7 +18,6 @@ class SituacaoFinanceiraVO {
             $this->agua = $agua;
             $this->total = $total;
             $this->quitado = $quitado; 
-            $this->debito = $debito;
-            $this->credito = $credito; 
+            $this->saldo = $saldo;
       }
 }

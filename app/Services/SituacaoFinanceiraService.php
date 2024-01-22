@@ -4,6 +4,7 @@ use App\Models\Comprovante;
 use App\Models\ContaImovel;
 use App\Models\Inquilino;
 use App\Models\InquilinoConta;
+use App\Models\InquilinoSaldo;
 
 class SituacaoFinanceiraService {
 
@@ -16,8 +17,11 @@ class SituacaoFinanceiraService {
             $aluguel = $this->getAluguelInquilino($inquilino_id);
             $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes);
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
+            $total = $this->somarContas($aluguel, $conta_luz, $conta_agua);
+            $quitado = $this->isReferenciaQuitada($inquilino_id, $referencia, $total);
 
-            $situacao_financeira = "";
+
+            $situacao_financeira = new SituacaoFinanceiraVO($referencia, $aluguel, $conta_luz, $conta_agua, $total, $quitado, 0.0);
 
             return $situacao_financeira;
 
@@ -43,17 +47,27 @@ class SituacaoFinanceiraService {
             return $aluguel + $conta_luz + $conta_agua;
       }
 
-      private function isReferenciaQuitada($inquilino_id, $referencia, $total){
-            $comprovantes_valores = Comprovante::select('valor')
+      private function getSomaComprovantesReferencia($inquilino_id, $referencia){
+            return Comprovante::select('valor')
             ->where('inquilino', $inquilino_id)
             ->where('referencia', $referencia)
-            ->get();
+            ->sum('valor');
+      }
 
-            
+      private function isReferenciaQuitada($inquilino_id, $referencia, $total){
+            $comprovantes_valores = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
+
+            return $comprovantes_valores >= $total; 
+      }
+
+      private function saldoMes(){
+
       }
 
       private function somaSaldo(){
+            $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
 
+            return 0.0;
       }
 
 }
