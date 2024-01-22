@@ -24,14 +24,14 @@ class SituacaoFinanceiraService {
 
             $aluguel = $this->getAluguelInquilino($inquilino_id);
 
-            $conta_luz = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes));
+            $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes);
 
-            $conta_agua = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes));
+            $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
 
             $total = $this->somarContas($aluguel, $conta_luz, $conta_agua);
             $quitado = $this->isReferenciaQuitada($inquilino_id, $referencia, $total);
 
-            $saldo = ProjectUtils::arrendondarParaDuasCasasDecimais($this->getSaldo($total, $inquilino_id, $referencia));
+            $saldo = $this->getSaldo($total, $inquilino_id, $referencia);
 
             $situacao_financeira = new SituacaoFinanceiraVO($referencia, 
             $aluguel, 
