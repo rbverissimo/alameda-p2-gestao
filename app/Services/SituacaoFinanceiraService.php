@@ -8,6 +8,7 @@ use App\Models\InquilinoConta;
 use App\Models\InquilinoSaldo;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\SituacaoFinanceiraVO;
+use Illuminate\Support\Facades\DB;
 
 class SituacaoFinanceiraService {
 
@@ -45,7 +46,7 @@ class SituacaoFinanceiraService {
 
       private function getValorInquilinoBy($tipoconta, $inquilino_id, $ano, $mes){
 
-            return InquilinoConta::select('inquilinos_contas.valorinquilino')
+            return DB::table('inquilinos_contas')->select('inquilinos_contas.valorinquilino')
                   ->join('contas_imoveis', 'inquilinos_contas.contacodigo', '=', 'contas_imoveis.id')
                   ->where('contas_imoveis.tipocodigo', $tipoconta)
                   ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
