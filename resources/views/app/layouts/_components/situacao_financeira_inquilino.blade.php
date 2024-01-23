@@ -1,7 +1,7 @@
 <div id="situacao-financeira-wrapper">
       @isset($situacao_financeira)
             <div>
-                  <p>{{$situacao_financeira->referencia}}</p>
+                  <p> Referência: {{$situacao_financeira->referencia}}</p>
             </div>
             <div>
                   <p>Aluguel: {{ $situacao_financeira->aluguel }}</p>

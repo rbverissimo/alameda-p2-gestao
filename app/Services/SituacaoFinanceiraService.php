@@ -29,16 +29,19 @@ class SituacaoFinanceiraService {
 
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
 
-            $total = $this->somarContas($aluguel, $conta_luz, $conta_agua);
+            $total = $this->somarContas($aluguel->valorAluguel, $conta_luz->valorinquilino, $conta_agua->valorinquilino);
             $quitado = $this->isReferenciaQuitada($inquilino_id, $referencia, $total);
 
             $saldo = $this->getSaldo($total, $inquilino_id, $referencia);
 
-            $situacao_financeira = new SituacaoFinanceiraVO($referencia, 
-            $aluguel, 
-            $conta_luz, 
-            $conta_agua, 
-            $total, $quitado, $saldo);
+            $situacao_financeira = new SituacaoFinanceiraVO(
+            ProjectUtils::adicionarMascaraReferencia($referencia), 
+            $aluguel->valorAluguel, 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz->valorinquilino), 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua->valorinquilino), 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($total), 
+            $quitado, 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo));
 
             return $situacao_financeira;
 
@@ -57,7 +60,7 @@ class SituacaoFinanceiraService {
       }
 
       private function getAluguelInquilino($inquilino_id) {
-            return Inquilino::select('valorAluguel')->where('id', $inquilino_id);
+            return Inquilino::select('valorAluguel')->where('id', $inquilino_id)->first();
       }
 
       private function somarContas($aluguel, $conta_luz, $conta_agua){
@@ -81,9 +84,11 @@ class SituacaoFinanceiraService {
             $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
             $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
 
-            $saldo_mes = $total - $valores_mes; 
+            $saldo_mes = $valores_mes - $total; 
 
-            return $inquilino_saldo->saldo_atual ??= 0.0 + $saldo_mes;
+            if($inquilino_saldo == null) $inquilino_saldo = 0.0;
+
+            return $inquilino_saldo + $saldo_mes;
       }
 
 }
