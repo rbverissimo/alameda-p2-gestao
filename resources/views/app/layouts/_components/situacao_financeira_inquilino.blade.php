@@ -10,7 +10,7 @@
                   <p>Total: {{ $situacao_financeira->total }}
             </div>
             <div>
-                  <input type="checkbox" name="quitado" value="" disabled>
+                  <input type="checkbox" name="quitado" checked="{{$situacao_financeira->quitado}}" disabled>
                   <label for="quitado">Referência quitada?</label>
             </div>
             <div>
