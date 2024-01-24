@@ -1,3 +1,6 @@
+<div>
+      <!-- ADICIONAR AQUI UM TOPO QUE PERMITA ADICIONAR OS COMPROVANTES E FILTRAR OS INSERIDOS -->
+</div>
 <table id='lista-comprovantes'>
       <tr>
             <th>ID</th>
