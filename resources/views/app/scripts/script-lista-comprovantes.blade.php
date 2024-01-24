@@ -178,5 +178,14 @@
             document.getElementById('lista-comprovantes').style.visibility = "hidden";
       }
 
+      
+      window.onload = function isReferenciaQuitada() {
+                  const saldo = document.getElementById('saldo').innerHTML;
+                  if(saldo > 0){
+                        document.getElementById('quitado').checked = true; 
+                  }
+            }
+      
+
 </script>
 @endsection

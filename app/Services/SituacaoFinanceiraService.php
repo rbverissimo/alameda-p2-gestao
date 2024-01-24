@@ -30,7 +30,6 @@ class SituacaoFinanceiraService {
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
 
             $total = $this->somarContas($aluguel->valorAluguel, $conta_luz->valorinquilino, $conta_agua->valorinquilino);
-            $quitado = $this->isReferenciaQuitada($inquilino_id, $referencia, $total);
 
             $saldo = $this->getSaldo($total, $inquilino_id, $referencia);
 
@@ -40,7 +39,6 @@ class SituacaoFinanceiraService {
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz->valorinquilino), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua->valorinquilino), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($total), 
-            $quitado, 
             ProjectUtils::arrendondarParaDuasCasasDecimais($saldo));
 
             return $situacao_financeira;
@@ -73,13 +71,7 @@ class SituacaoFinanceiraService {
             ->where('referencia', $referencia)
             ->sum('valor');
       }
-
-      private function isReferenciaQuitada($inquilino_id, $referencia, $total){
-            $comprovantes_valores = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
-
-            return $comprovantes_valores >= $total; 
-      }
-
+      
       private function getSaldo($total, $inquilino_id, $referencia){
             $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
             $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
