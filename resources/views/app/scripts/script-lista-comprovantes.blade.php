@@ -193,7 +193,7 @@
       function addTableRow(){
             const url = new URL(window.location);
             const idInquilino = url.pathname.split('/')[2];
-            window.location='{{route("comprovante-adicionar", 'idInquilino')}}';
+            window.location=`{{ route("comprovante-adicionar", ["id" => ""]) }}${'idInquilino'}`;
 
       }
 
