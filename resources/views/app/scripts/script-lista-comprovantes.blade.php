@@ -64,8 +64,8 @@
                   '<td>' + object.dataComprovante + '</td>' +
                   '<td>' + object.referencia + '</td>' +
                   '<td>' + object.tipocomprovante + '</td>' +
-                  '<td>' + 'EDITAR' + '</td>' +
-                  '<td>' + 'EXCLUIR' + '</td>';
+                  '<td>' + '<img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">'  + '</td>' +
+                  '<td>' + '<img class="crud-icon" src="{{asset("icons/delete-icon.svg")}}" alt="EXCLUIR">' + '</td>';
                   table.appendChild(tr);
             });
             
@@ -186,6 +186,13 @@
                   }
             }
       
+      /* 
+      * SCRIPTS DO TOPO
+      */
+
+      function addTableRow(){
+            console.log('tentando adicionar um table row'); 
+      }
 
 </script>
 @endsection

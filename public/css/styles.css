@@ -12,6 +12,10 @@ tr {
       text-decoration: none;
 }
 
+.crud-icon {
+      cursor: pointer;
+}
+
 #lista-comprovantes {
       visibility:  hidden;
 }
