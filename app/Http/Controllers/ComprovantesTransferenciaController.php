@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
@@ -12,7 +13,7 @@ class ComprovantesTransferenciaController extends Controller
 
     private $titulo = 'Comprovantes de Transferência';
 
-    public function index(Request $request){
+    public function index(Request $request, $id){
 
         if($request->isMethod('post')){
 
@@ -31,9 +32,16 @@ class ComprovantesTransferenciaController extends Controller
         $tipos_comprovantes = TipoComprovante::all();
 
         $inquilinos = Inquilino::select('inquilinos.id', 'pessoas.nome')
-            ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
-            ->where('inquilinos.situacao', '=', 'A')
-            ->get();
+                ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+                ->where('inquilinos.situacao', '=', 'A')
+                ->get();
+
+        if($id != null){
+            $inquilinos = $inquilinos->filter(function ($inquilino) use ($id) {
+                return $inquilino->id == $id;
+            })->first(); 
+        }
+        
 
         return view('app.comprovantes-transferencia', 
             ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
