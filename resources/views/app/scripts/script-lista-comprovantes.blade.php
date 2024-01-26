@@ -43,7 +43,6 @@
             const jsonArray = data['data'];
             next_page_url = data['next_page_url'];
             last_page_url = data['links'][0]['url'];
-            console.log(data);
             criarRowsJson(jsonArray);
 
             setTimeout(addClickEditarExcluir, 500);
@@ -84,7 +83,7 @@
                         });
                         
                         currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
-                              window.location='{{route("comprovante-editar", 'id')}}';
+                              window.location.href = "/comprovantes-transferencia/edit/" + id;
                         });
                   }
             }            
@@ -192,8 +191,8 @@
 
       function addTableRow(){
             const url = new URL(window.location);
-            const idInquilino = url.pathname.split('/')[2];
-            window.location=`{{ route("comprovante-adicionar", ["id" => ""]) }}${'idInquilino'}`;
+            const id = url.pathname.split('/')[2]; 
+            window.location.href = "/comprovantes-transferencia/add/" + id ;
 
       }
 
