@@ -83,7 +83,8 @@
                         });
                         
                         currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
-                              window.location.href = "/comprovantes-transferencia/edit/" + id;
+                              requestEditarComprovante(id)
+                              console.log('editando comprovante id: ' + id);
                         });
                   }
             }            
@@ -134,8 +135,11 @@
 
       }
 
+      function requestEditarComprovante(id){
+            window.location.href = "/comprovantes-transferencia/edit/" + id;
+      }
+
       function requestTrocarPagina(url){
-            console.log('request trocar pagina chamado'); 
             const request = new XMLHttpRequest();
                   request.open("GET", url);
                   request.send();

@@ -1,5 +1,8 @@
 <form action="{{route('comprovantes-transferencia')}}" method="POST">
       @csrf
+      @isset($comprovante->id)
+      <input name="id-comprovante" type="text" placeholder="ID" value="{{$comprovante->id}}" disabled>
+      @endisset
       <input name="valor-comprovante" type="text" placeholder="Valor do comprovante: ">
       <br>
       @isset($tipos_comprovantes)
