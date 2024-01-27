@@ -10,7 +10,11 @@
       @isset($tipos_comprovantes)
             <select name="tipo-comprovante">
                   @foreach ($tipos_comprovantes as $tipo)    
-                  <option value="{{$tipo->codigosistema}}">{{$tipo->tipo}}</option>
+                  <option value="{{$tipo->codigosistema}}"
+                  @isset($comprovante->tipocomprovante)
+                  @if($comprovante->tipocomprovante == $tipo->codigosistema) selected @endif
+                  @endisset
+                  >{{$tipo->tipo}}</option>
                   @endforeach
             </select>
       @endisset
