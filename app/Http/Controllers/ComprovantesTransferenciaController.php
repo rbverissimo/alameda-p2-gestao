@@ -12,7 +12,7 @@ class ComprovantesTransferenciaController extends Controller
 
     private $titulo = 'Comprovantes de Transferência';
 
-    public function index(Request $request, $id){
+    public function index(Request $request, $id = null){
 
         if($request->isMethod('post')){
 
@@ -53,7 +53,7 @@ class ComprovantesTransferenciaController extends Controller
     public function editarComprovante($id){
         $titulo = $this->titulo;
 
-        
+
 
         return view('app.comprovantes-transferencia', compact('id', 'titulo'));
     }
