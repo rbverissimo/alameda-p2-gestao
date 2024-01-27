@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
+use App\Services\ComprovantesService;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
@@ -51,11 +52,12 @@ class ComprovantesTransferenciaController extends Controller
     }
 
     public function editarComprovante($id){
+
         $titulo = $this->titulo;
+        $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
+        $comprovante = ComprovantesService::getComprovante($id);
 
-
-
-        return view('app.comprovantes-transferencia', compact('id', 'titulo'));
+        return view('app.comprovantes-transferencia', compact('id', 'titulo', 'tipos_comprovantes', 'comprovante'));
     }
 
     public function deletarComprovante($id){

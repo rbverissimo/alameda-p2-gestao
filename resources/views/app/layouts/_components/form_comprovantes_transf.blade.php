@@ -18,7 +18,7 @@
       <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: " value="{{ isset($comprovante->descricao) ? 
             old('descricao', $comprovante->descricao) : old('descricao') }}">
       </textarea>
-      
+
       @isset($inquilinos)
             <select name="inquilino">                 
                         @foreach ($inquilinos as $inquilino)

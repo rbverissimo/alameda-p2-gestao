@@ -15,7 +15,7 @@
       @isset($id)
       <div>
             <div>
-                  @component('app.layouts._components.form_compravantes_transf', 
+                  @component('app.layouts._components.form_comprovantes_transf', 
                   compact('tipos_comprovantes', 'id', 'comprovante'))
                   @endcomponent
             </div>
