@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Comprovante;
 use App\Models\Inquilino;
 
 class InquilinosService {
@@ -14,6 +15,11 @@ class InquilinosService {
                   ->first();
                   
             return $query->nome;
+      }
+
+      public static function getInquilinoIdFromComprovante($id_comprovante){
+            $query = Comprovante::where('id', $id_comprovante)->first();
+            return $query->inquilino;
       }
 
 }

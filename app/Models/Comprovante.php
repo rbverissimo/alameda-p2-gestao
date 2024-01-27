@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Comprovante extends Model
 {
     use HasFactory;
+    protected $fillable = ['id', 'valor', 'dataComprovante', 'referencia', 'descricao', 'inquilino', 'tipocomprovante'];
     
     public function inquilino(): HasOne {
         return $this->hasOne(Inquilino::class, 'inquilino');
