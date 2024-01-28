@@ -12,11 +12,11 @@
       </div>
       @endisset
 
-      @isset($id)
+      @isset($comprovante)
       <div>
             <div>
                   @component('app.layouts._components.form_comprovantes_transf', 
-                  compact('tipos_comprovantes', 'id', 'comprovante'))
+                  compact('tipos_comprovantes', 'comprovante'))
                   @endcomponent
             </div>
       </div>

@@ -1,7 +1,11 @@
 <form action="{{route('comprovantes-transferencia')}}" method="POST">
       @csrf
+      @if (isset($comprovante->id))
+            @method('PUT')
+      @endif
+
       @isset($comprovante->id)
-      <input name="id-comprovante" type="text" placeholder="ID" value="{{$comprovante->id}}" disabled>
+      <input name="id-comprovante" placeholder="ID" value="{{$comprovante->id}}" type="hidden">
       @endisset
       <input name="valor-comprovante" type="text" placeholder="Valor do comprovante: "
       value="{{ isset($comprovante->valor) ?
@@ -15,14 +19,15 @@
                   @isset($comprovante->tipocomprovante)
                         @if($comprovante->tipocomprovante == $tipo->codigosistema) selected @endif
                   @endisset
-                  
+
                   >{{$tipo->tipo}}</option>
                   @endforeach
             </select>
       @endisset
       <br>
-      <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: " value="{{ isset($comprovante->descricao) ? 
-            old('descricao', $comprovante->descricao) : old('descricao') }}">
+      <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: " >
+            {{ isset($comprovante->descricao) ? 
+            old('descricao', $comprovante->descricao) : old('descricao') }}
       </textarea>
 
       @isset($inquilinos)

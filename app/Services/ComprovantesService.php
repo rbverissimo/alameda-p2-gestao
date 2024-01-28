@@ -13,7 +13,7 @@ class ComprovantesService {
       }
 
       public static function getComprovante($id){
-            return Comprovante::where('id', $id)->first();
+            return Comprovante::find($id);
       }
       
 }
