@@ -43,15 +43,15 @@ Route::get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquili
 Route::controller(ComprovantesTransferenciaController::class)->group(function(){
     Route::get('/comprovantes-transferencia',  'index')
     ->name('comprovantes-transferencia');
+    Route::post('/comprovantes-transferencia', 'index')
+    ->name('comprovantes-transferencia');
     Route::get('comprovantes-transferencia/add/{id}', 'index')->name('comprovante-adicionar');
     Route::get('/comprovantes-transferencia/{id}', 'comprovantesPorInquilino')
     ->name('comprovantes-inquilino');
     Route::get('/comprovantes-transferencia/edit/{id}', 'editarComprovante')->name('comprovante-editar');
-    Route::get('/comprovantes-transferencia/delete/{id}', 'deletarComprovante')->name('comprovante-deletar');
-    Route::post('/comprovantes-transferencia', 'index')
-    ->name('comprovantes-transferencia');
     Route::put('/comprovantes-transferencia/edit/{id}', 'editarComprovante')
     ->name('comprovante-editar');
+    Route::get('/comprovantes-transferencia/delete/{id}', 'deletarComprovante')->name('comprovante-deletar');
 });
 
 Route::fallback(function () {

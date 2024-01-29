@@ -60,17 +60,12 @@ class ComprovantesTransferenciaController extends Controller
         $comprovante = ComprovantesService::getComprovante($id);
 
         if($request->isMethod('put')){
-
-            $id_comprovante = $request->input('id-comprovante');
-            // $comprovante = Comprovante::find($id_comprovante);
             $comprovante->valor = $request->input('valor-comprovante');
             $comprovante->dataComprovante = $request->input('data-comprovante');
             $comprovante->referencia = $request->input('referencia');
             $comprovante->descricao = $request->input('descricao');
             $comprovante->tipocomprovante = $request->input('tipo-comprovante');
-
             $comprovante->save();
-
         }
 
         return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante'));
