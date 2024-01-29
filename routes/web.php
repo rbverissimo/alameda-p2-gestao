@@ -50,8 +50,8 @@ Route::controller(ComprovantesTransferenciaController::class)->group(function(){
     Route::get('/comprovantes-transferencia/delete/{id}', 'deletarComprovante')->name('comprovante-deletar');
     Route::post('/comprovantes-transferencia', 'index')
     ->name('comprovantes-transferencia');
-    Route::put('/comprovantes-transferencia', 'index')
-    ->name('comprovantes-transferencia');
+    Route::put('/comprovantes-transferencia/edit/{id}', 'editarComprovante')
+    ->name('comprovante-editar');
 });
 
 Route::fallback(function () {

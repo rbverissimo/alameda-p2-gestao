@@ -22,4 +22,14 @@ class InquilinosService {
             return $query->inquilino;
       }
 
+      public static function getInfoPainelInquilino($id){
+            return Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
+                  'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 
+                  'inquilinos.valorAluguel', 'pessoas.telefone_celular')
+                  ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+                  ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
+                  ->where('inquilinos.id', $id)
+                  ->first();
+      }
+
 }

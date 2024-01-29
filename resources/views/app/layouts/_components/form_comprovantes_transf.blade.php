@@ -1,4 +1,4 @@
-<form action="{{route('comprovantes-transferencia')}}" method="POST">
+<form action="{{ isset($comprovante->id) ? route('comprovante-editar', ['id' => $comprovante->id]) : route('comprovantes-transferencia') }}" method="POST">
       @csrf
       @if (isset($comprovante->id))
             @method('PUT')
