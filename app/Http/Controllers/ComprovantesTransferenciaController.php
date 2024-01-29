@@ -58,6 +58,7 @@ class ComprovantesTransferenciaController extends Controller
         $titulo = $this->titulo;
         $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
         $comprovante = ComprovantesService::getComprovante($id);
+        $mensage = null;
 
         if($request->isMethod('put')){
             $comprovante->valor = $request->input('valor-comprovante');
@@ -66,9 +67,10 @@ class ComprovantesTransferenciaController extends Controller
             $comprovante->descricao = $request->input('descricao');
             $comprovante->tipocomprovante = $request->input('tipo-comprovante');
             $comprovante->save();
+            $mensagem = "sucesso";
         }
 
-        return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante'));
+        return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'mensagem'));
     }
 
     public function deletarComprovante($id){

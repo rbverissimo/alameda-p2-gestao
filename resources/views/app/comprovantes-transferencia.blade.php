@@ -16,7 +16,7 @@
       <div>
             <div>
                   @component('app.layouts._components.form_comprovantes_transf', 
-                  compact('tipos_comprovantes', 'comprovante'))
+                  compact('tipos_comprovantes', 'comprovante', 'mensagem'))
                   @endcomponent
             </div>
       </div>
