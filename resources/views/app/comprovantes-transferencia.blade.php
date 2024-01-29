@@ -22,3 +22,5 @@
       </div>
       @endisset
 @endsection
+
+@include('app.scripts.script-comprovantes')

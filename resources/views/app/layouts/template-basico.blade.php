@@ -7,7 +7,9 @@
       </head>
       <body>
             @include('app.layouts._partials.topo-nav')
+            @include('app.layouts._partials.mensagens')
             @yield('conteudo')
             @yield('scripts')
       </body>
+      <script src="{{ asset('js/scripts.js') }}"></script>
 </html>
