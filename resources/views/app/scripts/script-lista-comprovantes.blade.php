@@ -1,5 +1,6 @@
 @section('scripts')
 <script type="text/javascript">
+
       /*
       VARIAVEIS GLOBAIS DE CONTROLE DE FLUXO
       */
@@ -84,7 +85,6 @@
                         
                         currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
                               requestEditarComprovante(id)
-                              console.log('editando comprovante id: ' + id);
                         });
                   }
             }            
@@ -124,6 +124,8 @@
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
                               const data = request.response;
+                              console.log(data);
+                              if(data > 0) showMensagem("Registro removido com sucesso", "sucesso");
                               limparTabela();
                               isListaJaCarregada = false;
                               carregarComprovantes();
