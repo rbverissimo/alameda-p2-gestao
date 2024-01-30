@@ -1,10 +1,12 @@
 @section('scripts')
-<script type="text/javascript">
+<script type="module">
 
-const mensagem = {{ !! json_encode($mensagem)}}
-console.log(mensagem);
+    import { showMensagem } from "{{ asset('js/scripts.js')}}";
 
-if(mensagem === 1) showMensagem("Update feito com sucesso", "sucesso");
+    
+    const mensagem = {!! json_encode(session('mensagem')) !!};
+
+if(mensagem === 'sucesso') showMensagem("Update feito com sucesso", "sucesso");
 
 </script>
 @endsection

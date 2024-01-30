@@ -11,5 +11,5 @@
             @yield('conteudo')
             @yield('scripts')
       </body>
-      <script src="{{ asset('js/scripts.js') }}"></script>
+      <script type="module" src="{{ asset('js/scripts.js') }}"></script>
 </html>
