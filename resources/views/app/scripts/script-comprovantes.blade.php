@@ -4,9 +4,10 @@
     import { showMensagem } from "{{ asset('js/scripts.js')}}";
 
     
-    const mensagem = {!! json_encode(session('mensagem')) !!};
+    const mensagem = @json($mensagem);
+    console.log(mensagem);
 
-if(mensagem === 'sucesso') showMensagem("Update feito com sucesso", "sucesso");
+    if(mensagem === 'sucesso') showMensagem("Registro salvo com sucesso", "sucesso");
 
 </script>
 @endsection

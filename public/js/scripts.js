@@ -20,5 +20,5 @@ function showMensagemContainer() {
 
       setTimeout(() => {
             messageContainer.style.display = 'none';
-      }, 3000);
+      }, 5000);
 }

@@ -16,6 +16,8 @@ class ComprovantesTransferenciaController extends Controller
 
     public function index(Request $request, $id = null){
 
+        $mensagem = null; 
+
         if($request->isMethod('post')){
             
             $comprovante = new Comprovante();
@@ -28,6 +30,7 @@ class ComprovantesTransferenciaController extends Controller
 
 
             $comprovante->save();
+            $mensagem = "sucesso";
 
         }
 
@@ -45,7 +48,7 @@ class ComprovantesTransferenciaController extends Controller
         
 
         return view('app.comprovantes-transferencia', 
-            ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes]);
+            ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes, 'mensagem'=>$mensagem]);
     }
 
     public function comprovantesPorInquilino($id){
@@ -54,23 +57,26 @@ class ComprovantesTransferenciaController extends Controller
     }
 
     public function editarComprovante(Request $request, $id){
+        try{
+            $titulo = $this->titulo;
+            $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
+            $comprovante = ComprovantesService::getComprovante($id);
+            $mensagem = null; 
 
-        $titulo = $this->titulo;
-        $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
-        $comprovante = ComprovantesService::getComprovante($id);
+            if($request->isMethod('put')){
+                $comprovante->valor = $request->input('valor-comprovante');
+                $comprovante->dataComprovante = $request->input('data-comprovante');
+                $comprovante->referencia = $request->input('referencia');
+                $comprovante->descricao = $request->input('descricao');
+                $comprovante->tipocomprovante = $request->input('tipo-comprovante');
+                $comprovante->save();
+                $mensagem = "sucesso";
+            }
 
-        if($request->isMethod('put')){
-            $comprovante->valor = $request->input('valor-comprovante');
-            $comprovante->dataComprovante = $request->input('data-comprovante');
-            $comprovante->referencia = $request->input('referencia');
-            $comprovante->descricao = $request->input('descricao');
-            $comprovante->tipocomprovante = $request->input('tipo-comprovante');
-            $comprovante->save();
-
-            session()->flash('mensagem', 'sucesso');
+            return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'mensagem')); 
+        } catch (\Exception $e) {
+            return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }
-
-        return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante'));
     }
 
     public function deletarComprovante($id){
