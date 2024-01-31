@@ -199,7 +199,7 @@
             }
       
       /* 
-      * SCRIPTS DO TOPO
+      * SCRIPTS DO TOPO DA TABELA;
       */
 
       function addTableRow(){
@@ -207,6 +207,15 @@
             const id = url.pathname.split('/')[2]; 
             window.location.href = "/comprovantes-transferencia/add/" + id ;
 
+      }
+
+      function getSearchById() {
+            const value = document.getElementById('search-keyup-id').value;
+
+            if(/^\d+$/.test(value)){
+            } else {
+                  document.getElementById('search-keyup-id').value = value.replace(/\D/g, '');
+            }
       }
 
 </script>
