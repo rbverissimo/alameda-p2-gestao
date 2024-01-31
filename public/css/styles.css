@@ -53,6 +53,10 @@ tr {
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
 }
 
+#neutra-mensagem{
+      color: #222222;
+}
+
 #sucesso-mensagem {
       color: #4CAF50;
 }

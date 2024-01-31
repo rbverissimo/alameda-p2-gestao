@@ -52,7 +52,9 @@ class ComprovantesTransferenciaController extends Controller
     }
 
     public function comprovantesPorInquilino($id){
-        $comprovantes = Comprovante::where('inquilino', $id)->paginate(15);
+        $comprovantes = Comprovante::where('inquilino', $id)
+            ->orderBy('id', 'desc')
+            ->paginate(15);
         return $comprovantes;
     }
 

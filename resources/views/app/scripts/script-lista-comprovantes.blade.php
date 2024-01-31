@@ -117,23 +117,30 @@
       }
 
       function requestDeletarRow(id) {
-            const request = new XMLHttpRequest();
+            const isConfirmado = window.confirm("Você deseja deletar o registro " + id + " ?");
+
+            if(isConfirmado){
+                  const request = new XMLHttpRequest();
                   request.open("GET", "/comprovantes-transferencia/delete/"+ id);
                   request.send();
                   request.responseType = "json";
                   request.onload = () => {
                         if(request.readyState == 4 && request.status == 200){
                               const data = request.response;
-                              console.log(data);
                               if(data > 0) showMensagem("Registro removido com sucesso", "sucesso");
                               limparTabela();
                               isListaJaCarregada = false;
                               carregarComprovantes();
-                              
-                        } else {
-                              console.log(`Erro: ${request.status}`);
+                                    
+                              } else {
+                                    console.log(`Erro: ${request.status}`);
+                                    showMensagem("Não foi possível remover o registro " + id, "falha");
+                              }
                         }
-                  }
+
+            } else {
+                  showMensagem("Excluir o registro de ID: "+id+" não realizado", "neutra");
+            }
 
       }
 
