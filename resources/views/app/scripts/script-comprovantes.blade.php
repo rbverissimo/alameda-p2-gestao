@@ -6,6 +6,7 @@
     import { handleBackspaceHyphen } from "{{ asset('js/scripts.js')}}";
     import { isDataValida } from "{{ asset('js/scripts.js')}}";
     import { dataMascara } from "{{ asset('js/scripts.js')}}";
+    import { mascaraCurrencyBr } from "{{ asset('js/scripts.js')}}";
 
     const mensagem = @json($mensagem);
     if(mensagem === 'sucesso') showMensagem("Registro salvo com sucesso", "sucesso");
@@ -15,7 +16,6 @@
     anoMesInput.addEventListener('keydown', handleBackspaceHyphen);
 
     const dataInput = document.getElementById('data-input');
-
     dataInput.addEventListener('input', dataMascara);
     dataInput.addEventListener('keydown', handleBackspaceHyphen);
 
@@ -25,6 +25,9 @@
             event.target.value = '';
         }
     });
+
+    const valorInput = document.getElementById('input-valor-comprovante');
+    valorInput.addEventListener('input', mascaraCurrencyBr);
 
 </script>
 @endsection

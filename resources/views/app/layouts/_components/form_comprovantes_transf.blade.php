@@ -7,7 +7,7 @@
       @isset($comprovante->id)
       <input name="id-comprovante" placeholder="ID" value="{{$comprovante->id}}" type="hidden">
       @endisset
-      <input name="valor-comprovante" type="text" placeholder="Valor do comprovante: "
+      <input name="valor-comprovante" id="input-valor-comprovante" type="text" placeholder="Valor do comprovante: "
       value="{{ isset($comprovante->valor) ?
             old('valor-comprovante', $comprovante->valor) : old('valor-comprovante') }}">
       <br>
