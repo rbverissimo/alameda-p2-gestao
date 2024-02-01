@@ -40,12 +40,12 @@
       @endisset
 
       <br>
-      <input name="data-comprovante" type="text" placeholder="Data formato AAAA-mm-dd: "
+      <input name="data-comprovante" id="data-input" type="text" placeholder="Data formato AAAA-mm-dd: "
       value="{{ isset($comprovante->dataComprovante) ? 
             old('data-comprovante', $comprovante->dataComprovante) : 
                   old('data-comprovante') }}">
       <br>
-      <input name="referencia" type="text" placeholder="Ano/mês da referência: "
+      <input name="referencia" id="ano-mes-input" type="text" placeholder="Ano/mês da referência: "
       value="{{ isset($comprovante->referencia) ?
             old('referencia', $comprovante->referencia) : old('referencia') }}">
       <button type="submit">OK</button>
