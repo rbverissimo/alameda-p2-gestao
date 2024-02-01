@@ -31,4 +31,23 @@ function showMensagemContainer() {
       }, 3500);
 }
 
+export function apenasNumeros(event) {
+            
+      // Allow: backspace, delete, tab, escape, enter
+      if (event.key === "Backspace" || event.key === "Delete" || event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
+            return;
+      }
+
+      // Allow: Ctrl+A, Command+A
+      if ((event.ctrlKey === true || event.metaKey === true) && ((event.key === "a" || event.key === "A") || (event.key === "c" || event.key === "C") || (event.key === "v" || event.key === "V"))) {
+            return;
+      }
+
+      // Ensure only numbers are allowed
+      if (!/^[0-9]$/.test(event.key)) {
+            event.preventDefault();
+      }
+}
+
 window.showMensagem = showMensagem;
+window.apenasNumeros = apenasNumeros;

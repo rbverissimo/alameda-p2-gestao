@@ -19,7 +19,7 @@ input {
 input::placeholder {
       color: #95a5a6;
 }
-  
+
 input:focus {
       border-color: #2ecc71;
 }
@@ -27,7 +27,12 @@ input:focus {
 .input-container {
       width: 300px;
       margin: 50px auto;
-  }
+}
+
+.input-small {
+      display: flex;
+      max-width: 15%;
+}
 
 tr {
       border-bottom: 1px solid #222222;
@@ -94,4 +99,16 @@ tr {
 
 #falha-mensagem {
       color: #FF5722;
+}
+
+
+.topo-table-wrapper {
+      display: flex;
+      max-height: 5vh;
+      background-color: #d5d6d6;;
+      border: 1px solid #013a03;
+}
+
+.input-topo-table {
+      margin-left: 25px;
 }
