@@ -6,7 +6,6 @@ use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
 use App\Services\ComprovantesService;
-use App\Services\InquilinosService;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
