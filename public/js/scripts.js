@@ -1,5 +1,3 @@
-
-
 export function showMensagem(mensagem, tipo){
 
       let mensagemElement = undefined; 
@@ -52,18 +50,18 @@ export function apenasNumeros(event) {
 export function dataMascara(event) {
       let inputValue = event.target.value;
 
-      // Remove non-numeric characters
+      // Remove caracteres não numéricos
       inputValue = inputValue.replace(/\D/g, '');
 
-      // Ensure the input is not longer than 8 characters
+      // Garante que o input não em mais do que 8 dígitos
       inputValue = inputValue.slice(0, 8);
 
-      // Format the input as YYYY-MM-DD
+      // Formata a máscara de AAAA-mm-dd
       if (inputValue.length >= 6) {
             inputValue = inputValue.slice(0, 4) + '-' + inputValue.slice(4, 6) + '-' + inputValue.slice(6);
       }
 
-      // Update the input value
+      // Coloca no input o tratamento feito pela máscara
       event.target.value = inputValue;
 }
 
@@ -122,7 +120,17 @@ export function mascaraCurrencyBr(event) {
       event.target.value = inputValue;
 }
 
+export function isNotNullOrUndefined($value){
+      return $value !== null || $value !== undefined;
+}
+
+export function isBlank($value){
+      return $value === '';
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
 window.mascaraCurrencyBr = mascaraCurrencyBr;
+window.isNotNullOrUndefined = isNotNullOrUndefined;
+window.isBlank = isBlank;

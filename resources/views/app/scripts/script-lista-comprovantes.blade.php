@@ -15,6 +15,8 @@
 
       const inquilino = @json($inquilino);
       const id = inquilino['id'];
+
+      var timerPesquisa;
       
       /*
       * SCRIPTS LIGADOS AO CARREGAMENTO DA LISTA DE COMPROVANTES
@@ -24,6 +26,7 @@
             showListaComprovantes();
             if(!isListaJaCarregada){
                   const request = new XMLHttpRequest();
+                  console.log(id);
                   request.open("GET", "/comprovantes-transferencia/"+ id);
                   request.send();
                   request.responseType = "json";
@@ -41,15 +44,16 @@
 
       function processarRequestTableRows(request){
             const data = request.response;
+            console.log(data)
             const jsonArray = data['data'];
             next_page_url = data['next_page_url'];
             last_page_url = data['links'][0]['url'];
             criarRowsJson(jsonArray);
 
-            setTimeout(addClickEditarExcluir, 500);
-            setTimeout(AddClickHandlerNextPage(data), 500);
+            setTimeout(addClickEditarExcluir, 300);
+            setTimeout(AddClickHandlerNextPage(data), 300);
             if(data.current_page > 1){
-                  setTimeout(AddClickHandlerPreviousPage(data), 500);
+                  setTimeout(AddClickHandlerPreviousPage(data), 300);
             }
       }
 
@@ -210,9 +214,33 @@
       }
 
       function getSearchById() {
-            const value = document.getElementById('search-keyup-id').value;
+            clearTimeout(timerPesquisa);
+            
+            const idComprovante =  document.getElementById('search-keyup-id').value;
 
-            if(/^\d+$/.test(value)){
+
+            if(/^\d+$/.test(idComprovante) || idComprovante === '' ){
+                  timerPesquisa = setTimeout(function(){
+                        const request = new XMLHttpRequest();
+                        if(!isBlank(idComprovante)){
+                              request.open("GET", "/comprovantes-transferencia/id/"+idComprovante);
+                              request.send();
+                              request.responseType = "json";
+                              request.onload = () => {
+                                    if(request.readyState == 4 && request.status == 200){
+                                          limparTabela();
+                                          processarRequestTableRows(request);
+                                          isListaJaCarregada = true;
+                                          
+                                    } else {
+                                          console.log(`Erro: ${request.status}`);
+                                    }
+                              }
+                        } else {
+                              isListaJaCarregada = false;
+                              carregarComprovantes();
+                        } 
+                  }, 300);
             } else {
                   document.getElementById('search-keyup-id').value = value.replace(/\D/g, '');
             }

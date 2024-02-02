@@ -58,6 +58,13 @@ class ComprovantesTransferenciaController extends Controller
         return $comprovantes;
     }
 
+    public function comprovantesPor($paramName, $paramValue){
+        $comprovantes = Comprovante::where($paramName, $paramValue)
+            ->orderBy('id', 'desc')
+            ->paginate(15);
+        return $comprovantes;
+    }
+
     public function editarComprovante(Request $request, $id){
         try{
             $titulo = $this->titulo;

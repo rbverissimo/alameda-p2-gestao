@@ -48,6 +48,7 @@ Route::controller(ComprovantesTransferenciaController::class)->group(function(){
     Route::get('comprovantes-transferencia/add/{id}', 'index')->name('comprovante-adicionar');
     Route::get('/comprovantes-transferencia/{id}', 'comprovantesPorInquilino')
     ->name('comprovantes-inquilino');
+    Route::get('/comprovantes-transferencia/{param}/{id}', 'comprovantesPor')->name('filtrar-comprovante-por');
     Route::get('/comprovantes-transferencia/edit/{id}', 'editarComprovante')->name('comprovante-editar');
     Route::put('/comprovantes-transferencia/edit/{id}', 'editarComprovante')
     ->name('comprovante-editar');
