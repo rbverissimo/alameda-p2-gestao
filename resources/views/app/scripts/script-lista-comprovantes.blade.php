@@ -17,7 +17,7 @@
       const id = inquilino['id'];
 
       var timerPesquisa;
-      
+
       /*
       * SCRIPTS LIGADOS AO CARREGAMENTO DA LISTA DE COMPROVANTES
       */
@@ -26,7 +26,6 @@
             showListaComprovantes();
             if(!isListaJaCarregada){
                   const request = new XMLHttpRequest();
-                  console.log(id);
                   request.open("GET", "/comprovantes-transferencia/"+ id);
                   request.send();
                   request.responseType = "json";
@@ -213,37 +212,44 @@
 
       }
 
-      function getSearchById() {
-            clearTimeout(timerPesquisa);
-            
+      function getSearchById(){
             const idComprovante =  document.getElementById('search-keyup-id').value;
-
-
-            if(/^\d+$/.test(idComprovante) || idComprovante === '' ){
-                  timerPesquisa = setTimeout(function(){
-                        const request = new XMLHttpRequest();
-                        if(!isBlank(idComprovante)){
-                              request.open("GET", "/comprovantes-transferencia/id/"+idComprovante);
-                              request.send();
-                              request.responseType = "json";
-                              request.onload = () => {
-                                    if(request.readyState == 4 && request.status == 200){
-                                          limparTabela();
-                                          processarRequestTableRows(request);
-                                          isListaJaCarregada = true;
-                                          
-                                    } else {
-                                          console.log(`Erro: ${request.status}`);
-                                    }
-                              }
-                        } else {
-                              isListaJaCarregada = false;
-                              carregarComprovantes();
-                        } 
-                  }, 300);
+            if(/^\d+$/.test(idComprovante) || idComprovante === ''){
+                  getSearchBy('id', idComprovante);
             } else {
                   document.getElementById('search-keyup-id').value = value.replace(/\D/g, '');
             }
+      }
+
+      function getSearchByData(){
+            const data =  document.getElementById('search-keyup-data').value;
+            console.log(data);
+      }
+
+      function getSearchBy(paramName, paramValue) {
+            clearTimeout(timerPesquisa);
+            let route = `/comprovantes-transferencia/search/${paramName}/${paramValue}`;
+            timerPesquisa = setTimeout(function(){
+                  const request = new XMLHttpRequest();
+                  if(!isBlank(paramValue)){
+                        request.open("GET", route);
+                        request.send();
+                        request.responseType = "json";
+                        request.onload = () => {
+                              if(request.readyState == 4 && request.status == 200){
+                                    limparTabela();
+                                    processarRequestTableRows(request);
+                                    isListaJaCarregada = true;
+                                          
+                              } else {
+                                    console.log(`Erro: ${request.status}`);
+                              }
+                              }
+                  } else {
+                        isListaJaCarregada = false;
+                        carregarComprovantes();
+                        } 
+            }, 300);
       }
 
 </script>

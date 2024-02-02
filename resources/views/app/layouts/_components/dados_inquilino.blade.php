@@ -1,6 +1,4 @@
 <div>
-      <h3>Dados do Inquilino: </h3>
-      <br>
       <div><p>Nome: {{$inquilino->nome}}</p></div>
       <div><p>Valor do Aluguel: {{$inquilino->valorAluguel}}</p></div>
       <div><p>Contato: {{$inquilino->telefone_celular}}</p></div>

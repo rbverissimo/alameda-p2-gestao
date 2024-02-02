@@ -131,6 +131,8 @@ export function isBlank($value){
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
+window.dataMascara = dataMascara;
 window.mascaraCurrencyBr = mascaraCurrencyBr;
 window.isNotNullOrUndefined = isNotNullOrUndefined;
 window.isBlank = isBlank;
+window.handleBackspaceHyphen = handleBackspaceHyphen;
