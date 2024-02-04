@@ -12,9 +12,11 @@
 
       var next_page_url = '';
       var last_page_url = '';
+      var id;
 
-      const inquilino = @json($inquilino);
-      const id = inquilino['id'];
+      document.addEventListener('DOMContentLoaded', function(){
+            id = document.getElementById('display-id-inquilino-hidden').innerHTML;
+      });
 
       var timerPesquisa;
 

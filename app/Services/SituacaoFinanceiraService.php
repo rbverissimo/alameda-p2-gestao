@@ -25,19 +25,21 @@ class SituacaoFinanceiraService {
 
             $aluguel = $this->getAluguelInquilino($inquilino_id);
 
-            $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes);
+            $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes) != null ? 
+                  $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes)->valorinquilino  : 0.0;
 
-            $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes);
+            $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes) != null ?
+                  $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes)->valorinquilino : 0.0;
 
-            $total = $this->somarContas($aluguel->valorAluguel, $conta_luz->valorinquilino, $conta_agua->valorinquilino);
+            $total = $this->somarContas($aluguel->valorAluguel, $conta_luz, $conta_agua);
 
             $saldo = $this->getSaldo($total, $inquilino_id, $referencia);
 
             $situacao_financeira = new SituacaoFinanceiraVO(
             ProjectUtils::adicionarMascaraReferencia($referencia), 
             $aluguel->valorAluguel, 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz->valorinquilino), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua->valorinquilino), 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz), 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($total), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($saldo));
 
