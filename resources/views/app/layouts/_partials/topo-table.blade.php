@@ -1,4 +1,4 @@
-<div class="topo-table-wrapper">
+<div id="topo-table-state" class="topo-table-wrapper" style="display: none">
       <img style="margin-left: 20px;" src="{{asset('icons/search-icon.svg')}}">
       <input  placeholder="ID:  " class="input-small input-topo-table" id="search-keyup-id" onkeydown="apenasNumeros(event)" onkeyup="getSearchById()">
       <input  placeholder="Data:  " class="input-small input-topo-table" id="search-keyup-data" oninput="dataMascara(event)" onkeydown="apenasNumeros(event)" onkeyup="getSearchByData()">

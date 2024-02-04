@@ -63,7 +63,10 @@
             const table = document.getElementById('lista-comprovantes');
             
             jsonArray.forEach(function(object){
+                  
                   let tr = document.createElement('tr');
+                  tr.classList.add('table-row');
+                  
                   tr.innerHTML = '<td>' + object.id + '</td>' +
                   '<td>' + object.valor + '</td>' +
                   '<td>' + object.dataComprovante + '</td>' +
@@ -116,9 +119,11 @@
             }
 
       function showListaComprovantes(){
-            document.getElementById('lista-comprovantes').style.visibility = "visible";
-            document.getElementById('script-page').style.visibility = "visible"
-            document.getElementById('situacao-financeira-wrapper').style.visibility = "hidden";
+            document.getElementById('table-wrapper').style.display = "block";
+            document.getElementById('lista-comprovantes').style.display = "block";
+            document.getElementById('topo-table-state').style.display = "flex";
+            document.getElementById('script-page').style.visibility = "visible";
+            document.getElementById('situacao-financeira-wrapper').style.display = "none";
       }
 
       function requestDeletarRow(id) {
@@ -191,8 +196,8 @@
       }
 
       function showSituacaoFinanceira(){
-            document.getElementById('situacao-financeira-wrapper').style.visibility = "visible";
-            document.getElementById('lista-comprovantes').style.visibility = "hidden";
+            document.getElementById('situacao-financeira-wrapper').style.display = "block"
+            document.getElementById('table-wrapper').style.display = "none";
       }
 
       
