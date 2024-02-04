@@ -22,7 +22,6 @@ table {
       margin: 20px 0;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
-      border-radius: 8px;
       overflow: hidden;
 }
 
@@ -35,6 +34,14 @@ th, td {
 th {
       background-color: #3498db;
       color: #fff;
+}
+
+td {
+      width: 20vw;
+}
+
+tr > td:last-child, tr > td:nth-last-child(2){
+      width: 10vw;
 }
 
 tr:hover {
@@ -85,6 +92,11 @@ input:focus {
 
 .pagination {
       display: inline-block;
+      background-color: #fff;
+      margin-left: 90vw;
+      align-self: center;
+      margin-top: -24px;
+      overflow-y: auto;
 }
 
 .pagination a {
@@ -128,8 +140,9 @@ input:focus {
 .topo-table-wrapper {
       display: flex;
       max-height: 5vh;
-      background-color: #d5d6d6;;
-      border: 1px solid #013a03;
+      background-color: #fff;;
+      padding: 15px;
+      margin-bottom: -35px;
 }
 
 
