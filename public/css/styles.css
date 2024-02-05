@@ -40,6 +40,10 @@ td {
       width: 20vw;
 }
 
+tr > td:first-child {
+      max-width: 5vw !important;
+}
+
 tr > td:last-child, tr > td:nth-last-child(2){
       width: 10vw;
 }
@@ -55,6 +59,18 @@ input::placeholder {
 
 input:focus {
       border-color: #2ecc71;
+}
+
+.fixed-topo-nav {
+      background-color: #fff;
+      padding: 15px;
+      color: white;
+      text-align: right;
+      position: fixed;
+      width: 100vw;
+      overflow: auto;
+      top: 0;
+      transition: top 0.3s;
 }
 
 .input-container {
