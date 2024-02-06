@@ -8,7 +8,10 @@
       <body>
             @include('app.layouts._partials.topo-nav')
             @include('app.layouts._partials.mensagens')
-            @yield('conteudo')
+            <div class="conteudo-wrapper">
+                  @yield('conteudo')
+            </div>
+            @include('app.layouts._partials.footer')
             @yield('scripts')
       </body>
       <script type="module" src="{{ asset('js/scripts.js') }}"></script>
