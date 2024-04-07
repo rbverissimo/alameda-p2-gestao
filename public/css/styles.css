@@ -1,3 +1,9 @@
+:root {
+      --basic-card: #fff;
+      --basic-card-highlight: #f4f1de;
+
+}
+
 * {
       box-sizing: border-box;
 }
@@ -141,23 +147,7 @@ input:focus {
       width: 100%;
 }
 
-.card {
-      cursor: pointer;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      background-color: #fff;
-      transition: transform 0.3s ease;
-}
 
-.card:hover {
-      transform: translateY(-5px);
-}
-
-.card-conteudo {
-      padding: 20px;
-}
 
 .input-container {
       width: 300px;

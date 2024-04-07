@@ -1,25 +1,34 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
-      <div>
-            <li><a href="{{ route('calculo-contas')}}">Fazer o cálculo de contas</a></li>
-            <li><a href="{{ route('comprovantes-transferencia')}}">Declarar comprovantes de transferência</a></li>
-            <li><a href="{{ route('listar-inquilinos')}}">Ver inquilinos</a></li>
-      </div>
-
       <div class="card">
             <div class="card-conteudo">
-                  Cálculo de Contas
+                  <a href="{{ route('calculo-contas')}}">Cálculo de contas</a>
             </div>
       </div>
       <div class="card">
             <div class="card-conteudo">
-                  Painel de Inquilinos
+                  <a href="{{ route('listar-inquilinos')}}">Painel de inquilinos</a>
             </div>
       </div>
       <div class="card">
             <div class="card-conteudo">
-                  Comprovantes de Transferência
+                  <a href="{{ route('comprovantes-transferencia')}}">Comprovantes de transferência</a>
+            </div>
+      </div>
+      <div class="card">
+            <div class="card-conteudo">
+                  <a>Contratos</a>
+            </div>
+      </div>
+      <div class="card">
+            <div class="card-conteudo">
+                  <a>Serviços tomados</a>
+            </div>
+      </div>
+      <div class="card">
+            <div class="card-conteudo">
+                  <a>Compras</a>
             </div>
       </div>
 @endsection
