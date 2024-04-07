@@ -2,8 +2,6 @@
       box-sizing: border-box;
 }
 
-
-
 [class*="col-"] {
       float: left;
       padding: 15px;
@@ -21,6 +19,11 @@ body {
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
+}
+
+.center-itens {
+      display: flex;
+      justify-content: center;
 }
 
 input {
@@ -117,7 +120,15 @@ input:focus {
 }
 
 .conteudo-wrapper {
-      margin-top: 8vh;
+      margin-top: 12vh;
+      max-height: 70vh;
+      width: 75%;
+      margin-left: 12.5%;
+}
+
+.scrollable {
+      max-height: 65vh;
+      overflow-y: scroll;
 }
 
 .footer-wrapper {
@@ -127,7 +138,7 @@ input:focus {
       text-align: center;
       position: fixed;
       bottom: 0;
-      width: 100vw;
+      width: 100%;
 }
 
 .card {

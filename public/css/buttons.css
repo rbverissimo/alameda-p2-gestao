@@ -1,0 +1,20 @@
+.button {
+      display: inline-block;
+      padding: 10px 20px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 1rem;
+      transition: box-shadow 0.3s ease;
+}
+
+.confirmacao-button {
+      background-color: #341671;
+      color: #f4f4f4;
+}
+
+.button:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -5,6 +5,7 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="{{asset('css/styles.css')}}" rel="stylesheet">
+            <link href="{{asset('css/buttons.css')}}" rel="stylesheet">
       </head>
       <body>
             @include('app.layouts._partials.topo-nav')
