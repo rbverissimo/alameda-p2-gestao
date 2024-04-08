@@ -1,4 +1,4 @@
-<div id="situacao-financeira-wrapper">
+<div class="col-12 dashboard-card" id="situacao-financeira-wrapper">
       @isset($situacao_financeira)
             <div>
                   <p> Referência: {{$situacao_financeira->referencia}}</p>

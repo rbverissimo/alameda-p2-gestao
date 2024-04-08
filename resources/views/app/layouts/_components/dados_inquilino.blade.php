@@ -1,4 +1,4 @@
-<div>
+<div class="dashboard-card col-12" >
       <div id="display-id-inquilino-hidden" style="display: none">{{$inquilino->id}}</div>
       <div><p>Nome: {{$inquilino->nome}}</p></div>
       <div><p>Valor do Aluguel: {{$inquilino->valorAluguel}}</p></div>

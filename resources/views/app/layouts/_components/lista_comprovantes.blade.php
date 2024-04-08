@@ -7,17 +7,19 @@
                   @include('app.layouts._partials.paginator')
             </div>
       </div>
-      <div class="scrollable-table">     
-            <table id='lista-comprovantes'>
-                  <tr>
-                        <th>ID</th>
-                        <th>Valor</th>
-                        <th>Data</th>
-                        <th>Referência</th>
-                        <th>Tipo</th>
-                        <th></th>
-                        <th></th>
-                  </tr>
-            </table>
+      <div class="row">
+            <div class="col-12 scrollable-table">     
+                  <table id='lista-comprovantes'>
+                        <tr>
+                              <th>ID</th>
+                              <th>Valor</th>
+                              <th>Data</th>
+                              <th>Referência</th>
+                              <th>Tipo</th>
+                              <th></th>
+                              <th></th>
+                        </tr>
+                  </table>
+            </div>
       </div>
 </div>

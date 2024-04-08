@@ -1,8 +1,15 @@
 :root {
+      --text-white: #f4f4f4;
+      --text-black: #333;
       --basic-card: #fff;
       --basic-card-highlight: #f4f1de;
       --table-head: #004D74;
+      --primary-button: #341671;
+      --secondary-button: #AE2D68;
+      --alternative-secondary-button: #F54952;
 
+      --primary-card-border: #355070;
+      
 }
 
 * {

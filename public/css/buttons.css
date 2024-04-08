@@ -11,8 +11,13 @@
 }
 
 .confirmacao-button {
-      background-color: #341671;
-      color: #f4f4f4;
+      background-color: var(--primary-button);
+      color: var(--text-white);
+}
+
+.common-button {
+      background-color: var(--secondary-button);
+      color: var(--text-white);
 }
 
 .button:hover {
