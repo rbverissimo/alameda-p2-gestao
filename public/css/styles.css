@@ -8,6 +8,9 @@
       --secondary-button: #AE2D68;
       --alternative-secondary-button: #F54952;
 
+      --form-border: #660f56;
+      --form-border-focus: #F5C63C;
+
       --primary-card-border: #355070;
       
 }
@@ -44,7 +47,7 @@ input {
       width: 100%;
       padding: 10px;
       box-sizing: border-box;
-      border: 2px solid #660f56;
+      border: 2px solid var(--form-border);
       border-radius: 5px;
       font-size: 16px;
       outline: none;
@@ -252,6 +255,28 @@ input:focus {
 
 .input-topo-table {
       margin-left: 25px;
+}
+
+textarea {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      border: 2px solid var(--form-border);
+      border-radius: 5px;
+      resize: none;
+}
+
+select {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid var(--form-border);
+      border-radius: 5px;
+}
+
+select:focus {
+      border-color: var(--form-border-focus);
 }
 
 @media only screen and (min-width: 768px){
