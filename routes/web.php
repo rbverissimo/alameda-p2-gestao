@@ -22,7 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/painel-principal', [PainelPrincipalController::class, 'index'])->name('painel-principal');
+Route::get('/painel-principal', [PainelPrincipalController::class, 'index'])
+    ->name('painel-principal');
 
 Route::get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])->name('listar-inquilinos');
 
