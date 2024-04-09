@@ -146,8 +146,13 @@ input:focus {
 }
 
 .scrollable-table {
-      max-height: 47.5vh;
+      max-height: 30vh;
       overflow-y: scroll;
+}
+
+.scrollable {
+      max-height: 30vh;
+      overflow-y: scroll !important;
 }
 
 .footer-wrapper {
