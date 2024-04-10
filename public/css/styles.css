@@ -284,6 +284,17 @@ select:focus {
       border-color: var(--form-border-focus);
 }
 
+.login-container {
+      max-width: 960px;
+      align-self: center;
+      height: auto;
+      margin-top: calc((100vh - 20vh) / 9);
+      padding: 2%;
+      background-color: var(--basic-card);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
+}
+
 @media only screen and (min-width: 768px){
       .col-1 { width: 8.33%;}
       .col-2 { width: 16.66%;}

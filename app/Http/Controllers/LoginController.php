@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
+
+    public function index(){
+
+        $titulo = 'Login do usuário';
+
+        return view('app.login', compact('titulo'));
+    }
+
     public function authenticate(Request $request){
 
         $credentials = $request->validate(
