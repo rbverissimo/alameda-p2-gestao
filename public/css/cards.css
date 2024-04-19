@@ -39,9 +39,17 @@
 .card-erro {
       padding: 2.5%;
       background-color: var(--erro-color);
+      text-align: center;
 }
 
 .card-erro:hover {
       background-color: var(--erro-color-highlight);
       transform: none !important;
+}
+
+.basic-card-wrapper {
+      display: inline-block;
+      text-align: start;
+      width: 100%;
+      padding: 2% 5%;
 }

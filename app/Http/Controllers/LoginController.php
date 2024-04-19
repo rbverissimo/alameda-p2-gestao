@@ -31,23 +31,30 @@ class LoginController extends Controller
 
 
         $username = $request->get('username');
-        $password = $request->get('password');
+        $password = $request->get('senha');
 
-        $usuario = User::where('name', $username)
-            ->where('passowrd', $password)
+        $user = new User();
+
+        $usuario = $user::where('name', $username)
+            ->where('password', $password)
             ->get()
             ->first();
-
         
         if(isset($usuario->name)) {
                 session_start();
                 $_SESSION['nome'] = $usuario->name;
                 $_SESSION['email'] = $usuario->email;
+
+                print_r($_SESSION);
     
                 return redirect()->route('painel-principal');
         } else { 
                 return redirect()->route('login', ['erro' => 1]);
-        }
-        
+        } 
+    }
+
+    public function sair(){
+        session_destroy();
+        return redirect()->route('login');
     }
 }

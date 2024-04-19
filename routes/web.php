@@ -6,6 +6,7 @@ use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
+use App\Http\Controllers\RaizController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
+Route::controller(RaizController::class)->group(function () {
+    Route::get('/', 'index')->name('root');
 });
 
 Route::controller(LoginController::class)->group(function(){
@@ -32,21 +33,23 @@ Route::controller(LoginController::class)->group(function(){
 Route::middleware('autenticacao')->get('/painel-principal', [PainelPrincipalController::class, 'index'])
     ->name('painel-principal');
 
-Route::get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])->name('listar-inquilinos');
+Route::middleware('autenticacao')
+    ->get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])
+    ->name('listar-inquilinos');
 
 
-Route::controller(CalculoContasController::class)->group(function(){
+Route::middleware('autenticacao')->controller(CalculoContasController::class)->group(function(){
     Route::get('/calculo-contas', 'calculoContas')
     ->name('calculo-contas');
     Route::post('/calculo-contas', 'calculoContas')
     ->name('calculo-contas');
 });
 
-Route::get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquilino'])->name('painel-inquilino');
+Route::middleware('autenticacao')->get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquilino'])->name('painel-inquilino');
 
 
 
-Route::controller(ComprovantesTransferenciaController::class)->group(function(){
+Route::middleware('autenticacao')->controller(ComprovantesTransferenciaController::class)->group(function(){
     Route::get('/comprovantes-transferencia',  'index')
     ->name('comprovantes-transferencia');
     Route::post('/comprovantes-transferencia', 'index')
@@ -62,7 +65,7 @@ Route::controller(ComprovantesTransferenciaController::class)->group(function(){
 });
 
 Route::fallback(function () {
-    return redirect()->route('painel-principal');
+    return redirect()->route('root');
 });
 
 

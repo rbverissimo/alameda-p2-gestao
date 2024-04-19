@@ -20,6 +20,26 @@
       color: var(--text-white);
 }
 
+.logout-button {
+      display: inline-block;
+      width: 100%;
+      height: auto;
+      padding: 5%;
+      border: none;
+      border-radius: 5%;
+      background-color: var(--alternative-primary-button);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3 ease;
+}
+
+.logout-button:hover {
+      transform: translateY(-3px);
+}
+
+.logout-button a {
+      color: var(--text-white);
+}
+
 .button:hover {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

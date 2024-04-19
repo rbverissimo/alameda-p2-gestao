@@ -2,7 +2,18 @@
 
 @section('conteudo')
       <div class="row">
-            <div class="col-3">Olá, usuário</div>
+            <div class="col-3">
+                  <span class="basic-card-wrapper">
+                        Olá, {{ $nome_usuario }}
+                  </span>
+            </div>
+            <div class="col-7">
+            </div>
+            <div class="col-2">
+                  <button class="logout-button">
+                        <a href="{{ route('logout')}}">Sair</a>
+                  </button>
+            </div>
       </div>
       <div class="card">
             <div class="card-conteudo">
