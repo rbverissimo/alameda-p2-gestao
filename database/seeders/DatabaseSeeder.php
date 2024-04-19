@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             TipoContaSeeder::class,
             TipoPrestadorSeeder::class,
             SalaSeeder::class,
-            InquilinoSeeder::class
+            InquilinoSeeder::class,
+            UsuarioMestreSeeder::class
         ]);
 
         $this->call([InquilinoFatorDivisorSeeder::class]);
