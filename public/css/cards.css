@@ -34,3 +34,15 @@
       border-bottom-color: var(--primary-card-border);
       box-shadow: 0 -4px 6px -4px rgba(0, 0, 0, 0.5), 4px 0 6px -4px rgba(0, 0, 0, 0.5);
 }
+
+
+.card-erro {
+      border-radius: 3%;
+      padding: 3%;
+      background-color: var(--erro-color);
+}
+
+.card-erro:hover {
+      background-color: var(--erro-color-highlight);
+      transform: none !important;
+}

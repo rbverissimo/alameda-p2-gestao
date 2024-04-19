@@ -9,29 +9,26 @@ class LoginController extends Controller
 {
 
 
-    public function index(){
+    public function index(Request $request){
 
         $titulo = 'Login do usuário';
+        $codigo_erro = $request->get('erro');
+        $erro = '';
 
-        return view('app.login', compact('titulo'));
-    }
-
-    public function authenticate(Request $request){
-
-        $credentials = $request->validate(
-            [
-                'name' => ['required', 'name'],
-                'password' => ['password']
-            ]
-        );
-
-        if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-            return redirect()->intended('painel-principal');
+        if($codigo_erro == 1){
+            $erro = 'Login não realizado. Confira usuário e senha. ';
         }
 
-        return back()->withErrors([
-            'name' => 'Usuário/Senha não encontrados.'
-        ]);
+        if($codigo_erro == 2){
+            $erro = 'Não autorizado. Insira usuário e senha válidos. ';
+        }
+
+        return view('app.login', compact('titulo', 'erro'));
+    }
+
+    public function login(Request $request){
+
+        
+
     }
 }

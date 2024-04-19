@@ -11,9 +11,16 @@
                 </div>
             </div>
             <div class="row center-itens">
-                <div class="col-6">
-                    <span>Faça login para continuar</span>
-                </div>
+
+                @if ($erro != '')
+                    <div class="col-8">
+                        <div class="card card-erro">{{ $erro }}</div>
+                    </div>
+                @else    
+                    <div class="col-6">
+                        <span class="underline-highlighter">Faça login para continuar</span>
+                    </div>
+                @endif
             </div>
             <div class="row center-itens">
                 <div class="col-6">

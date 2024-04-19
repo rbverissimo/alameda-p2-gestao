@@ -20,14 +20,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::controller(LoginController::class)->group(function(){
-    Route::get('/login', 'index')->name('login');
+    Route::get('/login/{erro?}', 'index')->name('login');
+    Route::post('/login', 'login')->name('login');
+    Route::middleware('autenticacao')->get('/logout', 'sair')->name('logout');
 });
 
-Route::get('/painel-principal', [PainelPrincipalController::class, 'index'])
+Route::middleware('autenticacao')->get('/painel-principal', [PainelPrincipalController::class, 'index'])
     ->name('painel-principal');
 
 Route::get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])->name('listar-inquilinos');
