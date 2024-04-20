@@ -10,6 +10,10 @@
       transition: box-shadow 0.3s ease;
 }
 
+.button:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .confirmacao-button {
       background-color: var(--primary-button);
       color: var(--text-white);
@@ -18,6 +22,25 @@
 .common-button {
       background-color: var(--secondary-button);
       color: var(--text-white);
+}
+
+.light-button {
+      background-color: var(--alternative-primary-button);
+      color: var(--text-white);
+}
+
+.inline-button {
+      padding: 3%;
+      width: 100%;
+      border: none;
+      border-radius: 5%;
+      cursor: pointer;
+      transition: transform box-shadow 0.3s ease;
+}
+
+.inline-button:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px);
 }
 
 .logout-button {
@@ -38,8 +61,4 @@
 
 .logout-button a {
       color: var(--text-white);
-}
-
-.button:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

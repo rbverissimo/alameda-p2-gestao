@@ -1,8 +1,17 @@
 <div class="dashboard-card col-12" >
       <div id="display-id-inquilino-hidden" style="display: none">{{$inquilino->id}}</div>
-      <div><p>Nome: {{$inquilino->nome}}</p></div>
-      <div><p>Valor do Aluguel: {{$inquilino->valorAluguel}}</p></div>
-      <div><p>Contato: {{$inquilino->telefone_celular}}</p></div>
-      <div><p>Casa: {{$inquilino->salacodigo}} - {{$inquilino->nomesala}}</p></div>
-      <div><p>Qtde de moradores no imóvel: {{$inquilino->qtdePessoasFamilia}}</p></div>
+      <div class="row">
+            <div class="col-4">
+                  <span>Nome: {{$inquilino->nome}}</span>
+            </div>
+            <div class="col-3">
+                  <span>Valor Aluguel: {{$inquilino->valorAluguel}}</span>
+            </div>
+            <div class="col-3">
+                  <span>Contato: {{$inquilino->telefone_celular}}</span>
+            </div>       
+            <div class="col-2">
+                  <button class="inline-button light-button">Mais informações</button>
+            </div>
+      </div>
 </div>
