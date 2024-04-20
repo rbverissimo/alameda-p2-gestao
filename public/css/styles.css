@@ -159,7 +159,7 @@ input:focus {
       justify-content: center;
       background-color: #333;
       color: #fff;
-      padding: 20px 0;
+      padding: 0 0;
       text-align: center;
       position: fixed;
       bottom: 0;
@@ -284,10 +284,10 @@ select:focus {
 }
 
 .login-container {
-      max-width: 960px;
+      max-width: 720px;
       align-self: center;
       height: auto;
-      margin-top: calc((100vh - 20vh) / 9);
+      margin-top: calc((100vh - 20vh) / 15);
       padding: 2%;
       background-color: var(--basic-card);
       border-radius: 8px;
