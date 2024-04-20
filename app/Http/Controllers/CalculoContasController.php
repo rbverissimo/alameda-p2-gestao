@@ -6,6 +6,7 @@ use App\Models\ContaImovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
 class CalculoContasController extends Controller
@@ -21,11 +22,11 @@ class CalculoContasController extends Controller
             $tipo_conta = $request->input('tipo_conta');
 
             $conta_imovel = new ContaImovel();
-            $conta_imovel->valor = $request->input('valor-conta');
+            $conta_imovel->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-conta'));
             $conta_imovel->ano = $request->input('ano');
             $conta_imovel->mes = $request->input('mes');
             $conta_imovel->dataVencimento = $request->input('data-vencimento');
-            $conta_imovel->referenciaConta = $request->input('referencia');
+            $conta_imovel->referenciaConta = ProjectUtils::tirarMascara($request->input('referencia'));
             $conta_imovel->nrDocumento = $request->input('numero-documento');
             $conta_imovel->tipocodigo = $tipo_conta;
 

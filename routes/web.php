@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CalculoContasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
+use App\Http\Controllers\ImoveisController;
 use App\Http\Controllers\ImovelController;
 use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
@@ -65,8 +66,9 @@ Route::middleware('autenticacao')->controller(ComprovantesTransferenciaControlle
     Route::get('/comprovantes-transferencia/delete/{id}', 'deletarComprovante')->name('comprovante-deletar');
 });
 
-Route::middleware('autenticacao')->controller(ImovelController::class)->group(function(){
-    Route::get('/imovel/{id}', 'detalhar')->name('imovel');
+Route::middleware('autenticacao')->controller(ImoveisController::class)->group(function(){
+    Route::get('/imoveis', 'index')->name('imoveis');
+    Route::get('/imoveis/{id}', 'detalhar')->name('imoveis-detalhar');
 });
 
 Route::fallback(function () {

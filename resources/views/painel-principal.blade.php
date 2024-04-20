@@ -47,7 +47,7 @@
       </div>
       <div class="card">
             <div class="card-conteudo">
-                  <a href="{{ route('imovel', ['id' => '1']) }}">Imóvel</a>
+                  <a href="{{ route('imoveis') }}">Imóvel</a>
             </div>
       </div>
 

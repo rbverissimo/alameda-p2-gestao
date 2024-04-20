@@ -48,9 +48,26 @@ class ProjectUtils {
             });
       }
 
+      /**
+       * Dado um array de contas retorna um array de contas com o código indicado na chamada * do método
+       */
       public static function getContasBySala($contas, $salacodigo){
             return array_filter($contas, function($conta) use ($salacodigo){
                   return $conta->salacodigo === $salacodigo;
             });
+      }
+
+      public static function tirarMascara($stringComMascara){
+            $caracteres = array('/', '-', '_', '.');
+            $stringSemMascara = str_replace($caracteres, '', $stringComMascara);
+            return $stringSemMascara;
+      }
+
+      public static function trocarVirgulaPorPonto($valor){
+            return str_replace(',', '.', $valor);
+      }
+
+      public static function trocarPontoPorVirgula($valor){
+            return str_replace('.', ',', $valor);
       }
 }
