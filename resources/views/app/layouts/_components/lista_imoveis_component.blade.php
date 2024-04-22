@@ -15,7 +15,7 @@
                               <a class="table-link">{{$i->nomefantasia}}</a>
                         </td>
                         <td>
-                              <a class="table-link">{{$i->endereço}}</a>
+                              <a class="table-link">{{ $i->logradouro . ' ' . $i->bairro . ' ' . $i->numero . ' ' . $i->cep . ' ' . $i->cidade }}</a>
                         </td>
                         <td>
                               <div class="col-3">

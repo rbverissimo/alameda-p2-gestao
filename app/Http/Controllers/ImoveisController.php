@@ -12,7 +12,10 @@ class ImoveisController extends Controller
 
         $titulo = 'Lista de Imóveis';
 
-        $imoveis = Imovel::all();
+        $imoveis = Imovel::select('imoveis.id', 'imoveis.nomefantasia', 
+            'enderecos.logradouro', 'enderecos.bairro', 'enderecos.numero', 'enderecos.cep', 'enderecos.cidade')
+            ->join('enderecos', 'enderecos.id', 'imoveis.endereco')
+            ->get();
 
         return view('app.imoveis', compact('titulo', 'imoveis'));
     }
