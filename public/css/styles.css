@@ -135,11 +135,6 @@ input:focus {
       margin: 50px auto;
 }
 
-.input-small {
-      display: flex;
-      max-width: 15%;
-}
-
 .crud-icon {
       cursor: pointer;
 }
@@ -154,15 +149,14 @@ input:focus {
 
 .pagination {
       display: inline-block;
-      background-color: #fff;
-      margin-left: 0;
+      background-color: var(--basic-card);
       align-self: center;
-      margin-top: 0;
       overflow-y: auto;
 }
 
 .pagination a {
       color: black;
+      cursor: pointer;
       float: left;
       padding: 8px 16px;
       text-decoration: none;
@@ -201,15 +195,10 @@ input:focus {
 
 .topo-table-wrapper {
       display: flex;
-      max-height: 5vh;
-      background-color: #fff;;
-      padding: 15px;
-      margin-bottom: -35px;
-}
-
-
-.input-topo-table {
-      margin-left: 25px;
+      width: 100%;
+      height: auto;
+      background-color: var(--basic-card);
+      padding: 1%;
 }
 
 textarea {
