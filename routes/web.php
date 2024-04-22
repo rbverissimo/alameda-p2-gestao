@@ -68,7 +68,7 @@ Route::middleware('autenticacao')->controller(ComprovantesTransferenciaControlle
 
 Route::middleware('autenticacao')->controller(ImoveisController::class)->group(function(){
     Route::get('/imoveis', 'index')->name('imoveis');
-    Route::get('/imoveis/{id}', 'detalhar')->name('imoveis-detalhar');
+    Route::get('/imoveis/{id}', 'detalharImovel')->name('imoveis-detalhar');
 });
 
 Route::fallback(function () {

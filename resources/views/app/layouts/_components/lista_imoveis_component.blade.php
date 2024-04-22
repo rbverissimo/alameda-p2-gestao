@@ -19,7 +19,7 @@
                         </td>
                         <td>
                               <div class="col-3">
-                                    <img class="crud-icon" src="{{asset("icons/info-icon.svg")}}" alt="INFO">
+                                    <img onclick="redirecionarPara('{{route('imoveis-detalhar', $i->id)}}')" class="crud-icon" src="{{asset("icons/info-icon.svg")}}" alt="INFO">
                               </div>
                               <div class="col-3">
                                     <img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">

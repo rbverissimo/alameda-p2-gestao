@@ -128,6 +128,10 @@ export function isBlank($value){
       return $value === '';
 }
 
+export function redirecionarPara(route){
+      window.location.href = route;
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -136,3 +140,4 @@ window.mascaraCurrencyBr = mascaraCurrencyBr;
 window.isNotNullOrUndefined = isNotNullOrUndefined;
 window.isBlank = isBlank;
 window.handleBackspaceHyphen = handleBackspaceHyphen;
+window.redirecionarPara = redirecionarPara;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContaImovel;
 use App\Models\Imovel;
 use Illuminate\Http\Request;
 
@@ -19,10 +20,18 @@ class ImoveisController extends Controller
 
         return view('app.imoveis', compact('titulo', 'imoveis'));
     }
-    public function detalhar($imovel){
+    
+    public function detalharImovel($imovel){
 
-        $imovel_detalhado = Imovel::where('id', $imovel)->first();
+        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor',  'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
+            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
+            ->where('contas_imoveis.imovelcodigo', $imovel)
+            ->where('salas.imovelcodigo', $imovel)
+            ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
+            ->get(); 
 
-        return 'Detalhar imóvel: '.$imovel_detalhado->nomefantasia; 
+        dd($contas_imovel); 
+
+        return ''; 
     }
 }
