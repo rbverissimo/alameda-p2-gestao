@@ -7,6 +7,7 @@
             <link href="{{asset('css/styles.css')}}" rel="stylesheet">
             <link href="{{asset('css/buttons.css')}}" rel="stylesheet">
             <link href="{{asset('css/cards.css')}}" rel="stylesheet">
+            <link href="{{asset('css/tables.css')}}" rel="stylesheet">
       </head>
       <body>
             @include('app.layouts._partials.topo-nav')
