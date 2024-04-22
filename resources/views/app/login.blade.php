@@ -6,7 +6,7 @@
         <form action="" method="post">
             @csrf
             <div class="row center-itens">
-                <div class="col-6">
+                <div style="text-align: center" class="col-12">
                     <h2>Olá, seja bem-vindo(a)!</h2>
                 </div>
             </div>
