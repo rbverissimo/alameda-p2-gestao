@@ -29,7 +29,7 @@
 
 [class*="col-"] {
       float: left;
-      padding: 15px;
+      padding: 12px;
       width: 100%;
 }
 
@@ -92,6 +92,7 @@ input:focus {
       text-align: right;
       position: fixed;
       width: 100vw;
+      max-height: 100px;
       top: 0;
       transition: top 0.3s;
 }
@@ -199,6 +200,8 @@ input:focus {
       height: auto;
       background-color: var(--basic-card);
       padding: 1%;
+      border: 1px solid transparent;
+      border-radius: 10px;
 }
 
 textarea {

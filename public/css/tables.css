@@ -1,7 +1,7 @@
 table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
+      margin: 0;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
       overflow: hidden;
@@ -48,6 +48,10 @@ tr:hover {
 .scrollable-table {
       max-height: 50vh;
       overflow-y: scroll;
+}
+
+.end-table-scroll {
+      margin-bottom: 5em;
 }
 
 .crud-icon {
