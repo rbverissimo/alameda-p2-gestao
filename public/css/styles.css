@@ -87,12 +87,11 @@ input:focus {
 
 .fixed-topo-nav {
       background-color: #fff;
-      padding: 2%;
+      padding: 1.5%;
       color: white;
       text-align: right;
       position: fixed;
       width: 100vw;
-      max-height: 100px;
       top: 0;
       transition: top 0.3s;
 }
@@ -102,7 +101,7 @@ input:focus {
 }
 
 .nav-wrapper a {
-      padding: 2%;
+      padding: 1.5%;
 }
 
 .nav-wrapper a:hover {
