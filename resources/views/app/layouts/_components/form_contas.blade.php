@@ -1,4 +1,4 @@
-<form action="{{route('calculo-contas')}}" method="POST">
+<form action="{{ isset($conta_imovel->id) ? route('regravar-conta', ['id' => $conta_imovel->id]) : route('calculo-contas')}}" method="POST">
       @csrf
       @if (isset($conta_imovel->id))
          @method('PUT') 
