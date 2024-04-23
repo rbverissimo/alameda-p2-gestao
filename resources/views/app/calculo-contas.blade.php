@@ -4,7 +4,7 @@
 <h4>Declare as contas e o mês de referência: </h4>
       <div>
             <div>
-                  @component('app.layouts._components.form_contas', compact('tipos_contas', 'tipos_salas'))
+                  @component('app.layouts._components.form_contas', compact('tipos_contas', 'tipos_salas', 'conta_imovel', 'mensagem'))
                   @endcomponent
             </div>
       </div>

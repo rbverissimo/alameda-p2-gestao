@@ -9,6 +9,11 @@ use App\Models\InquilinoFatorDivisor;
 
 class CalculoContasService {
 
+
+    public static function getContaBy($id){
+        return ContaImovel::find($id);
+    }
+
     public function calcularContasInquilinos(){
 
         $conta_agua = ContaImovel::where('tipocodigo', 1)->orderByDesc('id')->first();

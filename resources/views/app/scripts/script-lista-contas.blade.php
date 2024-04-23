@@ -72,7 +72,7 @@ function addClickEditarExcluir(){
             lastColumn = currentRow.lastChild;
             var deletarIcon = lastColumn.lastChild;
             var editarIcon = deletarIcon.previousElementSibling;
-            
+
             const id = currentRow.getElementsByTagName('td')[0].innerHTML;
             deletarIcon.addEventListener("click", function(){
                 requestDeletarRow(id);
@@ -132,8 +132,7 @@ function requestDeletarRow(id) {
 }
 
 function requestEditarComprovante(id){
-    //window.location.href = "/comprovantes-transferencia/edit/" + id;
-    console.log('request para editar: ' + id);
+    window.location.href = "/calculo-contas/edit/" + id;
 }
 
 function converterTipoConta(tipo){

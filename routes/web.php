@@ -45,6 +45,8 @@ Route::middleware('autenticacao')->controller(CalculoContasController::class)->g
     ->name('calculo-contas');
     Route::post('/calculo-contas', 'calculoContas')
     ->name('calculo-contas');
+    Route::put('/calculo-contas/edit/{id}', 'regravarConta')->name('regravar-conta');
+    Route::get('/calculo-contas/edit/{id}', 'regravarConta')->name('regravar-conta');
 });
 
 Route::middleware('autenticacao')->get('/inquilino/{id}', [PainelInquilinoController::class, 'painel_inquilino'])->name('painel-inquilino');
