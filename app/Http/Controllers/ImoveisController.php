@@ -30,6 +30,11 @@ class ImoveisController extends Controller
             ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
             ->get(); 
 
-        return ''; 
+        $imovel = Imovel::where('id', $imovel)->first();
+
+        $titulo = 'Painel do Imóvel: '.$imovel->nomefantasia; 
+        $id = $imovel;
+
+        return view('app.painel-imovel', compact('titulo', 'contas_imovel', 'id')); 
     }
 }

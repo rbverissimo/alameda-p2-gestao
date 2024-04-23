@@ -2,7 +2,7 @@ table {
       width: 100%;
       border-collapse: collapse;
       margin: 0;
-      background-color: #fff;
+      background-color: var(--basic-card);
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
       overflow: hidden;
 }
@@ -35,7 +35,7 @@ tr:hover {
 }
 
 .table-row:hover {
-      background-color: #D6EEEE;
+      background-color: var(--table-highlight);
       cursor: pointer;
 }
 
@@ -62,4 +62,14 @@ tr:hover {
 
 .crud-icon:hover {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.topo-table-wrapper {
+      display: flex;
+      width: 100%;
+      height: auto;
+      background-color: var(--topo-table-bg);
+      border: 1px solid transparent;
+      padding: 1%;
+      border-radius: 10px;
 }

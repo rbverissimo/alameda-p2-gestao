@@ -5,7 +5,15 @@
 
       --basic-card: #fff;
       --basic-card-highlight: #f4f1de;
-      --table-head: #004D74;
+
+      
+      --topo-table-bg: #fff;
+
+
+      --table-head: #003652;
+      --table-highlight: #EDFDC4;
+
+
       --primary-button: #341671;
       --secondary-button: #AE2D68;
       --alternative-primary-button: #90BE6D;
@@ -135,10 +143,6 @@ input:focus {
       margin: 50px auto;
 }
 
-.crud-icon {
-      cursor: pointer;
-}
-
 #lista-comprovantes {
       display: none;
 }
@@ -190,17 +194,6 @@ input:focus {
 
 #falha-mensagem {
       color: #FF5722;
-}
-
-
-.topo-table-wrapper {
-      display: flex;
-      width: 100%;
-      height: auto;
-      background-color: var(--basic-card);
-      padding: 1%;
-      border: 1px solid transparent;
-      border-radius: 10px;
 }
 
 textarea {
