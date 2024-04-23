@@ -132,6 +132,62 @@ export function redirecionarPara(route){
       window.location.href = route;
 }
 
+export function converterReferencia(referencia){
+      console.log(referencia);
+      const ano = referencia.slice(0, 4);
+      const mes = converterMes(referencia.slice(4));
+
+      return mes+'/'+ano;
+
+}
+
+export function converterMes(mes){
+
+      let resultado = ''
+      switch(mes){
+            case '1':
+                  resultado = 'Jan'
+                  break;
+            case '2':
+                  resultado = 'Fev'
+                  break;
+            case '3':
+                  resultado = 'Março'
+                  break;
+            case '4':
+                  resultado = 'Abril'
+                  break;
+            case '5':
+                  resultado = 'Maio'
+                  break;
+            case '6':
+                  resultado = 'Junho'
+                  break;
+            case '7':
+                  resultado = 'Julho'
+                  break;
+            case '8':
+                  resultado = 'Agosto'
+                  break;
+            case '9':
+                  resultado = 'Set'
+                  break;
+            case '10':
+                  resultado = 'Out'
+                  break;
+            case '11':
+                  resultado = 'Nov'
+                  break;
+            case '12':
+                  resultado = 'Dez'
+                  break;
+            default:
+                  resultado = 'N/A'
+      }
+
+      return resultado; 
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -141,3 +197,5 @@ window.isNotNullOrUndefined = isNotNullOrUndefined;
 window.isBlank = isBlank;
 window.handleBackspaceHyphen = handleBackspaceHyphen;
 window.redirecionarPara = redirecionarPara;
+window.converterMes = converterMes;
+window.converterReferencia = converterReferencia;

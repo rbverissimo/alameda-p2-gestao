@@ -45,7 +45,6 @@
 
       function processarRequestTableRows(request){
             const data = request.response;
-            console.log(data)
             const jsonArray = data['data'];
             next_page_url = data['next_page_url'];
             last_page_url = data['links'][0]['url'];
@@ -83,13 +82,16 @@
             if((rows !== null || rows !== undefined) && rows.length > 0){
                   for(i = 1; i < rows.length; i++){
                         let currentRow = rows[i];
-                        const secondToLastIndex = currentRow.getElementsByTagName('td').length - 2;
+                        lastColumn = currentRow.lastChild;
+                        var deletarIcon = lastColumn.lastChild;
+                        var editarIcon = deletarIcon.previousElementSibling;
+
                         const id = currentRow.getElementsByTagName('td')[0].innerHTML;
-                        currentRow.lastChild.addEventListener("click", function(){
+                        deletarIcon.addEventListener("click", function(){
                               requestDeletarRow(id);
                         });
                         
-                        currentRow.getElementsByTagName('td')[secondToLastIndex].addEventListener("click", function(){
+                        editarIcon.addEventListener("click", function(){
                               requestEditarComprovante(id)
                         });
                   }
@@ -114,7 +116,7 @@
       function clickPrev(){
                   requestTrocarPagina(last_page_url);
                   document.getElementById('previous-page').removeEventListener("click", clickPrev, true);
-            }
+      }
 
       function showListaComprovantes(){
             document.getElementById('table-wrapper').style.display = "block";

@@ -22,19 +22,23 @@ class ImoveisController extends Controller
     }
 
     public function detalharImovel($imovel){
-
-        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor',  'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
-            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
-            ->where('contas_imoveis.imovelcodigo', $imovel)
-            ->where('salas.imovelcodigo', $imovel)
-            ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
-            ->get(); 
-
         $imovel = Imovel::where('id', $imovel)->first();
-
         $titulo = 'Painel do Imóvel: '.$imovel->nomefantasia; 
-        $id = $imovel;
+        $id = $imovel->id;
 
-        return view('app.painel-imovel', compact('titulo', 'contas_imovel', 'id')); 
+        return view('app.painel-imovel', compact('titulo', 'id')); 
+    }
+
+    public function listarContas($idImovel){
+
+        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
+            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
+            ->where('contas_imoveis.imovelcodigo', $idImovel)
+            ->where('salas.imovelcodigo', $idImovel)
+            ->orderBy('contas_imoveis.id', 'desc')
+            ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
+            ->paginate(15); 
+
+        return $contas_imovel;
     }
 }
