@@ -153,9 +153,21 @@ input:focus {
 
 #mensagem-container {
       display: none;
+      z-index: 3;
+      position: absolute;
+      width: 33vw;
+      left: 33vw;
+      text-align: center;
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
+      animation: fadeOut 6.5s forwards;
+}
+
+@keyframes fadeOut {
+      0% {opacity:  1;}
+      100% {opacity: 0;}
+      
 }
 
 #neutra-mensagem{

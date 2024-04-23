@@ -13,7 +13,8 @@ class CalculoContasController extends Controller
 {
     public function calculoContas(Request $request) {
 
-
+        $conta_imovel = null;
+        $mensagem = null;
         $tipos_contas = TipoConta::all();
         $tipos_salas = Sala::all();
 
@@ -43,7 +44,7 @@ class CalculoContasController extends Controller
 
         $titulo = 'Calcular Contas';
         
-        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas'));
+        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'conta_imovel', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
