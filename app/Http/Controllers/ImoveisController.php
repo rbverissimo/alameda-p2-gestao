@@ -20,7 +20,7 @@ class ImoveisController extends Controller
 
         return view('app.imoveis', compact('titulo', 'imoveis'));
     }
-    
+
     public function detalharImovel($imovel){
 
         $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor',  'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
@@ -29,8 +29,6 @@ class ImoveisController extends Controller
             ->where('salas.imovelcodigo', $imovel)
             ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
             ->get(); 
-
-        dd($contas_imovel); 
 
         return ''; 
     }
