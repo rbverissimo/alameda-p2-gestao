@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
 use App\Models\Imovel;
+use App\Services\UsuarioService;
 use Illuminate\Http\Request;
 
 class ImoveisController extends Controller
@@ -12,10 +13,13 @@ class ImoveisController extends Controller
     public function index(){
 
         $titulo = 'Lista de Imóveis';
+        $idUsuario = UsuarioService::getUsuarioLogado();
 
         $imoveis = Imovel::select('imoveis.id', 'imoveis.nomefantasia', 
             'enderecos.logradouro', 'enderecos.bairro', 'enderecos.numero', 'enderecos.cep', 'enderecos.cidade')
             ->join('enderecos', 'enderecos.id', 'imoveis.endereco')
+            ->join('users_imoveis', 'users_imoveis.idImovel', 'imoveis.id')
+            ->where('users_imoveis.idUsuario', $idUsuario)
             ->get();
 
         return view('app.imoveis', compact('titulo', 'imoveis'));

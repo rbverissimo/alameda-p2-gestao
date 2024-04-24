@@ -19,14 +19,13 @@ class DatabaseSeeder extends Seeder
             PessoaSeeder::class,
             TipoContaSeeder::class,
             TipoPrestadorSeeder::class,
+            TipoComprovanteSeeder::class,
             SalaSeeder::class,
             InquilinoSeeder::class,
+            InquilinoFatorDivisorSeeder::class,
             UsuarioMestreSeeder::class,
-            UsuariosOperadoresSeeder::class
+            UsuariosOperadoresSeeder::class,
+            UsersImoveisSeeder::class
         ]);
-
-        $this->call([InquilinoFatorDivisorSeeder::class]);
-
-        $this->call([TipoComprovanteSeeder::class]);
     }
 }
