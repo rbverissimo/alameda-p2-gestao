@@ -94,9 +94,9 @@ class CalculoContasController extends Controller
                     $file = $request->file('arquivo-conta');
                     $fileName = $file->getClientOriginalName();
                     $filePath = $file->storeAs('contas-imovel', $fileName);
+                    $conta_imovel->arquivo_conta = $filePath;
                 }
                 
-                $conta_imovel->arquivo_conta = $filePath;
 
                 $conta_imovel->save();
                 $mensagem = "sucesso";

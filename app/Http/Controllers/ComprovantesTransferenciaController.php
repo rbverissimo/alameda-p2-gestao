@@ -27,6 +27,14 @@ class ComprovantesTransferenciaController extends Controller
             $comprovante->descricao = $request->input('descricao');
             $comprovante->tipocomprovante = $request->input('tipo-comprovante');
 
+            $filePath = null; 
+
+            if($request->hasFile('arquivo-comprovante')){
+                $file = $request->file('arquivo-comprovante');
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('contas-imovel', $fileName);
+                $comprovante->arquivo_comprovante = $filePath;
+            }
 
             $comprovante->save();
             $mensagem = "sucesso";

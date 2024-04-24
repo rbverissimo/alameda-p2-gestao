@@ -65,6 +65,23 @@
             </div>
       </div>
       <div class="row">
+            <div class="col-6">
+                  <label for="arquivo-conta"> 
+                        Envie a conta:
+                  </label>
+                  <input type="file" name="arquivo-comprovante">
+            </div>
+            @isset($comprovante->arquivo_comprovante)
+                  <div class="col-6">
+                        <button class="button light-button">
+                              <a id="link-arquivo-baixar" href="{{route('baixarArquivoContaImovel', ['idArquivo' => $comprovante->id]) }}">BAIXAR {{ $comprovante->arquivo_comprovante }}</a>
+                              <img style="margin-left: 1vw" src="{{asset('icons/download-icon.svg')}}" alt="download-icon">
+                        </button>
+                  </div>
+            @endisset
+      
+      </div>
+      <div class="row">
             <div class="col-4">
                   <button class="button confirmacao-button" type="submit">OK</button>
             </div>
