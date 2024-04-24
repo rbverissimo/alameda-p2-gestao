@@ -65,7 +65,6 @@ class CalculoContasController extends Controller
     }
 
     public function regravarConta(Request $request, $idConta){
-
         
         try {
             $titulo = 'Edição de registro de contas';
@@ -77,7 +76,7 @@ class CalculoContasController extends Controller
             $imoveis = Imovel::where('id', 1)->get();
 
             if($request->isMethod('put')){
-                $conta_imovel->valor = $request->input('valor-comprovante');
+                $conta_imovel->valor = $request->input('valor-conta');
                 $conta_imovel->dataVencimento = $request->input('data-vencimento');
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
@@ -88,6 +87,16 @@ class CalculoContasController extends Controller
                 if($request->input('tipo-conta') == '1'){
                     $conta_imovel->imovelcodigo = 1;
                 }
+
+                $filePath = null; 
+
+                if($request->hasFile('arquivo-conta')){
+                    $file = $request->file('arquivo-conta');
+                    $fileName = $file->getClientOriginalName();
+                    $filePath = $file->storeAs('contas-imovel', $fileName);
+                }
+                
+                $conta_imovel->arquivo_conta = $filePath;
 
                 $conta_imovel->save();
                 $mensagem = "sucesso";

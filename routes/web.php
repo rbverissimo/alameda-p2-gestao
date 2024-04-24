@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\CalculoContasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ImoveisController;
-use App\Http\Controllers\ImovelController;
 use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelInquilinoController;
@@ -72,6 +72,10 @@ Route::middleware('autenticacao')->controller(ImoveisController::class)->group(f
     Route::get('/imoveis', 'index')->name('imoveis');
     Route::get('/imoveis/{id}', 'detalharImovel')->name('imoveis-detalhar');
     Route::get('/imoveis/listar-contas/{id}', 'listarContas')->name('imoveis-listar-contas');
+});
+
+Route::middleware('autenticacao')->group(function(){
+    Route::get('/download/{idArquivo}', [DownloadController::class, 'baixarArquivoContaBy'])->name('baixarArquivoContaImovel');
 });
 
 Route::fallback(function () {

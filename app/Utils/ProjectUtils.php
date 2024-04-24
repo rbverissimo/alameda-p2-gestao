@@ -70,4 +70,5 @@ class ProjectUtils {
       public static function trocarPontoPorVirgula($valor){
             return str_replace('.', ',', $valor);
       }
+
 }

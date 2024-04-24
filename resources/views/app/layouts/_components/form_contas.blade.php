@@ -120,16 +120,14 @@
                   </label>
                   <input type="file" name="arquivo-conta">
             </div>
-            @if(pathInfo($conta_imovel->arquivo_conta, PATHINFO_EXTENSION) === 'jpg' ||
-            pathInfo($conta_imovel->arquivo_conta, PATHINFO_EXTENSION) === 'png')
-                  <div class="col-3">
-                        <button>Mostrar conta</button>
+            @isset($conta_imovel->arquivo_conta)
+                  <div class="col-6">
+                        <button class="button light-button">
+                              <a id="link-arquivo-baixar" href="{{route('baixarArquivoContaImovel', ['idArquivo' => $conta_imovel->id]) }}">BAIXAR {{ $conta_imovel->arquivo_conta }}</a>
+                              <img style="margin-left: 1vw" src="{{asset('icons/download-icon.svg')}}" alt="download-icon">
+                        </button>
                   </div>
-            @else
-                  <div class="col-3">
-                        <a href="{{ 'http://localhost:8000/storage/app/'.$conta_imovel->arquivo_conta }}" download>{{ Storage::url($conta_imovel->arquivo_conta) }}</a>
-                  </div>
-            @endif
+            @endisset
       </div>
       <div class="row center-itens">
             <div class="col-3">
