@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UsuarioImovel;
 
 class UsuarioService {
 
@@ -15,6 +16,17 @@ class UsuarioService {
                               ->first();
 
             return $usuario_logado->id;
+      }
+
+      /**
+       * Retorna um array com os ID de todos os imóveis que um usuário possui
+       */
+      public static function getImoveisBy($user){
+            $usuario_imoveis = UsuarioImovel::select('idImovel')
+                  ->where('idUsuario', $user)
+                  ->groupBy('idImovel')
+                  ->get();
+            return $usuario_imoveis->pluck('idImovel')->toArray();
       }
 
 }
