@@ -11,6 +11,8 @@ class ContaImovel extends Model
     use HasFactory;
     protected $table = 'contas_imoveis';
 
+    protected $fillable = ['valor', 'imovelcodigo', 'ano', 'mes', 'dataVencimento', 'observacoes', 'referenciaConta', 'nrDocumento', 'salaCodigo', 'tipocodigo', 'arquivo_conta'];
+
     public function tipo_conta(): HasOne 
     {
         return $this->hasOne(TipoConta::class, 'tipocodigo');

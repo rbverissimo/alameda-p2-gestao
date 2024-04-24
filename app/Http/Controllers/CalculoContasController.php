@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
+use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
+use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
@@ -13,11 +15,18 @@ class CalculoContasController extends Controller
 {
     public function calculoContas(Request $request) {
 
+        
         $conta_imovel = null;
         $mensagem = null;
+        
+        
+        $usuario = UsuarioService::getUsuarioLogado();
+        $idImoveisDoUsuario = UsuarioService::getImoveisBy($usuario);
+        $imoveis = Imovel::whereIn('id', $idImoveisDoUsuario)->get();
+        
         $tipos_contas = TipoConta::all();
         $tipos_salas = Sala::all();
-
+        
         if($request->isMethod('post')){
 
             $tipo_conta = $request->input('tipo_conta');
@@ -33,18 +42,26 @@ class CalculoContasController extends Controller
 
             if($tipo_conta === '2'){
                 $conta_imovel->salacodigo = $request->input('sala');
+            } else if($tipo_conta == '1') {
+                $conta_imovel->imovelcodigo = $request->input('imovelcodigo');
             }
 
+            $filePath = null; 
+
+            if($request->hasFile('arquivo-conta')){
+                $file = $request->file('arquivo-conta');
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('contas-imovel', $fileName);
+            }
+            
+            $conta_imovel->arquivo_conta = $filePath;
+
             $conta_imovel->save();
-
-
-            $calculo_contas_service = new CalculoContasService();
-            // $calculo_contas_service->calcularContasInquilinos();
         }
 
         $titulo = 'Calcular Contas';
         
-        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'conta_imovel', 'mensagem'));
+        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'conta_imovel', 'imoveis', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
@@ -56,6 +73,8 @@ class CalculoContasController extends Controller
             $tipos_salas = Sala::all();
             $conta_imovel = CalculoContasService::getContaBy($idConta);
             $mensagem = null; 
+
+            $imoveis = Imovel::where('id', 1)->get();
 
             if($request->isMethod('put')){
                 $conta_imovel->valor = $request->input('valor-comprovante');
@@ -74,7 +93,7 @@ class CalculoContasController extends Controller
                 $mensagem = "sucesso";
             }
 
-            return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'conta_imovel', 'mensagem')); 
+            return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas','imoveis', 'conta_imovel', 'mensagem')); 
         } catch (\Throwable $th) {
             return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }

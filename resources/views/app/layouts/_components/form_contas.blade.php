@@ -1,21 +1,39 @@
-<form action="{{ isset($conta_imovel->id) ? route('regravar-conta', ['id' => $conta_imovel->id]) : route('calculo-contas')}}" method="POST">
+<form action="{{ isset($conta_imovel->id) ? route('regravar-conta', ['id' => $conta_imovel->id]) : route('calculo-contas')}}" method="POST" enctype="multipart/form-data">
       @csrf
       @if (isset($conta_imovel->id))
-         @method('PUT') 
+            @method('PUT') 
       @endif
-
       <div class="row">
+            
+            @isset($imoveis)
+                  <div class="col-3">
+                        <select id="imoveis-conta-select" name="imovelcodigo">
+                              @foreach ($imoveis as $imovel)
+                                    <option value="{{$imovel->id}}"
+                                          @isset($conta_imovel->imovelcodigo)
+                                                @if($conta_imovel->imovelcodigo == $imovel->id)
+                                                selected
+                                                @endif
+                                          @endisset
+                                    >
+                                          {{$imovel->nomefantasia}}
+                                    </option>
+                              @endforeach
+                        </select>
+                  
+                  </div>
+            @endisset
             <div class="col-3">
                   
                   @isset($tipos_contas)
                         <select id="tipo-conta-select" name="tipo_conta">
                               @foreach ($tipos_contas as $conta)
                                                 <option value="{{$conta->id}}"
-                                                     @isset($conta_imovel->tipocodigo)
-                                                         @if ($conta_imovel->tipocodigo == $conta->id)
+                                                      @isset($conta_imovel->tipocodigo)
+                                                            @if ($conta_imovel->tipocodigo == $conta->id)
                                                             selected
-                                                         @endif
-                                                     @endisset
+                                                            @endif
+                                                      @endisset
                                                 >
                                                       {{$conta->descricao}}</option>
                               @endforeach   
@@ -39,7 +57,7 @@
                         </select>
                   @endisset
             </div>
-            <div class="col-6">
+            <div class="col-3">
                   <input id="input-valor"
                         required
                         name="valor-conta"
@@ -63,7 +81,7 @@
                         minlength="7"
                         placeholder="Referência: "
                         value="{{ isset($conta_imovel->referenciaConta) ?
-                         old('referencia', $conta_imovel->referenciaConta) : old('referencia')}}">
+                        old('referencia', $conta_imovel->referenciaConta) : old('referencia')}}">
             </div>
       </div>
       <div class="row">
@@ -94,6 +112,24 @@
                         value="{{ isset($conta_imovel->mes) ?
                               old('mes', $conta_imovel->mes) : old('mes')}}">
             </div>
+      </div>
+      <div class="row">
+            <div class="col-6">
+                  <label for="arquivo-conta"> 
+                        Envie a conta:
+                  </label>
+                  <input type="file" name="arquivo-conta">
+            </div>
+            @if(pathInfo($conta_imovel->arquivo_conta, PATHINFO_EXTENSION) === 'jpg' ||
+            pathInfo($conta_imovel->arquivo_conta, PATHINFO_EXTENSION) === 'png')
+                  <div class="col-3">
+                        <button>Mostrar conta</button>
+                  </div>
+            @else
+                  <div class="col-3">
+                        <a href="{{ 'http://localhost:8000/storage/app/'.$conta_imovel->arquivo_conta }}" download>{{ Storage::url($conta_imovel->arquivo_conta) }}</a>
+                  </div>
+            @endif
       </div>
       <div class="row center-itens">
             <div class="col-3">
