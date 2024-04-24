@@ -24,9 +24,5 @@ class UsersImoveisSeeder extends Seeder
             'idImovel' => 1
         ]);
 
-        UsuarioImovel::create([
-            'idUsuario' => 3,
-            'idImovel' => 1
-        ]);
     }
 }
