@@ -4,7 +4,7 @@ export function setLiveRoute(rota){
 }
 
 export function setOldRoute(rota){
-      localStorage.setOldRoute('oldRoute', rota);
+      localStorage.setItem('oldRoute', rota);
 }
 
 export function getOldRoute(){
@@ -20,9 +20,12 @@ export function navigateToLastRoute(){
 }
 
 window.addEventListener("DOMContentLoaded", function(){
-      if(isNullOrUndefined(getOldRoute()) || isBlank(getOldRoute())){
-            
-      } 
+      if(isNullOrUndefined(getLiveRoute()) || isBlank(getLiveRoute())){
+            setLiveRoute(window.location.href);
+      } else {
+            setOldRoute(getLiveRoute());
+            setLiveRoute(window.location.href);
+      }
 });
 
 
