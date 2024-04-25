@@ -2,6 +2,7 @@
 <script>
 
 const idImovel = {{ $id }};
+
 var next_page_url = '';
 var last_page_url = '';
 

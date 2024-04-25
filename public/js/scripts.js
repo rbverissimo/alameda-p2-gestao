@@ -188,6 +188,13 @@ export function converterMes(mes){
       return resultado; 
 }
 
+export function navigateBack(rotaAnterior) {
+      const voltarTrigger = document.getElementById('voltar-wrapper');
+      voltarTrigger.addEventListener('click', function(){
+          window.location.href = rotaAnterior; 
+      });
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -199,3 +206,4 @@ window.handleBackspaceHyphen = handleBackspaceHyphen;
 window.redirecionarPara = redirecionarPara;
 window.converterMes = converterMes;
 window.converterReferencia = converterReferencia;
+window.navigateBack = navigateBack;

@@ -1,6 +1,8 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
+
+@include('app.layouts._partials.crud-header')
 <h4>Declare as contas e o mês de referência: </h4>
       <div>
             <div>

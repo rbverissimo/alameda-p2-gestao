@@ -7,9 +7,13 @@
       import { dataMascara } from "{{ asset('js/scripts.js')}}";
       import { mascaraCurrencyBr } from "{{ asset('js/scripts.js')}}";
       import { apenasNumeros } from "{{ asset('js/scripts.js') }}";
+      import { navigateBack } from "{{ asset('js/scripts.js') }}";
 
       const mensagem = @json($mensagem);
       if(mensagem === 'sucesso') showMensagem("Registro salvo com sucesso! ", "sucesso");
+
+
+      navigateBack("{{route('painel-principal')}}");
 
       const anoMesInput = document.getElementById('ano-mes-input');
       anoMesInput.addEventListener('input', anoMesMascara);
