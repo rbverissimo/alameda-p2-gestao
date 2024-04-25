@@ -8,6 +8,9 @@
       import { mascaraCurrencyBr } from "{{ asset('js/scripts.js')}}";
       import { apenasNumeros } from "{{ asset('js/scripts.js') }}";
 
+      const mensagem = @json($mensagem);
+      if(mensagem === 'sucesso') showMensagem("Registro salvo com sucesso! ", "sucesso");
+
       const anoMesInput = document.getElementById('ano-mes-input');
       anoMesInput.addEventListener('input', anoMesMascara);
       anoMesInput.addEventListener('keydown', handleBackspaceHyphen);

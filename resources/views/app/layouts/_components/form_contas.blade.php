@@ -116,14 +116,15 @@
       <div class="row">
             <div class="col-6">
                   <label for="arquivo-conta"> 
-                        Envie a conta:
+                        Enviar conta:
                   </label>
                   <input type="file" name="arquivo-conta">
             </div>
             @isset($conta_imovel->arquivo_conta)
                   <div class="col-6">
-                        <button class="button light-button">
-                              <a id="link-arquivo-baixar" href="{{route('baixarArquivoContaImovel', ['idArquivo' => $conta_imovel->id]) }}">BAIXAR {{ $conta_imovel->arquivo_conta }}</a>
+                        <label for="baixar-button">Baixar arquivo da conta: </label>
+                        <button id="baixar-button" class="button light-button">
+                              <a id="link-arquivo-baixar" href="{{route('baixarArquivoContaImovel', ['idArquivo' => $conta_imovel->id]) }}"> {{ $conta_imovel->arquivo_conta }}</a>
                               <img style="margin-left: 1vw" src="{{asset('icons/download-icon.svg')}}" alt="download-icon">
                         </button>
                   </div>

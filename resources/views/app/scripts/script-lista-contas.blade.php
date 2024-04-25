@@ -109,8 +109,8 @@ function clickPrev(){
 function requestDeletarRow(id) {
     const isConfirmado = window.confirm("Você deseja deletar o registro " + id + " ?");
     if(isConfirmado){
-/*         const request = new XMLHttpRequest();
-        request.open("GET", "/comprovantes-transferencia/delete/"+ id);
+         const request = new XMLHttpRequest();
+        request.open("GET", "/calculo-contas/delete/"+ id);
         request.send();
         request.responseType = "json";
         request.onload = () => {
@@ -118,17 +118,29 @@ function requestDeletarRow(id) {
                 const data = request.response;
                 if(data > 0) showMensagem("Registro removido com sucesso", "sucesso");
                 limparTabela();
-                isListaJaCarregada = false;
-                carregarComprovantes();                        
+                carregarContas();                        
             } else {
                 console.log(`Erro: ${request.status}`);
                 showMensagem("Não foi possível remover o registro " + id, "falha");
             }
-        } */
-        console.log('REMOVIDO: ' + id);
+        }
     } else {
         showMensagem("Excluir o registro de ID: "+id+" não realizado", "neutra");
     }
+}
+
+function limparTabela(){
+    let counter = 0
+    const table = document.getElementById('lista-contas');
+    const rows = table.getElementsByTagName('tr');
+    if((rows !== null || rows !== undefined) && rows.length > 0){
+        while(rows.length > 1){
+            let currentRow = rows[1];
+            currentRow.remove();
+            counter++;
+        }
+    }
+
 }
 
 function requestEditarComprovante(id){

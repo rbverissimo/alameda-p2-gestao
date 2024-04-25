@@ -16,9 +16,6 @@ class CalculoContasController extends Controller
     public function calculoContas(Request $request) {
 
         
-        $conta_imovel = null;
-        $mensagem = null;
-        
         
         $usuario = UsuarioService::getUsuarioLogado();
         $idImoveisDoUsuario = UsuarioService::getImoveisBy($usuario);
@@ -26,6 +23,7 @@ class CalculoContasController extends Controller
         
         $tipos_contas = TipoConta::all();
         $tipos_salas = Sala::all();
+        $mensagem = null; 
         
         if($request->isMethod('post')){
 
@@ -57,11 +55,12 @@ class CalculoContasController extends Controller
             $conta_imovel->arquivo_conta = $filePath;
 
             $conta_imovel->save();
+            $mensagem = 'sucesso';
         }
 
         $titulo = 'Calcular Contas';
         
-        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'conta_imovel', 'imoveis', 'mensagem'));
+        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
@@ -106,5 +105,11 @@ class CalculoContasController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }
+    }
+
+
+    public function deletarConta($id){
+        $conta_deletada = ContaImovel::where('id', $id)->delete();
+        return $conta_deletada;
     }
 }
