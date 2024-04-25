@@ -1,3 +1,31 @@
+export function setLiveRoute(rota){
+      localStorage.setItem('liveRoute', rota);
+
+}
+
+export function setOldRoute(rota){
+      localStorage.setOldRoute('oldRoute', rota);
+}
+
+export function getOldRoute(){
+      return localStorage.getItem('oldRoute');
+}
+
+export function getLiveRoute(){
+      return localStorage.getItem('liveRoute');
+}
+
+export function navigateToLastRoute(){
+      window.location.href = getOldRoute();
+}
+
+window.addEventListener("DOMContentLoaded", function(){
+      if(isNullOrUndefined(getOldRoute()) || isBlank(getOldRoute())){
+            
+      } 
+});
+
+
 export function showMensagem(mensagem, tipo){
 
       let mensagemElement = undefined; 
@@ -120,12 +148,16 @@ export function mascaraCurrencyBr(event) {
       event.target.value = inputValue;
 }
 
-export function isNotNullOrUndefined($value){
-      return $value !== null || $value !== undefined;
+export function isNullOrUndefined(value){
+      return value === null || value === undefined;
 }
 
-export function isBlank($value){
-      return $value === '';
+export function isNotNullOrUndefined(value){
+      return value !== null || value !== undefined;
+}
+
+export function isBlank(value){
+      return value === '';
 }
 
 export function redirecionarPara(route){
