@@ -75,16 +75,22 @@ class CalculoContasController extends Controller
             $imoveis = Imovel::where('id', 1)->get();
 
             if($request->isMethod('put')){
+
+                $tipo_conta = $request->input('tipo_conta');
+
                 $conta_imovel->valor = $request->input('valor-conta');
                 $conta_imovel->dataVencimento = $request->input('data-vencimento');
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
                 $conta_imovel->mes = $request->input('mes');
-                $conta_imovel->tipocodigo = $request->input('tipo-conta');
-                $conta_imovel->salacodigo = $request->input('sala');
+                $conta_imovel->tipocodigo = $tipo_conta;
 
-                if($request->input('tipo-conta') == '1'){
-                    $conta_imovel->imovelcodigo = 1;
+                if($tipo_conta === '2'){
+                    $conta_imovel->salacodigo = $request->input('sala');
+                    $conta_imovel->imovelcodigo = null;
+                } else if($tipo_conta == '1') {
+                    $conta_imovel->imovelcodigo = $request->input('imovelcodigo');
+                    $conta_imovel->salacodigo = null;
                 }
 
                 $filePath = null; 
@@ -96,7 +102,6 @@ class CalculoContasController extends Controller
                     $conta_imovel->arquivo_conta = $filePath;
                 }
                 
-
                 $conta_imovel->save();
                 $mensagem = "sucesso";
             }
