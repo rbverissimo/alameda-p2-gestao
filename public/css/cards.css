@@ -20,7 +20,6 @@
 .dashboard {
       width: 100%;
       border-radius: 10px;
-      overflow: hidden;
       margin: 1% 0;
       box-shadow: 4px 0 6px -4px rgba(0, 0, 0, 0.5);
 }

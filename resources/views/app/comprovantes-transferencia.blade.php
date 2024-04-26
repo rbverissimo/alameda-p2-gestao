@@ -1,6 +1,8 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
+
+@include('app.layouts._partials.crud-header')
 <h4>Declare um comprovante </h4>
       @isset($inquilinos)
       <div>
