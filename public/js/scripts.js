@@ -89,7 +89,7 @@ export function dataMascara(event) {
 
       // Formata a máscara de AAAA-mm-dd
       if (inputValue.length >= 6) {
-            inputValue = inputValue.slice(0, 4) + '-' + inputValue.slice(4, 6) + '-' + inputValue.slice(6);
+            inputValue = inputValue.slice(0, 2) + '-' + inputValue.slice(2, 4) + '-' + inputValue.slice(4);
       }
 
       // Coloca no input o tratamento feito pela máscara
@@ -97,15 +97,16 @@ export function dataMascara(event) {
 }
 
 export function isDataValida(dateString) {
-      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      const regex = /^\d{2}-\d{2}-\d{4}$/;
       if(!regex.test(dateString)){
             return false;
       }
 
-      // Extract year, month, and day
-      const year = parseInt(dateString.slice(0, 4), 10);
-      const month = parseInt(dateString.slice(5, 7), 10);
-      const day = parseInt(dateString.slice(8, 10), 10);
+      //20-12-2023
+      //0123456789
+      
+      const month = parseInt(dateString.slice(3, 5), 10);
+      const day = parseInt(dateString.slice(0, 2), 10);
 
       // Check if month is between 1 and 12, and day is between 1 and 31
       return month >= 1 && month <= 12 && day >= 1 && day <= 31;

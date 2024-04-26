@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use DateTime;
+
 class ProjectUtils {
 
 
@@ -69,6 +71,15 @@ class ProjectUtils {
 
       public static function trocarPontoPorVirgula($valor){
             return str_replace('.', ',', $valor);
+      }
+
+      public static function inverterDataParaSalvar($data){
+            return date('Y-m-d', strtotime($data));
+      }
+
+      public static function inverterDataParaRenderizar($data){
+            $dt = new DateTime($data);
+            return $dt->format('d-m-Y');
       }
 
 }
