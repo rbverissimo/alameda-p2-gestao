@@ -6,6 +6,7 @@ use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
 use App\Services\ComprovantesService;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
@@ -21,9 +22,9 @@ class ComprovantesTransferenciaController extends Controller
             
             $comprovante = new Comprovante();
             $comprovante->inquilino = $request->input('inquilino');
-            $comprovante->valor = $request->input('valor-comprovante');
-            $comprovante->dataComprovante = $request->input('data-comprovante');
-            $comprovante->referencia = $request->input('referencia');
+            $comprovante->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-comprovante'));
+            $comprovante->dataComprovante = ProjectUtils::inverterDataParaSalvar($request->input('data-comprovante'));
+            $comprovante->referencia = ProjectUtils::tirarMascara($request->input('referencia'));
             $comprovante->descricao = $request->input('descricao');
             $comprovante->tipocomprovante = $request->input('tipo-comprovante');
 
@@ -77,17 +78,25 @@ class ComprovantesTransferenciaController extends Controller
             $titulo = $this->titulo;
             $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
             $comprovante = ComprovantesService::getComprovante($id);
-            $mensagem = null; 
 
+            
+            $mensagem = null; 
+            
             if($request->isMethod('put')){
-                $comprovante->valor = $request->input('valor-comprovante');
-                $comprovante->dataComprovante = $request->input('data-comprovante');
-                $comprovante->referencia = $request->input('referencia');
+                $comprovante->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-comprovante'));
+                $comprovante->dataComprovante = ProjectUtils::inverterDataParaSalvar($request->input('data-comprovante'));
+                $comprovante->referencia = ProjectUtils::tirarMascara($request->input('referencia'));
                 $comprovante->descricao = $request->input('descricao');
                 $comprovante->tipocomprovante = $request->input('tipo-comprovante');
                 $comprovante->save();
                 $mensagem = "sucesso";
             }
+            
+            if($comprovante->dataComprovante != null){
+                $dataNaoInvertida = $comprovante->dataComprovante;
+                $comprovante->dataComprovante = ProjectUtils::inverterDataParaRenderizar($dataNaoInvertida);
+            }
+            
 
             return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'mensagem')); 
         } catch (\Exception $e) {

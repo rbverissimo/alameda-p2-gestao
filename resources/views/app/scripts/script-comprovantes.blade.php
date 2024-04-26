@@ -32,6 +32,5 @@
 
     const valorInput = document.getElementById('input-valor-comprovante');
     valorInput.addEventListener('input', mascaraCurrencyBr);
-
 </script>
 @endsection

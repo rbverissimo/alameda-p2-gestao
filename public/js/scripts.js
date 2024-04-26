@@ -181,31 +181,31 @@ export function converterMes(mes){
 
       let resultado = ''
       switch(mes){
-            case '1':
+            case '01':
                   resultado = 'Jan'
                   break;
-            case '2':
+            case '02':
                   resultado = 'Fev'
                   break;
-            case '3':
+            case '03':
                   resultado = 'Março'
                   break;
-            case '4':
+            case '04':
                   resultado = 'Abril'
                   break;
-            case '5':
+            case '05':
                   resultado = 'Maio'
                   break;
-            case '6':
+            case '06':
                   resultado = 'Junho'
                   break;
-            case '7':
+            case '07':
                   resultado = 'Julho'
                   break;
-            case '8':
+            case '08':
                   resultado = 'Agosto'
                   break;
-            case '9':
+            case '09':
                   resultado = 'Set'
                   break;
             case '10':
@@ -241,6 +241,11 @@ export function swapPontosVirgulas(valor){
       }
 }
 
+export function showDataFormatadaDMY(data){
+      const[ano, mes, dia] = data.split('-');
+      return `${dia}-${mes}-${ano}`;
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -254,3 +259,4 @@ window.converterMes = converterMes;
 window.converterReferencia = converterReferencia;
 window.navigateBack = navigateBack;
 window.swapPontosVirgulas = swapPontosVirgulas;
+window.showDataFormatadaDMY = showDataFormatadaDMY;

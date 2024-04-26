@@ -55,9 +55,10 @@ function criarRowsJson(jsonArray){
        
             tr.innerHTML = '<td>' + object.id + '</td>' +
             '<td>' + converterTipoConta(object.tipocodigo)  + '</td>' +
-            '<td>' + object.valor + '</td>' +
+            '<td>' + 'R$' + swapPontosVirgulas(object.valor) + '</td>' +
             '<td>' + converterReferencia(referencia) + '</td>' +
-            '<td>' + '<img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">' + '<img class="crud-icon" src="{{asset("icons/delete-icon.svg")}}" alt="EXCLUIR">'  + '</td>';
+            '<td>' + '<img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">' 
+                + '<img class="crud-icon" src="{{asset("icons/delete-icon.svg")}}" alt="EXCLUIR">'  + '</td>';
                 table.appendChild(tr);
         });
             

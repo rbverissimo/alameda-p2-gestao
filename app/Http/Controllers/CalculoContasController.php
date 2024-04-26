@@ -71,10 +71,6 @@ class CalculoContasController extends Controller
             $tipos_salas = Sala::all();
             $conta_imovel = CalculoContasService::getContaBy($idConta);
 
-            if($conta_imovel->dataVencimento != null){
-                $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaRenderizar($conta_imovel->dataVencimento);
-            }
-
             $mensagem = null; 
 
             $imoveis = Imovel::where('id', 1)->get();
@@ -83,7 +79,7 @@ class CalculoContasController extends Controller
 
                 $tipo_conta = $request->input('tipo_conta');
 
-                $conta_imovel->valor = $request->input('valor-conta');
+                $conta_imovel->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-conta'));
                 $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaSalvar($request->input('data-vencimento'));
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
@@ -109,6 +105,10 @@ class CalculoContasController extends Controller
                 
                 $conta_imovel->save();
                 $mensagem = "sucesso";
+            }
+
+            if($conta_imovel->dataVencimento != null){
+                $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaRenderizar($conta_imovel->dataVencimento);
             }
 
             return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas','imoveis', 'conta_imovel', 'mensagem')); 

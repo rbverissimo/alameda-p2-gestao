@@ -78,8 +78,7 @@ class ProjectUtils {
       }
 
       public static function inverterDataParaRenderizar($data){
-            $dt = new DateTime($data);
-            return $dt->format('d-m-Y');
+            return date('d-m-Y', strtotime($data));
       }
 
 }
