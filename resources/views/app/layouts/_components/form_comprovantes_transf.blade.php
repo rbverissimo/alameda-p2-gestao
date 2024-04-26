@@ -81,7 +81,7 @@
             @endisset
       
       </div>
-      <div class="row">
+      <div class="row center-itens">
             <div class="col-4">
                   <button class="button confirmacao-button" type="submit">OK</button>
             </div>

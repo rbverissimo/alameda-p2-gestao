@@ -10,3 +10,5 @@
             </div>
       </div>
 @endsection
+
+@include('app.scripts.script-listar-inquilinos')

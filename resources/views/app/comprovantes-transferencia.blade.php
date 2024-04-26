@@ -5,8 +5,8 @@
 @include('app.layouts._partials.crud-header')
 <h4>Declare um comprovante </h4>
       @isset($inquilinos)
-      <div>
-            <div>
+      <div class="row">
+            <div class="end-page-margin">
                   @component('app.layouts._components.form_comprovantes_transf',
                   compact('inquilinos', 'tipos_comprovantes', 'mensagem'))
                   @endcomponent
@@ -15,8 +15,8 @@
       @endisset
 
       @isset($comprovante)
-      <div>
-            <div>
+      <div class="row">
+            <div class="end-page-margin">
                   @component('app.layouts._components.form_comprovantes_transf', 
                   compact('tipos_comprovantes', 'comprovante', 'mensagem'))
                   @endcomponent

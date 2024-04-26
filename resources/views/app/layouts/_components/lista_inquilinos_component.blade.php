@@ -2,8 +2,8 @@
       <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Telefone</th>
-            <th>Valor do Aluguel</th>
+            <th>Valor Aluguel</th>
+            <th>Ações</th>
       </tr>
       @foreach ($inquilinos_ativos as $inquilino)
             <tr class="table-row">
@@ -14,10 +14,13 @@
                   <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->nome}}</a>
                   </td>
                   <td>
-                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->telefone_celular}}</a>
+                  <a 
+                        class="table-link valor-aluguel-lista-inquilinos" 
+                        href="{{route('painel-inquilino', $inquilino->id)}}">{{'R$'.$inquilino->valorAluguel}}</a>
                   </td>
                   <td>
-                  <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->valorAluguel}}</a>
+                        <img class="crud-icon" src="{{asset('icons/edit-icon.svg')}}" alt="edit" srcset="">
+                        <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete" srcset="">
                   </td>
             </tr>
       @endforeach

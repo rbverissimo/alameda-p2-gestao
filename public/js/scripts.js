@@ -230,6 +230,16 @@ export function navigateBack(rotaAnterior) {
       });
 }
 
+export function swapPontosVirgulas(valor){
+      if (valor.includes('.')) {
+            return valor.replace(/\./g, ',');
+      } else if(valor.includes(',')) {
+            return valor.replace(/,/g, '.');
+      } else {
+            return valor; 
+      }
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -242,3 +252,4 @@ window.redirecionarPara = redirecionarPara;
 window.converterMes = converterMes;
 window.converterReferencia = converterReferencia;
 window.navigateBack = navigateBack;
+window.swapPontosVirgulas = swapPontosVirgulas;
