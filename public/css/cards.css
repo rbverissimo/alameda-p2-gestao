@@ -17,6 +17,17 @@
       padding: 20px;
 }
 
+.card-erro {
+      padding: 2.5%;
+      background-color: var(--erro-color);
+      text-align: center;
+}
+
+.card-erro:hover {
+      background-color: var(--erro-color-highlight);
+      transform: none !important;
+}
+
 .dashboard {
       width: 100%;
       border-radius: 10px;
@@ -47,16 +58,23 @@
       box-shadow: 0 -4px 6px -4px rgba(0, 0, 0, 0.5), 4px 0 6px -4px rgba(0, 0, 0, 0.5);
 }
 
-
-.card-erro {
-      padding: 2.5%;
-      background-color: var(--erro-color);
-      text-align: center;
+.dashboard-modal {
+      position: fixed;
+      z-index: 10;
+      border-radius: 10px;
+      top: 33%;
+      align-self: center;
+      display: none;
+      padding: 3%;
+      margin: 1% 0; 
+      box-shadow: 0 -4px 6px -4px rgba(0, 0, 0, 0.5), 4px 0 6px -4px rgba(0, 0, 0, 0.5);
 }
 
-.card-erro:hover {
-      background-color: var(--erro-color-highlight);
-      transform: none !important;
+.big-modal {
+      min-width: 300px;
+      width: 50%;
+      height: auto;
+      max-height: 700px;
 }
 
 .basic-card-wrapper {

@@ -88,6 +88,14 @@ class ComprovantesTransferenciaController extends Controller
                 $comprovante->referencia = ProjectUtils::tirarMascara($request->input('referencia'));
                 $comprovante->descricao = $request->input('descricao');
                 $comprovante->tipocomprovante = $request->input('tipo-comprovante');
+
+                if($request->hasFile('arquivo-comprovante')){
+                    $file = $request->file('arquivo-comprovante');
+                    $fileName = $file->getClientOriginalName();
+                    $filePath = $file->storeAs('comprovantes-inquilinos', $fileName);
+                    $comprovante->arquivo_comprovante = $filePath;
+                }
+
                 $comprovante->save();
                 $mensagem = "sucesso";
             }

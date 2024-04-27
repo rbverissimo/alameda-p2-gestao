@@ -29,6 +29,11 @@
       color: var(--text-white);
 }
 
+.cancelar-button {
+      background-color: var(--alternative-secondary-button);
+      color: var(--text-white);
+}
+
 .light-button a {
       font-size: 0.9rem;
       color: var(--text-white);

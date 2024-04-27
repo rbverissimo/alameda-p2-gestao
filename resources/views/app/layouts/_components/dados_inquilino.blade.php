@@ -11,7 +11,8 @@
                   <span>Contato: {{$inquilino->telefone_celular}}</span>
             </div>       
             <div class="col-2">
-                  <button class="inline-button light-button">Mais informações</button>
+                  <button id="mais-info-painel-inquilino"
+                        class="inline-button light-button">Mais informações</button>
             </div>
       </div>
 </div>

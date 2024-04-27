@@ -231,6 +231,10 @@ export function navigateBack(rotaAnterior) {
       });
 }
 
+export function navigateTo(rota){
+      window.location.href = rota; 
+}
+
 export function swapPontosVirgulas(valor){
       if (valor.includes('.')) {
             return valor.replace(/\./g, ',');

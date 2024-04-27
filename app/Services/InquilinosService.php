@@ -32,4 +32,10 @@ class InquilinosService {
                   ->first();
       }
 
+      public static function getDetalhesInquilino($id){
+            return Inquilino::join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
+                  ->where('inquilinos.id', $id)
+                  ->first();
+      }
+
 }

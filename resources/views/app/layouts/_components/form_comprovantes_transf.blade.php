@@ -1,4 +1,4 @@
-<form action="{{ isset($comprovante->id) ? route('comprovante-editar', ['id' => $comprovante->id]) : route('comprovantes-transferencia') }}" method="POST">
+<form action="{{ isset($comprovante->id) ? route('comprovante-editar', ['id' => $comprovante->id]) : route('comprovantes-transferencia') }}" method="POST" enctype="multipart/form-data">
       @csrf
       @if (isset($comprovante->id))
             @method('PUT')
@@ -66,8 +66,8 @@
       </div>
       <div class="row">
             <div class="col-6">
-                  <label for="arquivo-conta"> 
-                        Envie a conta:
+                  <label for="arquivo-comprovante"> 
+                        Envie o comprovante:
                   </label>
                   <input type="file" name="arquivo-comprovante">
             </div>
