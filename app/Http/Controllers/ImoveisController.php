@@ -88,7 +88,9 @@ class ImoveisController extends Controller
             }
         }
 
-        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel'));
+        $itens_carrossel = [202403, 202404, 202405];
+
+        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel'));
 
     }
 }
