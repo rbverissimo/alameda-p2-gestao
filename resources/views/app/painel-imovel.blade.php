@@ -12,7 +12,7 @@
                 Quod ea laudantium iure explicabo voluptate rerum ipsam qui sapiente blanditiis libero.
             </div>
             <div class="col-2">
-                <button class="button common-button">Calcular contas</button>
+                <button id="calcular-contas-botao-painel-imovel" class="button common-button">Calcular contas</button>
             </div>
     </div>
 </div>
@@ -23,3 +23,4 @@
 @endsection
 
 @include('app.scripts.script-lista-contas')
+@include('app.scripts.script-painel-imovel')

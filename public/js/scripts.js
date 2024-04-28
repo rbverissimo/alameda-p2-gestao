@@ -169,7 +169,6 @@ export function redirecionarPara(route){
 }
 
 export function converterReferencia(referencia){
-      console.log(referencia);
       const ano = referencia.slice(0, 4);
       const mes = converterMes(referencia.slice(4));
 

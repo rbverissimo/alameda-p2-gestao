@@ -45,4 +45,12 @@ class ImoveisController extends Controller
 
         return $contas_imovel;
     }
+
+    public function executarCalculoContas($idImovel, $periodoReferencia = null){
+
+        $titulo = 'Executar cálculo de contas do imóvel';
+
+        return view('app.painel-calcular-contas', compact('titulo'));
+
+    }
 }

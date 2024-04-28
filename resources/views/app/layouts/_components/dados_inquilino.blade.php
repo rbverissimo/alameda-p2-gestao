@@ -5,7 +5,7 @@
                   <span>Nome: {{$inquilino->nome}}</span>
             </div>
             <div class="col-3">
-                  <span>Valor Aluguel: {{$inquilino->valorAluguel}}</span>
+                  <span>Valor Aluguel: R${{$inquilino->valorAluguel}}</span>
             </div>
             <div class="col-3">
                   <span>Contato: {{$inquilino->telefone_celular}}</span>

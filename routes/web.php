@@ -81,6 +81,7 @@ Route::middleware('autenticacao')->controller(ImoveisController::class)->group(f
     Route::get('/imoveis', 'index')->name('imoveis');
     Route::get('/imoveis/{id}', 'detalharImovel')->name('imoveis-detalhar');
     Route::get('/imoveis/listar-contas/{id}', 'listarContas')->name('imoveis-listar-contas');
+    Route::get('/imoveis/executar-calculo/{id}/{ref?}', 'executarCalculoContas')->name('executar-calculo-contas');
 });
 
 Route::middleware('autenticacao')->group(function(){

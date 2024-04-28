@@ -1,5 +1,5 @@
 @section('scripts')
-<script>
+<script type="text/javascript">
 
 const idImovel = {{ $id }};
 
