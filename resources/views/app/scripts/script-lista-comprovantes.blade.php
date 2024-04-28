@@ -259,6 +259,7 @@
                         } 
             }, 300);
       }
+      
 
 </script>
 @endsection

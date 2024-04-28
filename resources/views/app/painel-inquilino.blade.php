@@ -23,4 +23,5 @@
 
 @endsection
 
+@include('app.scripts.script-dados-inquilino')
 @include('app.scripts.script-lista-comprovantes')
