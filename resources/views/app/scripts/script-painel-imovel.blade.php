@@ -1,4 +1,3 @@
-@section('scripts')
 <script type="module">
 
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
@@ -10,4 +9,3 @@
     });
 
 </script> 
-@endsection

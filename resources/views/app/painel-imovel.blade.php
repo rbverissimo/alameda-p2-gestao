@@ -22,5 +22,7 @@
 
 @endsection
 
-@include('app.scripts.script-lista-contas')
-@include('app.scripts.script-painel-imovel')
+@section('scripts')
+    @include('app.scripts.script-lista-contas')
+    @include('app.scripts.script-painel-imovel')
+@endsection

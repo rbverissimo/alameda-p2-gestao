@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
 use App\Models\Imovel;
+use App\Models\Sala;
 use App\Services\UsuarioService;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
 class ImoveisController extends Controller
@@ -35,7 +37,8 @@ class ImoveisController extends Controller
 
     public function listarContas($idImovel){
 
-        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
+        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 
+                'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
             ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
             ->where('contas_imoveis.imovelcodigo', $idImovel)
             ->where('salas.imovelcodigo', $idImovel)
@@ -50,7 +53,42 @@ class ImoveisController extends Controller
 
         $titulo = 'Executar cálculo de contas do imóvel';
 
-        return view('app.painel-calcular-contas', compact('titulo'));
+        if($periodoReferencia == null){
+            $referencia_sistema = ProjectUtils::getAnoMesSistemaSemMascara();
+            $ano_sistema = ProjectUtils::getAnoFromReferencia($referencia_sistema);
+            $mes_sistema = ProjectUtils::getMesFromReferencia($referencia_sistema);
+
+        } else {
+            $ano_sistema = ProjectUtils::getAnoFromReferencia($periodoReferencia);
+            $mes_sistema = ProjectUtils::getMesFromReferencia($periodoReferencia);
+        }
+
+        $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo',
+                            'contas_imoveis.salacodigo')
+                            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
+                            ->where('contas_imoveis.imovelcodigo', $idImovel)
+                            ->where('salas.imovelcodigo', $idImovel)
+                            ->where('contas_imoveis.ano', $ano_sistema)
+                            ->where('contas_imoveis.mes', $mes_sistema)
+                            ->orderBy('contas_imoveis.id', 'desc')
+                            ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.salacodigo')
+                            ->get();
+        
+        $salas = Sala::select('id', 'nomesala')->where('imovelcodigo', $idImovel)->get();
+
+        // Essa parte do código é feita para associar o nome de descrição da sala à conta
+        foreach ($contas_imovel as $conta) {
+            if($conta->salacodigo != null){
+                foreach ($salas as $sala) {    
+                    if($sala->id == $conta->salacodigo){
+                        $conta->nomesala = $sala->nomesala;
+                    }
+                    
+                }
+            }
+        }
+
+        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel'));
 
     }
 }

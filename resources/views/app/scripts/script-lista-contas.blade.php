@@ -1,4 +1,3 @@
-@section('scripts')
 <script type="text/javascript">
 
 const idImovel = {{ $id }};
@@ -166,4 +165,3 @@ function converterTipoConta(tipo){
 }
 
 </script>
-@endsection
