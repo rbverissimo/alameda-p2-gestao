@@ -39,8 +39,7 @@ class ImoveisController extends Controller
 
         $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 
                 'contas_imoveis.tipocodigo','contas_imoveis.ano', 'contas_imoveis.mes')
-            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
-            ->where('contas_imoveis.imovelcodigo', $idImovel)
+            ->join('salas', 'salas.id', 'contas_imoveis.salacodigo')
             ->where('salas.imovelcodigo', $idImovel)
             ->orderBy('contas_imoveis.id', 'desc')
             ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
