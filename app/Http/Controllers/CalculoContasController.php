@@ -41,7 +41,7 @@ class CalculoContasController extends Controller
             if($tipo_conta === '2'){
                 $conta_imovel->salacodigo = $request->input('sala');
             } else if($tipo_conta == '1') {
-                $conta_imovel->imovelcodigo = $request->input('imovelcodigo');
+                $conta_imovel->salacodigo = 4;
             }
 
             $filePath = null; 

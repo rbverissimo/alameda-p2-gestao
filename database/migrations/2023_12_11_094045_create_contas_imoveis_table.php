@@ -17,14 +17,14 @@ class CreateContasImoveisTable extends Migration
             
             $table->id();
             $table->double('valor');
-            $table->integer('imovelcodigo');
+            $table->unsignedBigInteger('imovelcodigo');
             $table->integer('ano');
             $table->integer('mes');
             $table->string('dataVencimento', 9);
             $table->string('observacoes', 200)->nullable();
             $table->integer('referenciaConta');
             $table->string('nrDocumento', 25)->nullable();
-            $table->integer('salacodigo');
+            $table->unsignedBigInteger('salacodigo');
             $table->timestamps();
 
             $table->foreign('salacodigo')->references('id')->on('salas');

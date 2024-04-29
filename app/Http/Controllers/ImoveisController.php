@@ -65,8 +65,7 @@ class ImoveisController extends Controller
 
         $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo',
                             'contas_imoveis.salacodigo')
-                            ->join('salas', 'salas.imovelcodigo', 'contas_imoveis.imovelcodigo')
-                            ->where('contas_imoveis.imovelcodigo', $idImovel)
+                            ->join('salas', 'salas.id', 'contas_imoveis.salacodigo')
                             ->where('salas.imovelcodigo', $idImovel)
                             ->where('contas_imoveis.ano', $ano_sistema)
                             ->where('contas_imoveis.mes', $mes_sistema)

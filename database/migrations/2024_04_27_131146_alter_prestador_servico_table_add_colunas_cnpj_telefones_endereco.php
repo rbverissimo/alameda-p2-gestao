@@ -13,7 +13,11 @@ class AlterPrestadorServicoTableAddColunasCnpjTelefonesEndereco extends Migratio
      */
     public function up()
     {
-        //
+        Schema::table('prestadores_servicos', function(Blueprint $table){
+            $table->string('cnpj', 18)->nullable();
+            $table->string('telefone_empresa', 15)->nullable();
+            $table->unsignedBigInteger('endereco_codigo')->nullable();
+        });
     }
 
     /**
@@ -23,6 +27,10 @@ class AlterPrestadorServicoTableAddColunasCnpjTelefonesEndereco extends Migratio
      */
     public function down()
     {
-        //
+        Schema::table('prestadores_servicos', function(Blueprint $table){
+            $table->dropColumn('cnpj');
+            $table->dropColumn('telefone_empresa');
+            $table->dropColumn('endereco_codigo');
+        });
     }
 }

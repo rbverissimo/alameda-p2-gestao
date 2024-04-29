@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterPessoasTableAddEnderecoTrabalhoColumn extends Migration
+class AlterUsersTableAddSalt extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterPessoasTableAddEnderecoTrabalhoColumn extends Migration
      */
     public function up()
     {
-        Schema::table('pessoas', function(Blueprint $table){
-            $table->unsignedBigInteger('endereco_trabalho')->nullable();
+        Schema::table('users', function(Blueprint $table){
+            $table->string('salt', 255)->nullable();
         });
     }
 
@@ -25,9 +25,8 @@ class AlterPessoasTableAddEnderecoTrabalhoColumn extends Migration
      */
     public function down()
     {
-        Schema::table('pessoas', function(Blueprint $table){
-            $table->dropColumn('endereco_trabalho');
+        Schema::table('users', function(Blueprint $table){
+            $table->dropColumn('salt');
         });
     }
-    
 }
