@@ -51,16 +51,12 @@ class ImoveisController extends Controller
     public function executarCalculoContas($idImovel, $periodoReferencia = null){
 
         $titulo = 'Executar cálculo de contas do imóvel';
+        $nomeImovel = Imovel::find($idImovel)->pluck('nomefantasia');
+        $referencia_calculo = $periodoReferencia != null ? $periodoReferencia : ProjectUtils::getAnoMesSistemaSemMascara();
 
-        if($periodoReferencia == null){
-            $referencia_sistema = ProjectUtils::getAnoMesSistemaSemMascara();
-            $ano_sistema = ProjectUtils::getAnoFromReferencia($referencia_sistema);
-            $mes_sistema = ProjectUtils::getMesFromReferencia($referencia_sistema);
-
-        } else {
-            $ano_sistema = ProjectUtils::getAnoFromReferencia($periodoReferencia);
-            $mes_sistema = ProjectUtils::getMesFromReferencia($periodoReferencia);
-        }
+        
+        $ano_sistema = ProjectUtils::getAnoFromReferencia($referencia_calculo);
+        $mes_sistema = ProjectUtils::getMesFromReferencia($referencia_calculo);
 
         $contas_imovel = ContaImovel::select('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo',
                             'contas_imoveis.salacodigo')
@@ -86,9 +82,11 @@ class ImoveisController extends Controller
             }
         }
 
-        $itens_carrossel = [202403, 202404, 202405];
+        $itens_carrossel = [$referencia_calculo-1, $referencia_calculo];
+        $mensagemConfirmacaoModal = 'Deseja realizar o cálculo das contas do imóvel '.$nomeImovel.
+            ' para o período de referência: '.$referencia_calculo.'?';
 
-        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel'));
+        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 'mensagemConfirmacaoModal'));
 
     }
 }
