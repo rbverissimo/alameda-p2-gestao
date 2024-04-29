@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -42,10 +41,16 @@ class LoginController extends Controller
         
         if(isset($usuario->name)) {
                 session_start();
+
+                session_set_cookie_params(86400);
+                ini_set('session.gc_maxlifetime', 86400);
+
+                session_regenerate_id(true);
                 $_SESSION['nome'] = $usuario->name;
                 $_SESSION['email'] = $usuario->email;
 
-                print_r($_SESSION);
+
+                //print_r($_SESSION);
     
                 return redirect()->route('painel-principal');
         } else { 
@@ -54,6 +59,7 @@ class LoginController extends Controller
     }
 
     public function sair(){
+        session_regenerate_id(true);
         session_destroy();
         return redirect()->route('login');
     }
