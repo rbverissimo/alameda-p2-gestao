@@ -40,21 +40,21 @@ class LoginController extends Controller
             ->first();
         
         if(isset($usuario->name)) {
-                session_start();
-
-                session_set_cookie_params(86400);
-                ini_set('session.gc_maxlifetime', 86400);
-
-                session_regenerate_id(true);
-                $_SESSION['nome'] = $usuario->name;
-                $_SESSION['email'] = $usuario->email;
+            session_set_cookie_params(86400);
+            ini_set('session.gc_maxlifetime', 86400);
+            session_start();
 
 
-                //print_r($_SESSION);
+            session_regenerate_id(true);
+            $_SESSION['nome'] = $usuario->name;
+            $_SESSION['email'] = $usuario->email;
+
+
+            //print_r($_SESSION);
     
-                return redirect()->route('painel-principal');
+            return redirect()->route('painel-principal');
         } else { 
-                return redirect()->route('login', ['erro' => 1]);
+            return redirect()->route('login', ['erro' => 1]);
         } 
     }
 
