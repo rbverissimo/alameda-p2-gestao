@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ContaImovel;
 use App\Models\Imovel;
 use App\Models\Sala;
+use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
@@ -72,26 +73,25 @@ class ImoveisController extends Controller
 
         // Essa parte do código é feita para associar o nome de descrição da sala à conta
         foreach ($contas_imovel as $conta) {
-            if($conta->salacodigo != null){
-                foreach ($salas as $sala) {    
-                    if($sala->id == $conta->salacodigo){
-                        $conta->nomesala = $sala->nomesala;
-                    }
-                    
-                }
+            foreach ($salas as $sala) {    
+                if($sala->id == $conta->salacodigo){
+                    $conta->nomesala = $sala->nomesala;
+                }        
             }
+            $conta->tipoconta = TipoContasService::getDescricaoTipoContaBy($conta->tipocodigo);   
         }
 
         $itens_carrossel = [$referencia_calculo-1, $referencia_calculo];
         $mensagemConfirmacaoModal = 'Deseja realizar o cálculo das contas do imóvel '.$nomeImovel->first().
             ' para o período de referência: '.$referencia_calculo.'?';
 
-        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 'mensagemConfirmacaoModal'));
+        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 
+            'mensagemConfirmacaoModal', 'idImovel', 'referencia_calculo'));
 
     }
 
     public function calculo($idImovel, $referencia){
 
-
+        return response()->json(['mensagem' => 'Chegou aqui!']);
     }
 }
