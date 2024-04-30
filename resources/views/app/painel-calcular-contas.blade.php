@@ -1,9 +1,7 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
-    <div class="row">
-        @include('app.layouts._partials.simple-modal')
-    </div>
+    @include('app.layouts._partials.simple-modal')
     <div class="row center-itens">
         <div class="col-3">
             @include('app.layouts._partials.simple-carousel')
@@ -18,7 +16,7 @@
         <div class="dashboard light-dashboard">
             <div class="row">
                 <div class="col-2">
-                    <button class="button confirmacao-button">Realizar cálculos</button>
+                    <button id="botao-realizar-calculos" class="button confirmacao-button">Realizar cálculos</button>
                 </div>
             </div>
         </div>
