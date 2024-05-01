@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
 use App\Models\Imovel;
+use App\Models\Inquilino;
+use App\Models\InquilinoConta;
 use App\Models\Sala;
+use App\Models\TipoConta;
 use App\Services\CalculoContasService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
@@ -93,9 +96,37 @@ class ImoveisController extends Controller
 
     public function calculo($idImovel, $referencia){
 
-        $calcular_contas_service = new CalculoContasService();
-        $calcular_contas_service->calcularContasInquilinos($idImovel, $referencia);
+        /* $calcular_contas_service = new CalculoContasService();
+        $calcular_contas_service->calcularContasInquilinos($idImovel, $referencia); */
 
-        return response()->json(['mensagem' => 'Chegou aqui!']);
+        $ano_referencia = ProjectUtils::getAnoFromReferencia($referencia);
+        $mes_referencia = ProjectUtils::getMesFromReferencia($referencia);
+
+
+        $inquilinos = Inquilino::select('inquilinos.id', 'pessoas.nome', 'inquilinos.valorAluguel')
+            ->join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
+            ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+            ->where('salas.imovelcodigo', $idImovel)
+            ->where('inquilinos.situacao', 'A')
+            ->get();
+
+        foreach ($inquilinos as $inquilino) {
+            $contas_inquilino = InquilinoConta::select('inquilinos_contas.valorinquilino', 'contas_imoveis.tipocodigo')
+                ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
+                ->where('inquilinos_contas.inquilinocodigo', $inquilino->id)
+                ->where('contas_imoveis.ano', $ano_referencia)
+                ->where('contas_imoveis.mes', $mes_referencia)
+                ->get();
+            
+            foreach ($contas_inquilino as $conta) {
+                $descricao_codigo = TipoContasService::getDescricaoTipoContaBy($conta->tipocodigo);
+                $conta->descricao = $descricao_codigo;
+            }
+            
+            $inquilino->contas_inquilino = $contas_inquilino;
+        }
+        
+
+        return response()->json(['mensagem' => 'Chegou aqui!', 'inquilinos' => $inquilinos]);
     }
 }

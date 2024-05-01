@@ -21,8 +21,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            NESSA DIV ESTARÁ O OUTPUT DO CÁLCULO COM UM BOTÃO PARA O USUÁRIO FECHAR A REFERÊNCIA
+        <div class="dashboard light-dashboard">
+            <div id="resultado-calculo" class="row">
+                
+            </div>
         </div>
     @else
         <div class="dashboard light-dashboard">

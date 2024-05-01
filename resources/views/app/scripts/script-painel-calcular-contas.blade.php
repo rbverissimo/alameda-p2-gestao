@@ -35,6 +35,7 @@
                 .then(data => {
                     toggleOverlay(loadingOverlay);
                     console.log(data);
+                    renderizarResultado(data['inquilinos']);
                 })
                 .catch(error => {
                     toggleOverlay(loadingOverlay);
@@ -50,6 +51,21 @@
     function toggleModal(){
         overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
         wrapperModal.style.display = wrapperModal.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function renderizarResultado(data){
+        const divResultado = document.getElementById('resultado-calculo');
+        let html = '<div class="col-12 end-table-scroll">';
+        data.forEach(function(inquilino) {
+            html += `<div>Nome: ${inquilino.nome}, Valor do Aluguel: ${inquilino.valorAluguel}</div>`;
+
+            inquilino.contas_inquilino.forEach(e => {
+                html += `<div> Conta:  ${e.descricao} - Valor: ${e.valorinquilino}</div>`;
+            })
+        });
+        
+        html += '</div>';
+        divResultado.innerHTML = html;
     }
 
 </script>

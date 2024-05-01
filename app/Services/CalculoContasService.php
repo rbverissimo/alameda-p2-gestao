@@ -48,10 +48,9 @@ class CalculoContasService {
 
         $soma_valor_luz_sala_3 = $conta_luz_sala3->sum('valor');
 
-        $fator_casa_3 = $this->getFatorCasa3($soma_valor_luz_sala_3);
-
+        
         $inquilinos = Inquilino::where('situacao', 'A')->get();
-
+        
         $inquilinos_sala1 = $inquilinos->filter(function($item) {
             return $item->salacodigo == 1;
         });
@@ -60,10 +59,11 @@ class CalculoContasService {
         $inquilinos_sala2 = $inquilinos->filter(function($item) {
             return $item->salacodigo == 2;
         });
-
+        
         $numero_inquilinos_sala1 = count($inquilinos_sala1);
         $numero_inquilinos_sala2 = count($inquilinos_sala2);
-
+        $fator_casa_3 = $this->getFatorCasa3($soma_valor_luz_sala_3, $numero_inquilinos_sala1 + $numero_inquilinos_sala2);
+        
         foreach($inquilinos as $inquilino){
 
             $fator_divisor_inquilino = InquilinoFatorDivisor::where('inquilino_id', $inquilino->id)->orderByDesc('id')->first();
@@ -102,8 +102,8 @@ class CalculoContasService {
         }
     }
 
-    private function getFatorCasa3($valor_casa_3){
-        return $valor_casa_3 / 2;
+    private function getFatorCasa3($valor_casa_3, $nr_inquilinos_imovel){
+        return $valor_casa_3 / $nr_inquilinos_imovel;
     }
 
     private function calculoEnergiaCasa1($energia_casa_1, $nr_inquilinos_sala1, $fator_casa_3, $fator_divisor){
