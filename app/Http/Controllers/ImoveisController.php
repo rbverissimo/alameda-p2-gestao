@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ContaImovel;
 use App\Models\Imovel;
 use App\Models\Sala;
+use App\Services\CalculoContasService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
@@ -91,6 +92,10 @@ class ImoveisController extends Controller
     }
 
     public function calculo($idImovel, $referencia){
+
+        $calcular_contas_service = new CalculoContasService();
+        $calcular_contas_service->calcularContasInquilinos($idImovel, $referencia);
+
         return response()->json(['mensagem' => 'Chegou aqui!']);
     }
 }
