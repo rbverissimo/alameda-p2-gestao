@@ -1,13 +1,14 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
-    @include('app.layouts._partials.simple-modal')
-    <div class="row center-itens">
-        <div class="col-3">
-            @include('app.layouts._partials.simple-carousel')
-        </div>
+@include('app.layouts._partials.simple-modal')
+@include('app.layouts._partials.spinner')
+<div class="row center-itens">
+    <div class="col-3">
+        @include('app.layouts._partials.simple-carousel')
     </div>
-    @if ($contas_imovel->isNotEmpty())     
+</div>
+@if ($contas_imovel->isNotEmpty())     
         <div class="row">
             <div class="col-12">
                 @include('app.layouts._components.lista_executar_calculo_contas')
@@ -35,6 +36,7 @@
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{ asset('js/comportamento-dinamico.js')}}"></script>
     @include('app.scripts.script-painel-calcular-contas')
     @include('app.scripts.script-carousel')
 @endsection

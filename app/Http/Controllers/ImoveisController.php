@@ -91,7 +91,6 @@ class ImoveisController extends Controller
     }
 
     public function calculo($idImovel, $referencia){
-
         return response()->json(['mensagem' => 'Chegou aqui!']);
     }
 }

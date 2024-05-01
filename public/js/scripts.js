@@ -164,6 +164,10 @@ export function isBlank(value){
       return value === '';
 }
 
+export function isArrayEmpty(array){
+      return array.lenght === 0 || array.length === undefined;
+}
+
 export function redirecionarPara(route){
       window.location.href = route;
 }
