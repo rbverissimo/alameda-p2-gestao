@@ -77,12 +77,17 @@ Route::middleware('autenticacao')->controller(ComprovantesTransferenciaControlle
     Route::get('/comprovantes-transferencia/delete/{id}', 'deletarComprovante')->name('comprovante-deletar');
 });
 
-Route::middleware('autenticacao')->controller(ImoveisController::class)->group(function(){
-    Route::get('/imoveis', 'index')->name('imoveis');
-    Route::get('/imoveis/{id}', 'detalharImovel')->name('imoveis-detalhar');
-    Route::get('/imoveis/listar-contas/{id}', 'listarContas')->name('imoveis-listar-contas');
-    Route::get('/imoveis/executar-calculo/{id}/{ref?}', 'executarCalculoContas')->name('executar-calculo-contas');
-    Route::get('/imoveis/executar-calculo/calculo/{id}/{ref}', 'calculo')->name('realizar-calculo');
+Route::prefix('imoveis')->middleware('autenticacao')->group(function(){
+    Route::get('/', [ImoveisController::class, 'index'])->name('imoveis');
+    Route::get('/{id}', [ImoveisController::class, 'detalharImovel'])->name('imoveis-detalhar');
+    Route::get('/listar-contas/{id}', [ImoveisController::class, 'listarContas'])->name('imoveis-listar-contas');
+    Route::get('/executar-calculo/{id}/{ref?}', [ImoveisController::class, 'executarCalculoContas'])->name('executar-calculo-contas');
+    Route::get('/executar-calculo/calculo/{id}/{ref}', [ImoveisController::class, 'calculo'])->name('realizar-calculo');
+    Route::get('/cadastrar-imovel', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
+});
+
+Route::prefix('servicos')->middleware('autenticacao')->group(function(){
+    // Route::get('/', '');
 });
 
 Route::middleware('autenticacao')->group(function(){

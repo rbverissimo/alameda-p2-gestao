@@ -32,6 +32,14 @@ class ImoveisController extends Controller
         return view('app.imoveis', compact('titulo', 'imoveis'));
     }
 
+    public function cadastrar(){
+
+        $titulo = 'Cadastrar novo imóvel';
+
+        return view('app.cadastro-imovel', compact('titulo'));
+
+    }
+
     public function detalharImovel($imovel){
         $imovel = Imovel::where('id', $imovel)->first();
         $titulo = 'Painel do Imóvel: '.$imovel->nomefantasia; 
