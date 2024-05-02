@@ -21,13 +21,11 @@
                 </div>
             </div>
         </div>
-        <div class="end-table-scroll">
-            <div class="dashboard light-dashboard">
-                <div id="resultado-calculo" class="row">
-                    
-                </div>
+        <div  class="dashboard light-dashboard">
+            <div id="resultado-calculo" class="row">          
             </div>
         </div>
+        
     @else
         <div class="dashboard light-dashboard">
             <div class="row">
@@ -37,6 +35,9 @@
             </div>
         </div>
     @endif
+<div class="row">
+    <div class="whitespace-end-page"></div>
+</div>
 @endsection
 
 @section('scripts')
