@@ -34,6 +34,7 @@ class InquilinosService {
 
       public static function getDetalhesInquilino($id){
             return Inquilino::join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
+                  ->join('inquilinos_fator_divisor', 'inquilinos_fator_divisor.id', 'inquilinos.id')
                   ->where('inquilinos.id', $id)
                   ->first();
       }

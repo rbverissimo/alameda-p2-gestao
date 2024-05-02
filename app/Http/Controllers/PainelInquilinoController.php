@@ -6,6 +6,7 @@ use App\Models\Inquilino;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Utils\ProjectUtils;
+use GuzzleHttp\Psr7\Request;
 
 class PainelInquilinoController extends Controller
 {
@@ -52,6 +53,10 @@ class PainelInquilinoController extends Controller
             return response()->json(['message' => 'Failed to update situacao', 'error' => $e->getMessage()], 500);
         }
         // $this->detalharInquilino($id);
+    }
+
+    public function editarInquilino(Request $request, $id){
+        
     }
 
 }

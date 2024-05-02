@@ -51,10 +51,18 @@
     </div>
     <div class="row">
         <div class="col-3">
+            <label for="profissao">Profissão: </label>
             <input type="text" 
                 name="profissao" 
-                placeholder="Profissão: "
+                placeholder="ex: Autônomo, Médico, etc"
                 value="{{ isset($inquilino->profissao) ? old('profissao', $inquilino->profissao) : old('profissao')}}">
+        </div>
+        <div class="col-3">
+            <label for="fator-divisor">Fator divisor do cálculo: </label>
+            <input type="text" 
+                name="fator-divisor"
+                placeholder="Fator divisor: "
+                value="{{ isset($inquilino->fatorDivisor) ? old('fator-divisor', $inquilino->fatorDivisor) : old('fator-divisor') }}">
         </div>
     </div>
     <div class="row center-itens">
