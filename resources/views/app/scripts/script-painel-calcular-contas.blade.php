@@ -55,13 +55,14 @@
 
     function renderizarResultado(data){
         const divResultado = document.getElementById('resultado-calculo');
-        let html = '<div class="col-12 end-table-scroll">';
+        let html = '<div class="col-12">';
         data.forEach(function(inquilino) {
-            html += `<div>Nome: ${inquilino.nome}, Valor do Aluguel: ${inquilino.valorAluguel}</div>`;
+            html += `<div class="col-3"><div>Nome: ${inquilino.nome}</div><div>Aluguel: ${inquilino.valorAluguel}</div>`;
 
             inquilino.contas_inquilino.forEach(e => {
-                html += `<div> Conta:  ${e.descricao} - Valor: ${e.valorinquilino}</div>`;
+                html += `<div> ${e.descricao}: ${e.valorinquilino}</div>`;
             })
+            html += '</div>';
         });
         
         html += '</div>';

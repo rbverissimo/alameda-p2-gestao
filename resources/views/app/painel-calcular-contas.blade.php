@@ -21,9 +21,11 @@
                 </div>
             </div>
         </div>
-        <div class="dashboard light-dashboard">
-            <div id="resultado-calculo" class="row">
-                
+        <div class="end-table-scroll">
+            <div class="dashboard light-dashboard">
+                <div id="resultado-calculo" class="row">
+                    
+                </div>
             </div>
         </div>
     @else
