@@ -4,8 +4,18 @@ namespace App\Services;
 
 use App\Models\Comprovante;
 use App\Models\Inquilino;
+use App\Models\InquilinoFatorDivisor;
 
 class InquilinosService {
+
+
+      public static function getInquilinoBy($id){
+            return Inquilino::find($id)->first();
+      }
+
+      public static function getInquilinoFatorDivisorBy($idInquilino){
+            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino);
+      }
 
       public static function getInquilinoNome($id) {
             

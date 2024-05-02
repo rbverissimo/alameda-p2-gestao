@@ -7,9 +7,11 @@ use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Utils\ProjectUtils;
 use GuzzleHttp\Psr7\Request;
+use PessoasService;
 
 class PainelInquilinoController extends Controller
 {
+    private $titulo = 'Painel do Inquilino: '; 
     public function painel_inquilino($id){
 
         $inquilino = InquilinosService::getInfoPainelInquilino($id);
@@ -56,7 +58,17 @@ class PainelInquilinoController extends Controller
     }
 
     public function editarInquilino(Request $request, $id){
-        
+        try {
+
+            $titulo = $this->titulo;
+            $inquilino = InquilinosService::getInquilinoBy($id);
+            $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($id);
+            $pessoa = PessoasService::getPessoaBy($inquilino->pessoacodigo);
+
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }        
     }
 
 }
