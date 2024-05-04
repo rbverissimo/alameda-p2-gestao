@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\RaizController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(RaizController::class)->group(function () {
     Route::get('/', 'index')->name('root');
+});
+
+Route::prefix('sessao')->middleware('autenticacao')->group(function(){
+    Route::post('/', [SessionController::class, 'getFlashedSessionData'])->name('buscar-session-data');
 });
 
 Route::controller(LoginController::class)->group(function(){

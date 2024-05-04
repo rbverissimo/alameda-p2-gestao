@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row">
-        @include('app.layouts._components.form_pessoas')
+        @include('app.layouts._components.form_inquilinos')
     </div>
 @endsection
 

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Inquilino;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
+use App\Services\PessoasService;
 use App\Utils\ProjectUtils;
-use GuzzleHttp\Psr7\Request;
-use PessoasService;
+use Illuminate\Http\Request;
 
 class PainelInquilinoController extends Controller
 {
@@ -50,9 +50,9 @@ class PainelInquilinoController extends Controller
         
             $inquilino->save();
         
-            return response()->json(['message' => 'Situação do inquilino alteradac com sucesso!', 'inquilino' => $inquilino]);
+            return response()->json(['mensagem' => 'Situação do inquilino alterada com sucesso!', 'inquilino' => $inquilino]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to update situacao', 'error' => $e->getMessage()], 500);
+            return response()->json(['mensagem' => 'Erro alterar a situação do inquilino: ', 'error' => $e->getMessage()], 500);
         }
         // $this->detalharInquilino($id);
     }
@@ -65,9 +65,25 @@ class PainelInquilinoController extends Controller
             $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($id);
             $pessoa = PessoasService::getPessoaBy($inquilino->pessoacodigo);
 
+            $pessoa->nome = $request->input('nome');
+            $pessoa->cpf = $request->input('cpf');
+            $pessoa->profissao = $request->input('profissao');
+            $pessoa->telefone_celular = $request->input('telefone_celular');
+            $pessoa->telefone_fixo = $request->input('telefone_fixo');
+            $pessoa->telefone_trabalho = $request->input('telefone_trabalho');
 
-        } catch (\Throwable $th) {
-            //throw $th;
+            $pessoa->save();
+
+            $inquilino->valorAluguel = $request->input('valor-aluguel');
+
+            $inquilino->save();
+
+            $fator_divisor->fatorDivisor = $request->input('fator-divisor');
+            
+            $fator_divisor->save();
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with("mensagem", "Não foi possível alterar os dados do inquilino ");
         }        
     }
 

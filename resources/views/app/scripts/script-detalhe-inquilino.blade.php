@@ -9,6 +9,10 @@
     const inativarInquilinoBotao = document.getElementById('botao-inativar-inquilino-painel');
     const spanSituacao = document.getElementById('span-situacao');
 
+    document.addEventListener('DOMContentLoaded', function(){
+        buscarMensagemSessionData();
+    });
+
     document.getElementById('botao-confirmar-modal').addEventListener('click', function(){
         const request = new XMLHttpRequest();
         request.open("GET", "/inquilino/toggle-inquilino/"+ idInquilino, true);
@@ -64,6 +68,36 @@
 
     function converterSituacao(situacao){
         return situacao === 'A' ? 'Ativo' : 'Inativo';
+    }
+
+    function buscarMensagemSessionData() {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var requestBody = {
+            chaveDataSession: 'mensagem'
+        };
+
+        fetch("{{ route('buscar-session-data') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Não foi possível buscar o session data. ');
+            }
+            return response.json();
+        }).then(
+            data => {
+                console.log(data);
+                var mensagem = data.mensagem;
+                if(mensagem != undefined && mensagem != ''){
+                    showMensagem(mensagem, "neutra");
+                }
+            }
+        )
     }
 
 </script>
