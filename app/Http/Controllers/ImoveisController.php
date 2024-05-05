@@ -93,7 +93,7 @@ class ImoveisController extends Controller
             $conta->tipoconta = TipoContasService::getDescricaoTipoContaBy($conta->tipocodigo);   
         }
 
-        $itens_carrossel = [$referencia_calculo-1, $referencia_calculo];
+        $itens_carrossel = [$referencia_calculo-1, $referencia_calculo, $referencia_calculo+1];
         $mensagemConfirmacaoModal = 'Deseja realizar o cálculo das contas do imóvel '.$nomeImovel->first().
             ' para o período de referência: '.$referencia_calculo.'?';
 

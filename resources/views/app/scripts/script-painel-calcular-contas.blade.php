@@ -3,6 +3,7 @@
     import { toggleOverlay } from "{{ asset('js/comportamento-dinamico.js') }}";
     import { isArrayEmpty } from "{{ asset('js/scripts.js') }}";
     import { isNotNullOrUndefined } from "{{ asset('js/scripts.js') }}";
+    import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
 
     const referenciaCalculo = @json($referencia_calculo);
     const idImovel = @json($idImovel);
@@ -11,6 +12,22 @@
     const wrapperModal = document.getElementById('dashboard-modal-wrapper');
     const overlay = document.getElementsByClassName('overlay')[0];
     const loadingOverlay = document.getElementById('loading-overlay');
+
+
+    document.querySelector('.prev-carousel').addEventListener('click', () => {
+        escolherReferenciaAnterior();
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        setarSliderReferencia();
+
+        // Esse event listener tem de ser setado depois do click no botão para evitar um loop infinito de clicks
+        document.querySelector('.next-carousel').addEventListener('click', () => {
+            escolherReferenciaPosterior();
+        });
+        
+    });
 
     if(!isArrayEmpty(contas)){
         document.getElementById('botao-realizar-calculos').addEventListener('click', function(){
@@ -67,6 +84,20 @@
         
         html += '</div>';
         divResultado.innerHTML = html;
+    }
+
+    function setarSliderReferencia(){
+        document.querySelector('.next-carousel').click();
+    }
+
+    function escolherReferenciaAnterior(){
+        var slide = document.querySelector('.slide-carousel');
+        const referencia = slide.textContent;
+        redirecionarPara("{{ route('executar-calculo-contas', ['id' => $idImovel, 'ref' => $itens_carrossel[0] ] )}}");
+    }
+
+    function escolherReferenciaPosterior(){
+        redirecionarPara("{{ route('executar-calculo-contas', ['id' => $idImovel, 'ref' => $itens_carrossel[2] ] )}}");
     }
 
 </script>
