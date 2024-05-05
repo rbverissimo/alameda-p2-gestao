@@ -17,15 +17,19 @@ class CalculoContasService {
 
     public function calcularContasInquilinos($idImovel, $periodo_referencia){
 
-        $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
-        /*
-            PASSO 1: Checar para cada id de Inquilino do imóvel se já existe um registro para a referência informada
-                na tabela inquilinos_contas
-            PASSO 2: Havendo, esses registros serão excluídos e inseridos novos registros de acordo com o fluxo abaixo; 
-        */
-
         $ano_referencia = ProjectUtils::getAnoFromReferencia($periodo_referencia);
         $mes_referencia = ProjectUtils::getMesFromReferencia($periodo_referencia);
+        $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
+
+        foreach ($inquilinos_imovel as $inquilino) {
+            $contas_ja_calculadas = $this->buscarIdInquilinoContaByReferencia($inquilino->id, $ano_referencia, $mes_referencia);
+            if(!$contas_ja_calculadas->isEmpty()){
+                foreach ($contas_ja_calculadas as $conta_calculada) {
+                    InquilinoConta::where('id', $conta_calculada->id)->delete();
+                }
+            }
+        }
+
 
         $conta_agua = ContaImovel::where('tipocodigo', 1)
             ->where('ano', $ano_referencia)
@@ -123,6 +127,15 @@ class CalculoContasService {
 
     private function calculoAgua($conta_agua, $nr_inquilinos_imovel, $fator_divisor){
         return ($conta_agua / $nr_inquilinos_imovel) * $fator_divisor;
+    }
+
+    private function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia){
+        return InquilinoConta::select('inquilinos_contas.id')
+            ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
+            ->where('inquilinos_contas.inquilinocodigo', $idInquilino)
+            ->where('contas_imoveis.ano', $ano_referencia)
+            ->where('contas_imoveis.mes', $mes_referencia)
+            ->get();   
     }
 
 }
