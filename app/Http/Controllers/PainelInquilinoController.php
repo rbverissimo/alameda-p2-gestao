@@ -82,13 +82,22 @@ class PainelInquilinoController extends Controller
             
             $fator_divisor->save();
 
+            $inquilino->nome = $pessoa->nome;
+            $inquilino->cpf = $pessoa->cpf;
+            $inquilino->profissao = $pessoa->profissao;
+            $inquilino->telefone_celular = $pessoa->telefone_celular;
+            $inquilino->telefone_fixo = $pessoa->telefone_fixo;
+            $inquilino->telefone_trabalho = $pessoa->telefone_trabalho;
+            $inquilino->fatorDivisor = $fator_divisor->fatorDivisor;
+
+
             $mensagem = 'sucesso';
             $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
 
-            return view('app.detalhes-inquilino', compact('titulo', 'mensagem', 'mensagemConfirmaaoModal' ));
+            return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem', 'mensagemConfirmacaoModal'));
 
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return redirect()->back()->with('erros', $e->getMessage());
         }        
     }
 

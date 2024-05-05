@@ -14,7 +14,7 @@ class InquilinosService {
       }
 
       public static function getInquilinoFatorDivisorBy($idInquilino){
-            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino);
+            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->first();
       }
 
       public static function getInquilinoNome($id) {
