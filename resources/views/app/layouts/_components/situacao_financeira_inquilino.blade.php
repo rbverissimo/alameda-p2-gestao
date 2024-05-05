@@ -1,8 +1,11 @@
-<div class="col-12 dashboard-card" id="situacao-financeira-wrapper">
+<div class="dashboard light-dashboard" id="situacao-financeira-wrapper">
       @isset($situacao_financeira)
             <div class="row">
-                  <div class="col-12">
-                        <span> Referência: {{$situacao_financeira->referencia}}</span>
+                  <div class="col-3">
+                        <span class="basic-card-wrapper">Referência: </span>
+                  </div>
+                  <div style="align-self: center" class="col-4">
+                        @include('app.layouts._partials.simple-carousel')
                   </div>
             </div>
             <div class="row">
@@ -21,7 +24,7 @@
             </div>
             <div class="row">
                   <div class="col-6">
-                        <label for="checkbox-quitado">Referência quitada?</label>
+                        <label for="quitado">Referência quitada?</label>
                         <input type="checkbox" id="quitado" name="checkbox-quitado" disabled>
                   </div>
                   <div class="col-6">

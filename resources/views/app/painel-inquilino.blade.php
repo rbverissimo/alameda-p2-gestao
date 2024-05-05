@@ -26,4 +26,5 @@
 @section('scripts')
       @include('app.scripts.script-dados-inquilino')
       @include('app.scripts.script-lista-comprovantes')
+      @include('app.scripts.script-carousel')
 @endsection
