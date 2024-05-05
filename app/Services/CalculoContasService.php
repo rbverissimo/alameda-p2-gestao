@@ -17,6 +17,13 @@ class CalculoContasService {
 
     public function calcularContasInquilinos($idImovel, $periodo_referencia){
 
+        $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
+        /*
+            PASSO 1: Checar para cada id de Inquilino do imóvel se já existe um registro para a referência informada
+                na tabela inquilinos_contas
+            PASSO 2: Havendo, esses registros serão excluídos e inseridos novos registros de acordo com o fluxo abaixo; 
+        */
+
         $ano_referencia = ProjectUtils::getAnoFromReferencia($periodo_referencia);
         $mes_referencia = ProjectUtils::getMesFromReferencia($periodo_referencia);
 

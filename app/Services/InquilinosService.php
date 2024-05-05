@@ -49,4 +49,11 @@ class InquilinosService {
                   ->first();
       }
 
+      public static function getInquilinosByImovel($idImovel){
+            return Inquilino::select('inquilinos.id')
+                  ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+                  ->where('salas.imovelcodigo', $idImovel)
+                  ->get();
+      }
+
 }

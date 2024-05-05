@@ -104,8 +104,8 @@ class ImoveisController extends Controller
 
     public function calculo($idImovel, $referencia){
 
-        /* $calcular_contas_service = new CalculoContasService();
-        $calcular_contas_service->calcularContasInquilinos($idImovel, $referencia); */
+        $calcular_contas_service = new CalculoContasService();
+        $calcular_contas_service->calcularContasInquilinos($idImovel, $referencia);
 
         $ano_referencia = ProjectUtils::getAnoFromReferencia($referencia);
         $mes_referencia = ProjectUtils::getMesFromReferencia($referencia);
