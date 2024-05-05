@@ -1,17 +1,18 @@
-@section('scripts')
-
 <script type="module">
 
-    const idInquilino = @json($inquilino->id);
+    import { isStringValida } from "{{ asset('js/scripts.js') }}"
 
+    const idInquilino = @json($inquilino->id);
+    const mensagem = @json($mensagem);
+
+    if(isStringValida(mensagem)){
+        if(mensagem === 'sucesso') showMensagem("Registro alterado com sucesso", "sucesso");
+    }
+    
     const wrapperModal = document.getElementById('dashboard-modal-wrapper');
     const overlay = document.getElementsByClassName('overlay')[0];
     const inativarInquilinoBotao = document.getElementById('botao-inativar-inquilino-painel');
     const spanSituacao = document.getElementById('span-situacao');
-
-    document.addEventListener('DOMContentLoaded', function(){
-        buscarMensagemSessionData();
-    });
 
     document.getElementById('botao-confirmar-modal').addEventListener('click', function(){
         const request = new XMLHttpRequest();
@@ -69,37 +70,4 @@
     function converterSituacao(situacao){
         return situacao === 'A' ? 'Ativo' : 'Inativo';
     }
-
-    function buscarMensagemSessionData() {
-        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var requestBody = {
-            chaveDataSession: 'mensagem'
-        };
-
-        fetch("{{ route('buscar-session-data') }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify(requestBody)
-        })
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Não foi possível buscar o session data. ');
-            }
-            return response.json();
-        }).then(
-            data => {
-                console.log(data);
-                var mensagem = data.mensagem;
-                if(mensagem != undefined && mensagem != ''){
-                    showMensagem(mensagem, "neutra");
-                }
-            }
-        )
-    }
-
 </script>
-    
-@endsection

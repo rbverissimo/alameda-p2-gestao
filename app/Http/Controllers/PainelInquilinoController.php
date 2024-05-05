@@ -27,10 +27,10 @@ class PainelInquilinoController extends Controller
     public function detalharInquilino($id){
         $inquilino = InquilinosService::getDetalhesInquilino($id);
         $titulo = 'Detalhes do Inquilino: '.$inquilino->nome; 
-
+        $mensagem = null; 
         $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
 
-        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagemConfirmacaoModal'));
+        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem', 'mensagemConfirmacaoModal'));
 
     }
 
@@ -68,9 +68,9 @@ class PainelInquilinoController extends Controller
             $pessoa->nome = $request->input('nome');
             $pessoa->cpf = $request->input('cpf');
             $pessoa->profissao = $request->input('profissao');
-            $pessoa->telefone_celular = $request->input('telefone_celular');
-            $pessoa->telefone_fixo = $request->input('telefone_fixo');
-            $pessoa->telefone_trabalho = $request->input('telefone_trabalho');
+            $pessoa->telefone_celular = $request->input('telefone-celular');
+            $pessoa->telefone_fixo = $request->input('telefone-fixo');
+            $pessoa->telefone_trabalho = $request->input('telefone-trabalho');
 
             $pessoa->save();
 
@@ -82,8 +82,13 @@ class PainelInquilinoController extends Controller
             
             $fator_divisor->save();
 
+            $mensagem = 'sucesso';
+            $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
+
+            return view('app.detalhes-inquilino', compact('titulo', 'mensagem', 'mensagemConfirmaaoModal' ));
+
         } catch (\Exception $e) {
-            return redirect()->back()->with("mensagem", "Não foi possível alterar os dados do inquilino ");
+            return $e->getMessage();
         }        
     }
 

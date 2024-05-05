@@ -20,4 +20,6 @@
     </div>
 @endsection
 
-@include('app.scripts.script-detalhe-inquilino')
+@section('scripts')
+    @include('app.scripts.script-detalhe-inquilino')
+@endsection

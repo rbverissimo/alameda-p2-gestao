@@ -168,6 +168,10 @@ export function isArrayEmpty(array){
       return array.lenght === 0 || array.length === undefined;
 }
 
+export function isStringValida(string){
+      return isNotNullOrUndefined(string) && !isBlank(string);
+}
+
 export function redirecionarPara(route){
       window.location.href = route;
 }

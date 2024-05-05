@@ -51,18 +51,30 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <label for="profissao">Profissão: </label>
+            <label for="input-profissao">Profissão: </label>
             <input type="text" 
                 name="profissao" 
+                id="input-profissao"
                 placeholder="ex: Autônomo, Médico, etc"
                 value="{{ isset($inquilino->profissao) ? old('profissao', $inquilino->profissao) : old('profissao')}}">
         </div>
         <div class="col-3">
-            <label for="fator-divisor">Fator divisor do cálculo: </label>
+            <label for="input-fator-divisor">Fator divisor do cálculo: </label>
             <input type="text" 
                 name="fator-divisor"
+                id="input-fator-divisor"
                 placeholder="Fator divisor: "
-                value="{{ isset($inquilino->fatorDivisor) ? old('fator-divisor', $inquilino->fatorDivisor) : old('fator-divisor') }}">
+                value="{{ isset($inquilino->fatorDivisor) ? 
+                old('fator-divisor', $inquilino->fatorDivisor) : old('fator-divisor') }}">
+        </div>
+        <div class="col-3">
+            <label for="input-valor-aluguel">Valor do Aluguel: </label>
+            <input type="text" 
+                name="valor-aluguel"
+                id="input-valor-aluguel"
+                placeholder="R$800,00"
+                value="{{ isset($inquilino->valorAluguel) ? 
+                old('valor-aluguel', $inquilino->valorAluguel) : old('valor-aluguel')}}">
         </div>
     </div>
     <div class="row center-itens">
