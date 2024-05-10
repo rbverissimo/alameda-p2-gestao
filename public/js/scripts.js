@@ -23,6 +23,9 @@ window.addEventListener("DOMContentLoaded", function(){
       if(isNullOrUndefined(getLiveRoute()) || isBlank(getLiveRoute())){
             setLiveRoute(window.location.href);
       } else {
+
+            if(getLiveRoute() === window.location.href) return; 
+            
             setOldRoute(getLiveRoute());
             setLiveRoute(window.location.href);
       }
@@ -63,7 +66,8 @@ function showMensagemContainer() {
 export function apenasNumeros(event) {
             
       // Allow: backspace, delete, tab, escape, enter
-      if (event.key === "Backspace" || event.key === "Delete" || event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
+      if (event.key === "Backspace" || event.key === "Delete" || 
+            event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
             return;
       }
 
@@ -267,3 +271,4 @@ window.converterReferencia = converterReferencia;
 window.navigateBack = navigateBack;
 window.swapPontosVirgulas = swapPontosVirgulas;
 window.showDataFormatadaDMY = showDataFormatadaDMY;
+window.navigateToLastRoute = navigateToLastRoute;

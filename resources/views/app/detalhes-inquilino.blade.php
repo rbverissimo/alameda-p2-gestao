@@ -4,13 +4,17 @@
     @include('app.layouts._partials.simple-modal')
     <div class="dashboard light-dashboard">
         <div class="row">
+            <div onclick="navigateToLastRoute()" class="col-2">
+                <button class="button common-button">
+                    Voltar</button>
+            </div>
             @if ($inquilino->situacao == 'A')
                 <div class="col-2">
-                    <button id="botao-inativar-inquilino-painel" class="button common-button">Inativar inqulino</button>
+                    <button id="botao-inativar-inquilino-painel" class="button action-button">Inativar inqulino</button>
                 </div>
             @else 
                 <div class="col-2">
-                    <button id="botao-inativar-inquilino-painel" class="button common-button">Ativar inqulino</button>
+                    <button id="botao-inativar-inquilino-painel" class="button action-button">Ativar inqulino</button>
                 </div>
             @endif
         </div>

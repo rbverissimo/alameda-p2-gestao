@@ -24,6 +24,11 @@
       color: var(--text-white);
 }
 
+.action-button {
+      background-color: var(--action-button);
+      color: var(--text-black);
+}
+
 .light-button {
       background-color: var(--alternative-primary-button);
       color: var(--text-white);

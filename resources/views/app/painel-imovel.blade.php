@@ -5,11 +5,19 @@
 <div class="row">
     <div class="dashboard-card">
             <div class=" col-8">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Est fugiat ad iusto eligendi quis vel quasi ullam maxime saepe asperiores magni, 
-                architecto cum iure labore nostrum ipsum cupiditate corrupti dolore.
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Quod ea laudantium iure explicabo voluptate rerum ipsam qui sapiente blanditiis libero.
+                <span>
+                    Gastos (soma das contas de água, energia, etc): R$ 1500
+                </span><br>
+                <span>
+                    Receitas esperadas: R$ 4500
+                </span><br>
+                <span>
+                    Receitas já recebidas: R$ 3400
+                </span><br>
+                <span>
+                    Saldo em caixa: R$115
+                </span><br>
+
             </div>
             <div class="col-2">
                 <button id="calcular-contas-botao-painel-imovel" class="button common-button">Calcular contas</button>

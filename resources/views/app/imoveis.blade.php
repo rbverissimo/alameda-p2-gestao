@@ -4,7 +4,7 @@
       <div class="dashboard light-dashboard">
             <div class="row">
                   <div class="col-3">
-                        <button onclick="redirecionarPara('{{ route('cadastrar-imovel')}}')" class="button common-button" >
+                        <button onclick="redirecionarPara('{{ route('cadastrar-imovel')}}')" class="button action-button" >
                               Cadastrar novo imóvel
                         </button>
                   </div>
