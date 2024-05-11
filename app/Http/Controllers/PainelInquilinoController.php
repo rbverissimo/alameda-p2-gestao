@@ -20,9 +20,8 @@ class PainelInquilinoController extends Controller
 
         $situacao_financeira_service = new SituacaoFinanceiraService();
         $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, ProjectUtils::getAnoMesSistemaSemMascara());
-        $itens_carrossel = [ProjectUtils::getAnoMesSistemaSemMascara()];
 
-        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira', 'itens_carrossel'));
+        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira'));
     }
 
     public function detalharInquilino($id){
