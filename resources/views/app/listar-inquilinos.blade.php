@@ -1,7 +1,7 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
-<h4>Inquilinos ativos: </h4>
+@include('app.layouts._partials.topo-lista-inquilinos')
       <div>
             <div>
                   @component('app.layouts._components.lista_inquilinos_component',
