@@ -3,7 +3,7 @@
             <a href="{{ route('painel-principal') }}">Painel</a>
             <a href="{{ route('calculo-contas')}}">Contas</a>
             <a href="{{ route('comprovantes-transferencia') }}">Comprovantes</a>
-            <a href="{{ route('imoveis')}}">Imoveis</a>
+            <a href="{{ route('imoveis')}}">Imóveis</a>
       </div>
 </div>
 

@@ -45,6 +45,7 @@ function processarRequestTableRows(request){
 
 function criarRowsJson(jsonArray){
         const table = document.getElementById('lista-contas');
+        console.log(jsonArray);
             
         jsonArray.forEach(function(object){
             let tr = document.createElement('tr');

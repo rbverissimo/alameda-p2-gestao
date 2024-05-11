@@ -27,7 +27,9 @@
 <div class="row">
     @include('app.layouts._components.lista_contas')
 </div>
-
+<div class="row">
+    <div class="whitespace-end-page"></div>
+</div>
 @endsection
 
 @section('scripts')

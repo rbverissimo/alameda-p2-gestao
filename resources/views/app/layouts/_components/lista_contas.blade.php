@@ -3,7 +3,7 @@
             @include('app.layouts._partials.topo-table')
       </div>
       <div class="row">
-            <div class="col-12 scrollable-table end-table-scroll">     
+            <div class="col-12">     
                   <table id='lista-contas'>
                         <tr>
                               <th>ID</th>

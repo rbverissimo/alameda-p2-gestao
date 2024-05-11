@@ -193,30 +193,39 @@ export function converterMes(mes){
       let resultado = ''
       switch(mes){
             case '01':
+            case '1':
                   resultado = 'Jan'
                   break;
             case '02':
+            case '2':
                   resultado = 'Fev'
                   break;
             case '03':
+            case '3':
                   resultado = 'Março'
                   break;
             case '04':
+            case '4':
                   resultado = 'Abril'
                   break;
             case '05':
+            case '5':
                   resultado = 'Maio'
                   break;
             case '06':
+            case '6':
                   resultado = 'Junho'
                   break;
             case '07':
+            case '7':
                   resultado = 'Julho'
                   break;
             case '08':
+            case '8':
                   resultado = 'Agosto'
                   break;
             case '09':
+            case '9':
                   resultado = 'Set'
                   break;
             case '10':

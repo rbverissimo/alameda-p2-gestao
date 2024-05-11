@@ -15,17 +15,17 @@
                   </button>
             </div>
       </div>
-      <div class="card">
+      <div onclick="redirecionarPara('{{ route('calculo-contas') }}')" class="card">
             <div class="card-conteudo">
                   <a href="{{ route('calculo-contas')}}">Cálculo de contas</a>
             </div>
       </div>
-      <div class="card">
+      <div onclick="redirecionarPara('{{ route('listar-inquilinos') }}')" class="card">
             <div class="card-conteudo">
                   <a href="{{ route('listar-inquilinos')}}">Painel de inquilinos</a>
             </div>
       </div>
-      <div class="card">
+      <div onclick="redirecionarPara('{{ route('comprovantes-transferencia') }}')" class="card">
             <div class="card-conteudo">
                   <a href="{{ route('comprovantes-transferencia')}}">Comprovantes de transferência</a>
             </div>
@@ -45,7 +45,7 @@
                   <a>Compras</a>
             </div>
       </div>
-      <div class="card">
+      <div onclick="redirecionarPara('{{ route('imoveis') }}')" class="card">
             <div class="card-conteudo">
                   <a href="{{ route('imoveis') }}">Imóveis</a>
             </div>
