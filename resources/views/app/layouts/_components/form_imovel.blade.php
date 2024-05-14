@@ -21,12 +21,49 @@
                   <label for="bairro">Bairro: </label>
                   <input type="text"
                         name="bairro"
-                        placeholder="Ex. Setor Central, Bairro das Nações, etc : "
+                        placeholder="Ex. Setor Central, Bairro Novo: "
                         value="{{ isset($imovel->bairro) ? 
                         old('bairro', $imovel->bairro) : old('bairro')}}">
             </div>
       </div>
       <div class="row">
+            <div class="col-2">
+                  <label>Número: </label>
+                  <input name="numero"
+                        placeholder="Ex. 786, 1030: "
+                        value="{{ isset($imovel->numero) ?
+                        old('numero', $imovel->numero) : old('numero') }}">
+            </div>
+            <div class="col-2">
+                  <label>Quadra: </label>
+                  <input name="quadra"
+                        placeholder="Ex. 40, 2, 3: "
+                        value="{{ isset($imovel->quadra) ?
+                        old('quadra', $imovel->quadra) : old('quadra') }}">
+            </div>
+            <div class="col-2">
+                  <label>Lote: </label>
+                  <input name="lote"
+                        placeholder="Ex. 2, 3, 10: "
+                        value="{{ isset($imovel->lote) ?
+                        old('lote', $imovel->lote) : old('lote') }}">
+            </div>
+            <div class="col-6">
+                  <label>Complemento: </label>
+                  <input name="complemento"
+                        placeholder="Ex. Edifício Santana, Loteamento das Flores, etc: "
+                        value="{{ isset($imovel->complemento) ?
+                        old('complemento', $imovel->complemento) : old('complemento') }}">
+            </div>
+      </div>
+      <div class="row">
+            <div class="col-6">
+                  <label>Nome identificador do imóvel: </label>
+                  <input name="nomefantasia"
+                        placeholder="Ex. Vila do Chaves: "
+                        value="{{ isset($imovel->nomefantasia) ?
+                        old('nomefantasia', $imovel->nomefantasia) : old('nomefantasia') }}">
+            </div>
       </div>
       <div class="row center-itens">
             <div class="col-3">
