@@ -85,4 +85,18 @@ class SituacaoFinanceiraService {
             return $inquilino_saldo + $saldo_mes;
       }
 
+      public function consolidarSaldo(){
+
+            $imoveis = ImoveisService::getImoveisByUsuarioLogado();
+
+            foreach ($imoveis as $imovel) {
+                 $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
+
+                 // Para cada inquilino vai haver uma busca no saldo_anterior da tabela inquilinos_saldos
+                 // Se o resultado dessa busca for nulo, a ele será atribuído o valor 0.0 
+                 // Vai haver a busca do saldo do mês e ele será somado ao saldo_anterior 
+                 // O resultado dessa soma será atribuído ao saldo_atual
+            }
+      }
+
 }
