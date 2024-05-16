@@ -11,10 +11,17 @@ class ProjectUtils {
             return date('Y-m-d');
       }
 
+      /**
+       * Retorna a referência porém sem a máscara.
+       * Ao invés de retornar, digamos, 2024-05, esse método retornará 202405
+       */
       public static function getAnoMesSistemaSemMascara(){
             return str_replace('-', '', ProjectUtils::getAnoMesSistema());
       }
 
+      /**
+       * Retorna o anoMês (ou seja, a referência) que o sistema lê
+       */
       public static function getAnoMesSistema(){
             return date('Y-m');
       }
@@ -44,6 +51,11 @@ class ProjectUtils {
             }, $collection));
       }
 
+      /**
+       * Ao fornecer um array de Contas identificáveis por seu tipo, esse método
+       * filtra as contas retornando um novo array de acordo com tipo passado no 
+       * parâmetro da função
+       */
       public static function getContasByTipo($contas, $tipoconta){
             return array_filter($contas, function($conta) use ($tipoconta){
                   return $conta->tipocodigo === $tipoconta;

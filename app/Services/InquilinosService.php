@@ -68,12 +68,19 @@ class InquilinosService {
        * Se não houver um saldo, retorna 0.0. 
        * 
        * 
-       * @return saldo_anterior do inquilino
+       * @return float saldo anterior salvo na tabela inquilinos_saldos de acordo com o  inquilino
        */
       public static function getSaldoAnteriorBy($inquilino){
             $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
 
             return $saldo->saldo_anterior != null ? $saldo->saldo_anterior : 0.0; 
+      }
+
+      /**
+       * @return InquilinoSaldo retorna uma instância do objeto InquilinoSaldo extraído do banco de dados
+       */
+      public static function getInquilinoSaldoBy($inquilino){
+            return InquilinoSaldo::find($inquilino);
       }
 
 }

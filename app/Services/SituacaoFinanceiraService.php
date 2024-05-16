@@ -47,6 +47,10 @@ class SituacaoFinanceiraService {
 
       }
 
+      /**
+       * Busca o valor de uma conta de acordo seu tipo, inquilino, ano e mês
+       * 
+       */
       private function getValorInquilinoBy($tipoconta, $inquilino_id, $ano, $mes){
 
             return DB::table('inquilinos_contas')->select('inquilinos_contas.valorinquilino')
@@ -57,6 +61,23 @@ class SituacaoFinanceiraService {
                   ->where('contas_imoveis.mes', $mes)
                   ->orderByDesc('contas_imoveis.id')
                   ->first();
+      }
+
+      /**
+       * Retorna a soma do aluguel com todas as contas do ano e mês para um determinado inquilino
+       */
+      private function getValoresSomadosMes($inquilino_id, $ano, $mes){
+
+            $aluguel = $this->getAluguelInquilino($inquilino_id);
+            $soma_contas = InquilinoConta::select('inquilinos_contas.valorinquilino')
+                  ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
+                  ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
+                  ->where('contas_imoveis.ano', $ano)
+                  ->where('contas_imoveis.mes', $mes)
+                  ->sum('inqulinos_contas.valorinquilino');
+
+            return $aluguel + $soma_contas;
+
       }
 
       private function getAluguelInquilino($inquilino_id) {
@@ -90,15 +111,38 @@ class SituacaoFinanceiraService {
             return $inquilino_saldo + $saldo_mes;
       }
 
+      /**
+       * Essa é uma função crítica do sistema.
+       */
       public function consolidarSaldo(){
 
             $imoveis = ImoveisService::getImoveisByUsuarioLogado();
-
+            
             foreach ($imoveis as $imovel) {
-                 $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
+                  $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
                   
-                 array_walk($inquilinos_ativos, function($inquilino){
-                        InquilinosService::getSaldoAnteriorBy($inquilino->id);
+                  array_walk($inquilinos_ativos, function($inquilino){
+
+                        $referencia_hoje = ProjectUtils::getAnoMesSistemaSemMascara();
+                        $ano = ProjectUtils::getAnoFromReferencia($referencia_hoje);
+                        $mes = ProjectUtils::getMesFromReferencia($referencia_hoje);
+
+
+                        $saldo_anterior =  InquilinosService::getSaldoAnteriorBy($inquilino->id);
+                        $soma_contas_mes_anterior = $this->getValoresSomadosMes($inquilino, $ano, $mes - 1);
+
+                        $referencia_mes_anterior = $ano+''+$mes-1;
+
+                        $saldo_mes_anterior = $this->getSaldo($soma_contas_mes_anterior, $inquilino, $referencia_mes_anterior);
+
+                        $saldo_consolidado = $saldo_anterior + $saldo_mes_anterior;
+
+                        $inquilino_saldo = InquilinosService::getInquilinoSaldoBy($inquilino);
+
+                        $inquilino_saldo->saldo_atual = $saldo_consolidado;
+                        $inquilino_saldo->saldo_anterior = $saldo_consolidado;
+
+                        $inquilino_saldo->save();
 
                  });
 
