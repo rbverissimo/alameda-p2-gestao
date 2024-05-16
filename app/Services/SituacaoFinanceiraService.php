@@ -31,16 +31,16 @@ class SituacaoFinanceiraService {
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes) != null ?
                   $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes)->valorinquilino : 0.0;
 
-            $total = $this->somarContas($aluguel->valorAluguel, $conta_luz, $conta_agua);
+            $total_contas = $this->somarContas($aluguel->valorAluguel, $conta_luz, $conta_agua);
 
-            $saldo = $this->getSaldo($total, $inquilino_id, $referencia);
+            $saldo = $this->getSaldoParcial($total_contas, $inquilino_id, $referencia);
 
             $situacao_financeira = new SituacaoFinanceiraVO(
             ProjectUtils::adicionarMascaraReferencia($referencia), 
             $aluguel->valorAluguel, 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($total), 
+            ProjectUtils::arrendondarParaDuasCasasDecimais($total_contas), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($saldo));
 
             return $situacao_financeira;
@@ -94,21 +94,34 @@ class SituacaoFinanceiraService {
             ->where('referencia', $referencia)
             ->sum('valor');
       }
-      
       /**
-       * @param total recebe o total das contas para a referência
-       * @param inquilino_id recebe o id do inquilino, necessário para buscar os valores do mês_referência
+       * Esse método recebe o valor total de contas do mês e busca os comprovantes 
+       * na tabela de comprovantes para um determinado inquilino representado pelo seu ID
+       * Ainda, é feita uma consulta pelo saldo_atual na tabela inquilinos_saldos.
+       * O retorno dessa função é a diferença do valor devido do mês menos os valores de comprovantes
+       * somado ao saldo_nao_consolidado resultando em um saldo parcial do que é devido pelo inquilino
+       * 
+       * @return float
        * 
        */
-      private function getSaldo($total, $inquilino_id, $referencia){
-            $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
-            $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
+      private function getSaldoParcial($valor_total_contas, $inquilino_id, $referencia){
 
-            $saldo_mes = $valores_mes - $total; 
+            $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);       
+            $saldo_nao_consolidado = InquilinosService::getSaldoAtualBy($inquilino_id);
+            $saldo_mes = $valores_mes - $valor_total_contas; 
 
-            if($inquilino_saldo == null) $inquilino_saldo = 0.0;
+            return $saldo_nao_consolidado + $saldo_mes;
+      }
 
-            return $inquilino_saldo + $saldo_mes;
+      private function getSaldoMes($inquilino_id, $referencia){
+
+            $ano = ProjectUtils::getAnoFromReferencia($referencia);
+            $mes = ProjectUtils::getMesFromReferencia($referencia);
+
+            $valores_pagos_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
+            $valores_devidos_mes = $this->getValoresSomadosMes($inquilino_id, $ano, $mes);
+
+            return $valores_pagos_mes - $valores_devidos_mes; 
       }
 
       /**
@@ -120,37 +133,26 @@ class SituacaoFinanceiraService {
             
             foreach ($imoveis as $imovel) {
                   $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
-                  
                   array_walk($inquilinos_ativos, function($inquilino){
-
-                        $referencia_hoje = ProjectUtils::getAnoMesSistemaSemMascara();
-                        $ano = ProjectUtils::getAnoFromReferencia($referencia_hoje);
-                        $mes = ProjectUtils::getMesFromReferencia($referencia_hoje);
-
-
-                        $saldo_anterior =  InquilinosService::getSaldoAnteriorBy($inquilino->id);
-                        $soma_contas_mes_anterior = $this->getValoresSomadosMes($inquilino, $ano, $mes - 1);
-
-                        $referencia_mes_anterior = $ano+''+$mes-1;
-
-                        $saldo_mes_anterior = $this->getSaldo($soma_contas_mes_anterior, $inquilino, $referencia_mes_anterior);
-
-                        $saldo_consolidado = $saldo_anterior + $saldo_mes_anterior;
 
                         $inquilino_saldo = InquilinosService::getInquilinoSaldoBy($inquilino);
 
+                        $referencia_hoje = ProjectUtils::getAnoMesSistemaSemMascara();
+                        $ano = ProjectUtils::getAnoFromReferencia($referencia_hoje);
+                        $mes_anterior = ProjectUtils::getMesFromReferencia($referencia_hoje) - 1;
+
+
+                        $saldo_anterior =  InquilinosService::getSaldoAnteriorBy($inquilino['id']);
+                        $saldo_mes_anterior = $this->getSaldoMes($inquilino['id'], $ano * 100 + $mes_anterior);
+
+                        $saldo_consolidado = $saldo_anterior + $saldo_mes_anterior;
+
+                        //Update no objeto do banco de dados
                         $inquilino_saldo->saldo_atual = $saldo_consolidado;
                         $inquilino_saldo->saldo_anterior = $saldo_consolidado;
-
                         $inquilino_saldo->save();
 
                  });
-
-                 // Para cada inquilino vai haver uma busca no saldo_anterior da tabela inquilinos_saldos
-                 // Se o resultado dessa busca for nulo, a ele será atribuído o valor 0.0 
-                 // Vai haver a busca do saldo do mês e ele será somado ao saldo_anterior 
-                 // O resultado dessa soma será atribuído ao saldo_atual
             }
       }
-
 }

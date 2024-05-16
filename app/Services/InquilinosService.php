@@ -57,9 +57,20 @@ class InquilinosService {
                   ->get();
       }
 
+      /**
+       * Traz todos os inquilinos de um imóvel independente de estarem ativos ou não
+       * 
+       */
+      public static function getInquilinosBy($imovel){
+
+            return Inquilino::join('salas', 'salas.id', 'inquilinos.salacodigo')
+                  ->where('salas.imovelcodigo', $imovel->idImovel)
+                  ->get();
+      }
+
       public static function getInquilinosAtivosByImovel($idImovel){
-            return array_filter(InquilinosService::getInquilinosByImovel($idImovel), function($inquilino){
-                  return $inquilino['situacao'] == 'A';
+            return array_filter(InquilinosService::getInquilinosBy($idImovel)->toArray(), function($inquilino){
+                  return $inquilino['situacao'] === 'A';
             });
       }
 
@@ -75,6 +86,20 @@ class InquilinosService {
 
             return $saldo->saldo_anterior != null ? $saldo->saldo_anterior : 0.0; 
       }
+
+      /**
+       * Busca o saldo atual ainda não consolidado do Inquilino. 
+       * Se não houver um saldo, retorna 0.0. 
+       * 
+       * 
+       * @return float saldo anterior salvo na tabela inquilinos_saldos de acordo com o  inquilino
+       */
+      public static function getSaldoAtualBy($inquilino){
+            $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
+
+            return $saldo->saldo_atual != null ? $saldo->saldo_atual : 0.0; 
+      }
+
 
       /**
        * @return InquilinoSaldo retorna uma instância do objeto InquilinoSaldo extraído do banco de dados
