@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\InquilinoFatorDivisor;
+use App\Models\InquilinoSaldo;
 
 class InquilinosService {
 
@@ -54,6 +55,25 @@ class InquilinosService {
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where('salas.imovelcodigo', $idImovel)
                   ->get();
+      }
+
+      public static function getInquilinosAtivosByImovel($idImovel){
+            return array_filter(InquilinosService::getInquilinosByImovel($idImovel), function($inquilino){
+                  return $inquilino['situacao'] == 'A';
+            });
+      }
+
+      /**
+       * Busca o saldo anterior já consolidado do Inquilino. 
+       * Se não houver um saldo, retorna 0.0. 
+       * 
+       * 
+       * @return saldo_anterior do inquilino
+       */
+      public static function getSaldoAnteriorBy($inquilino){
+            $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
+
+            return $saldo->saldo_anterior != null ? $saldo->saldo_anterior : 0.0; 
       }
 
 }

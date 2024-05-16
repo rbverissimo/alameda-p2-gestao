@@ -74,6 +74,11 @@ class SituacaoFinanceiraService {
             ->sum('valor');
       }
       
+      /**
+       * @param total recebe o total das contas para a referência
+       * @param inquilino_id recebe o id do inquilino, necessário para buscar os valores do mês_referência
+       * 
+       */
       private function getSaldo($total, $inquilino_id, $referencia){
             $inquilino_saldo = InquilinoSaldo::orderByDesc('id')->first();
             $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
@@ -91,6 +96,11 @@ class SituacaoFinanceiraService {
 
             foreach ($imoveis as $imovel) {
                  $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
+                  
+                 array_walk($inquilinos_ativos, function($inquilino){
+                        InquilinosService::getSaldoAnteriorBy($inquilino->id);
+
+                 });
 
                  // Para cada inquilino vai haver uma busca no saldo_anterior da tabela inquilinos_saldos
                  // Se o resultado dessa busca for nulo, a ele será atribuído o valor 0.0 
