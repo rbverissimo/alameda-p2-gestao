@@ -108,10 +108,11 @@ class InquilinosService {
 
 
       /**
+       * Busca através do ID do inquilino o saldo na tabela inquilinos_saldo
        * @return InquilinoSaldo retorna uma instância do objeto InquilinoSaldo extraído do banco de dados
        */
       public static function getInquilinoSaldoBy($inquilino){
-            return InquilinoSaldo::find($inquilino);
+            return InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
       }
 
 }
