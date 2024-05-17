@@ -74,9 +74,10 @@ class SituacaoFinanceiraService {
                   ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
                   ->where('contas_imoveis.ano', $ano)
                   ->where('contas_imoveis.mes', $mes)
-                  ->sum('inqulinos_contas.valorinquilino');
+                  ->sum('inquilinos_contas.valorinquilino');
 
-            return $aluguel + $soma_contas;
+
+            return $aluguel->valorAluguel + $soma_contas;
 
       }
 
@@ -133,9 +134,10 @@ class SituacaoFinanceiraService {
             
             foreach ($imoveis as $imovel) {
                   $inquilinos_ativos = InquilinosService::getInquilinosAtivosByImovel($imovel);
-                  array_walk($inquilinos_ativos, function($inquilino){
+                  foreach ($inquilinos_ativos as $inquilino) {
 
-                        $inquilino_saldo = InquilinosService::getInquilinoSaldoBy($inquilino);
+                        $inquilino_saldo = InquilinosService::getInquilinoSaldoBy($inquilino['id']);
+
 
                         $referencia_hoje = ProjectUtils::getAnoMesSistemaSemMascara();
                         $ano = ProjectUtils::getAnoFromReferencia($referencia_hoje);
@@ -148,11 +150,19 @@ class SituacaoFinanceiraService {
                         $saldo_consolidado = $saldo_anterior + $saldo_mes_anterior;
 
                         //Update no objeto do banco de dados
-                        $inquilino_saldo->saldo_atual = $saldo_consolidado;
-                        $inquilino_saldo->saldo_anterior = $saldo_consolidado;
-                        $inquilino_saldo->save();
-
-                 });
+                        if($inquilino_saldo == null){
+                              $novo_saldo = new InquilinoSaldo();
+                              $novo_saldo->inquilinocodigo = $inquilino['id'];
+                              $novo_saldo->saldo_atual = 0.0;
+                              $novo_saldo->saldo_anterior = $saldo_consolidado;
+                              $novo_saldo->save();
+                        } else {
+                              $inquilino_saldo_update = $inquilino_saldo;
+                              $inquilino_saldo_update->saldo_atual = $saldo_consolidado;
+                              $inquilino_saldo_update->saldo_anterior = $saldo_consolidado;
+                              $inquilino_saldo_update->save();
+                        }
+                 };
             }
       }
 }

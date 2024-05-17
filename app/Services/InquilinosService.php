@@ -63,7 +63,8 @@ class InquilinosService {
        */
       public static function getInquilinosBy($imovel){
 
-            return Inquilino::join('salas', 'salas.id', 'inquilinos.salacodigo')
+            return Inquilino::select('inquilinos.id', 'inquilinos.situacao', 'inquilinos.valoraluguel')
+                  ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where('salas.imovelcodigo', $imovel->idImovel)
                   ->get();
       }
@@ -84,7 +85,12 @@ class InquilinosService {
       public static function getSaldoAnteriorBy($inquilino){
             $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
 
-            return $saldo->saldo_anterior != null ? $saldo->saldo_anterior : 0.0; 
+            $saldo_anterior = 0.0;
+            if($saldo != null){
+                  $saldo_anterior = $saldo->saldo_anterior != null ? $saldo->saldo_anterior : 0.0; 
+            }
+
+            return  $saldo_anterior;
       }
 
       /**
