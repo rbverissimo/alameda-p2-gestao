@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
 use App\Services\UsuarioService;
-use Illuminate\Http\Request;
 
 class ListaInquilinosController extends Controller
 {

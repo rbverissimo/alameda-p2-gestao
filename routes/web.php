@@ -61,8 +61,9 @@ Route::prefix('inquilino')->middleware('autenticacao')->group(function(){
     Route::get('/detalhe/{id}', [PainelInquilinoController::class, 'detalharInquilino'])->name('detalhar-inquilino');
     Route::post('/detalhe/{id}', [PainelInquilinoController::class, 'editarInquilino'])->name('editar-inquilino');
     Route::put('/detalhe/{id}', [PainelInquilinoController::class, 'editarInquilino'])->name('editar-inquilino');
-    Route::get('/toggle-inquilino/{id}', [PainelInquilinoController::class, 'toggleSituacaoInquilino'])->name('toggle-inquilino');
+    Route::get('/toggle-inquilino/{id}', [PainelInquilinoController::class, 'toggleSituacaoAtividadeInquilino'])->name('toggle-inquilino');
     Route::delete('/excluir-registro-inquilino/{id}', [PainelInquilinoController::class, 'excluirInqulino'])->name('excluir-inquilino');
+    Route::get('/show-situacao-financeira/{id}/{ref?}', [PainelInquilinoController::class, 'mostrarSituacaoFinanceira'])->name('mostrar-situacao-financeira');
 });
 
 

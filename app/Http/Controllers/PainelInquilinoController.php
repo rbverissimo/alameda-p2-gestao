@@ -34,7 +34,7 @@ class PainelInquilinoController extends Controller
 
     }
 
-    public function toggleSituacaoInquilino($id){
+    public function toggleSituacaoAtividadeInquilino($id){
         $inquilino = Inquilino::find($id);
 
         if (!$inquilino) {
@@ -99,6 +99,10 @@ class PainelInquilinoController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('erros', $e->getMessage());
         }        
+    }
+
+    public function mostrarSituacaoFinanceira(Request $request, $idInquilino, $referencia = null){
+        
     }
 
 }
