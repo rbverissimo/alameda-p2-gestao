@@ -17,12 +17,12 @@
       </div>
       <div onclick="redirecionarPara('{{ route('calculo-contas') }}')" class="card">
             <div class="card-conteudo">
-                  <a href="{{ route('calculo-contas')}}">Cálculo de contas</a>
+                  <a href="{{ route('calculo-contas')}}">Contas dos Imóveis</a>
             </div>
       </div>
       <div onclick="redirecionarPara('{{ route('listar-inquilinos') }}')" class="card">
             <div class="card-conteudo">
-                  <a href="{{ route('listar-inquilinos')}}">Painel de inquilinos</a>
+                  <a href="{{ route('listar-inquilinos')}}">Painel de Inquilinos</a>
             </div>
       </div>
       <div onclick="redirecionarPara('{{ route('comprovantes-transferencia') }}')" class="card">

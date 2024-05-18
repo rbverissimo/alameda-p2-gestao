@@ -102,8 +102,7 @@ class InquilinosService {
        */
       public static function getSaldoAtualBy($inquilino){
             $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
-
-            return $saldo->saldo_atual != null ? $saldo->saldo_atual : 0.0; 
+            return $saldo ? $saldo->saldo_atual : 0.0;
       }
 
 
