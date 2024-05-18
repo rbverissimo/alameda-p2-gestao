@@ -89,6 +89,13 @@ class SituacaoFinanceiraService {
             return $aluguel + $conta_luz + $conta_agua;
       }
 
+      /**
+       * Esse método busca na tabela de comprovantes a soma dos valores 
+       * de todos comprovantes dada uma determinada referência para um 
+       * determinado inquilino
+       * 
+       * @return float
+       */
       private function getSomaComprovantesReferencia($inquilino_id, $referencia){
             return Comprovante::select('valor')
             ->where('inquilino', $inquilino_id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
+use App\Services\ComprovantesService;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Services\PessoasService;
@@ -110,15 +111,20 @@ class PainelInquilinoController extends Controller
             $referencia_situacao_financeira = $referencia ? $referencia : (int) ProjectUtils::getAnoMesSistemaSemMascara();
     
             if (!is_numeric($referencia_situacao_financeira)) {
-                throw new InvalidArgumentException('A referência da situação financeira deve ser uma representação válida de ano e mês tal qual: 
+                throw new InvalidArgumentException('A referência da situação financeira deve ser uma representação válida de ano e mês como 
                     202404, representando o ano de 2024 e o mês de abril (04)');
               }
             
             $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
     
             $itens_carrossel = [$referencia_situacao_financeira];
+
+            $situacao_financeira_service = new SituacaoFinanceiraService();
+            $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, $referencia_situacao_financeira);
+            $comprovantes = ComprovantesService::getComprovantesBy($inquilino->id, $referencia_situacao_financeira);
     
-            return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel', 'inquilino', 'referencia_situacao_financeira'));
+            return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel', 'inquilino', 
+                'situacao_financeira', 'referencia_situacao_financeira', 'comprovantes'));
         } catch (\InvalidArgumentException | Exception $e) {
             return redirect()->back()->with('erros', $e->getMessage());   
         }
