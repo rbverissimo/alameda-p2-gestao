@@ -13,4 +13,5 @@
 
 @section('scripts')
     @include('app.scripts.script-carousel')
+    @include('app.scripts.script-painel-situacao-financeira')
 @endsection

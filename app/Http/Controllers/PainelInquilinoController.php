@@ -116,9 +116,9 @@ class PainelInquilinoController extends Controller
             
             $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
     
-            $itens_carrossel = [$referencia_situacao_financeira-1, $referencia_situacao_financeira, $referencia_situacao_financeira+1];
+            $itens_carrossel = [$referencia_situacao_financeira];
     
-            return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel'));
+            return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel', 'inquilino', 'referencia_situacao_financeira'));
         } catch (\InvalidArgumentException | Exception $e) {
             return redirect()->back()->with('erros', $e->getMessage());   
         }

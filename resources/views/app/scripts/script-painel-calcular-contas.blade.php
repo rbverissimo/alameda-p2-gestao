@@ -4,6 +4,8 @@
     import { isArrayEmpty } from "{{ asset('js/scripts.js') }}";
     import { isNotNullOrUndefined } from "{{ asset('js/scripts.js') }}";
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
+    import { mascaraReferenciaSlider } from "{{ asset('js/scripts.js') }}";
+
 
     const referenciaCalculo = @json($referencia_calculo);
     const idImovel = @json($idImovel);
@@ -20,13 +22,19 @@
 
     
     document.addEventListener('DOMContentLoaded', () => {
-        setarSliderReferencia();
 
-        // Esse event listener tem de ser setado depois do click no botão para evitar um loop infinito de clicks
-        document.querySelector('.next-carousel').addEventListener('click', () => {
-            escolherReferenciaPosterior();
-        });
-        
+        try {
+            mascaraReferenciaSlider();
+            setarSliderReferencia();
+    
+            // Esse event listener tem de ser setado depois do click no botão para evitar um loop infinito de clicks
+            document.querySelector('.next-carousel').addEventListener('click', () => {
+                escolherReferenciaPosterior();
+            });
+                
+        } catch (error) {
+            showMensagem(error.message, "falha");
+        }
     });
 
     if(!isArrayEmpty(contas)){
@@ -91,8 +99,6 @@
     }
 
     function escolherReferenciaAnterior(){
-        var slide = document.querySelector('.slide-carousel');
-        const referencia = slide.textContent;
         redirecionarPara("{{ route('executar-calculo-contas', ['id' => $idImovel, 'ref' => $itens_carrossel[0] ] )}}");
     }
 

@@ -29,6 +29,11 @@ window.addEventListener("DOMContentLoaded", function(){
             setOldRoute(getLiveRoute());
             setLiveRoute(window.location.href);
       }
+      
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+      displayMensagemErro();
 });
 
 
@@ -63,6 +68,18 @@ function showMensagemContainer(temporizador) {
       }, temporizador);
 }
 
+/**
+ * Esse método busca pela div de erros retornados pela Session.
+ * Uma vez encontrada ele transmite a string para o modal de mensagens
+ * através do método showMensagem();
+ */
+export function displayMensagemErro(){
+      const divErros = document.getElementById('mensagem-erro-session');
+      if(divErros != null){
+            showMensagem(divErros.textContent, 'falha', 5000);
+      }
+}
+
 export function apenasNumeros(event) {
             
       // Allow: backspace, delete, tab, escape, enter
@@ -71,12 +88,13 @@ export function apenasNumeros(event) {
             return;
       }
 
-      // Allow: Ctrl+A, Command+A
-      if ((event.ctrlKey === true || event.metaKey === true) && ((event.key === "a" || event.key === "A") || (event.key === "c" || event.key === "C") || (event.key === "v" || event.key === "V"))) {
+      if ((event.ctrlKey === true || event.metaKey === true) 
+            && ((event.key === "a" || event.key === "A") || (event.key === "c" || event.key === "C") 
+            || (event.key === "v" || event.key === "V"))) {
             return;
       }
 
-      // Ensure only numbers are allowed
+      // Testa se apenas números estão sendo usados
       if (!/^[0-9]$/.test(event.key)) {
             event.preventDefault();
       }
@@ -180,12 +198,28 @@ export function redirecionarPara(route){
       window.location.href = route;
 }
 
+/**
+ * 
+ * @param {*} referencia que será convertida, recebida em 6 dígitos no formato AAAAdd
+ * @returns retorna uma string formatada em mm/AAAA
+ */
 export function converterReferencia(referencia){
       const ano = referencia.slice(0, 4);
       const mes = converterMes(referencia.slice(4));
 
       return mes+'/'+ano;
 
+}
+
+/**
+ * 
+ * @param {*} stringOriginal com os caracteres que serão removidos
+ * @param {*} caracteresRemoviveis aqueles caracteres que precisam ser retirados da string
+ * @returns a string limpa de caracteres
+ */
+export function removerCaracteres(stringOriginal, caracteresRemoviveis){
+      const regex = new RegExp(`[${caracteresRemoviveis}]`, 'g');
+      return stringOriginal.replace(regex, '');
 }
 
 export function converterMes(mes){
@@ -243,6 +277,42 @@ export function converterMes(mes){
 
       return resultado; 
 }
+
+/**
+ * Esse método torna uma referência com 6 digitos formatada para AAAAmm
+ * 
+ * @param {*} referencia o parâmetro que será mascarado
+ * @returns o parâmetro recebido no formato AAAA-mm 
+ */
+export function colocaMascaraReferencia(referencia){
+      if(referencia.length != 6) return referencia; 
+
+      const ano = referencia.substring(0,4);
+      const mes = referencia.substring(4);
+
+      return `${ano}-${mes}`;
+}
+
+
+/**
+ *
+ * Esse método busca pelas referências fornecidas no carrossel 
+ * e adiciona máscara a cada uma delas;
+ */
+export function mascaraReferenciaSlider(){
+      const container = document.querySelector('.carousel-container');
+      if(container){
+          const itensCarrossel = container.querySelectorAll('.slide-carousel');
+          itensCarrossel.forEach(item => {
+              const referenciaItem = item.textContent.trim();
+              const referenciaComMascara = colocaMascaraReferencia(referenciaItem);
+              item.textContent = referenciaComMascara;
+          });
+      } else {
+          throw new Error('Erro ao ler a referência. ');
+      }
+  }
+
 
 export function navigateBack(rotaAnterior) {
       const voltarTrigger = document.getElementById('voltar-wrapper');
