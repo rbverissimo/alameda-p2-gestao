@@ -162,13 +162,16 @@ input:focus {
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0 , 0, 0.1);
-      animation: fadeOut 8s forwards;
+      animation: popOut 0.75s ease-in-out forwards;
 }
 
-@keyframes fadeOut {
-      0% {opacity:  1;}
-      100% {opacity: 0;}
-      
+@keyframes popOut {
+      from { 
+            transform: scale(0.8); 
+      } 
+      to { 
+            transform: scale(1);
+      }  
 }
 
 #neutra-mensagem{

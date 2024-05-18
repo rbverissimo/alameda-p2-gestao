@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", function(){
 });
 
 
-export function showMensagem(mensagem, tipo){
+export function showMensagem(mensagem, tipo, temporizador = 4000){
 
       let mensagemElement = undefined; 
 
@@ -47,11 +47,11 @@ export function showMensagem(mensagem, tipo){
             document.getElementById('mensagem-container').style.backgroundColor = '#DBD8F0';
       }
       mensagemElement.textContent = mensagem;
-      showMensagemContainer();
+      showMensagemContainer(temporizador);
       
 }
 
-function showMensagemContainer() {
+function showMensagemContainer(temporizador) {
       const messageContainer = document.getElementById('mensagem-container');
       messageContainer.style.display = 'block';
 
@@ -60,7 +60,7 @@ function showMensagemContainer() {
             document.getElementById('sucesso-mensagem').textContent = '';
             document.getElementById('falha-mensagem').textContent = '';
             document.getElementById('neutra-mensagem').textContent = '';
-      }, 3500);
+      }, temporizador);
 }
 
 export function apenasNumeros(event) {

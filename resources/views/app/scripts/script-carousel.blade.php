@@ -19,5 +19,4 @@
         const slideWidth = container.clientWidth;
         container.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
     }
-
 </script>

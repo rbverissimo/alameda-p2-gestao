@@ -7,7 +7,9 @@ use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Services\PessoasService;
 use App\Utils\ProjectUtils;
+use Exception;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 class PainelInquilinoController extends Controller
 {
@@ -103,10 +105,24 @@ class PainelInquilinoController extends Controller
 
     public function mostrarSituacaoFinanceira(Request $request, $idInquilino, $referencia = null){
 
-        $inquilino = InquilinosService::getDetalhesInquilino($idInquilino);
-        $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
+        try {
+            $inquilino = InquilinosService::getDetalhesInquilino($idInquilino);
+            $referencia_situacao_financeira = $referencia ? $referencia : (int) ProjectUtils::getAnoMesSistemaSemMascara();
+    
+            if (!is_numeric($referencia_situacao_financeira)) {
+                throw new InvalidArgumentException('A referência da situação financeira deve ser uma representação válida de ano e mês tal qual: 
+                    202404, representando o ano de 2024 e o mês de abril (04)');
+              }
+            
+            $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
+    
+            $itens_carrossel = [$referencia_situacao_financeira-1, $referencia_situacao_financeira, $referencia_situacao_financeira+1];
+    
+            return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel'));
+        } catch (\InvalidArgumentException | Exception $e) {
+            return redirect()->back()->with('erros', $e->getMessage());   
+        }
 
-        return view('app.painel-situacao-financeira', compact('titulo'));
     }
 
 }
