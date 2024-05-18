@@ -199,14 +199,6 @@
             document.getElementById('situacao-financeira-wrapper').style.display = "block"
             document.getElementById('table-wrapper').style.display = "none";
       }
-
-      
-      window.onload = function isReferenciaQuitada() {
-                  const saldo = document.getElementById('saldo').innerHTML;
-                  if(saldo > 0){
-                        document.getElementById('quitado').checked = true; 
-                  }
-            }
       
       /* 
       * SCRIPTS DO TOPO DA TABELA;

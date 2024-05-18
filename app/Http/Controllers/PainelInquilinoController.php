@@ -102,7 +102,11 @@ class PainelInquilinoController extends Controller
     }
 
     public function mostrarSituacaoFinanceira(Request $request, $idInquilino, $referencia = null){
-        
+
+        $inquilino = InquilinosService::getDetalhesInquilino($idInquilino);
+        $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
+
+        return view('app.painel-situacao-financeira', compact('titulo'));
     }
 
 }

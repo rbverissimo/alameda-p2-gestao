@@ -10,6 +10,11 @@ use App\Models\InquilinoSaldo;
 class InquilinosService {
 
 
+      /**
+       * Busca o registro na tabela de inquilinos de acordo com o ID
+       * 
+       * @return Inquilino
+       */
       public static function getInquilinoBy($id){
             return Inquilino::find($id)->first();
       }
@@ -33,6 +38,14 @@ class InquilinosService {
             return $query->inquilino;
       }
 
+      /**
+       * Busca no banco de dados informações relevantes para a composição do painel
+       * do inquilino. Essas informações são as tais: id da tabela de inquilinos, nome relacionado
+       * à tabela de pessoas, nome da sala do imóvel que o inquilino está alocado, o id dessa sala,
+       * a quantidade de pessoas na família, valor do Aluguel e o telefone celular dessa pessoa. 
+       * 
+       * @return Inquilino
+       */
       public static function getInfoPainelInquilino($id){
             return Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
                   'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 
@@ -43,6 +56,10 @@ class InquilinosService {
                   ->first();
       }
 
+      /**
+       * Busca no banco de dados a pessoa associada ao inquilino e o fator divisor do mesmo
+       * 
+       */
       public static function getDetalhesInquilino($id){
             return Inquilino::join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
                   ->join('inquilinos_fator_divisor', 'inquilinos_fator_divisor.id', 'inquilinos.id')

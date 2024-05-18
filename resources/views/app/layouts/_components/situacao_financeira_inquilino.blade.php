@@ -8,7 +8,9 @@
                   </div>
                   <div class="col-5"></div>
                   <div class="col-4">
-                        <button class="button action-button">Mostrar referências anteriores</button>
+                        <button onclick="redirecionarPara('{{ route('mostrar-situacao-financeira', ['id' => $inquilino->id]) }}')" 
+                              class="button action-button">Mostrar referências anteriores
+                        </button>
                   </div>
             </div>
             <div class="row">
