@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Endereco extends Model
 {
@@ -21,5 +22,9 @@ class Endereco extends Model
             'lote',
             'uf'
     ];
+
+    public function imovel(): HasOne {
+        return $this->hasOne(Imovel::class, 'endereco');
+    }
     
 }

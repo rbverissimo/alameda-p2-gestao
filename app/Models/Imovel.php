@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Imovel extends Model
@@ -12,8 +14,13 @@ class Imovel extends Model
 
     protected $table = 'imoveis';
 
-    public function endereco(): HasOne 
+    public function endereco(): BelongsTo 
     {
-        return $this->hasOne(Endereco::class, 'endereco');
+        return $this->belongsTo(Endereco::class, 'endereco');
+    }
+
+    public function sala(): HasMany
+    {
+        return $this->hasMany(Sala::class, 'imovelcodigo');
     }
 }

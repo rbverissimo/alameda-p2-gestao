@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InquilinoFatorDivisor extends Model
@@ -12,7 +13,7 @@ class InquilinoFatorDivisor extends Model
 
     protected $table = 'inquilinos_fator_divisor';
 
-    public function inquilino(): HasOne {
-        return $this->hasOne(Inquilino::class, 'inquilino_id');
+    public function inquilino(): BelongsTo {
+        return $this->belongsTo(Inquilino::class, 'inquilino_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InquilinoConta extends Model
@@ -12,13 +13,13 @@ class InquilinoConta extends Model
     protected $table = 'inquilinos_contas';
     protected $fillable = ['inquilinocodigo', 'contacodigo', 'valorinquilino', 'dataVencimento', 'dataPagamento', 'quitada'];
 
-    public function conta_imovel(): HasOne
+    public function conta_imovel(): BelongsTo
     {
-        return $this->hasOne(ContaImovel::class, 'contacodigo');
+        return $this->belongsTo(ContaImovel::class, 'contacodigo');
     }
 
-    public function inquilino(): HasOne
+    public function inquilino(): BelongsTo
     {
-        return $this->hasOne(Inquilino::class, 'inquilinocodigo');
+        return $this->belongsTo(Inquilino::class, 'inquilinocodigo');
     }
 }

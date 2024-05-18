@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InquilinoSaldo extends Model
@@ -12,8 +13,8 @@ class InquilinoSaldo extends Model
 
     protected $table = 'inquilinos_saldo';
 
-    public function inquilino(): HasOne
+    public function inquilino(): BelongsTo
     {
-        return $this->hasOne(Inquilino::class, 'inquilinocodigo');
+        return $this->belongsTo(Inquilino::class, 'inquilinocodigo');
     }
 }
