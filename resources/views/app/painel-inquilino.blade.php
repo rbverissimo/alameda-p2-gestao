@@ -20,6 +20,9 @@
 <div class="row">
       @include('app.layouts._components.situacao_financeira_inquilino')
 </div>
+<div class="row">
+      <div class="whitespace-end-page"></div>
+</div>
 
 @endsection
 

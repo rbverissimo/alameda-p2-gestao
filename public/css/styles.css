@@ -9,6 +9,10 @@
       
       --topo-table-bg: #fff;
 
+      --primary-dashboard-header: #DAFF7D;
+      --secondary-dashboard-header: #003652;
+      --alert-dashboard-header: #AE2709;
+      --positive-dashboard-header: #0C72C0;
 
       --table-head: #003652;
       --table-highlight: #EDFDC4;
@@ -27,6 +31,8 @@
 
       --erro-color: #FF5722;
       --erro-color-highlight: #fb7a53;
+
+      --info-color: #0C72C0;
 
       --highlight: #660f56;
       

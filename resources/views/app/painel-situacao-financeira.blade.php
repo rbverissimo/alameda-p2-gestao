@@ -8,6 +8,9 @@
         </div>
     </div>
     <div class="dashboard light-dashboard">
+        <div class="divisor-header primary-divisor">
+            Contas do mês:
+        </div>
         <div class="row">
             <div class="col-3">
                 <span>Aluguel: {{ $situacao_financeira->aluguel }}</span>
@@ -24,33 +27,34 @@
         </div>
     </div>
     <div class="row"></div>
-    @isset($comprovantes)
-        <div class="row">
-            <div class="col-12">
-                <span>Comprovantes: </span>
+    @if(!$comprovantes->isEmpty())
+        <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">
+                Comprovantes de transferência:
             </div>
+            @component('app.layouts._components.lista_comprovantes', ['comprovantes' => $comprovantes])  
+            @endcomponent
         </div>
-        @foreach ($comprovantes as $comprovante)
-            <div class="dashboard light-dashboard">
-                <div class="row">
-                    <div class="col-1">
-                        ID: {{$comprovante->id}}
-                    </div>
-                    <div class="col-2">
-                        Data: {{$comprovante->dataComprovante}}
-                    </div>
-                    <div class="col-2">
-                        Valor: {{$comprovante->valor}}
-                    </div>
-                    <div class="col-7">
-                        Descrição: {{$comprovante->descricao}}
-                    </div>
+    @else
+        <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">
+                Comprovantes de transferência:
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <span>Não foram encontrados comprovantes de pagamento para esta referência</span>
                 </div>
             </div>
-            
-        @endforeach
-        
-    @endisset
+        </div>       
+    @endif
+    <div class="dashboard light-dashboard">
+        <div id="painel-financeiro-saldo" class="divisor-header alert-divisor">
+            Saldo do mês: {{ $situacao_financeira->saldoReferencia }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="whitespace-end-page"></div>
+    </div>
 @endsection
 
 

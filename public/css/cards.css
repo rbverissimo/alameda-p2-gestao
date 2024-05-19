@@ -83,3 +83,22 @@
       width: 100%;
       padding: 2% 5%;
 }
+
+.divisor-header {
+      padding: 0.5em 1em;
+      border-radius: 10px;
+}
+
+.primary-divisor {
+      background-color: var(--primary-dashboard-header); 
+}
+
+.secondary-divisor {
+      background-color: var(--secondary-dashboard-header);
+      color: var(--text-white);
+}
+
+.alert-divisor {
+      background-color: var(--alert-dashboard-header);
+      color: var(--text-white);
+}

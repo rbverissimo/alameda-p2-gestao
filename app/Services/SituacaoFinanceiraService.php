@@ -35,13 +35,16 @@ class SituacaoFinanceiraService {
 
             $saldo = $this->getSaldoParcial($total_contas, $inquilino_id, $referencia);
 
+            $saldo_mes = $this->getSaldoMes($inquilino_id, $referencia);
+
             $situacao_financeira = new SituacaoFinanceiraVO(
             ProjectUtils::adicionarMascaraReferencia($referencia), 
             $aluguel->valorAluguel, 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($total_contas), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo));
+            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo),
+            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo_mes));
 
             return $situacao_financeira;
 
@@ -121,6 +124,13 @@ class SituacaoFinanceiraService {
             return $saldo_nao_consolidado + $saldo_mes;
       }
 
+
+      /**
+       * Retorna o saldo do mês através da conta entre valores pagos naquele mês
+       * subtraídos dos valores devidos na mesm referência
+       * 
+       * @return float
+       */
       private function getSaldoMes($inquilino_id, $referencia){
 
             $ano = ProjectUtils::getAnoFromReferencia($referencia);

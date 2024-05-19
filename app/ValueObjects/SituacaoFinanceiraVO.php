@@ -9,9 +9,10 @@ class SituacaoFinanceiraVO {
       public $agua;
       public $total;
       public $saldo;
+      public $saldoReferencia;
       
 
-      public function __construct($referencia, $aluguel, $luz, $agua, $total, $saldo)
+      public function __construct($referencia, $aluguel, $luz, $agua, $total, $saldo, $saldoReferencia)
       {
             $this->referencia = $referencia;
             $this->aluguel = $aluguel;
@@ -19,5 +20,6 @@ class SituacaoFinanceiraVO {
             $this->agua = $agua;
             $this->total = $total;
             $this->saldo = $saldo;
+            $this->saldoReferencia = $saldoReferencia;
       }
 }
