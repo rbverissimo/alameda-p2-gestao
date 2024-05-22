@@ -24,7 +24,9 @@ class PainelInquilinoController extends Controller
         $situacao_financeira_service = new SituacaoFinanceiraService();
         $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, ProjectUtils::getAnoMesSistemaSemMascara());
 
-        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira'));
+        $mensagemConfirmacaoModal = 'Consolidar o saldo do inquilino '.$inquilino->nome.' de acordo com as informações financeiras atuais?';
+
+        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira', 'mensagemConfirmacaoModal'));
     }
 
     public function detalharInquilino($id){

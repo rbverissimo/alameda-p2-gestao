@@ -1,7 +1,8 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
-
+@include('app.layouts._partials.simple-modal')
+@include('app.layouts._partials.spinner')
 <div class="row">
       @component('app.layouts._components.dados_inquilino', compact('inquilino'))
       @endcomponent

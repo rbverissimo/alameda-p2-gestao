@@ -1,12 +1,20 @@
 <div class="dashboard light-dashboard" id="situacao-financeira-wrapper">
       @isset($situacao_financeira)
+            <div class="divisor-header secondary-divisor">
+                  Situação financeira do mês com saldo consolidado de meses anteriores: 
+            </div>
             <div class="row">
                   <div class="col-3">
                         <span class="basic-card-wrapper">
                               Referência: {{ $situacao_financeira->referencia }}
                         </span>
                   </div>
-                  <div class="col-5"></div>
+                  <div class="col-2"></div>
+                  <div class="col-3">
+                        <button class="button action-button">
+                              Consolidar saldo
+                        </button>
+                  </div>
                   <div class="col-4">
                         <button onclick="redirecionarPara('{{ route('mostrar-situacao-financeira', ['id' => $inquilino->id]) }}')" 
                               class="button action-button">Mostrar referências anteriores
