@@ -11,7 +11,7 @@
                   </div>
                   <div class="col-2"></div>
                   <div class="col-3">
-                        <button class="button action-button">
+                        <button id="consolidar-saldo-button-painel-inquilino" class="button action-button">
                               Consolidar saldo
                         </button>
                   </div>

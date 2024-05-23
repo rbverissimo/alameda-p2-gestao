@@ -28,6 +28,7 @@
 @endsection
 
 @section('scripts')
+      <script type="module" src="{{ asset('js/comportamento-dinamico.js')}}"></script>
       @include('app.scripts.script-dados-inquilino')
       @include('app.scripts.script-lista-comprovantes')
 @endsection
