@@ -57,7 +57,7 @@ Route::middleware('autenticacao')->controller(CalculoContasController::class)->g
 
 Route::prefix('inquilino')->middleware('autenticacao')->group(function(){
     Route::get('/{id}', [PainelInquilinoController::class, 'painel_inquilino'])->name('painel-inquilino');
-    Route::post('/cadastrar-inquilino/{id}', [PainelInquilinoController::class, 'cadastrarInquilino'])->name('cadastrar-inquilino');
+    Route::get('/cadastrar-inquilino/cadastro', [PainelInquilinoController::class, 'cadastrarInquilino'])->name('cadastrar-inquilino');
     Route::get('/detalhe/{id}', [PainelInquilinoController::class, 'detalharInquilino'])->name('detalhar-inquilino');
     Route::post('/detalhe/{id}', [PainelInquilinoController::class, 'editarInquilino'])->name('editar-inquilino');
     Route::put('/detalhe/{id}', [PainelInquilinoController::class, 'editarInquilino'])->name('editar-inquilino');

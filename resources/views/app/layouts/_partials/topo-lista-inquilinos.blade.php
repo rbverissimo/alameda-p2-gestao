@@ -4,7 +4,7 @@
             <button onclick="navigateToLastRoute()" class="button common-button">Voltar</button>
         </div>
         <div class="col-2">
-            <button onclick="redirecionarPara('{{ route('cadastrar-imovel')}}')" class="button action-button" >
+            <button onclick="redirecionarPara('{{ route('cadastrar-inquilino')}}')" class="button action-button" >
                 Cadastrar
             </button>
         </div>

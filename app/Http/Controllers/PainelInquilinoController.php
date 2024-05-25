@@ -15,6 +15,7 @@ use InvalidArgumentException;
 class PainelInquilinoController extends Controller
 {
     private $titulo = 'Painel do Inquilino: '; 
+
     public function painel_inquilino($id){
 
         $inquilino = InquilinosService::getInfoPainelInquilino($id);
@@ -62,11 +63,22 @@ class PainelInquilinoController extends Controller
         // $this->detalharInquilino($id);
     }
 
+
+    public function cadastrarInquilino(Request $request){
+
+        $titulo = 'Cadastro de Inquilinos';
+        $mensagem = '';
+
+        return view('app.cadastro-inquilino', compact('titulo', 'mensagem'));
+
+    }
+
     public function editarInquilino(Request $request, $id){
         try {
 
             $titulo = $this->titulo;
             $inquilino = InquilinosService::getInquilinoBy($id);
+            $inquilino_aluguel = InquilinosService::getAluguel($id);
             $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($id);
             $pessoa = PessoasService::getPessoaBy($inquilino->pessoacodigo);
 
@@ -79,9 +91,9 @@ class PainelInquilinoController extends Controller
 
             $pessoa->save();
 
-            $inquilino->valorAluguel = $request->input('valor-aluguel');
+            $inquilino_aluguel->valorAluguel = $request->input('valor-aluguel');
 
-            $inquilino->save();
+            $inquilino_aluguel->save();
 
             $fator_divisor->fatorDivisor = $request->input('fator-divisor');
             
@@ -94,6 +106,7 @@ class PainelInquilinoController extends Controller
             $inquilino->telefone_fixo = $pessoa->telefone_fixo;
             $inquilino->telefone_trabalho = $pessoa->telefone_trabalho;
             $inquilino->fatorDivisor = $fator_divisor->fatorDivisor;
+            $inquilino->valorAluguel = $inquilino_aluguel->valorAluguel;
 
 
             $mensagem = 'sucesso';

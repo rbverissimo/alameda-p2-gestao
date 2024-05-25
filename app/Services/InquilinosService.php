@@ -14,7 +14,8 @@ class InquilinosService {
 
 
       /**
-       * Busca o registro na tabela de inquilinos de acordo com o ID
+       * Esse método busca o inquilino na tabela de inquilinos 
+       * usando o ID passado no parâmetro para encontra-lo
        * 
        * @return Inquilino
        */
@@ -71,6 +72,13 @@ class InquilinosService {
                   ->first();
       }
 
+      /**
+       * Esse método busca no banco de dados todos os inquilinos ligados a um imóvel
+       * Atente que esse método busca inquilinos que estão inativos também 
+       * 
+       * @param idMovel o ID do imóvel
+       * @return Collection
+       */
       public static function getInquilinosByImovel($idImovel){
             return Inquilino::select('inquilinos.id')
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
@@ -152,9 +160,7 @@ class InquilinosService {
        * @return float retorna o campo valorAluguel do registro encontrado no banco de dados; 
        */
       public static function getAluguelAtualizado($inquilino){
-
-            $inquilino_aluguel = InquilinoAluguel::where('inquilino', $inquilino)->orderBy('id', 'desc')->first();
-            return $inquilino_aluguel->valorAluguel;
+            return InquilinosService::getAluguel($inquilino)->valorAluguel;
       }
 
       /**
@@ -171,6 +177,15 @@ class InquilinosService {
                   ->where('fimvalidade', '<=', $referencia)
                   ->order('id', 'desc')
                   ->first();
+      }
+
+      /**
+       * Esse método busca o registro do aluguel mais atualizado de acordo com o ID máximo 
+       * do inquilino fornecido atavés do parâmetro
+       * @return \App\Models\InquilinoAluguel 
+       */
+      public static function getAluguel($inquilino){
+            return InquilinoAluguel::where('inquilino', $inquilino)->orderBy('id','desc')->first(); 
       }
 
       /**
