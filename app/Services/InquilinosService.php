@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Comprovante;
 use App\Models\Inquilino;
+use App\Models\InquilinoAluguel;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 
@@ -49,9 +50,10 @@ class InquilinosService {
       public static function getInfoPainelInquilino($id){
             return Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
                   'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 
-                  'inquilinos.valorAluguel', 'pessoas.telefone_celular')
+                  'inquilinos_alugueis.valorAluguel', 'pessoas.telefone_celular')
                   ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
                   ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
+                  ->join('inquilinos_alugueis', 'inquilinos_alugueis.inquilino', '=', 'inquilinos.id')
                   ->where('inquilinos.id', $id)
                   ->first();
       }
@@ -80,8 +82,9 @@ class InquilinosService {
        */
       public static function getInquilinosBy($imovel){
 
-            return Inquilino::select('inquilinos.id', 'inquilinos.situacao', 'inquilinos.valoraluguel')
+            return Inquilino::select('inquilinos.id', 'inquilinos.situacao', 'inquilinos_alugueis.valoraluguel')
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+                  ->join('inquilinos_alugueis', 'inquilinos_alugueis.inquilino', 'inquilinos.id')
                   ->where('salas.imovelcodigo', $imovel->idImovel)
                   ->get();
       }
@@ -129,6 +132,34 @@ class InquilinosService {
        */
       public static function getInquilinoSaldoBy($inquilino){
             return InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
+      }
+
+      /**
+       * Esse método busca o último valor de aluguel de um inquilino na tabela inquilinos_alugueis
+       * 
+       * @param inquilino reflete o ID do inquilino que será buscado no banco de dados
+       * @return float retorna o campo valorAluguel do registro encontrado no banco de dados; 
+       */
+      public static function getAluguelAtualizado($inquilino){
+
+            $inquilino_aluguel = InquilinoAluguel::where('inquilino', $inquilino)->order('id', 'desc')->first();
+            return $inquilino_aluguel->valorAluguel;
+      }
+
+      /**
+       * Esse método busca o valor do aluguel de um inquilino em uma determinada referência
+       * passada no segundo parâmetro da assinatura da função
+       * 
+       * @param inquilino reflete o ID do inquilino que será buscado no banco de dados;
+       * @param referencia reflete a referência procurada nos intervalos de inicioValidade e fimValidade 
+       * @return InquilinoAluguel um objeto com as informações contidas no registro 
+       */
+      public static function getAluguelBy($inquilino, $referencia){
+            return InquilinoAluguel::where('inquilino', $inquilino)
+                  ->where('iniciovalidade', '>=', $referencia)
+                  ->where('fimvalidade', '<=', $referencia)
+                  ->order('id', 'desc')
+                  ->first();
       }
 
 }
