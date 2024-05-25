@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
+use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 
@@ -77,7 +78,13 @@ class InquilinosService {
       }
 
       /**
-       * Traz todos os inquilinos de um imóvel independente de estarem ativos ou não
+       * Esse método busca no banco de dados todos os inquilinos (ativos ou não) 
+       * cadastrados em um imóvel. O result set desse método inclui o ID do inquilino,
+       * a situação em que ele se encontra e o valor do aluguel dele 
+       * (esse filtrado pelo ID máximo encontrado na tabela inquilinos_alugueis)
+       * 
+       * @param imovel ID do imóvel que será usado para identificar as salas e os inquilinos
+       * @return Collection um array com os resultados encontrados 
        * 
        */
       public static function getInquilinosBy($imovel){
@@ -86,6 +93,7 @@ class InquilinosService {
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->join('inquilinos_alugueis', 'inquilinos_alugueis.inquilino', 'inquilinos.id')
                   ->where('salas.imovelcodigo', $imovel->idImovel)
+                  ->orderBy('inquilinos_alugueis.id', 'desc')
                   ->get();
       }
 
@@ -142,7 +150,7 @@ class InquilinosService {
        */
       public static function getAluguelAtualizado($inquilino){
 
-            $inquilino_aluguel = InquilinoAluguel::where('inquilino', $inquilino)->order('id', 'desc')->first();
+            $inquilino_aluguel = InquilinoAluguel::where('inquilino', $inquilino)->orderBy('id', 'desc')->first();
             return $inquilino_aluguel->valorAluguel;
       }
 
@@ -161,5 +169,20 @@ class InquilinosService {
                   ->order('id', 'desc')
                   ->first();
       }
+
+
+
+      /**
+       * 
+       * @return Collection um array com os ID das contas 
+       */
+      public static function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia){
+            return InquilinoConta::select('inquilinos_contas.id')
+                ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
+                ->where('inquilinos_contas.inquilinocodigo', $idInquilino)
+                ->where('contas_imoveis.ano', $ano_referencia)
+                ->where('contas_imoveis.mes', $mes_referencia)
+                ->get();   
+        }
 
 }

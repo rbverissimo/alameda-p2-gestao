@@ -22,7 +22,7 @@ class CalculoContasService {
         $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
 
         foreach ($inquilinos_imovel as $inquilino) {
-            $contas_ja_calculadas = $this->buscarIdInquilinoContaByReferencia($inquilino->id, $ano_referencia, $mes_referencia);
+            $contas_ja_calculadas = InquilinosService::buscarIdInquilinoContaByReferencia($inquilino->id, $ano_referencia, $mes_referencia);
             if(!$contas_ja_calculadas->isEmpty()){
                 foreach ($contas_ja_calculadas as $conta_calculada) {
                     InquilinoConta::where('id', $conta_calculada->id)->delete();
@@ -127,15 +127,6 @@ class CalculoContasService {
 
     private function calculoAgua($conta_agua, $nr_inquilinos_imovel, $fator_divisor){
         return ($conta_agua / $nr_inquilinos_imovel) * $fator_divisor;
-    }
-
-    private function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia){
-        return InquilinoConta::select('inquilinos_contas.id')
-            ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
-            ->where('inquilinos_contas.inquilinocodigo', $idInquilino)
-            ->where('contas_imoveis.ano', $ano_referencia)
-            ->where('contas_imoveis.mes', $mes_referencia)
-            ->get();   
     }
 
 }

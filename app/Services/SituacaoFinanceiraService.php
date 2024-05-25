@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Comprovante;
-use App\Models\Inquilino;
-use App\Models\InquilinoConta;
 use App\Models\InquilinoSaldo;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\SituacaoFinanceiraVO;
@@ -23,7 +20,7 @@ class SituacaoFinanceiraService {
             $mes = ProjectUtils::getMesFromReferencia($referencia);
 
 
-            $aluguel = $this->getAluguelInquilino($inquilino_id);
+            $aluguel = InquilinosService::getAluguelAtualizado($inquilino_id);
 
             $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes) != null ? 
                   $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes)->valorinquilino  : 0.0;
@@ -31,7 +28,7 @@ class SituacaoFinanceiraService {
             $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes) != null ?
                   $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes)->valorinquilino : 0.0;
 
-            $total_contas = $this->somarContas($aluguel->valorAluguel, $conta_luz, $conta_agua);
+            $total_contas = $this->somarContas($aluguel, $conta_luz, $conta_agua);
 
             $saldo = $this->getSaldoParcial($total_contas, $inquilino_id, $referencia);
 
@@ -39,7 +36,7 @@ class SituacaoFinanceiraService {
 
             $situacao_financeira = new SituacaoFinanceiraVO(
             ProjectUtils::adicionarMascaraReferencia($referencia), 
-            $aluguel->valorAluguel, 
+            $aluguel, 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua), 
             ProjectUtils::arrendondarParaDuasCasasDecimais($total_contas), 
@@ -66,45 +63,11 @@ class SituacaoFinanceiraService {
                   ->first();
       }
 
-      /**
-       * Retorna a soma do aluguel com todas as contas do ano e mês para um determinado inquilino
-       */
-      private function getValoresSomadosMes($inquilino_id, $ano, $mes){
-
-            $aluguel = $this->getAluguelInquilino($inquilino_id);
-            $soma_contas = InquilinoConta::select('inquilinos_contas.valorinquilino')
-                  ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
-                  ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
-                  ->where('contas_imoveis.ano', $ano)
-                  ->where('contas_imoveis.mes', $mes)
-                  ->sum('inquilinos_contas.valorinquilino');
-
-
-            return $aluguel->valorAluguel + $soma_contas;
-
-      }
-
-      private function getAluguelInquilino($inquilino_id) {
-            return Inquilino::select('valorAluguel')->where('id', $inquilino_id)->first();
-      }
 
       private function somarContas($aluguel, $conta_luz, $conta_agua){
             return $aluguel + $conta_luz + $conta_agua;
       }
 
-      /**
-       * Esse método busca na tabela de comprovantes a soma dos valores 
-       * de todos comprovantes dada uma determinada referência para um 
-       * determinado inquilino
-       * 
-       * @return float
-       */
-      private function getSomaComprovantesReferencia($inquilino_id, $referencia){
-            return Comprovante::select('valor')
-            ->where('inquilino', $inquilino_id)
-            ->where('referencia', $referencia)
-            ->sum('valor');
-      }
       /**
        * Esse método recebe o valor total de contas do mês e busca os comprovantes 
        * na tabela de comprovantes para um determinado inquilino representado pelo seu ID
@@ -117,7 +80,7 @@ class SituacaoFinanceiraService {
        */
       private function getSaldoParcial($valor_total_contas, $inquilino_id, $referencia){
 
-            $valores_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);       
+            $valores_mes =  ComprovantesService::getSomaComprovantesReferencia($inquilino_id, $referencia);       
             $saldo_nao_consolidado = InquilinosService::getSaldoAtualBy($inquilino_id);
             $saldo_mes = $valores_mes - $valor_total_contas; 
 
@@ -136,8 +99,8 @@ class SituacaoFinanceiraService {
             $ano = ProjectUtils::getAnoFromReferencia($referencia);
             $mes = ProjectUtils::getMesFromReferencia($referencia);
 
-            $valores_pagos_mes = $this->getSomaComprovantesReferencia($inquilino_id, $referencia);
-            $valores_devidos_mes = $this->getValoresSomadosMes($inquilino_id, $ano, $mes);
+            $valores_pagos_mes = ComprovantesService::getSomaComprovantesReferencia($inquilino_id, $referencia);
+            $valores_devidos_mes = InquilinosService::getValoresSomadosMes($inquilino_id, $ano, $mes);
 
             return $valores_pagos_mes - $valores_devidos_mes; 
       }
