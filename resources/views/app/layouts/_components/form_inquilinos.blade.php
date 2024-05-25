@@ -77,6 +77,14 @@
                 old('valor-aluguel', $inquilino->valorAluguel) : old('valor-aluguel')}}">
         </div>
     </div>
+    <div class="dashboard light-dashboard">
+        <div class="divisor-header secondary-divisor">
+            Informações do imóvel:
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
     <div class="row center-itens">
         <div class="col-2">
             <button class="button confirmacao-button">OK</button>
