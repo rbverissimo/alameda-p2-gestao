@@ -8,6 +8,7 @@ use App\Models\InquilinoAluguel;
 use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
+use Illuminate\Support\Facades\DB;
 
 class InquilinosService {
 
@@ -50,11 +51,11 @@ class InquilinosService {
        */
       public static function getInfoPainelInquilino($id){
             return Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
-                  'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 
-                  'inquilinos_alugueis.valorAluguel', 'pessoas.telefone_celular')
+                  'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 'pessoas.telefone_celular',
+                  DB::raw('(SELECT valorAluguel from INQUILINOS_ALUGUEIS 
+                              WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE inquilino = inquilinos.id)) as valorAluguel'))
                   ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
                   ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
-                  ->join('inquilinos_alugueis', 'inquilinos_alugueis.inquilino', '=', 'inquilinos.id')
                   ->where('inquilinos.id', $id)
                   ->first();
       }
@@ -89,7 +90,9 @@ class InquilinosService {
        */
       public static function getInquilinosBy($imovel){
 
-            return Inquilino::select('inquilinos.id', 'inquilinos.situacao', 'inquilinos_alugueis.valoraluguel')
+            return Inquilino::select('inquilinos.id', 'inquilinos.situacao', 
+                  DB::raw('(SELECT valorAluguel from INQUILINOS_ALUGUEIS 
+                        WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE inquilino = inquilinos.id)) as valorAluguel'))
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->join('inquilinos_alugueis', 'inquilinos_alugueis.inquilino', 'inquilinos.id')
                   ->where('salas.imovelcodigo', $imovel->idImovel)
@@ -170,8 +173,6 @@ class InquilinosService {
                   ->first();
       }
 
-
-
       /**
        * 
        * @return Collection um array com os ID das contas 
@@ -183,6 +184,53 @@ class InquilinosService {
                 ->where('contas_imoveis.ano', $ano_referencia)
                 ->where('contas_imoveis.mes', $mes_referencia)
                 ->get();   
-        }
+      }
+
+      /**
+       * Retorna a soma do aluguel com todas as contas do ano e mês para um determinado inquilino
+       */
+      public static function getValoresSomadosMes($inquilino_id, $ano, $mes){
+
+            $aluguel = InquilinosService::getAluguelAtualizado($inquilino_id);
+            $soma_contas = InquilinoConta::select('inquilinos_contas.valorinquilino')
+                  ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
+                  ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
+                  ->where('contas_imoveis.ano', $ano)
+                  ->where('contas_imoveis.mes', $mes)
+                  ->sum('inquilinos_contas.valorinquilino');
+
+
+            return $aluguel + $soma_contas;
+
+      }
+
+
+      /**
+       * Esse método busca todos os inquilinos ativos de acordo com os ID dos imóveis 
+       * passados no parâmetro da assinatura da função. Esse método é usado para construir
+       * a lista dos inquilinos. Os ID de imóveis passados são previamente filtrados de 
+       * acordo com o usuário. Essa aplicação conjunta dos dois métodos, um que filtre os imóveis
+       * pelo usuário, e esse, garantem a integridade da informação.  
+       * 
+       * @return Collection
+       */
+      public static function getListaInquilinosAtivosTodosImoveis($imoveis){
+
+            /* A subquery contida no DB::raw faz a busca do valorAluguel de acordo com o maior ID disponível 
+               para aquele inquilino identificado pelo ID
+            */
+            $inquilinos_ativos = Inquilino::select('inquilinos.id', 'pessoas.nome', 'pessoas.telefone_celular',
+                  DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
+                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
+              ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+              ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+              ->whereIn('salas.imovelcodigo', $imoveis)
+              ->where('inquilinos.situacao', '=', 'A')
+              ->get();
+
+      
+            return $inquilinos_ativos;
+      }
+
 
 }
