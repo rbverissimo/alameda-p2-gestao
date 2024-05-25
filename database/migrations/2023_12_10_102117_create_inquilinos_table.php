@@ -15,7 +15,6 @@ class CreateInquilinosTable extends Migration
     {
         Schema::create('inquilinos', function (Blueprint $table) {
             $table->id();
-            $table->double('valorAluguel');
             $table->integer('pessoacodigo');
             $table->string('situacao')->default('A');
             $table->integer('salacodigo');

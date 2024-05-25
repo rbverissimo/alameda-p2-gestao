@@ -36,4 +36,8 @@ class Inquilino extends Model
     {
         return $this->hasOne(InquilinoSaldo::class, 'inquilinocodigo');
     }
+
+    public function aluguel(): hasMany {
+        return $this->hasMany(InquilinoAluguel::class, 'inquilino');
+    }
 }
