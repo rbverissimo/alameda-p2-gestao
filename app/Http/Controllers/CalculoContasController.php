@@ -7,6 +7,7 @@ use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
+use App\Services\ImoveisService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CalculoContasController extends Controller
         
         $usuario = UsuarioService::getUsuarioLogado();
         $idImoveisDoUsuario = UsuarioService::getImoveisBy($usuario);
-        $imoveis = Imovel::whereIn('id', $idImoveisDoUsuario)->get();
+        $imoveis = ImoveisService::getImoveis();
         
         $tipos_contas = TipoConta::all();
         $tipos_salas = Sala::all();
@@ -73,7 +74,7 @@ class CalculoContasController extends Controller
 
             $mensagem = null; 
 
-            $imoveis = Imovel::where('id', 1)->get();
+            $imoveis = ImoveisService::getImoveis();
 
             if($request->isMethod('put')){
 

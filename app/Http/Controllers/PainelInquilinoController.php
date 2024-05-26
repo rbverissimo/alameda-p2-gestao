@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
 use App\Services\ComprovantesService;
+use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Services\PessoasService;
@@ -68,8 +69,9 @@ class PainelInquilinoController extends Controller
 
         $titulo = 'Cadastro de Inquilinos';
         $mensagem = '';
+        $imoveis = ImoveisService::getImoveis();
 
-        return view('app.cadastro-inquilino', compact('titulo', 'mensagem'));
+        return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'mensagem'));
 
     }
 

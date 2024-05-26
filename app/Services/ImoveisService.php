@@ -19,7 +19,10 @@ class ImoveisService {
         $usuarioLogado = UsuarioService::getUsuarioLogado();
         $imoveis_usuario = UsuarioImovel::with('imoveis')->where('idUsuario', $usuarioLogado)->get();
 
-        return $imoveis_usuario->imoveis;
+        $imoveis = [];
+        
+
+        return $imoveis;
     }
 
 }
