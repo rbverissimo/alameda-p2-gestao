@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
             SalaSeeder::class,
             InquilinoSeeder::class,
             InquilinoFatorDivisorSeeder::class,
-            UsersImoveisSeeder::class
+            UsersImoveisSeeder::class,
+            InquilinosAlugueisSeeder::class,
+            ImoveisTiposContasSeeder::class
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\UsuarioImovel;
 
@@ -37,10 +38,23 @@ class ImoveisService {
     /**
      * Esse método retorna as salas cadastradas ao um imóvel específico
      * 
-     * @return EloquentCollection 
+     * @return Illuminate\Database\Eloquent\Collection 
      */
     public static function getSalaBy($imovel){
         return Sala::where('imovelcodigo', $imovel)->get();
+    }
+
+    /**
+     * Esse método busca os tipos de contas associados a um imóvel
+     * no banco de dados. Se ele encontrar, ele retorna um array
+     * com os tipos. Caso contrário, ele retorna um array vazio. 
+     * 
+     * @return array de App\Models\TipoConta
+     */
+    public static function getTipoContasBy($imovel){
+        $imovel = Imovel::with('tipos_contas')->where('id', $imovel)->first();
+
+        return $imovel->tipos_contas ?? [];
     }
 
 }

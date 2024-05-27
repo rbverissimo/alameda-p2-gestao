@@ -21,7 +21,7 @@ class CalculoContasController extends Controller
         $imoveis = ImoveisService::getImoveis();
         
         $tipos_contas = TipoConta::all();
-        $tipos_salas = ImoveisService::getSalaBy($imoveis[0]->id);
+        $tipos_salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : []; 
         $mensagem = null; 
         
         if($request->isMethod('post')){
