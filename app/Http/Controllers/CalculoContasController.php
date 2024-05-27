@@ -16,14 +16,12 @@ class CalculoContasController extends Controller
 {
     public function calculoContas(Request $request) {
 
-        
-        
         $usuario = UsuarioService::getUsuarioLogado();
         $idImoveisDoUsuario = UsuarioService::getImoveisBy($usuario);
         $imoveis = ImoveisService::getImoveis();
         
         $tipos_contas = TipoConta::all();
-        $tipos_salas = Sala::all();
+        $tipos_salas = ImoveisService::getSalaBy($imoveis[0]->id);
         $mensagem = null; 
         
         if($request->isMethod('post')){
@@ -60,6 +58,7 @@ class CalculoContasController extends Controller
         }
 
         $titulo = 'Calcular Contas';
+
         
         return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'));
     }
