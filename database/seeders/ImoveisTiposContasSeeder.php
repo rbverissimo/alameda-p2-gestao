@@ -17,7 +17,7 @@ class ImoveisTiposContasSeeder extends Seeder
 
         $registro_1 = [
             'imovel' => 1,
-            'tipoconta' => 2
+            'tipoconta' => 1
         ];
 
         $registro_2 = [
