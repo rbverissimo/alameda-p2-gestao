@@ -82,7 +82,40 @@
             Informações do imóvel:
         </div>
         <div class="row">
-
+            @isset($imoveis)
+            <div class="col-3">
+                  <select id="imoveis-conta-select" name="imovelcodigo">
+                        @foreach ($imoveis as $imovel)
+                              <option value="{{$imovel->id}}"
+                                    @isset($conta_imovel->imovelcodigo)
+                                          @if($conta_imovel->imovelcodigo == $imovel->id)
+                                          selected
+                                          @endif
+                                    @endisset
+                              >
+                                    {{$imovel->nomefantasia}}
+                              </option>
+                        @endforeach
+                  </select> 
+            </div>
+            @endisset 
+            @isset($salas)
+            <div class="col-3">
+                <select id="sala-select" name="sala">
+                    @foreach ($salas as $sala)
+                          <option value="{{$sala->id}}"
+                                @isset($conta_imovel->salacodigo)
+                                      @if ($conta_imovel->salacodigo == $sala->id)
+                                                selected
+                                      @endif
+                                @endisset
+                                >
+                                    {{$sala->nomesala}}
+                            </option>
+                    @endforeach
+                </select>
+            </div>
+            @endisset
         </div>
     </div>
     <div class="row center-itens">

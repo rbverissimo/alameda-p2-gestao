@@ -37,6 +37,9 @@ class PainelInquilinoController extends Controller
         $mensagem = null; 
         $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
 
+        $imoveis = ImoveisService::getImoveis();
+        $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
+
         return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem', 'mensagemConfirmacaoModal'));
 
     }
@@ -70,8 +73,9 @@ class PainelInquilinoController extends Controller
         $titulo = 'Cadastro de Inquilinos';
         $mensagem = '';
         $imoveis = ImoveisService::getImoveis();
+        $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
 
-        return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'mensagem'));
+        return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'salas', 'mensagem'));
 
     }
 

@@ -57,4 +57,14 @@ class ImoveisService {
         return $imovel->tipos_contas ?? [];
     }
 
+    /**
+     * Esse método busca as informações de uma sala junto
+     * ao imóvel ao qual está associada
+     * 
+     * @return App\Models\Sala
+     */
+    public static function getSalaImovelBy($sala){
+        return Sala::with('inquilino')->where('id', $sala)->first();
+    }
+
 }

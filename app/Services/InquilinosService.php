@@ -9,6 +9,7 @@ use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 use Illuminate\Support\Facades\DB;
+use Mockery\Undefined;
 
 class InquilinosService {
 
@@ -245,6 +246,12 @@ class InquilinosService {
 
       
             return $inquilinos_ativos;
+      }
+
+      public static function getSalaImovelBy($inquilino){
+            $inquilino = Inquilino::with('sala')->where('id', $inquilino)->first(); 
+            $salaImovel = $inquilino->has('sala') ? ImoveisService::getSalaImovelBy($inquilino->sala->id) : null; 
+            return $salaImovel;
       }
 
 

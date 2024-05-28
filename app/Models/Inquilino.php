@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Inquilino extends Model
 {
@@ -17,6 +18,7 @@ class Inquilino extends Model
         return $this->belongsTo(Sala::class, 'salacodigo');
     }
 
+    
     public function pessoa(): BelongsTo
     {
         return $this->belongsTo(Pessoa::class, 'pessoacodigo');
