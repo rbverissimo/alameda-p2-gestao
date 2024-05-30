@@ -12,4 +12,7 @@
 <div class="row">
     @include('app.layouts._components.form_inquilinos')
 </div>
+<div class="row">
+    <div class="whitespace-end-page"></div>
+</div>
 @endsection

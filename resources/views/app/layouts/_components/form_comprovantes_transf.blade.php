@@ -1,4 +1,5 @@
-<form action="{{ isset($comprovante->id) ? route('comprovante-editar', ['id' => $comprovante->id]) : route('comprovantes-transferencia') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ isset($comprovante->id) ? route('comprovante-editar', ['id' => $comprovante->id]) : route('comprovantes-transferencia') }}"
+       method="POST" enctype="multipart/form-data">
       @csrf
       @if (isset($comprovante->id))
             @method('PUT')

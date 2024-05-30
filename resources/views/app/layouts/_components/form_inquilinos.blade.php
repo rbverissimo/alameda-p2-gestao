@@ -1,4 +1,5 @@
-<form action="{{ isset($inquilino->id) ? route('editar-inquilino', ['id' => $inquilino->id]) : route('cadastrar-inquilino')}}" method="post">
+<form action="{{ isset($inquilino->id) ? route('editar-inquilino', ['id' => $inquilino->id]) : route('cadastrar-inquilino')}}" 
+    method="post" enctype="multipart/form-data">
     @csrf
     @if (isset($inquilino->id))
         @method('PUT')
@@ -118,6 +119,9 @@
             @endisset
         </div>
     </div>
+    @component('app.layouts._components.dados_contrato', compact('contrato'))
+        
+    @endcomponent
     <div class="row center-itens">
         <div class="col-2">
             <button class="button confirmacao-button">OK</button>
