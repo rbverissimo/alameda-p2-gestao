@@ -74,7 +74,6 @@
             <label for="input-valor-aluguel">Valor do Aluguel: </label>
             <input type="text" 
                 name="valor-aluguel"
-                id="input-valor-aluguel"
                 placeholder="R$800,00"
                 value="{{ isset($inquilino->valorAluguel) ? 
                 old('valor-aluguel', $inquilino->valorAluguel) : old('valor-aluguel')}}">

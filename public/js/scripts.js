@@ -224,6 +224,34 @@ export function mascaraCurrencyBr(event) {
       event.target.value = inputValue;
 }
 
+export function mascaraValoresEmReal(event){
+      const valor = event.target.value; 
+      if (isNaN(valor) || valor === 0) {
+            return "R$0,00";
+      }
+
+      const [parteInteira, parteDecimal] = valor.toString().split(".");
+        
+      const parteInteiraAgrupada = agrouparDigitos(parteInteira);
+      console.log(parteInteiraAgrupada);
+      const parteDecimalFormatada = parteDecimal ? parteDecimal.padEnd(2, "0") : "00";
+      event.target.value = `R$${parteInteiraAgrupada},${parteDecimalFormatada}`;
+}
+
+
+function agrouparDigitos(numero) {
+      const numeroString = numero.toString();
+      const numeroReverso = numeroString.split("").reverse().join("");
+      let resultado = "";
+            for (let i = 0; i < numeroReverso.length; i++) {
+                  if (i > 0 && i % 3 === 0) {
+                        resultado += ".";
+                  }
+                  resultado += numeroReverso[i];
+            }
+      return resultado.split("").reverse().join("");
+}
+
 export function isNullOrUndefined(value){
       return value === null || value === undefined;
 }
