@@ -26,3 +26,48 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.comp-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40%;
+    height: 2rem;
+  }
+  
+.comp-toggle-switch-checkbox {
+    display: none;
+}
+  
+.comp-toggle-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .2s;
+    border-radius: 34px;
+}
+  
+.comp-toggle-switch-checkbox:checked + .comp-toggle-switch-slider {
+    background-color: #4CAF50;
+}
+  
+.comp-toggle-switch-slider:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .2s; 
+}
+  
+.comp-toggle-switch-checkbox:checked + .comp-toggle-switch-slider:after {
+    left: calc(100% - 5px);
+}
+  

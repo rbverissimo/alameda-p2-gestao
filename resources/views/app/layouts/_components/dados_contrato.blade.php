@@ -3,23 +3,21 @@
         Informações à cerca do contrato de locação 
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <input name="data-assinatura" type="text" placeholder="Data da assinatura do contrato: "
             value="{{ isset($contrato->dataAssinatura) ? 
                   old('data-comprovante', $contrata->dataAssinatura) : 
                         old('data-comprovante') }}">
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <input name="data-expiracao" type="text" placeholder="Data de expiração do contrato: "
             value="{{ isset($contrato->dataAssinatura) ? 
                   old('data-comprovante', $contrata->dataAssinatura) : 
                         old('data-comprovante') }}">
         </div>
-        @isset($contrato->renovacaoAutomatica)
-            <div class="col-2">
-                {{ $contrato->renovacaoAutomatica }}
-            </div>
-        @endisset
+        <div class="col-4">
+            <x-toggle-switch></x-toggle-switch>
+        </div>
     </div>
     <div class="row">
         <div class="col-3">
