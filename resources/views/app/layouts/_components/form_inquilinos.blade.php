@@ -16,6 +16,7 @@
             <input type="text" 
                 name="cpf" 
                 placeholder="CPF: "
+                id="form-inquilino-cpf"
                 value="{{ isset($inqulino->cpf) ? old('cpf', $inqulino->cpf) : old('cpf')}}">
         </div>
         @if (isset($inquilino->id))
@@ -32,6 +33,7 @@
             <input required type="text" 
                 name="telefone-celular" 
                 placeholder="Celular com DDD:"
+                id="form-inquilino-telefone-celular"
                 value="{{ isset($inquilino->telefone_celular) ? 
                     old('telefone-celular', $inquilino->telefone_celular) : old('telefone-celular')}}">   
         </div>

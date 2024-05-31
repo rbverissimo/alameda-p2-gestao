@@ -258,7 +258,7 @@ select:focus {
       margin-bottom: 5em;
 }
 
-@media only screen and (min-width: 768px){
+@media only screen and (min-width: 769px){
       .col-1 { width: 8.33%;}
       .col-2 { width: 16.66%;}
       .col-3 { width: 25%;}

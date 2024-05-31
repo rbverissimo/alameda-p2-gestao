@@ -25,4 +25,6 @@
       @endisset
 @endsection
 
-@include('app.scripts.script-comprovantes')
+@section('scripts')
+      @include('app.scripts.script-comprovantes')
+@endsection

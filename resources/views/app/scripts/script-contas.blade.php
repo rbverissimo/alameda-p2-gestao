@@ -1,4 +1,3 @@
-@section('scripts')
 <script type="module">
 
       import { anoMesMascara } from "{{ asset('js/scripts.js')}}";
@@ -52,4 +51,3 @@
       });
 
 </script>
-@endsection

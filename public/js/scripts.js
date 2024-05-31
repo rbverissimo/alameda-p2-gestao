@@ -106,10 +106,10 @@ export function dataMascara(event) {
       // Remove caracteres não numéricos
       inputValue = inputValue.replace(/\D/g, '');
 
-      // Garante que o input não em mais do que 8 dígitos
+      // Garante que o input não tenha mais do que 8 dígitos
       inputValue = inputValue.slice(0, 8);
 
-      // Formata a máscara de AAAA-mm-dd
+      // Formata a máscara de dd-MM-AAAA
       if (inputValue.length >= 6) {
             inputValue = inputValue.slice(0, 2) + '-' + inputValue.slice(2, 4) + '-' + inputValue.slice(4);
       }
@@ -134,6 +134,53 @@ export function isDataValida(dateString) {
       return month >= 1 && month <= 12 && day >= 1 && day <= 31;
 }
 
+/**
+ * Esse método recebe um evento do tipo Input e volte um value
+ * para esse evento formando a máscara: (dd) ddddd-dddd
+ * 
+ * @param {*} event 
+ */
+export function telefoneCelularMascara(event){
+      let inputValue = event.target.value;
+
+      inputValue = inputValue.slice(0, 14);
+
+      if (inputValue.length === 3) {
+            inputValue = '(' + inputValue.slice(0, 2) + ')' + inputValue.slice(2);
+      }
+
+      if(inputValue.length > 8){
+            inputValue = '(' + inputValue.slice(1, 3) + ')' + inputValue.slice(4, 9) + '-' + inputValue.slice(10);
+      }
+
+      event.target.value = inputValue;
+}
+
+/**
+ * máscara: ddd.ddd.ddd-dd
+ * @param {*} event 
+ */
+export function cpfMascara(event){
+      let inputValue = event.target.value;
+
+      inputValue = inputValue.slice(0, 14);
+
+      if(inputValue.length === 3){
+            inputValue = inputValue.slice(0 , 3) + '.' + inputValue.slice(3, 7);
+      }
+
+      if(inputValue.length === 7){
+            inputValue = inputValue.slice(0 , 7) +
+            '.' + inputValue.slice(8, 11);
+      }
+
+      if(inputValue.length > 10 ){
+            inputValue = inputValue.slice(0, 11) + '-' + inputValue.slice(12);
+      }
+
+      event.target.value = inputValue;
+}
+
 export function anoMesMascara(event) {
       let inputValue = event.target.value;
 
@@ -154,7 +201,10 @@ export function anoMesMascara(event) {
 
 export function handleBackspaceHyphen(event) {
       // Allow backspace even if the value ends with a hyphen
-      if (event.key === 'Backspace' && event.target.value.endsWith('-')) {
+      if (event.key === 'Backspace' && (event.target.value.endsWith('-')
+            || event.target.value.endsWith('.') 
+            || event.target.value.endsWith('(') 
+            || event.target.value.endsWith(')'))) {
             event.target.value = event.target.value.slice(0, -1);
       }
 }
