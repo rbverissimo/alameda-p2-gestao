@@ -7,13 +7,20 @@ use Illuminate\View\Component;
 class ToggleSwitch extends Component
 {
     /**
+     * O nome do atributo do Input
+     * @var string
+     */
+    public $attName;
+
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($attName)
     {
-        //
+        $this->attName = $attName;
     }
 
     /**

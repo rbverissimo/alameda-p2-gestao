@@ -30,8 +30,8 @@
 .comp-toggle-switch {
     position: relative;
     display: inline-block;
-    width: 40%;
-    height: 2rem;
+    width: 100%;
+    height: 1.5rem;
   }
   
 .comp-toggle-switch-checkbox {
@@ -51,7 +51,7 @@
 }
   
 .comp-toggle-switch-checkbox:checked + .comp-toggle-switch-slider {
-    background-color: #4CAF50;
+    background-color: var(--slider-on);
 }
   
 .comp-toggle-switch-slider:after {
@@ -62,7 +62,8 @@
     transform: translate(-50%, -50%);
     width: 26px;
     height: 26px;
-    background-color: white;
+    background-color: var(--slider-bullet);
+    border: 1px solid var(--slider-border);
     border-radius: 50%;
     transition: .2s; 
 }

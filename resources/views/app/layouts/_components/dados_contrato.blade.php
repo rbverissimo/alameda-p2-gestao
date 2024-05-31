@@ -16,7 +16,10 @@
                         old('data-comprovante') }}">
         </div>
         <div class="col-4">
-            <x-toggle-switch></x-toggle-switch>
+            <span class="basic-card-wrapper">Renovação automática de contrato?</span>
+        </div>
+        <div class="col-1">
+            <x-toggle-switch attName="renovacao-automatica"></x-toggle-switch>
         </div>
     </div>
     <div class="row">
