@@ -38,7 +38,7 @@
             <label for="arquivo-contrato"> 
                   Envie o comprovante:
             </label>
-            <input type="file" name="contrato">
+            <input type="file" id="arquivo-contrato" name="contrato">
       </div>
     </div>
     <div class="row">

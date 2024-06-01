@@ -83,8 +83,8 @@ export function displayMensagemErro(){
 export function apenasNumeros(event) {
             
       // Allow: backspace, delete, tab, escape, enter
-      if (event.key === "Backspace" || event.key === "Delete" || 
-            event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
+      if (event.key === "Backspace" || event.key === "Delete" || event.key === "ArrowLeft" || event.key === "ArrowRight"
+            || event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
             return;
       }
 
@@ -202,6 +202,7 @@ export function anoMesMascara(event) {
 export function handleBackspaceHyphen(event) {
       // Allow backspace even if the value ends with a hyphen
       if (event.key === 'Backspace' && (event.target.value.endsWith('-')
+            || event.target.value.endsWith(',')
             || event.target.value.endsWith('.') 
             || event.target.value.endsWith('(') 
             || event.target.value.endsWith(')'))) {
@@ -226,31 +227,77 @@ export function mascaraCurrencyBr(event) {
 
 export function mascaraValoresEmReal(event){
       const valor = event.target.value; 
-      if (isNaN(valor) || valor === 0) {
-            return "R$0,00";
+      let resultado = '';
+
+      resultado = valor.replace(/^R\$/, "");
+      
+
+      if(resultado.includes(',')){
+            let[parteInteira, parteDecimal] = resultado.split(',');
+
+            parteInteira = parteInteira.replace(/[^0-9]/g, "");
+
+            if(parteInteira === ''){
+                  parteInteira = '0';
+            }
+
+            if(parteInteira > 999){
+                  parteInteira = agrouparMilhares(parteInteira);
+            }
+
+            parteDecimal = parseInt(parteDecimal);
+            if(parteDecimal > 9 && parteDecimal < 100){
+                  resultado = parteInteira + ',' + parteDecimal;
+            } else if(parteDecimal !== 0 && parteDecimal < 10){
+                  resultado = parteInteira + ',0' + parteDecimal;
+            } else {
+                  resultado = parteInteira + ',' + '00';
+            }
+      } else {
+            resultado = resultado + ',' + '00';
       }
 
-      const [parteInteira, parteDecimal] = valor.toString().split(".");
-        
-      const parteInteiraAgrupada = agrouparDigitos(parteInteira);
-      console.log(parteInteiraAgrupada);
-      const parteDecimalFormatada = parteDecimal ? parteDecimal.padEnd(2, "0") : "00";
-      event.target.value = `R$${parteInteiraAgrupada},${parteDecimalFormatada}`;
+      event.target.value = `R$${resultado}`;
 }
 
+function agrouparMilhares(valor){
+      const arrNumeros = valor.split("").reverse();
+      let resultado = '';
 
-function agrouparDigitos(numero) {
-      const numeroString = numero.toString();
-      const numeroReverso = numeroString.split("").reverse().join("");
-      let resultado = "";
-            for (let i = 0; i < numeroReverso.length; i++) {
-                  if (i > 0 && i % 3 === 0) {
-                        resultado += ".";
-                  }
-                  resultado += numeroReverso[i];
+      for(let i = 0; i < arrNumeros.length; i++){
+            if(i > 0 && i % 3 === 0){
+                  resultado += '.';
             }
+            resultado += arrNumeros[i];
+      }
+
       return resultado.split("").reverse().join("");
 }
+
+export function mascaraFatorDivisor(event){
+      const fator = event.target.value;
+      const fatorNormalizado = fator.replace(/[^0-9]/g, "");
+      const arrFator = fatorNormalizado.split("");
+      let resultado = '';
+      
+
+      
+      if(arrFator[0] > 1){
+            event.target.value = 0;
+            return;
+      }
+
+      
+      for(let i = 0; i < arrFator.length; i++){
+            if(i === 1){
+                  resultado += '.';
+            }
+            resultado += arrFator[i];
+      }
+      
+
+      event.target.value = resultado;  
+} 
 
 export function isNullOrUndefined(value){
       return value === null || value === undefined;
