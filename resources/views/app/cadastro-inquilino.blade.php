@@ -19,4 +19,5 @@
 
 @section('scripts')
     @include('app.scripts.script-cadastro-inquilino')
+    @include('app.scripts.script-dados-contrato')
 @endsection

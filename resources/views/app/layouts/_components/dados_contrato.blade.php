@@ -4,13 +4,20 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <input name="data-assinatura" type="text" placeholder="Data da assinatura do contrato: "
+            <label for="contrato-input-data-assinatura">Data de assinatura: </label>
+            <input name="data-assinatura" 
+            id="contrato-input-data-assinatura"
+            type="text" 
+            placeholder="Data da assinatura do contrato: "
             value="{{ isset($contrato->dataAssinatura) ? 
                   old('data-comprovante', $contrata->dataAssinatura) : 
                         old('data-comprovante') }}">
         </div>
         <div class="col-3">
-            <input name="data-expiracao" type="text" placeholder="Data de expiração do contrato: "
+            <label for="contrato-input-data-expiracao">Data de expiração: </label>
+            <input name="data-expiracao" 
+            id="contrato-input-data-expiracao"
+            type="text" placeholder="Data de expiração do contrato: "
             value="{{ isset($contrato->dataAssinatura) ? 
                   old('data-comprovante', $contrata->dataAssinatura) : 
                         old('data-comprovante') }}">

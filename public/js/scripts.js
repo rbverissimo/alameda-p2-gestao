@@ -100,21 +100,19 @@ export function apenasNumeros(event) {
       }
 }
 
+/**
+ * 
+ * @param {InputEvent} event 
+ */
 export function dataMascara(event) {
       let inputValue = event.target.value;
-
-      // Remove caracteres não numéricos
       inputValue = inputValue.replace(/\D/g, '');
-
-      // Garante que o input não tenha mais do que 8 dígitos
       inputValue = inputValue.slice(0, 8);
 
-      // Formata a máscara de dd-MM-AAAA
       if (inputValue.length >= 6) {
             inputValue = inputValue.slice(0, 2) + '-' + inputValue.slice(2, 4) + '-' + inputValue.slice(4);
       }
 
-      // Coloca no input o tratamento feito pela máscara
       event.target.value = inputValue;
 }
 
@@ -124,21 +122,18 @@ export function isDataValida(dateString) {
             return false;
       }
 
-      //20-12-2023
-      //0123456789
       
       const month = parseInt(dateString.slice(3, 5), 10);
       const day = parseInt(dateString.slice(0, 2), 10);
 
-      // Check if month is between 1 and 12, and day is between 1 and 31
       return month >= 1 && month <= 12 && day >= 1 && day <= 31;
 }
 
 /**
- * Esse método recebe um evento do tipo Input e volte um value
- * para esse evento formando a máscara: (dd) ddddd-dddd
+ * Esse método recebe um evento do tipo Input e volta um value
+ * para esse evento formando a máscara: (dd)ddddd-dddd
  * 
- * @param {*} event 
+ * @param {InputEvent} event 
  */
 export function telefoneCelularMascara(event){
       let inputValue = event.target.value;
@@ -151,6 +146,29 @@ export function telefoneCelularMascara(event){
 
       if(inputValue.length > 8){
             inputValue = '(' + inputValue.slice(1, 3) + ')' + inputValue.slice(4, 9) + '-' + inputValue.slice(10);
+      }
+
+      event.target.value = inputValue;
+}
+
+/**
+ * Esse método recebe um InputEvent e retorna um value
+ * de acordo com a máscara (dd)dddd-dddd que representa um 
+ * número de telefone
+ * 
+ * @param {InputEvent} event 
+ */
+export function telefoneFixoMascara(event){
+      let inputValue = event.target.value;
+
+      inputValue = inputValue.slice(0, 13);
+
+      if (inputValue.length === 3) {
+            inputValue = '(' + inputValue.slice(0, 2) + ')' + inputValue.slice(2);
+      }
+
+      if(inputValue.length > 7){
+            inputValue = '(' + inputValue.slice(1, 3) + ')' + inputValue.slice(4, 8) + '-' + inputValue.slice(9);
       }
 
       event.target.value = inputValue;
@@ -228,7 +246,6 @@ export function mascaraCurrencyBr(event) {
 export function mascaraValoresEmReal(event){
       const valor = event.target.value; 
       let resultado = '';
-
       resultado = valor.replace(/^R\$/, "");
       
 
@@ -238,7 +255,7 @@ export function mascaraValoresEmReal(event){
             parteInteira = parteInteira.replace(/[^0-9]/g, "");
 
             if(parteInteira === ''){
-                  parteInteira = '0';
+                  parteInteira = 0;
             }
 
             if(parteInteira > 999){
@@ -254,7 +271,7 @@ export function mascaraValoresEmReal(event){
                   resultado = parteInteira + ',' + '00';
             }
       } else {
-            resultado = resultado + ',' + '00';
+            resultado = '0,00';
       }
 
       event.target.value = `R$${resultado}`;
@@ -272,6 +289,10 @@ function agrouparMilhares(valor){
       }
 
       return resultado.split("").reverse().join("");
+}
+
+function isDivisivelPor(base, numero){
+      return numero % base === 0;
 }
 
 export function mascaraFatorDivisor(event){
