@@ -77,9 +77,15 @@ class ProjectUtils {
             return $stringSemMascara;
       }
 
+      public static function retirarMascaraMoeda($valor){
+            $valor_sem_mascara = ProjectUtils::trocarVirgulaPorPonto($valor);
+            return str_replace('R$', '', $valor_sem_mascara);
+      }
+      
       public static function trocarVirgulaPorPonto($valor){
             return str_replace(',', '.', $valor);
       }
+
 
       public static function trocarPontoPorVirgula($valor){
             return str_replace('.', ',', $valor);
