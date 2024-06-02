@@ -32,9 +32,13 @@ class ImoveisController extends Controller
         return view('app.imoveis', compact('titulo', 'imoveis'));
     }
 
-    public function cadastrar(){
+    public function cadastrar(Request $request){
 
         $titulo = 'Cadastrar novo imóvel';
+
+        if($request->isMethod('POST')){
+            
+        }
 
         return view('app.cadastro-imovel', compact('titulo'));
 
