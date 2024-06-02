@@ -6,6 +6,7 @@
                   <input type="text"
                         name="cep"
                         placeholder="Ex. 12456-90: "
+                        id="form-cadastro-imovel-cep-imovel"
                         value="{{ isset($imovel->cep) ? 
                         old('cep', $imovel->cep) : old('cep')}}">
             </div>
@@ -31,6 +32,7 @@
                   <label>Número: </label>
                   <input name="numero"
                         placeholder="Ex. 786, 1030: "
+                        id="form-cadastro-imovel-numero-imovel"
                         value="{{ isset($imovel->numero) ?
                         old('numero', $imovel->numero) : old('numero') }}">
             </div>
@@ -38,6 +40,7 @@
                   <label>Quadra: </label>
                   <input name="quadra"
                         placeholder="Ex. 40, 2, 3: "
+                        id="form-cadastro-imovel-quadra-imovel"
                         value="{{ isset($imovel->quadra) ?
                         old('quadra', $imovel->quadra) : old('quadra') }}">
             </div>
@@ -45,6 +48,7 @@
                   <label>Lote: </label>
                   <input name="lote"
                         placeholder="Ex. 2, 3, 10: "
+                        id="form-cadastro-imovel-lote-imovel"
                         value="{{ isset($imovel->lote) ?
                         old('lote', $imovel->lote) : old('lote') }}">
             </div>

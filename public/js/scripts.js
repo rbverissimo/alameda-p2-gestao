@@ -130,6 +130,28 @@ export function isDataValida(dateString) {
 }
 
 /**
+ * Recebe um evento do tipo Input e extrai dele seu valor
+ * O valor recebe uma máscara de acordo com a seguinte: ddddd-ddd
+ * Essa máscara é retornada ao evento à medida que o usuário digita
+ * 
+ * @param {InputEvent} event 
+ */
+export function cepMascara(event){
+      let inputValue = event.target.value;
+      inputValue = inputValue.replace(/\D/g, '');
+
+      // Define o tamanho máximo de retorno
+      inputValue = inputValue.slice(0, 8);
+
+      if(inputValue.length > 4){
+            inputValue = inputValue.slice(0, 5) + '-' + inputValue.slice(5);
+      }
+
+      event.target.value = inputValue;
+
+}
+
+/**
  * Esse método recebe um evento do tipo Input e volta um value
  * para esse evento formando a máscara: (dd)ddddd-dddd
  * 
@@ -217,6 +239,10 @@ export function anoMesMascara(event) {
       event.target.value = inputValue;
 }
 
+export function isReferenciaValida(){
+      
+}
+
 export function handleBackspaceHyphen(event) {
       // Allow backspace even if the value ends with a hyphen
       if (event.key === 'Backspace' && (event.target.value.endsWith('-')
@@ -291,17 +317,16 @@ function agrouparMilhares(valor){
       return resultado.split("").reverse().join("");
 }
 
-function isDivisivelPor(base, numero){
-      return numero % base === 0;
-}
-
+/**
+ * 
+ * @param {InputEvent} event 
+ * @returns 0 ao value do Input se o valor digitado for maior do que 1
+ */
 export function mascaraFatorDivisor(event){
       const fator = event.target.value;
       const fatorNormalizado = fator.replace(/[^0-9]/g, "");
       const arrFator = fatorNormalizado.split("");
       let resultado = '';
-      
-
       
       if(arrFator[0] > 1){
             event.target.value = 0;

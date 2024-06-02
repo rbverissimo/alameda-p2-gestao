@@ -5,10 +5,12 @@
                         Voltar
                   </button>
             </div>
-            <div class="col-2">
-                  <button class="button action-button" >
-                        Salas
-                  </button>
-             </div>
+            @isset($imovel->id)    
+                  <div class="col-2">
+                        <button class="button action-button" >
+                              Salas
+                        </button>
+                  </div>
+            @endisset
       </div>
 </div>
