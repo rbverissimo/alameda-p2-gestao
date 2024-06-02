@@ -123,7 +123,7 @@
     @endcomponent
     <div class="row center-itens">
         <div class="col-2">
-            <button class="button confirmacao-button">OK</button>
+            <button class="button confirmacao-button">Salvar</button>
         </div>
     </div>
 </form>
