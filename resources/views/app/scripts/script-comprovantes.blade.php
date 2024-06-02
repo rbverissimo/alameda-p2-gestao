@@ -1,10 +1,10 @@
-@section('scripts')
 <script type="module">
 
     import { showMensagem } from "{{ asset('js/scripts.js')}}";
     import { anoMesMascara } from "{{ asset('js/scripts.js')}}";
     import { handleBackspaceHyphen } from "{{ asset('js/scripts.js')}}";
     import { isDataValida } from "{{ asset('js/scripts.js')}}";
+    import { isReferenciaValida } from "{{ asset('js/scripts.js') }}";
     import { dataMascara } from "{{ asset('js/scripts.js')}}";
     import { mascaraCurrencyBr } from "{{ asset('js/scripts.js')}}";
     import { navigateToLastRoute } from "{{ asset('js/scripts.js') }}";
@@ -18,6 +18,12 @@
     const anoMesInput = document.getElementById('ano-mes-input');
     anoMesInput.addEventListener('input', anoMesMascara);
     anoMesInput.addEventListener('keydown', handleBackspaceHyphen);
+    anoMesInput.addEventListener('blur', (e) => {
+        if(!isReferenciaValida(e.target.value)){
+            e.target.value = '';
+            showMensagem("A referência passada é inválida.", "neutra");
+        }
+    })
 
     const dataInput = document.getElementById('data-input');
     dataInput.addEventListener('input', dataMascara);
@@ -32,5 +38,5 @@
 
     const valorInput = document.getElementById('input-valor-comprovante');
     valorInput.addEventListener('input', mascaraCurrencyBr);
+
 </script>
-@endsection
