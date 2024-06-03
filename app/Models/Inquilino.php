@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Inquilino extends Model
 {
     use HasFactory;
+    protected $fillable = ['pessoacodigo', 'situacao', 'salacodigo'];
 
     public function sala(): BelongsTo
     {
@@ -39,7 +40,8 @@ class Inquilino extends Model
         return $this->hasOne(InquilinoSaldo::class, 'inquilinocodigo');
     }
 
-    public function aluguel(): hasMany {
+    public function aluguel(): hasMany 
+    {
         return $this->hasMany(InquilinoAluguel::class, 'inquilino');
     }
 }

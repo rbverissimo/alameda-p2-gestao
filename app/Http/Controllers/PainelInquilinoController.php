@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
+use App\Models\InquilinoAluguel;
+use App\Models\Pessoa;
 use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
@@ -75,6 +77,33 @@ class PainelInquilinoController extends Controller
         $imoveis = ImoveisService::getImoveis();
         $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
         $contrato = null;
+
+        if($request->isMethod('POST')){
+
+            $pessoa = Pessoa::create([
+                "nome" => $request->input('nome'),
+                "cpf" => $request->input('cpf'),
+                "profissao" => $request->input('profissao'),
+                "telefone-celular" => $request->input('telefone-celular'),
+                "telefone-fixo" => $request->input('telefone-fixo'),
+                "telefone-trabalho" => $request->input('telefone-trabalho')
+            ]);
+
+            $id_pessoa = PessoasService::getIDMaximo();
+
+            $inquilino = Inquilino::create([
+                'pessoacodigo' => $id_pessoa,
+                'salacodigo' => $request->input('sala')
+            ]);
+
+            $id_inquilino = InquilinosService::getIDMaximo();
+
+            $inquilino_aluguel = InquilinoAluguel::create([
+                'inquilino' => $id_inquilino, 
+                'valorAluguel' => $request->input('valor-aluguel'),
+            ]);
+
+        }
 
         return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'salas', 'mensagem', 'contrato'));
 

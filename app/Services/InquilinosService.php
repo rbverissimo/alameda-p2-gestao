@@ -15,6 +15,16 @@ class InquilinosService {
 
 
       /**
+       * Esse método busca o ID máximo de um inquilino 
+       * na tabela de inquilinos
+       * @return int
+       * 
+       */
+      public static function getIDMaximo(){
+            return Inquilino::max('id');
+      }
+
+      /**
        * Esse método busca o inquilino na tabela de inquilinos 
        * usando o ID passado no parâmetro para encontra-lo
        * 

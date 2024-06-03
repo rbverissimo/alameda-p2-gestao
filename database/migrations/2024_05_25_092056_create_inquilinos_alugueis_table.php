@@ -17,7 +17,7 @@ class CreateInquilinosAlugueisTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('inquilino');
-            $table->unsignedDouble('valorAluguel');
+            $table->unsignedDouble('valorAluguel', 8, 2);
             $table->integer('inicioValidade');
             $table->integer('fimValidade')->nullable();
             $table->float('reajuste_previsto')->default(0.0);
