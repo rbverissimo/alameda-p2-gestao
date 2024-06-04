@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contrato;
+use App\Models\ContratoModel;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
 use App\Models\Pessoa;
@@ -105,6 +107,25 @@ class PainelInquilinoController extends Controller
                 'valorAluguel' => $request->input('valor-aluguel'),
                 'inicioValidade' => $inicioValidade_aluguel,
                 'fimValidade' => $fimValidade_aluguel
+            ]);
+
+
+            $id_aluguel = InquilinosService::getIDMaximoAluguel();
+            $renovacao_automatica = $request->input('renovacao-automatica') == 'on' ? true : false; 
+
+            $contratoPath = null;
+
+            if($request->hasFile('contrato')){
+                $file = $request->file('contrato');
+                $fileName = $file->getClientOriginalName();
+                $contratoPath = $file->storeAs('contratos', $fileName);
+            }
+            $contrato = Contrato::create([
+                'aluguel' => $id_aluguel,
+                'dataAssinatura' => ProjectUtils::inverterDataParaSalvar($request->input('data-assinatura')),
+                'dataExpiracao' => ProjectUtils::inverterDataParaSalvar($request->input('data-expiracao')),
+                'renovacacaoAutomatica' => $renovacao_automatica,
+                'contrato' => $contratoPath
             ]);
 
         }

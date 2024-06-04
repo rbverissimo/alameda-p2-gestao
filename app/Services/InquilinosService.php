@@ -9,7 +9,6 @@ use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 use Illuminate\Support\Facades\DB;
-use Mockery\Undefined;
 
 class InquilinosService {
 
@@ -22,6 +21,10 @@ class InquilinosService {
        */
       public static function getIDMaximo(){
             return Inquilino::max('id');
+      }
+
+      public static function getIDMaximoAluguel(){
+            return InquilinoAluguel::max('id');
       }
 
       /**
