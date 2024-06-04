@@ -97,10 +97,14 @@ class PainelInquilinoController extends Controller
             ]);
 
             $id_inquilino = InquilinosService::getIDMaximo();
+            $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
+            $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
 
             $inquilino_aluguel = InquilinoAluguel::create([
                 'inquilino' => $id_inquilino, 
                 'valorAluguel' => $request->input('valor-aluguel'),
+                'inicioValidade' => $inicioValidade_aluguel,
+                'fimValidade' => $fimValidade_aluguel
             ]);
 
         }

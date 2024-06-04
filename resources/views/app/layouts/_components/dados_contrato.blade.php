@@ -10,17 +10,17 @@
             type="text" 
             placeholder="Data da assinatura do contrato: "
             value="{{ isset($contrato->dataAssinatura) ? 
-                  old('data-comprovante', $contrata->dataAssinatura) : 
-                        old('data-comprovante') }}">
+                  old('data-assinatura', $contrato->dataAssinatura) : 
+                        old('data-assinatura') }}">
         </div>
         <div class="col-3">
             <label for="contrato-input-data-expiracao">Data de expiração: </label>
             <input name="data-expiracao" 
             id="contrato-input-data-expiracao"
             type="text" placeholder="Data de expiração do contrato: "
-            value="{{ isset($contrato->dataAssinatura) ? 
-                  old('data-comprovante', $contrata->dataAssinatura) : 
-                        old('data-comprovante') }}">
+            value="{{ isset($contrato->dataExpiracao) ? 
+                  old('data-expiracao', $contrato->dataExpiracao) : 
+                        old('data-expiracao') }}">
         </div>
         <div class="col-4">
             <span class="basic-card-wrapper">Renovação automática de contrato?</span>

@@ -34,6 +34,19 @@ class ProjectUtils {
             return $referencia % 100; 
       }
 
+      /**
+       * Esse método recebe uma string representando uma data
+       * como 20-12-2023 e extrai dela apenas a referência
+       * 
+       * @return int a referência extraída da data
+       */
+      public static function getReferenciaFromDate($dateString){
+           $data = explode('-', $dateString, 3);
+           $mes = intval($data[1]);
+           $ano = intval($data[2]);
+           return $ano * 100 + $mes;
+      }
+
       public static function adicionarMascaraReferencia($referencia){
             $ano = substr($referencia, 0, 4);
             $mes = substr($referencia, 4, 2);
