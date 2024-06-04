@@ -15,6 +15,7 @@ use App\Services\PessoasService;
 use App\Utils\ProjectUtils;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 class PainelInquilinoController extends Controller
@@ -84,52 +85,55 @@ class PainelInquilinoController extends Controller
 
             if($request->isMethod('POST')){
 
-                $pessoa = Pessoa::create([
-                    "nome" => $request->input('nome'),
-                    "cpf" => $request->input('cpf'),
-                    "profissao" => $request->input('profissao'),
-                    "telefone_celular" => $request->input('telefone-celular'),
-                    "telefone_fixo" => $request->input('telefone-fixo'),
-                    "telefone_trabalho" => $request->input('telefone-trabalho')
-                ]);
+                DB::transaction(function($request){
+                    $pessoa = Pessoa::create([
+                        "nome" => $request->input('nome'),
+                        "cpf" => $request->input('cpf'),
+                        "profissao" => $request->input('profissao'),
+                        "telefone_celular" => $request->input('telefone-celular'),
+                        "telefone_fixo" => $request->input('telefone-fixo'),
+                        "telefone_trabalho" => $request->input('telefone-trabalho')
+                    ]);
+    
+                    $id_pessoa = PessoasService::getIDMaximo();
+    
+                    $inquilino = Inquilino::create([
+                        'pessoacodigo' => $id_pessoa,
+                        'salacodigo' => $request->input('sala')
+                    ]);
+    
+                    $id_inquilino = InquilinosService::getIDMaximo();
+                    $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
+                    $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
+    
+                    $inquilino_aluguel = InquilinoAluguel::create([
+                        'inquilino' => $id_inquilino, 
+                        'valorAluguel' => $request->input('valor-aluguel'),
+                        'inicioValidade' => $inicioValidade_aluguel,
+                        'fimValidade' => $fimValidade_aluguel
+                    ]);
+    
+    
+                    $id_aluguel = InquilinosService::getIDMaximoAluguel();
+    
+                    $renovacao_automatica = $request->input('renovacao-automatica') === 'on' ? 'S' : 'N'; 
+    
+                    $contratoPath = null;
+    
+                    if($request->hasFile('contrato')){
+                        $file = $request->file('contrato');
+                        $fileName = $file->getClientOriginalName();
+                        $contratoPath = $file->storeAs('contratos', $fileName);
+                    }
+                    $contrato = Contrato::create([
+                        'aluguel' => $id_aluguel,
+                        'dataAssinatura' => ProjectUtils::inverterDataParaSalvar($request->input('data-assinatura')),
+                        'dataExpiracao' => ProjectUtils::inverterDataParaSalvar($request->input('data-expiracao')),
+                        'renovacaoAutomatica' => $renovacao_automatica,
+                        'contrato' => $contratoPath
+                    ]);
+                });
 
-                $id_pessoa = PessoasService::getIDMaximo();
-
-                $inquilino = Inquilino::create([
-                    'pessoacodigo' => $id_pessoa,
-                    'salacodigo' => $request->input('sala')
-                ]);
-
-                $id_inquilino = InquilinosService::getIDMaximo();
-                $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
-                $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
-
-                $inquilino_aluguel = InquilinoAluguel::create([
-                    'inquilino' => $id_inquilino, 
-                    'valorAluguel' => $request->input('valor-aluguel'),
-                    'inicioValidade' => $inicioValidade_aluguel,
-                    'fimValidade' => $fimValidade_aluguel
-                ]);
-
-
-                $id_aluguel = InquilinosService::getIDMaximoAluguel();
-
-                $renovacao_automatica = $request->input('renovacao-automatica') === 'on' ? 'S' : 'N'; 
-
-                $contratoPath = null;
-
-                if($request->hasFile('contrato')){
-                    $file = $request->file('contrato');
-                    $fileName = $file->getClientOriginalName();
-                    $contratoPath = $file->storeAs('contratos', $fileName);
-                }
-                $contrato = Contrato::create([
-                    'aluguel' => $id_aluguel,
-                    'dataAssinatura' => ProjectUtils::inverterDataParaSalvar($request->input('data-assinatura')),
-                    'dataExpiracao' => ProjectUtils::inverterDataParaSalvar($request->input('data-expiracao')),
-                    'renovacaoAutomatica' => $renovacao_automatica,
-                    'contrato' => $contratoPath
-                ]);
 
 
                 $mensagem = 'Inquilino cadastrado com sucesso!';
