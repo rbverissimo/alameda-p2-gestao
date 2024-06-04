@@ -74,63 +74,72 @@ class PainelInquilinoController extends Controller
 
     public function cadastrarInquilino(Request $request){
 
-        $titulo = 'Cadastro de Inquilinos';
-        $mensagem = '';
-        $imoveis = ImoveisService::getImoveis();
-        $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
-        $contrato = null;
+        try {
 
-        if($request->isMethod('POST')){
+            $titulo = 'Cadastro de Inquilinos';
+            $mensagem = '';
+            $imoveis = ImoveisService::getImoveis();
+            $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
+            $contrato = null;
 
-            $pessoa = Pessoa::create([
-                "nome" => $request->input('nome'),
-                "cpf" => $request->input('cpf'),
-                "profissao" => $request->input('profissao'),
-                "telefone-celular" => $request->input('telefone-celular'),
-                "telefone-fixo" => $request->input('telefone-fixo'),
-                "telefone-trabalho" => $request->input('telefone-trabalho')
-            ]);
+            if($request->isMethod('POST')){
 
-            $id_pessoa = PessoasService::getIDMaximo();
+                $pessoa = Pessoa::create([
+                    "nome" => $request->input('nome'),
+                    "cpf" => $request->input('cpf'),
+                    "profissao" => $request->input('profissao'),
+                    "telefone_celular" => $request->input('telefone-celular'),
+                    "telefone_fixo" => $request->input('telefone-fixo'),
+                    "telefone_trabalho" => $request->input('telefone-trabalho')
+                ]);
 
-            $inquilino = Inquilino::create([
-                'pessoacodigo' => $id_pessoa,
-                'salacodigo' => $request->input('sala')
-            ]);
+                $id_pessoa = PessoasService::getIDMaximo();
 
-            $id_inquilino = InquilinosService::getIDMaximo();
-            $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
-            $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
+                $inquilino = Inquilino::create([
+                    'pessoacodigo' => $id_pessoa,
+                    'salacodigo' => $request->input('sala')
+                ]);
 
-            $inquilino_aluguel = InquilinoAluguel::create([
-                'inquilino' => $id_inquilino, 
-                'valorAluguel' => $request->input('valor-aluguel'),
-                'inicioValidade' => $inicioValidade_aluguel,
-                'fimValidade' => $fimValidade_aluguel
-            ]);
+                $id_inquilino = InquilinosService::getIDMaximo();
+                $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
+                $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
+
+                $inquilino_aluguel = InquilinoAluguel::create([
+                    'inquilino' => $id_inquilino, 
+                    'valorAluguel' => $request->input('valor-aluguel'),
+                    'inicioValidade' => $inicioValidade_aluguel,
+                    'fimValidade' => $fimValidade_aluguel
+                ]);
 
 
-            $id_aluguel = InquilinosService::getIDMaximoAluguel();
-            $renovacao_automatica = $request->input('renovacao-automatica') == 'on' ? true : false; 
+                $id_aluguel = InquilinosService::getIDMaximoAluguel();
 
-            $contratoPath = null;
+                $renovacao_automatica = $request->input('renovacao-automatica') === 'on' ? 'S' : 'N'; 
 
-            if($request->hasFile('contrato')){
-                $file = $request->file('contrato');
-                $fileName = $file->getClientOriginalName();
-                $contratoPath = $file->storeAs('contratos', $fileName);
+                $contratoPath = null;
+
+                if($request->hasFile('contrato')){
+                    $file = $request->file('contrato');
+                    $fileName = $file->getClientOriginalName();
+                    $contratoPath = $file->storeAs('contratos', $fileName);
+                }
+                $contrato = Contrato::create([
+                    'aluguel' => $id_aluguel,
+                    'dataAssinatura' => ProjectUtils::inverterDataParaSalvar($request->input('data-assinatura')),
+                    'dataExpiracao' => ProjectUtils::inverterDataParaSalvar($request->input('data-expiracao')),
+                    'renovacaoAutomatica' => $renovacao_automatica,
+                    'contrato' => $contratoPath
+                ]);
+
+
+                $mensagem = 'Inquilino cadastrado com sucesso!';
+
             }
-            $contrato = Contrato::create([
-                'aluguel' => $id_aluguel,
-                'dataAssinatura' => ProjectUtils::inverterDataParaSalvar($request->input('data-assinatura')),
-                'dataExpiracao' => ProjectUtils::inverterDataParaSalvar($request->input('data-expiracao')),
-                'renovacacaoAutomatica' => $renovacao_automatica,
-                'contrato' => $contratoPath
-            ]);
 
+            return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'salas', 'mensagem', 'contrato'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("erros", "Não foi possível cadastrar um inquilino. Erro: ".$th->getMessage());
         }
-
-        return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'salas', 'mensagem', 'contrato'));
 
     }
 
