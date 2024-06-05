@@ -9,6 +9,7 @@
                         id="form-cadastro-imovel-cep-imovel"
                         value="{{ isset($imovel->cep) ? 
                         old('cep', $imovel->cep) : old('cep')}}">
+                  <span class="errors-highlighted">{{ $errors->has('cep') ? $errors->first('cep') : ' '}}</span>
             </div>
             <div class="col-5">
                   <label for="logradouro">Logradouro: </label>

@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Dto\ImovelDTOBuilder;
 use App\Models\ContaImovel;
+use App\Models\Endereco;
 use App\Models\Imovel;
 use App\Models\Inquilino;
 use App\Models\InquilinoConta;
 use App\Models\Sala;
-use App\Models\TipoConta;
+use App\Models\UsuarioImovel;
 use App\Services\CalculoContasService;
+use App\Services\EnderecosService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ImoveisController extends Controller
 {
@@ -36,12 +41,78 @@ class ImoveisController extends Controller
 
         $titulo = 'Cadastrar novo imóvel';
 
-        if($request->isMethod('POST')){
+        try {
             
+            if($request->isMethod('POST')){
+
+                $regras = [
+                    'cep' => 'required',
+                    'logradouro' => 'required',
+                    'bairro' => 'required',
+                    'numero' => 'required',
+                    'nomefantasia' => 'required|min:3',
+                ];
+
+                $feedback = [
+                    'nomefantasia.min' => 'O nome fantasia do imóvel deve ter mais do que três caractéres. ',
+
+                    'required' => 'O :attribute é obrigatório.',
+                ];
+
+                $request->validate($regras, $feedback);
+
+                $cep = $request->input('cep');
+                $logradouro = $request->input('logradouro');
+                $bairro = $request->input('bairro');
+                $numero = $request->input('numero');
+                $quadra = $request->input('quadra');
+                $lote = $request->input('lote');
+                $complemento = $request->input('complemento');
+                $nomefantasia = $request->input('nomefantasia');
+
+                $imovel_dto = (new ImovelDTOBuilder)
+                    ->withCep($cep)
+                    ->withLogradouro($logradouro)
+                    ->withBairro($bairro)
+                    ->withNumero($numero)
+                    ->withQuadra($quadra)
+                    ->withLote($lote)
+                    ->withComplemento($complemento)
+                    ->withNomeFantasia($nomefantasia)
+                    ->build();
+
+                DB::transaction(function($closure_dto) use ($imovel_dto){
+
+                    Endereco::create([
+                        'cep' => $imovel_dto->getCep(),
+                        'logradouro' => $imovel_dto->getLogradouro(),
+                        'bairro' => $imovel_dto->getBairro(),
+                        'numero' => $imovel_dto->getNumero(),
+                        'quadra' => $imovel_dto->getQuadra(),
+                        'lote' => $imovel_dto->getLote(),
+                        'complemento' => $imovel_dto->getComplemento(),
+                        'nomefantasia' => $imovel_dto->getNomeFantasia(),
+                        'uf' => 'GO',
+                        'cidade' => 'Goiania'
+                    ]);
+
+                    Imovel::create([
+                        'nomefantasia' => $imovel_dto->getNomeFantasia(),
+                        'endereco' => DB::getPdo()->lastInsertId(),
+                    ]);
+
+                });
+    
+            }
+
+            return view('app.cadastro-imovel', compact('titulo'));
+        } catch (\Throwable | ValidationException $e) {
+
+            if($e instanceof ValidationException){
+                return back()->withErrors($e->validator->errors());
+            }
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar o imóvel. '.$e->getMessage());
         }
-
-        return view('app.cadastro-imovel', compact('titulo'));
-
     }
 
     public function detalharImovel($imovel){
