@@ -4,6 +4,8 @@ namespace App\Http\Dto;
 
 class ImovelDTO {
 
+    private string $cidade;
+    private string $uf;
     private string $cep;
     private string $logradouro;
     private string $bairro;
@@ -15,6 +17,16 @@ class ImovelDTO {
     private int $usuario;
 
     // Getters
+    public function getCidade(): string
+    {
+        return $this->cidade;
+    }
+
+    public function getUf(): string
+    {
+        return $this->uf;
+    }
+
     public function getCep(): string
     {
         return $this->cep;
@@ -61,6 +73,16 @@ class ImovelDTO {
     }
 
     // Setters
+    public function setCidade(string $cidade): void
+    {
+        $this->cidade = $cidade;
+    }
+
+    public function setUf(string $uf): void
+    {
+        $this->uf = $uf;
+    }
+
     public function setCep(string $cep): void
     {
         $this->cep = $cep;

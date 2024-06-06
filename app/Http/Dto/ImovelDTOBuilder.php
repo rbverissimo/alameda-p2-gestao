@@ -51,6 +51,16 @@ class ImovelDTOBuilder {
         return $this;
     }
 
+    public function withCidade(string $cidade): ImovelDTOBuilder {
+        $this->imovel_dto->setCidade($cidade);
+        return $this;
+    }
+
+    public function withUf(string $uf): ImovelDTOBuilder {
+        $this->imovel_dto->setUf($uf);
+        return $this;
+    }
+
     public function build(): ImovelDTO {
         return $this->imovel_dto;
     }
