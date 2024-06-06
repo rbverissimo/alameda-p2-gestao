@@ -4,63 +4,54 @@ namespace App\Http\Dto;
 
 class ImovelDTOBuilder {
 
-    private string $cep;
-    private string $logradouro;
-    private string $bairro;
-    private int $numero;
-    private int $quadra;
-    private int $lote;
-    private string $complemento;
-    private string $nomefantasia; 
+    private ImovelDTO $imovel_dto;
 
     public function withCep(string $cep): ImovelDTOBuilder {
-        $this->cep = $cep;
+        $this->imovel_dto->setCep($cep);
         return $this;
     }
 
     public function withLogradouro(string $logradouro): ImovelDTOBuilder {
-        $this->logradouro = $logradouro;
+        $this->imovel_dto->setLogradouro($logradouro);
         return $this;
     }
 
     public function withBairro(string $bairro): ImovelDTOBuilder {
-        $this->bairro = $bairro;
+        $this->imovel_dto->setBairro($bairro);
         return $this;
     }
 
     public function withNumero(int $numero): ImovelDTOBuilder {
-        $this->numero = $numero;
+        $this->imovel_dto->setNumero($numero);
         return $this;
     }
 
     public function withQuadra(int $quadra): ImovelDTOBuilder {
-        $this->quadra = $quadra;
+        $this->imovel_dto->setQuadra($quadra);
         return $this;
     }
 
     public function withLote(int $lote): ImovelDTOBuilder {
-        $this->lote = $lote;
+        $this->imovel_dto->setLote($lote);
         return $this;
     }
 
     public function withComplemento(string $complemento): ImovelDTOBuilder {
-        $this->complemento = $complemento;
+        $this->imovel_dto->setComplemento($complemento);
         return $this;
     }
 
     public function withNomeFantasia(string $nomefantasia): ImovelDTOBuilder {
-        $this->nomefantasia = $nomefantasia;
+        $this->imovel_dto->setNomeFantasia($nomefantasia);
+        return $this;
+    }
+
+    public function withUsuario(int $usuario): ImovelDTOBuilder{
+        $this->imovel_dto->setUsuario($usuario);
         return $this;
     }
 
     public function build(): ImovelDTO {
-        return new ImovelDTO($this->cep,
-        $this->logradouro,
-        $this->bairro,
-        $this->numero,
-        $this->quadra,
-        $this->lote,
-        $this->complemento,
-        $this->nomefantasia);
+        return $this->imovel_dto;
     }
 }

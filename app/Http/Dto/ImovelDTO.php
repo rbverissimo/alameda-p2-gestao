@@ -12,18 +12,7 @@ class ImovelDTO {
     private int $lote;
     private string $complemento;
     private string $nomefantasia; 
-    
-    public function __construct(string $cep, string $logradouro, string $bairro, int $numero, int $quadra, int $lote,
-                                string $complemento, string $nomefantasia) {
-        $this->cep = $cep;
-        $this->logradouro = $logradouro;
-        $this->bairro = $bairro;
-        $this->numero = $numero;
-        $this->quadra = $quadra;
-        $this->lote = $lote;
-        $this->complemento = $complemento;
-        $this->nomefantasia = $nomefantasia;
-    }
+    private int $usuario;
 
     // Getters
     public function getCep(): string
@@ -66,6 +55,11 @@ class ImovelDTO {
         return $this->nomefantasia;
     }
 
+    public function getUsuario(): int 
+    {
+        return $this->usuario;
+    }
+
     // Setters
     public function setCep(string $cep): void
     {
@@ -106,5 +100,10 @@ class ImovelDTO {
     {
         $this->nomefantasia = $nomefantasia;
     }
-    
+
+    public function setUsuario(int $usuario): void 
+    {
+        $this->usuario = $usuario; 
+    }
+
 }

@@ -69,6 +69,7 @@ class ImoveisController extends Controller
                 $lote = $request->input('lote');
                 $complemento = $request->input('complemento');
                 $nomefantasia = $request->input('nomefantasia');
+                $idUsuario = UsuarioService::getUsuarioLogado();
 
                 $imovel_dto = (new ImovelDTOBuilder)
                     ->withCep($cep)
@@ -79,6 +80,7 @@ class ImoveisController extends Controller
                     ->withLote($lote)
                     ->withComplemento($complemento)
                     ->withNomeFantasia($nomefantasia)
+                    ->withUsuario($idUsuario)
                     ->build();
 
                 DB::transaction(function($closure_dto) use ($imovel_dto){
@@ -99,6 +101,11 @@ class ImoveisController extends Controller
                     Imovel::create([
                         'nomefantasia' => $imovel_dto->getNomeFantasia(),
                         'endereco' => DB::getPdo()->lastInsertId(),
+                    ]);
+
+                    UsuarioImovel::create([
+                        'idUsuario' => $imovel_dto->getUsuario(),
+                        'idImove' => DB::getPdo()->lastInsertId()
                     ]);
 
                 });

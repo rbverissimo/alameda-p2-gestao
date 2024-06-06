@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UsuarioImovel extends Model
 {
     use HasFactory;
-
     protected $table = 'users_imoveis';
-
     protected $fillable = ['idUsuario', 'idImovel'];
 
     public function imoveis(): BelongsTo {
