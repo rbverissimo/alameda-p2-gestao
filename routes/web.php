@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\RaizController;
+use App\Http\Controllers\SalasController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,8 +91,14 @@ Route::prefix('imoveis')->middleware('autenticacao')->group(function(){
     Route::get('/listar-contas/{id}', [ImoveisController::class, 'listarContas'])->name('imoveis-listar-contas');
     Route::get('/executar-calculo/{id}/{ref?}', [ImoveisController::class, 'executarCalculoContas'])->name('executar-calculo-contas');
     Route::get('/executar-calculo/calculo/{id}/{ref}', [ImoveisController::class, 'calculo'])->name('realizar-calculo');
-    Route::get('/cadastrar-imovel/adicionar', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
-    Route::post('/cadastrar-imovel/adicionar', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
+    Route::get('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
+    Route::post('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
+});
+
+Route::prefix('salas')->middleware('autenticacao')->group(function(){
+    Route::get('/listar-salas/{id}', [SalasController::class, 'listar-salas'])->name('listar-salas');
+    Route::get('/cadastrar-sala/{id}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala');
+    Route::post('/cadastrar-sala/{id}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala'); 
 });
 
 Route::prefix('servicos')->middleware('autenticacao')->group(function(){
