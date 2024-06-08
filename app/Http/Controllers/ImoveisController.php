@@ -12,6 +12,7 @@ use App\Models\Sala;
 use App\Models\UsuarioImovel;
 use App\Services\CalculoContasService;
 use App\Services\EnderecosService;
+use App\Services\ImoveisService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
@@ -109,11 +110,15 @@ class ImoveisController extends Controller
 
                     UsuarioImovel::create([
                         'idUsuario' => $imovel_dto->getUsuario(),
-                        'idImove' => DB::getPdo()->lastInsertId()
+                        'idImovel' => DB::getPdo()->lastInsertId()
                     ]);
 
                 });
+
+
+                $imovel = ImoveisService::getIDMaximo();
     
+                return redirect()->route('cadastrar-sala', compact('imovel'));
             }
 
             return view('app.cadastro-imovel', compact('titulo'));

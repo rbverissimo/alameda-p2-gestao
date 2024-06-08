@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-9">
             <span class="basic-card-wrapper">
-                Clique no botão ao lado para cadastrar mais de uma sala
+                Clique no botão "Nova sala" para cadastrar mais de uma sala no Imóvel {{ $imovel->nomefantasia }}
             </span>
         </div>
         <div class="col-3">

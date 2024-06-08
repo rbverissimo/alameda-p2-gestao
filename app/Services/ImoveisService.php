@@ -17,6 +17,29 @@ class ImoveisService {
         return UsuarioImovel::where('idUsuario', $usuarioLogado)->get();
     }
 
+    /**
+     * Esse método retorna o ID máximo da tabela de imóveis
+     * 
+     * @return int
+     */
+    public static function getIDMaximo(){
+        return Imovel::max('id');
+    }
+
+    /**
+     * Esse método busca o Imovel junto de seu endereço no banco
+     * de dados de acordo com ID passado no parâmetro
+     * @return App\Models\Imovel
+     */
+    public static function getImovelBy($idImovel){
+        return Imovel::with('endereco')->find($idImovel);
+    }
+
+    /**
+     * Esse método retorna uma lista de imóveis de acordo
+     * com o usuário logado no sistema
+     * @return array 
+     */
     public static function getImoveis(){
         $usuarioLogado = UsuarioService::getUsuarioLogado();
         $imoveis_usuario = UsuarioImovel::with('imoveis')
