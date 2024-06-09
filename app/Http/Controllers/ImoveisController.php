@@ -41,6 +41,7 @@ class ImoveisController extends Controller
     public function cadastrar(Request $request){
 
         $titulo = 'Cadastrar novo imóvel';
+        $mensagem = '';
 
         try {
             
@@ -81,7 +82,7 @@ class ImoveisController extends Controller
                     ->withNumero($numero)
                     ->withQuadra($quadra)
                     ->withLote($lote)
-                    ->withComplemento($complemento)
+                    ->withComplemento($complemento ?? '')
                     ->withNomeFantasia($nomefantasia)
                     ->withUsuario($idUsuario)
                     ->withCidade($cidade)
@@ -117,8 +118,10 @@ class ImoveisController extends Controller
 
 
                 $imovel = ImoveisService::getIDMaximo();
-    
-                return redirect()->route('cadastrar-sala', compact('imovel'));
+                $mensagem = 'Imóvel cadastrado com sucesso!';
+                $salas_controller = new SalasController();
+
+                return $salas_controller->cadastrarPrimeiraSala(new Request(), $imovel, $mensagem) ;
             }
 
             return view('app.cadastro-imovel', compact('titulo'));

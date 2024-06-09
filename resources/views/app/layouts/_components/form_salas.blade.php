@@ -1,6 +1,6 @@
-<form action="{{ route('cadastrar-sala')}}" method="post">
+<form action="{{ route('cadastrar-sala', ['idImovel' => $idImovel])}}" method="post">
     @csrf
-    @component('app.layouts._components.dados_salas')
+    @component('app.layouts._components.dados_salas', compact('imovel'))
         
     @endcomponent
     <div class="row center-itens">

@@ -6,6 +6,10 @@ class ImovelDTOBuilder {
 
     private ImovelDTO $imovel_dto;
 
+    public function __construct() {
+        $this->imovel_dto = new ImovelDTO();
+    }
+
     public function withCep(string $cep): ImovelDTOBuilder {
         $this->imovel_dto->setCep($cep);
         return $this;
@@ -36,7 +40,7 @@ class ImovelDTOBuilder {
         return $this;
     }
 
-    public function withComplemento(string $complemento): ImovelDTOBuilder {
+    public function withComplemento(string $complemento = null): ImovelDTOBuilder {
         $this->imovel_dto->setComplemento($complemento);
         return $this;
     }

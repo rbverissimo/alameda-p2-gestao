@@ -97,8 +97,9 @@ Route::prefix('imoveis')->middleware('autenticacao')->group(function(){
 
 Route::prefix('salas')->middleware('autenticacao')->group(function(){
     Route::get('/listar-salas/{id}', [SalasController::class, 'listar-salas'])->name('listar-salas');
-    Route::get('/cadastrar-sala/{id}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala');
-    Route::post('/cadastrar-sala/{id}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala'); 
+    Route::get('/cadastrar-sala/s/ps/{idImovel}', [SalasController::class, 'cadastrarPrimeiraSala'])->name('primeira-sala');
+    Route::get('/cadastrar-sala/s/{idImovel}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala');
+    Route::post('/cadastrar-sala/s/{idImovel}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala'); 
 });
 
 Route::prefix('servicos')->middleware('autenticacao')->group(function(){
