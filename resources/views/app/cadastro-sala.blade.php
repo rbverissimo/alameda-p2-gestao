@@ -18,4 +18,5 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/components/cadastro-sala.js')}}" type="module"></script> 
 @endsection
