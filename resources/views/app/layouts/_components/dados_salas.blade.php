@@ -9,7 +9,7 @@
             </span>
         </div>
         <div class="col-3">
-            <button class="button action-button" id="adicionar-sala-button">
+            <button type="button" class="button action-button" id="adicionar-sala-button">
                 Nova sala
             </button>
         </div>

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function adicionarCamposNovaSala(){
+function adicionarCamposNovaSala(event){
     const novaRow = wrapperSalas.appendChild('div');
     novaRow.classList.add('row');
 
@@ -25,6 +25,9 @@ function adicionarCamposNovaSala(){
 
     const col2 = novaRow.appendChild('div');
     col3.classList.add('col-2');
+
+    // Previne que o clique ative o submit do formulário
+    event.preventDefault();
 
 }
 
