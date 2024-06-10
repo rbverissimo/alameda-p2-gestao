@@ -10,22 +10,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function adicionarCamposNovaSala(event){
-    const novaRow = wrapperSalas.appendChild('div');
+    const novaRow = document.createElement('div');
     novaRow.classList.add('row');
-
-    const col7 = novaRow.appendChild('div');
-    col7.classList.add('col-7');
     
-    const inputSala = col7.appendChild('input');
+    const col7 = document.createElement('div');
+    col7.classList.add('col-7');
+    novaRow.appendChild(col7);
+    
+    const inputSala = document.createElement('input');
     inputSala.name = 'input-sala-form-nome-' + salasCounter + 1;
     inputSala.placeholder = 'Digite aqui o nome da sala' 
-
-    const col3 = novaRow.appendChild('div');
+    col7.appendChild(inputSala);
+    salasCounter += 1;
+    
+    const col3 = document.createElement('div')
     col3.classList.add('col-3');
-
-    const col2 = novaRow.appendChild('div');
+    novaRow.appendChild(col3);
+    
+    const col2 = document.createElement('div');
     col3.classList.add('col-2');
-
+    novaRow.appendChild(col2);
+    
+    wrapperSalas.appendChild(novaRow);
     // Previne que o clique ative o submit do formulário
     event.preventDefault();
 
