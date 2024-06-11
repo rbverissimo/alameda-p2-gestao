@@ -24,14 +24,14 @@ function adicionarCamposNovaSala(event){
     novaRow.appendChild(col7);
     
     const inputSala = document.createElement('input');
-    inputSala.name = 'input-sala-form-nome-' + getNextCounter();
+    inputSala.name = 'input-sala-form-nome-' + getCounter();
     inputSala.placeholder = 'Digite aqui o nome da sala' 
     col7.appendChild(inputSala);
     
     const col3 = document.createElement('div')
     col3.classList.add('col-3');
     novaRow.appendChild(col3);
-    
+
     criarSelect(col3);
     
     const col2 = document.createElement('div');
@@ -46,7 +46,8 @@ function adicionarCamposNovaSala(event){
     col2.appendChild(imgDelete);
     
     wrapperSalas.appendChild(novaRow);
-    // Previne que o clique ative o submit do formulário
+    
+    updateCounter();
     event.preventDefault();
 
 }
@@ -55,7 +56,7 @@ function getCounter() {
     return salasCounter;
 }
 
-function updateCouter(){
+function updateCounter(){
     salasCounter++;
 }
 
