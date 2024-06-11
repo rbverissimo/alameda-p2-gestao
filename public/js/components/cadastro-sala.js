@@ -2,7 +2,13 @@
 const wrapperSalas = document.getElementById('wrapper-salas');
 const adicionarSalaButton = document.getElementById('adicionar-sala-button');
 
-let salasCounter = 1;
+const tiposOptions = [
+    { value: "1", text: 'Residencial' },
+    { value: "2", text: 'Comercial' },
+    { value: "3", text: 'Rural' },
+];
+
+let salasCounter = 2;
 
 document.addEventListener('DOMContentLoaded', () => {
     adicionarSalaButton.addEventListener('click', adicionarCamposNovaSala);
@@ -18,23 +24,56 @@ function adicionarCamposNovaSala(event){
     novaRow.appendChild(col7);
     
     const inputSala = document.createElement('input');
-    inputSala.name = 'input-sala-form-nome-' + salasCounter + 1;
+    inputSala.name = 'input-sala-form-nome-' + getNextCounter();
     inputSala.placeholder = 'Digite aqui o nome da sala' 
     col7.appendChild(inputSala);
-    salasCounter += 1;
     
     const col3 = document.createElement('div')
     col3.classList.add('col-3');
     novaRow.appendChild(col3);
     
+    criarSelect(col3);
+    
     const col2 = document.createElement('div');
-    col3.classList.add('col-2');
+    col2.classList.add('col-2');
     novaRow.appendChild(col2);
+
+
+    const imgDelete = document.createElement('img');
+    imgDelete.src = '/public/icons/delete-icon.svg';
+    imgDelete.alt = 'EXCLUIR';
+
+    col2.appendChild(imgDelete);
     
     wrapperSalas.appendChild(novaRow);
     // Previne que o clique ative o submit do formulário
     event.preventDefault();
 
+}
+
+function getCounter() {
+    return salasCounter;
+}
+
+function updateCouter(){
+    salasCounter++;
+}
+
+function criarSelect(node){
+    const tipoContaSelect = document.createElement('select');
+
+    tipoContaSelect.id = '';
+    tipoContaSelect.name = 'input-sala-form-tipo-' + getCounter(); 
+
+    for(const option of tiposOptions){
+        const novaOption = document.createElement('option');
+        novaOption.value = option.value;
+        novaOption.textContent = option.text;
+
+        tipoContaSelect.appendChild(novaOption);
+    }
+
+    node.appendChild(tipoContaSelect);
 }
 
 
