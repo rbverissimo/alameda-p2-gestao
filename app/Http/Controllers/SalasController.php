@@ -16,6 +16,16 @@ class SalasController extends Controller
 
         try {
 
+            $inputs = $request->input();
+
+            $nome_salas = collect($inputs)->filter(function($value, $key){
+                return str_starts_with($key, 'input-sala-form-nome-');
+            })->toArray();
+
+            $tipos_salas = collect($inputs)->filter(function($value, $key){
+                return str_starts_with($key, 'select-sala-form-nome-');
+            })->toArray();
+
             return view('app.cadastro-sala', compact('titulo', 'imovel'));
 
         } catch (\Throwable $th) {

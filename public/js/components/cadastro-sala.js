@@ -41,7 +41,7 @@ function adicionarCamposNovaSala(event){
 
 
     const imgDelete = document.createElement('img');
-    imgDelete.src = '/public/icons/delete-icon.svg';
+    imgDelete.src = '../public/icons/delete-icon.svg';
     imgDelete.alt = 'EXCLUIR';
     col2.appendChild(imgDelete);
     
@@ -65,7 +65,7 @@ function criarSelect(node){
     const tipoContaSelect = document.createElement('select');
 
     tipoContaSelect.id = '';
-    tipoContaSelect.name = 'input-sala-form-tipo-' + getCounter(); 
+    tipoContaSelect.name = 'select-sala-form-tipo-' + getCounter(); 
 
     for(const option of tiposOptions){
         const novaOption = document.createElement('option');
