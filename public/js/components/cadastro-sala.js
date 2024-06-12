@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function adicionarCamposNovaSala(event){
     const novaRow = document.createElement('div');
+    novaRow.id = 'row-sala-form-' + getCounter();
     novaRow.classList.add('row');
     
     const col7 = document.createElement('div');
@@ -42,12 +43,12 @@ function adicionarCamposNovaSala(event){
     const imgDelete = document.createElement('img');
     imgDelete.src = '/public/icons/delete-icon.svg';
     imgDelete.alt = 'EXCLUIR';
-
     col2.appendChild(imgDelete);
     
     wrapperSalas.appendChild(novaRow);
     
     updateCounter();
+    adicionarImgDeleteEventListener(imgDelete);
     event.preventDefault();
 
 }
@@ -75,6 +76,18 @@ function criarSelect(node){
     }
 
     node.appendChild(tipoContaSelect);
+}
+
+function adicionarImgDeleteEventListener(imgDelete){
+    imgDelete.addEventListener('click', eliminarSala);
+}
+
+function eliminarSala(event){
+    const divCol2 = event.target.parentElement;
+    const divRow = divCol2.parentElement;
+    if(divRow){
+        divRow.remove();
+    }
 }
 
 
