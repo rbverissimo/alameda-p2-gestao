@@ -6,12 +6,12 @@ use App\Http\Dto\SalaDTOBuilder;
 
 abstract class SalasUtils {
 
-    public static function mergeFormInputs(array $nomeSalas, array $tipoSalas): array
+    public static function getSalasDTOsFromMerge(array $nomeSalas, array $tipoSalas): array
     {
         $salasList = [];
-
-        $nomeSalasPattern = "/^input-form-salas-nome-(\d+)$/";
-        $tipoSalasPattern = "/^select-form-sala-tipo-(\d+)$/";
+        
+        $nomeSalasPattern = "/^input-sala-form-nome-(\d+)$/";
+        $tipoSalasPattern = "/^input-sala-form-tipo-(\d+)$/";
 
         foreach ($nomeSalas as $key => $nome) {
             if (preg_match($nomeSalasPattern, $key, $matches) !== 1) {
@@ -25,6 +25,7 @@ abstract class SalasUtils {
             ];
         }
 
+
         foreach ($tipoSalas as $key => $tipo) {
             if (preg_match($tipoSalasPattern, $key, $matches) !== 1) {
                 continue;
@@ -35,6 +36,8 @@ abstract class SalasUtils {
                 $salasList[$identificador]['tipo_sala'] = $tipo;
             }
         }
+
+        dd($salasList);
 
         $salaDTOs = [];
         foreach ($salasList as $identificador => $salaData) {

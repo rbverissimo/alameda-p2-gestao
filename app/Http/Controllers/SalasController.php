@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ImoveisService;
 use Illuminate\Http\Request;
 use App\Utils\CollectionUtils;
+use App\Utils\SalasUtils;
 
 class SalasController extends Controller
 {
@@ -24,6 +25,8 @@ class SalasController extends Controller
 
             $nome_salas = CollectionUtils::getAssociativeArray($inputs, '-' , 4, 'input-sala-form-nome-');
             $tipos_salas = CollectionUtils::getAssociativeArray($inputs, '-', 4, 'input-sala-form-tipo-');
+
+            $salas_dto = SalasUtils::getSalasDTOsFromMerge($nome_salas, $tipos_salas);
 
 
             return view('app.cadastro-sala', compact('titulo', 'imovel'));
