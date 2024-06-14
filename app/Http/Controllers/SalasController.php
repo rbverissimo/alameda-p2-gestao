@@ -26,6 +26,7 @@ class SalasController extends Controller
                 return str_starts_with($key, 'select-sala-form-nome-');
             })->toArray();
 
+
             return view('app.cadastro-sala', compact('titulo', 'imovel'));
 
         } catch (\Throwable $th) {
