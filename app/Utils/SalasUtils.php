@@ -6,25 +6,44 @@ use App\Http\Dto\SalaDTOBuilder;
 
 abstract class SalasUtils {
 
-    public static function mergeFormInputs(string $nome_salas_pattern, string $tipo_salas_pattern, array $nome_salas, array $tipo_salas): array {
-        $salas_list = [];
-        $salas_mapeadas = [];
+    public static function mergeFormInputs(array $nomeSalas, array $tipoSalas): array
+    {
+        $salasList = [];
 
-        $nomeSalasPattern = "^{$nome_salas_pattern}-(\d+)$";
-        $tipoSalasPattern = "^{$tipo_salas_pattern}-(\d+)$";
+        $nomeSalasPattern = "/^input-form-salas-nome-(\d+)$/";
+        $tipoSalasPattern = "/^select-form-sala-tipo-(\d+)$/";
 
-        foreach ($nome_salas as $nome) {
-            [$sala, $identificador] = explode('-', $nome);
-            $salas_mapeadas[$identificador] = $sala;
+        foreach ($nomeSalas as $key => $nome) {
+            if (preg_match($nomeSalasPattern, $key, $matches) !== 1) {
+                continue;
+            }
+            $identificador = (int) $matches[1];
+
+            $salasList[$identificador] = [
+                'nome_sala' => $nome, 
+                'tipo_sala' => null, 
+            ];
         }
 
-        foreach ($tipo_salas as $tipo) {
-            [$tipoSala, $identificador] = explode('-', $tipo);
-            if(isset($salas_mapeadas[$identificador])){
-                $salas_list = (new SalaDTOBuilder)->withNomeSala($salas_mapeadas[$identificador])->withTipoSala($tipo)->build();
+        foreach ($tipoSalas as $key => $tipo) {
+            if (preg_match($tipoSalasPattern, $key, $matches) !== 1) {
+                continue;
+            }
+            $identificador = (int) $matches[1];
+
+            if (isset($salasList[$identificador])) {
+                $salasList[$identificador]['tipo_sala'] = $tipo;
             }
         }
 
-        return $salas_list;
+        $salaDTOs = [];
+        foreach ($salasList as $identificador => $salaData) {
+            $salaDTOs[] = (new SalaDTOBuilder)
+                ->withNomeSala($salaData['nome_sala'])
+                ->withTipoSala($salaData['tipo_sala'])
+                ->build();
+        }
+
+        return $salaDTOs;
     }
 }

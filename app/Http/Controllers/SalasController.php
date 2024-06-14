@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ImoveisService;
 use Illuminate\Http\Request;
+use App\Utils\CollectionUtils;
 
 class SalasController extends Controller
 {
@@ -18,13 +19,11 @@ class SalasController extends Controller
 
             $inputs = $request->input();
 
-            $nome_salas = collect($inputs)->filter(function($value, $key){
-                return str_starts_with($key, 'input-sala-form-nome-');
-            })->toArray();
+            //input-sala-form-nome-1
+            //input-sala-form-tipo-1
 
-            $tipos_salas = collect($inputs)->filter(function($value, $key){
-                return str_starts_with($key, 'select-sala-form-nome-');
-            })->toArray();
+            $nome_salas = CollectionUtils::getAssociativeArray($inputs, '-' , 4, 'input-sala-form-nome-');
+            $tipos_salas = CollectionUtils::getAssociativeArray($inputs, '-', 4, 'input-sala-form-tipo-');
 
 
             return view('app.cadastro-sala', compact('titulo', 'imovel'));
