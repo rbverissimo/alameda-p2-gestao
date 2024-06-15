@@ -10,7 +10,7 @@ class CollectionUtils {
             return str_starts_with($key, $pattern);
         })->mapWithKeys(function($value, $key) use ($separator, $index_identificador){
             $identificador = (int) explode($separator, $key)[$index_identificador];
-            return [$key => $value];
+            return [$identificador => $value];
         })
         ->toArray();
     }

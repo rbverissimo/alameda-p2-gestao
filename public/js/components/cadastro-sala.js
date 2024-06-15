@@ -2,10 +2,11 @@
 const wrapperSalas = document.getElementById('wrapper-salas');
 const adicionarSalaButton = document.getElementById('adicionar-sala-button');
 
+// Valores idênticos ao da tabela tipos_sala do banco de dados
 const tiposOptions = [
     { value: "1", text: 'Residencial' },
     { value: "2", text: 'Comercial' },
-    { value: "3", text: 'Rural' },
+    { value: "3", text: 'Uso misto' },
 ];
 
 let salasCounter = 2;
@@ -65,7 +66,7 @@ function criarSelect(node){
     const tipoContaSelect = document.createElement('select');
 
     tipoContaSelect.id = '';
-    tipoContaSelect.name = 'select-sala-form-tipo-' + getCounter(); 
+    tipoContaSelect.name = 'input-sala-form-tipo-' + getCounter(); 
 
     for(const option of tiposOptions){
         const novaOption = document.createElement('option');
@@ -89,20 +90,3 @@ function eliminarSala(event){
         divRow.remove();
     }
 }
-
-
-{/* <div class="row">
-            <div class="col-7">
-                <input type="text" name="input-sala-form-nome-1" placeholder="Digite aqui o nome da sala ">
-            </div>
-            <div class="col-3">
-                <select name="input-sala-form-tipo-1" id="">
-                    <option value="1">Residencial</option>
-                    <option value="2">Comercial</option>
-                    <option value="3">Rural</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <img src="{{asset("icons/delete-icon.svg")}}" alt="EXCLUIR">
-            </div>
-        </div> */}

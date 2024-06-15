@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sala;
 use App\Services\ImoveisService;
 use Illuminate\Http\Request;
 use App\Utils\CollectionUtils;
 use App\Utils\SalasUtils;
+use Illuminate\Support\Facades\DB;
 
 class SalasController extends Controller
 {
@@ -25,15 +27,29 @@ class SalasController extends Controller
 
             $nome_salas = CollectionUtils::getAssociativeArray($inputs, '-' , 4, 'input-sala-form-nome-');
             $tipos_salas = CollectionUtils::getAssociativeArray($inputs, '-', 4, 'input-sala-form-tipo-');
+            $salas_dto = SalasUtils::getSalasDTOsFromMerge($nome_salas, $tipos_salas, $imovel->id);
 
-            $salas_dto = SalasUtils::getSalasDTOsFromMerge($nome_salas, $tipos_salas);
+            DB::transaction(function($closure) use ($salas_dto){
+
+                foreach ($salas_dto as $sala_dto) {
+
+                    Sala::create([
+                        'imovelcodigo' => $sala_dto->getIdImovel(),
+                        'nomeSala' => $sala_dto->getNomeSala(),
+                        'tipo_sala' => $sala_dto->getTipoSala(),
+                    ]);
+                }
+
+            });
 
 
-            return view('app.cadastro-sala', compact('titulo', 'imovel'));
+            return '<h1>CADASTRO CONCLUÍDO COM SUCESSO</h1>';
 
         } catch (\Throwable $th) {
-            
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar o imóvel. '.$th->getMessage()); 
         }
+
+        return '<h1>CADASTRO CONCLUÍDO COM SUCESSO</h1>';
     }
 
     /**

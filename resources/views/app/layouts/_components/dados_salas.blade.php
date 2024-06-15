@@ -24,7 +24,7 @@
                 <select name="input-sala-form-tipo-1" id="">
                     <option value="1">Residencial</option>
                     <option value="2">Comercial</option>
-                    <option value="3">Rural</option>
+                    <option value="3">Uso misto</option>
                 </select>
             </div>
             <div class="col-2">
