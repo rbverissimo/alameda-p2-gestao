@@ -27,12 +27,24 @@ class ImoveisService {
     }
 
     /**
-     * Esse método busca o Imovel junto de seu endereço no banco
+     * Esse método busca o imóvel junto de seu endereço no banco
      * de dados de acordo com ID passado no parâmetro
      * @return App\Models\Imovel
      */
     public static function getImovelBy($idImovel){
         return Imovel::with('endereco')->find($idImovel);
+    }
+
+
+    /**
+     * Esse método busca o imóvel junto de seu endereço e suas salas
+     * relacionadas ao mesmo no banco de dados de acordo com o ID passado
+     * no parâmetro da assinatura do método
+     * 
+     * @return App\Models\Imovel
+     */
+    public static function getImovelWithSalasBy($idImovel){
+        return Imovel::with('endereco')->with('sala')->find($idImovel);
     }
 
     /**

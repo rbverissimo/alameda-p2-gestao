@@ -72,6 +72,37 @@
     left: calc(100% - 5px);
 }
 
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.chip-group label {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px; 
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--chip-bg);
+}
+
+.chip-group label:hover{
+    background-color: var(--chip-highlight);
+}
+
+.chip-group input[type="checkbox"] {
+    display: none;
+}
+
+.chip-group label span {
+    margin-left: 5px;
+}
+
+.chip-group input:checked + label {
+    background-color: var(--chip-selected);
+}
+
 @media only screen and (max-width: 768px){
 
     .comp-toggle-switch {
