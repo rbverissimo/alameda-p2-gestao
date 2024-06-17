@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Imovel;
 use App\Models\Sala;
+use App\Models\TipoSala;
 use App\Models\UsuarioImovel;
 
 class ImoveisService {
@@ -100,6 +101,16 @@ class ImoveisService {
      */
     public static function getSalaImovelBy($sala){
         return Sala::with('inquilino')->where('id', $sala)->first();
+    }
+
+    /**
+     * Esse método busca um registro de tipo de sala apenas com a descrição 
+     * no objeto de retorno. 
+     * 
+     * @return App\Models\TipoSala
+     */
+    public static function getTipoSalaBy($idTipoSala){
+        return TipoSala::select('descricao')->find($idTipoSala);
     }
 
 }
