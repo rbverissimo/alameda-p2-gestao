@@ -118,7 +118,7 @@ class ImoveisController extends Controller
 
 
                 $imovel = ImoveisService::getIDMaximo();
-                $mensagem = 'Imóvel cadastrado com sucesso!';
+                $mensagem = 'sucesso';
                 $salas_controller = new SalasController();
 
                 return $salas_controller->cadastrarPrimeiraSala(new Request(), $imovel, $mensagem) ;

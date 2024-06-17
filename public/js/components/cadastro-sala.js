@@ -1,4 +1,3 @@
-
 const wrapperSalas = document.getElementById('wrapper-salas');
 const adicionarSalaButton = document.getElementById('adicionar-sala-button');
 
