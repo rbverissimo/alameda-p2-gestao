@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipoConta;
 use App\Services\ImoveisService;
+use App\Services\TipoContasService;
 use Illuminate\Http\Request;
 
 class TiposContasController extends Controller {
@@ -20,6 +21,7 @@ class TiposContasController extends Controller {
             if($imovel){
                 $endereco_cadastrado = $imovel->endereco;
                 $imovel_cadastrado = [];
+                $salas_cadastradas = [];
                 if($endereco_cadastrado){
                     
                     $endereco_string = sprintf(
@@ -35,26 +37,17 @@ class TiposContasController extends Controller {
                         $imovel_cadastrado = [
                             'nomefantasia' => $imovel->nomefantasia,
                             'endereco' => $endereco_string,
-                            ];
-                            
-                            
+                        ];        
                 }
 
-                $salas_cadastradas = [];
                 if($imovel->sala){
-                    foreach ($imovel->sala as $sala) {
-                        $descricao_tipoSala = '';
-                        if($sala->tipo_sala){
-                            $descricao_tipoSala = ImoveisService::getTipoSalaBy($sala->tipo_sala);
-                        }
-
-                        $sala_cadastrada = [
+                    $salas_cadastradas = $imovel->sala->map(function($sala){
+                        $descricao_tipoSala = $sala->tipo_sala ? ImoveisService::getTipoSalaBy($sala->tipo_sala) : '';
+                        return [
                             'descricao' => $sala->nomesala,
                             'tipo' => $descricao_tipoSala,
                         ];
-
-                        $salas_cadastradas = $sala_cadastrada;
-                    }
+                    });
                 }
             }
 
@@ -63,7 +56,7 @@ class TiposContasController extends Controller {
                 como chip para o usuário selecionar serão aquelas que estão registradas por padrão no 
                 sistema.
             */
-            $chips = TipoConta::all()->map(function($tipoConta){
+            $chips = TipoContasService::getTiposContasDoSistema()->map(function($tipoConta){
                 return [
                     'id' => 'chip-' + $tipoConta->id,
                     'text' => $tipoConta->descricao,
