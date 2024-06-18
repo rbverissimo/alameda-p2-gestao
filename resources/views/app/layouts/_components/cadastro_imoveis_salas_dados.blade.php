@@ -5,14 +5,14 @@
     <div class="row">
         <div class="col-6">
             <span class="basic-card-wrapper">
-                {{ $imovel_cadastrado->nomefantasia }}
+                {{ $imovel_cadastrado['nomefantasia'] }}
             </span>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
             <span class="basic-card-wrapper">
-                {{ $imovel_cadastrado->endereco }}
+                {{ $imovel_cadastrado['endereco'] }}
             </span>
         </div>
     </div>
@@ -25,12 +25,12 @@
         <div class="row">
             <div class="col-6">
                 <span class="basic-card-wrapper">
-                    {{ $sala->descricao }}
+                    {{ $sala['descricao'] }}
                 </span>
             </div>
             <div class="col-4">
                 <span class="basic-card-wrapper">
-                    {{ $sala->tipo }}
+                    {{ $sala['tipo'] }}
                 </span>
             </div>
         </div>

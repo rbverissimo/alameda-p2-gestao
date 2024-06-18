@@ -110,7 +110,7 @@ class ImoveisService {
      * @return App\Models\TipoSala
      */
     public static function getTipoSalaBy($idTipoSala){
-        return TipoSala::select('descricao')->find($idTipoSala);
+        return TipoSala::where('id', $idTipoSala)->pluck('descricao')->first();
     }
 
 }

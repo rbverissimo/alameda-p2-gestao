@@ -1,7 +1,7 @@
 <form action="" method="post">
     <div class="row">
         <div class="col-12">
-            <x-chips-group :chips="$chips" name="tipos-contas-group"></x-chips-group>
+            <x-chip-group :chips="$chips" name="tipos-contas-group"></x-chip-group>
         </div>
     </div>
     <div class="row center-itens">

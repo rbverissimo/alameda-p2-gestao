@@ -20,7 +20,6 @@ class TiposContasController extends Controller {
 
             if($imovel){
                 $endereco_cadastrado = $imovel->getRelation('endereco');
-                $imovel_cadastrado = [];
                 $salas_cadastradas = [];
                 if($endereco_cadastrado){
                     
@@ -41,9 +40,11 @@ class TiposContasController extends Controller {
                     
                 }
 
-                if($imovel->sala){
-                    $salas_cadastradas = $imovel->sala->map(function($sala){
-                        $descricao_tipoSala = $sala->tipo_sala ? ImoveisService::getTipoSalaBy($sala->tipo_sala) : null;
+                if($imovel->relationLoaded('sala')){
+                    $salas_cadastradas = $imovel->getRelation('sala')->map(function($sala){
+                        $descricao_tipoSala = $sala->tipo_sala ? 
+                            ImoveisService::getTipoSalaBy($sala->tipo_sala) 
+                            : 'Tipo de sala não identificado';
                         return [
                             'descricao' => $sala->nomesala,
                             'tipo' => $descricao_tipoSala,
@@ -51,7 +52,6 @@ class TiposContasController extends Controller {
                     });
                 }
 
-                dd($salas_cadastradas);
             }
 
             /*
@@ -61,7 +61,7 @@ class TiposContasController extends Controller {
             */
             $chips = TipoContasService::getTiposContasDoSistema()->map(function($tipoConta){
                 return [
-                    'id' => 'chip-' + $tipoConta->id,
+                    'id' => 'chip-'.$tipoConta->id,
                     'text' => $tipoConta->descricao,
                     'value' => $tipoConta->id,
                 ];
