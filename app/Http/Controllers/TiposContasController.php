@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class TiposContasController extends Controller {
 
 
-    public function cadastrarPrimeirasContas(Request $request, $idImovel){
+    public function cadastrarPrimeirasContas(Request $request, $idImovel, $mensagem){
 
         $titulo = 'Cadastro dos tipos de contas do imóvel';
 
@@ -19,36 +19,39 @@ class TiposContasController extends Controller {
             $imovel = ImoveisService::getImovelWithSalasBy($idImovel);
 
             if($imovel){
-                $endereco_cadastrado = $imovel->endereco;
+                $endereco_cadastrado = $imovel->getRelation('endereco');
                 $imovel_cadastrado = [];
                 $salas_cadastradas = [];
                 if($endereco_cadastrado){
                     
                     $endereco_string = sprintf(
-                        '%s %s, %s. CEP: %s, %s-%s',
+                        '%s %d, %s. CEP: %s, %s-%s',
                         $endereco_cadastrado->logradouro,
                         $endereco_cadastrado->numero,
                         $endereco_cadastrado->bairro,
                         $endereco_cadastrado->cep,
                         $endereco_cadastrado->cidade,
                         $endereco_cadastrado->uf
-                        );
+                    );
                         
-                        $imovel_cadastrado = [
-                            'nomefantasia' => $imovel->nomefantasia,
-                            'endereco' => $endereco_string,
-                        ];        
+                    $imovel_cadastrado = [
+                        'nomefantasia' => $imovel->nomefantasia,
+                        'endereco' => $endereco_string,
+                    ];
+                    
                 }
 
                 if($imovel->sala){
                     $salas_cadastradas = $imovel->sala->map(function($sala){
-                        $descricao_tipoSala = $sala->tipo_sala ? ImoveisService::getTipoSalaBy($sala->tipo_sala) : '';
+                        $descricao_tipoSala = $sala->tipo_sala ? ImoveisService::getTipoSalaBy($sala->tipo_sala) : null;
                         return [
                             'descricao' => $sala->nomesala,
                             'tipo' => $descricao_tipoSala,
                         ];
                     });
                 }
+
+                dd($salas_cadastradas);
             }
 
             /*
@@ -64,7 +67,7 @@ class TiposContasController extends Controller {
                 ];
             }); 
 
-            return view('app.cadastro-tipo-contas-imovel', compact('titulo', 'chips', 'imovel_cadastrado', 'salas_cadastradas'));
+            return view('app.cadastro-tipo-contas-imovel', compact('titulo', 'chips', 'imovel_cadastrado', 'salas_cadastradas', 'mensagem'));
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar os tipos de conta do imóvel. ' + $th->getMessage());

@@ -42,16 +42,20 @@ class SalasController extends Controller
 
             });
 
+            $mensagem = [
+                'status' => 'sucesso',
+                'mensagem' => 'As salas do imóvel foram cadastradas com sucesso!'
+            ];
 
             $tipos_contas_controller = new TiposContasController;
-            return $tipos_contas_controller->cadastrarPrimeirasContas($request, $idImovel);
+            return $tipos_contas_controller->cadastrarPrimeirasContas($request, $imovel->id, $mensagem);
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('erros', 'Não foi possível cadastrar o imóvel. '.$th->getMessage()); 
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar as salas. '.$th->getMessage()); 
         }
 
         $tipos_contas_controller = new TiposContasController;
-        return $tipos_contas_controller->cadastrarPrimeirasContas($request, $idImovel);
+        return $tipos_contas_controller->cadastrarPrimeirasContas($request, $idImovel, $mensagem);
     }
 
     /**

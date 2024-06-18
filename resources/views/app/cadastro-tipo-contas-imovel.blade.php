@@ -14,5 +14,5 @@
 @endsection
 
 @section('scripts')
-    @include('app.scripts.script-cadastro-compra')
+    @include('app.scripts.script-mensagem')
 @endsection
