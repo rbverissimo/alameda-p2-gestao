@@ -36,3 +36,7 @@
             <div class="whitespace-end-page"></div>
       </div>
 @endsection
+
+@section('scripts')
+      @include('app.scripts.script-mensagem')
+@endsection

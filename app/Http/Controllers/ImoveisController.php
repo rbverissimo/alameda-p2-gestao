@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\DB;
 class ImoveisController extends Controller
 {
 
-    public function index(){
+    public function index($mensagem = null){
 
         $titulo = 'Lista de Imóveis';
         $idUsuario = UsuarioService::getUsuarioLogado();
@@ -35,7 +35,7 @@ class ImoveisController extends Controller
             ->where('users_imoveis.idUsuario', $idUsuario)
             ->get();
 
-        return view('app.imoveis', compact('titulo', 'imoveis'));
+        return view('app.imoveis', compact('titulo', 'imoveis', 'mensagem'));
     }
 
     public function cadastrar(Request $request){

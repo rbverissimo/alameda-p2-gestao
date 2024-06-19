@@ -34,7 +34,13 @@ class TiposContasController extends Controller {
 
             DB::table($table_name)->insert($imoveis_tipos_contas_dto);
 
-            return 'Cadastro concluído com sucesso';
+            $mensagem = [
+                'status' => 'sucesso',
+                'mensagem' => 'Tipos de contas definidos! Imóvel cadastrado com sucesso!',
+            ];
+
+            $imoveis_controller = new ImoveisController();
+            return $imoveis_controller->index($mensagem);
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar os tipos de conta do imóvel. ' + $th->getMessage());
