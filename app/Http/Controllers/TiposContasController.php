@@ -5,17 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\TipoConta;
 use App\Services\ImoveisService;
 use App\Services\TipoContasService;
+use App\Utils\CollectionUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TiposContasController extends Controller {
 
 
     public function cadastrar(Request $request, $idImovel){
 
-        dd($request->all());
 
         try {
-            
+            //input-tipo-conta-form-1
+            $inputs = $request->input();
+
+            $id_tipos_contas = CollectionUtils::getAssociativeArray($inputs, '-', 4, 'input-tipo-conta-form-');
+
+            $imoveis_tipos_contas_dto = [];
+            foreach ($id_tipos_contas as $key => $value) {
+                $dto = [
+                    'imovel' => $idImovel,
+                    'tipoconta' => $value
+                ];
+                $imoveis_tipos_contas_dto[] = $dto; 
+            }
+
+            $table_name = 'imoveis_tipos_contas';
+
+            DB::table($table_name)->insert($imoveis_tipos_contas_dto);
+
+            return 'Cadastro concluído com sucesso';
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar os tipos de conta do imóvel. ' + $th->getMessage());
         }
