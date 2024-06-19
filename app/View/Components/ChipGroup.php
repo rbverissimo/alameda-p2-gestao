@@ -6,14 +6,6 @@ use Illuminate\View\Component;
 
 class ChipGroup extends Component
 {
-
-    /**
-     * O nome do input
-     * 
-     * @var string
-     */
-    public $name;
-
     /**
      * As informações que serão renderizadas nos chips
      * @var array
@@ -26,9 +18,8 @@ class ChipGroup extends Component
      *
      * @return void
      */
-    public function __construct($name, $chips)
+    public function __construct($chips)
     {
-        $this->name = $name;
         $this->chips = $chips;
     }
 

@@ -10,6 +10,19 @@ use Illuminate\Http\Request;
 class TiposContasController extends Controller {
 
 
+    public function cadastrar(Request $request, $idImovel){
+
+        dd($request->all());
+
+        try {
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar os tipos de conta do imóvel. ' + $th->getMessage());
+        }
+
+    }
+
+
     public function cadastrarPrimeirasContas(Request $request, $idImovel, $mensagem){
 
         $titulo = 'Cadastro dos tipos de contas do imóvel';
@@ -64,10 +77,11 @@ class TiposContasController extends Controller {
                     'id' => 'chip-'.$tipoConta->id,
                     'text' => $tipoConta->descricao,
                     'value' => $tipoConta->id,
+                    'name' => 'input-tipo-conta-form-'.$tipoConta->id,
                 ];
             }); 
 
-            return view('app.cadastro-tipo-contas-imovel', compact('titulo', 'chips', 'imovel_cadastrado', 'salas_cadastradas', 'mensagem'));
+            return view('app.cadastro-tipo-contas-imovel', compact('titulo', 'chips', 'idImovel', 'imovel_cadastrado', 'salas_cadastradas', 'mensagem'));
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar os tipos de conta do imóvel. ' + $th->getMessage());

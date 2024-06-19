@@ -3,6 +3,9 @@
         Informações do imóvel cadastrado
     </div>
     <div class="row">
+        <div class="col-3">
+            <span class="basic-card-wrapper"> Nome do Imóvel: </span>
+        </div>
         <div class="col-6">
             <span class="basic-card-wrapper">
                 {{ $imovel_cadastrado['nomefantasia'] }}
@@ -10,7 +13,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-3">
+            <span class="basic-card-wrapper">
+                Endereço:
+            </span>
+        </div>
+        <div class="col-9">
             <span class="basic-card-wrapper">
                 {{ $imovel_cadastrado['endereco'] }}
             </span>

@@ -1,4 +1,4 @@
-<form action="{{ route('cadastrar-sala', ['idImovel' => $imovel->id])}}" method="POST">
+<form action="{{ route('cadastrar-sala', ['idImovel' => $imovel->id]) }}" method="POST">
     @csrf
     @component('app.layouts._components.dados_salas', compact('imovel'))
         

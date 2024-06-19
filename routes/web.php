@@ -11,6 +11,7 @@ use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\RaizController;
 use App\Http\Controllers\SalasController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TiposContasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,6 +101,10 @@ Route::prefix('salas')->middleware('autenticacao')->group(function(){
     Route::get('/cadastrar-sala/s/ps/{idImovel}', [SalasController::class, 'cadastrarPrimeiraSala'])->name('primeira-sala');
     Route::get('/cadastrar-sala/s/{idImovel}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala');
     Route::post('/cadastrar-sala/s/{idImovel}', [SalasController::class, 'cadastrar'])->name('cadastrar-sala'); 
+});
+
+Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
+    Route::post('/cadastrar-tipos/{idImovel}', [TiposContasController::class, 'cadastrar'])->name('cadastrar-tipos-contas');
 });
 
 Route::prefix('servicos')->middleware('autenticacao')->group(function(){
