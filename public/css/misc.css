@@ -88,7 +88,7 @@
     background-color: var(--chip-bg);
 }
 
-.chip-group label:hover{
+.chip-group label:hover {
     background-color: var(--chip-highlight);
 }
 
@@ -98,10 +98,6 @@
 
 .chip-group label span {
     margin-left: 5px;
-}
-
-.chip-group input:checked {
-    background-color: var(--chip-selected);
 }
 
 @media only screen and (max-width: 768px){

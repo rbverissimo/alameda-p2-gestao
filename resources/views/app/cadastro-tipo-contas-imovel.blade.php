@@ -18,4 +18,5 @@
 @section('scripts')
     @include('app.scripts.script-mensagem')
     <script src="{{ asset('js/components/cadastro-tipo-contas-imovel.js')}}" type="module"></script> 
+    <script src="{{ asset('js/partials/chip-group.js')}}" type="module"></script> 
 @endsection
