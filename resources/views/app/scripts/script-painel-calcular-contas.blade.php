@@ -5,6 +5,7 @@
     import { isNotNullOrUndefined } from "{{ asset('js/scripts.js') }}";
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
     import { mascaraReferenciaSlider } from "{{ asset('js/scripts.js') }}";
+    import { showMensagem } from "{{ asset('js/scripts.js') }}";
 
 
     const referenciaCalculo = @json($referencia_calculo);
@@ -61,6 +62,7 @@
                     toggleOverlay(loadingOverlay);
                     console.log(data);
                     renderizarResultado(data['inquilinos']);
+                    showMensagem(data['mensagem']['mensagem'], data['mensagem']['status']);
                 })
                 .catch(error => {
                     toggleOverlay(loadingOverlay);
@@ -79,19 +81,21 @@
     }
 
     function renderizarResultado(data){
-        const divResultado = document.getElementById('resultado-calculo');
-        let html = '<div class="col-12">';
-        data.forEach(function(inquilino) {
-            html += `<div class="col-3"><div>Nome: ${inquilino.nome}</div><div>Aluguel: ${inquilino.valorAluguel}</div>`;
-
-            inquilino.contas_inquilino.forEach(e => {
-                html += `<div> ${e.descricao}: ${e.valorinquilino}</div>`;
-            })
+        if(data !== undefined){
+            const divResultado = document.getElementById('resultado-calculo');
+            let html = '<div class="col-12">';
+            data.forEach(function(inquilino) {
+                html += `<div class="col-3"><div>Nome: ${inquilino.nome}</div><div>Aluguel: ${inquilino.valorAluguel}</div>`;
+    
+                inquilino.contas_inquilino.forEach(e => {
+                    html += `<div> ${e.descricao}: ${e.valorinquilino}</div>`;
+                })
+                html += '</div>';
+            });
+            
             html += '</div>';
-        });
-        
-        html += '</div>';
-        divResultado.innerHTML = html;
+            divResultado.innerHTML = html;
+        }
     }
 
     function setarSliderReferencia(){

@@ -187,9 +187,9 @@ class InquilinosService {
        */
       public static function getAluguelBy($inquilino, $referencia){
             return InquilinoAluguel::where('inquilino', $inquilino)
-                  ->where('iniciovalidade', '>=', $referencia)
-                  ->where('fimvalidade', '<=', $referencia)
-                  ->order('id', 'desc')
+                  ->where('iniciovalidade', '<=', $referencia)
+                  ->where('fimvalidade', '>=', $referencia)
+                  ->orderBy('id', 'desc')
                   ->first();
       }
 
