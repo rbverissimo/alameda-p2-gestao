@@ -44,8 +44,9 @@ class PainelInquilinoController extends Controller
 
         $imoveis = ImoveisService::getImoveis();
         $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
+        $contrato = InquilinosService::getContratoVigente($id);
 
-        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'mensagem', 'mensagemConfirmacaoModal'));
+        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'mensagemConfirmacaoModal'));
 
     }
 

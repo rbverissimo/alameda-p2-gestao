@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Comprovante;
+use App\Models\Contrato;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
 use App\Models\InquilinoConta;
@@ -265,6 +266,16 @@ class InquilinosService {
             $inquilino = Inquilino::with('sala')->where('id', $inquilino)->first(); 
             $salaImovel = $inquilino->has('sala') ? ImoveisService::getSalaImovelBy($inquilino->sala->id) : null; 
             return $salaImovel;
+      }
+
+      public static function getContratoVigente($idInquilino){
+            $aluguel = InquilinosService::getAluguel($idInquilino);
+
+            $contrato = Contrato::where('aluguel', $aluguel->id);
+            $contrato->valorAluguel = $aluguel->valorAluguel;
+
+            return $contrato; 
+            
       }
 
 

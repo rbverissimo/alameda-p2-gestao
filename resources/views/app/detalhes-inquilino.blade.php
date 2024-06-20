@@ -20,7 +20,9 @@
         </div>
     </div>
     <div class="row">
-        @include('app.layouts._components.form_inquilinos')
+        @component('app.layouts._components.form_inquilinos', compact('contrato'))
+            
+        @endcomponent
     </div>
 @endsection
 
