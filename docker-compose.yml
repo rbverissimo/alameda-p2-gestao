@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  php:
+    build: .
+    volumes: 
+      - ./src/app/database:var/www/app/database
+      - ./src/app/storage:var/www/app/storage:rw
+    ports:
+      - "9000:9000"
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+networks:
+  app-network:
