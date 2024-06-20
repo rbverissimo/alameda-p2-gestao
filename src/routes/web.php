@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CalculoContasController;
+use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ImoveisController;
@@ -107,8 +108,8 @@ Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
     Route::post('/cadastrar-tipos/{idImovel}', [TiposContasController::class, 'cadastrar'])->name('cadastrar-tipos-contas');
 });
 
-Route::prefix('servicos')->middleware('autenticacao')->group(function(){
-    // Route::get('/', '');
+Route::prefix('compras')->middleware('autenticacao')->group(function(){
+    Route::get('/', [ComprasController::class, 'index'])->name('compras');
 });
 
 Route::middleware('autenticacao')->group(function(){

@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Compra extends Model
 {
     use HasFactory;
+
+    protected $table = 'compras';
+
+    protected $fillabe = [
+        'imovel',
+        'tipoCompra', 
+        'inquilino',
+        'dataCompra',
+        'valor',
+        'descricao'
+    ];
 }

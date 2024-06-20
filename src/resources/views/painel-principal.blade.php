@@ -42,7 +42,7 @@
       </div>
       <div class="card">
             <div class="card-conteudo">
-                  <a>Compras</a>
+                  <a href="{{ route('compras') }}">Compras</a>
             </div>
       </div>
       <div onclick="redirecionarPara('{{ route('imoveis') }}')" class="card">
