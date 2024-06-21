@@ -1,8 +1,14 @@
-FROM php:7.4-cli
+FROM php:7.4-fpm
 
-COPY src/composer.json src/composer.lock ./
+RUN apt-get update -y && apt-get install -y openssl zip unzip git
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
+COPY composer.phar /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
+
+COPY . .
+
+COPY composer.json composer.lock ./
+
 RUN composer install
 
 COPY . /var/www/app
