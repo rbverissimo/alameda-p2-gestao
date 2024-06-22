@@ -11,6 +11,9 @@ COPY composer.json composer.lock ./
 
 RUN composer install
 
+RUN mkdir -p /var/www/app/database
+RUN mkdir -p /var/www/app/storage
+
 COPY . /var/www/app
 WORKDIR /var/www/app
 

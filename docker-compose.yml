@@ -4,8 +4,8 @@ services:
   php:
     build: .
     volumes: 
-      - ./src/app/database:var/www/app/database
-      - ./src/app/storage:var/www/app/storage:rw
+      - ./app/database:/var/www/app/database
+      - ./app/storage:/var/www/app/storage:rw
     ports:
       - "9000:9000"
   nginx:
