@@ -110,6 +110,7 @@ Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
 
 Route::prefix('compras')->middleware('autenticacao')->group(function(){
     Route::get('/', [ComprasController::class, 'index'])->name('compras');
+    Route::get('/cadastrar', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
 });
 
 Route::middleware('autenticacao')->group(function(){

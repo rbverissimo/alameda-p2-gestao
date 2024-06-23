@@ -21,4 +21,20 @@ class ComprasController extends Controller
         }
 
     }
+
+
+    public function cadastrar(){
+        $titulo = 'Cadastrar nova compra';
+
+        try {
+
+
+            
+
+            
+            return view('app.', compact('titulo'));
+        } catch (\Throwable $th) {
+            redirect()->back()->with('erros', 'Não foi possível cadastrar a compras '.$th->getMessage());
+        }
+    }
 }

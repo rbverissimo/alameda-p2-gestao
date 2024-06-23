@@ -7,6 +7,11 @@
             <button class="button common-button">
                 Voltar</button>
         </div>
+        <div class="col-3">
+            <button onclick="redirecionarPara('{{ route('cadastrar-compra')}}')" class="button action-button" >
+                  Cadastrar nova compra
+            </button>
+      </div>
     </div>
 </div>
     @if (isset($compras[0]))
