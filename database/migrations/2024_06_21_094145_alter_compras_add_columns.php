@@ -34,16 +34,39 @@ class AlterComprasAddColumns extends Migration
     public function down()
     {
         Schema::table('compras', function(Blueprint $table){
-
-            $table->dropColumn('nota');
-            $table->dropColumn('nrDocumento');
             $table->dropColumn('garantia');
+        });
+
+        Schema::table('compras', function(Blueprint $table){
             $table->dropColumn('qtdeDiasGarantia');
+        });
+
+        Schema::table('compras', function(Blueprint $table){
             $table->dropColumn('nome_vendedor');
+        });
+
+        Schema::table('compras', function(Blueprint $table){
+            $table->dropColumn('nota');
+        });
+
+        Schema::table('compras', function(Blueprint $table){
+            $table->dropColumn('nrDocumento');
+        });
+
+        Schema::table('compras', function(Blueprint $table){
             $table->dropColumn('forma_pagamento');
-            $table->dropColumn('qtdeParcelas');
-            $table->dropColumn('fornecedor');
 
         });
+
+        Schema::table('compras', function(Blueprint $table){
+            $table->dropColumn('qtdeParcelas');
+
+        });
+
+        Schema::table('compras', function(Blueprint $table){
+            $table->dropColumn('fornecedor');
+        });
+
+
     }
 }
