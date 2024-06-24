@@ -1,5 +1,7 @@
 <div class="dashboard light-dashboard">
     <div class="row">
-        <x-search-input placeholder="{{ $placeholder_search_input }}" ></x-search-input>
+        <div class="col-6">
+            <x-search-input placeholder="Digiete o CNPJ do Fornecedor para buscar" ></x-search-input>
+        </div>
     </div>
 </div>

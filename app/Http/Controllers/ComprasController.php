@@ -27,13 +27,15 @@ class ComprasController extends Controller
 
     public function cadastrar(){
         $titulo = 'Cadastrar nova compra';
-
         try {
 
 
             $input_autocomplete = FornecedoresService::getFornecedores()->keyBy('cnpj');
+
+            $jsonData = json_encode($input_autocomplete);
+            file_put_contents('public/js/initial-data.js', "window.appData = $jsonData;");
             
-            return view('app.', compact('titulo', 'input_autocomplete'));
+            return view('app.cadastro-compra', compact('titulo', 'input_autocomplete'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível cadastrar a compras '.$th->getMessage());
         }

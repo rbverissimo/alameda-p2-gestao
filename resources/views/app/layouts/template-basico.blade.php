@@ -21,5 +21,6 @@
             @include('app.layouts._partials.footer')
             @yield('scripts')
       </body>
+      <script type="module" src="{{ asset('js/initial-data.js')}}"></script>
       <script type="module" src="{{ asset('js/scripts.js') }}"></script>
 </html>

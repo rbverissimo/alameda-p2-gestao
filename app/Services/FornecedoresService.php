@@ -15,7 +15,7 @@ class FornecedoresService {
     public static function getFornecedores(){
         $usuario = UsuarioService::getUsuarioLogado();
         $imoveis = UsuarioService::getImoveisBy($usuario);
-        $fornecedores = Fornecedor::with('endereco')->whereHas('compras', function($query) use ($imoveis){
+        $fornecedores = Fornecedor::with('endereco')->whereHas('compra', function($query) use ($imoveis){
             $query->whereIn('imovel', $imoveis);
         })->get();
         return $fornecedores;

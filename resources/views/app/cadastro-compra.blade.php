@@ -10,7 +10,9 @@
     </div>
 </div>
 <div class="row">
-    @include('app.layouts._components.form_compra')
+    @component('app.layouts._components.form_compra')
+        
+    @endcomponent()
 </div>
 <div class="row">
     <div class="whitespace-end-page"></div>
@@ -18,5 +20,6 @@
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{ asset('js/components/search-input.js')}}"></script>
     @include('app.scripts.script-cadastro-compra')
 @endsection
