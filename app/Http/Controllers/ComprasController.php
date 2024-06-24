@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
+use App\Services\FornecedoresService;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
@@ -29,10 +31,9 @@ class ComprasController extends Controller
         try {
 
 
+            $input_autocomplete = FornecedoresService::getFornecedores()->keyBy('cnpj');
             
-
-            
-            return view('app.', compact('titulo'));
+            return view('app.', compact('titulo', 'input_autocomplete'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível cadastrar a compras '.$th->getMessage());
         }

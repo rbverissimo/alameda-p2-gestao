@@ -23,8 +23,14 @@ class Endereco extends Model
             'uf'
     ];
 
-    public function imovel(): HasOne {
+    public function imovel(): HasOne 
+    {
         return $this->hasOne(Imovel::class, 'endereco');
+    }
+
+    public function fornecedor(): HasOne
+    {
+        return $this->hasOne(Fornecedor::class, 'endereco');
     }
     
 }

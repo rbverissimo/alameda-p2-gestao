@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Imovel extends Model
 {
@@ -30,8 +29,15 @@ class Imovel extends Model
         return $this->hasMany(Sala::class, 'imovelcodigo');
     }
 
+    public function compra(): HasMany
+    {
+        return $this->hasMany(Compra::class, 'imovel');
+    }
+
     public function tipos_contas(): BelongsToMany
     {
         return $this->belongsToMany(TipoConta::class, 'imoveis_tipos_contas', 'imovel', 'tipoconta');
     }
+
+
 }
