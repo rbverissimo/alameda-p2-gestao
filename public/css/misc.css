@@ -100,6 +100,35 @@
     margin-left: 5px;
 }
 
+
+#sugestoes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    width: 100%;
+}
+
+#sugestoes li {
+    font-size: 0.9rem;
+    padding: 1.5%;
+    cursor: pointer;
+    width: 100%;
+}
+
+#sugestoes li:hover {
+    background-color: var(--dropdown-highlight-1);
+}
+
+ul#sugestoes li.cadastrar {
+    border: 1px solid #ddd;
+}
+
+ul#sugestoes li.cadastrar:hover {
+    background-color: var(--dropdown-highlight-2);
+}
+
+
 @media only screen and (max-width: 768px){
 
     .comp-toggle-switch {

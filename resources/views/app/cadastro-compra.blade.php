@@ -21,5 +21,5 @@
 
 @section('scripts')
     <script type="module" src="{{ asset('js/components/search-input.js')}}"></script>
-    @include('app.scripts.script-cadastro-compra')
+    @include('app.scripts.script-cadastro-compras')
 @endsection

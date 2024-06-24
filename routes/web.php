@@ -4,6 +4,7 @@ use App\Http\Controllers\CalculoContasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ImoveisController;
 use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\RaizController;
 use App\Http\Controllers\SalasController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TiposContasController;
+use App\Models\Fornecedor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -111,6 +113,10 @@ Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
 Route::prefix('compras')->middleware('autenticacao')->group(function(){
     Route::get('/', [ComprasController::class, 'index'])->name('compras');
     Route::get('/cadastrar', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
+});
+
+Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){
+    Route::get('/buscar', [FornecedorController::class, 'fornecedores'])->name('buscar-fornecedores');
 });
 
 Route::middleware('autenticacao')->group(function(){
