@@ -20,6 +20,6 @@
 @endsection
 
 @section('scripts')
-    <script type="module" src="{{ asset('js/components/search-input.js')}}"></script>
-    @include('app.scripts.script-cadastro-compras')
+    <script src="{{ asset('js/components/search-input.js')}}" type="module"></script>
+    <script src="{{asset('js/views/cadastro-compras.js')}}" type="module"></script>
 @endsection
