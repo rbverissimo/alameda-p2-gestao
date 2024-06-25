@@ -518,6 +518,12 @@ export function showDataFormatadaDMY(data){
       return `${dia}-${mes}-${ano}`;
 }
 
+export function criarSearchInputEvent(obj){
+      return new CustomEvent('onSearchInputsAvailable', {
+            detail: obj
+      });
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -533,3 +539,4 @@ window.navigateBack = navigateBack;
 window.swapPontosVirgulas = swapPontosVirgulas;
 window.showDataFormatadaDMY = showDataFormatadaDMY;
 window.navigateToLastRoute = navigateToLastRoute;
+window.criarSearchInputEvent = criarSearchInputEvent;

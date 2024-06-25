@@ -13,6 +13,9 @@ async function buscarFornecedores(){
         const data = await response.json();
         if(data !== null ){
             fornecedores = data;
+            const searchInputsAvailable = criarSearchInputEvent(data);
+            console.log(searchInputsAvailable);
+            document.dispatchEvent(searchInputsAvailable);
         }
     } catch (error) {
         showMensagem(error, 'falha', 5000);

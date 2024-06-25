@@ -21,5 +21,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/components/search-input.js')}}" type="module"></script>
+    <script src="{{ asset('js/components/search-input-handler.js')}}" type="module"></script>
     <script src="{{asset('js/views/cadastro-compras.js')}}" type="module"></script>
 @endsection
