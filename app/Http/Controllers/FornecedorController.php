@@ -11,7 +11,7 @@ class FornecedorController extends Controller
 
         $fornecedores = FornecedoresService::getFornecedores()->keyBy('cnpj');
 
-        return response()->json(['fornecedores' => $fornecedores]);
+        return response()->json(['search' => $fornecedores]);
 
     }
 }

@@ -6,8 +6,7 @@ const dominio = document.getElementById('dominio').innerHTML;
 document.addEventListener('onSearchInputsAvailable', (event) => {
     const eventDominio = event['dominio'];
     if(eventDominio === dominio){
-        dataMap = event['detail'];
-        console.log(dataMap);
+        dataMap = event['detail']['search'];
     }
     
 });
