@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
+use App\Services\ComprasService;
 use App\Services\FornecedoresService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,9 @@ class ComprasController extends Controller
 
         try {
 
-            return view('app.painel-compras', compact('titulo'));
+            $compras = ComprasService::getDadosTabelaCompras();
+
+            return view('app.painel-compras', compact('titulo', 'compras'));
             
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível acessar as compras '.$th->getMessage());

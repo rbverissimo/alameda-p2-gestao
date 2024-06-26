@@ -15,7 +15,13 @@
     </div>
 </div>
     @if (isset($compras[0]))
-        
+        <div class="row">
+            <div class="col-12">
+                @component('app.layouts._components.lista_compras', compact('compras'))
+                    
+                @endcomponent
+            </div>
+        </div>
     @else
         <div class="dashboard light-dashboard">
             <div class="row">

@@ -1,17 +1,17 @@
 <table>
     <tr>
-          <th>ID</th>
           <th>Data</th>
+          <th>Fornecedor</th>
           <th>Valor</th>
           <th>Ações</th>
     </tr>
     @foreach ($compras as $compra)
           <tr class="table-row">
                 <td>
-                <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$compra->id}}</a>
+                <a class="table-link">{{$compra->dataCompra}}</a>
                 </td>
                 <td>
-                <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$compra->dataCompra}}</a>
+                <a class="table-link">{{$compra->nome_fornecedor}}</a>
                 </td>
                 <td>
                 <a 
