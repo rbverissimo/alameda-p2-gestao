@@ -1,6 +1,6 @@
 
 var dataMap;
-const dominio = document.getElementById('dominio').innerHTML;
+const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 
 
 document.addEventListener('onSearchInputsAvailable', (event) => {
@@ -36,6 +36,14 @@ function renderSugestoes(sugestoesFiltradas){
     sugestoesFiltradas.forEach(sugestao => {
         const listItem = document.createElement('li');
         listItem.textContent = sugestao.key;
+
+        listItem.addEventListener('click', () => {
+            searchInput.value = sugestao.key
+            const selectedEvent = criarSelectedSearchInputEvent(sugestao, dominio);
+            document.dispatchEvent(selectedEvent);
+            sugestoes.innerHTML = '';
+        })
+
         sugestoes.appendChild(listItem);
     });
     

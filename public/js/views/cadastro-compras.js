@@ -1,7 +1,15 @@
-
+const dominio = 'fornecedores';
+var objetoSelecionado;
 
 document.addEventListener('DOMContentLoaded', () => {
     buscarFornecedores();
+});
+
+document.addEventListener('onSearchInputSelected', (event) => {
+    if(dominio === event['dominio']){
+        objetoSelecionado = event['detail'];
+        console.log(objetoSelecionado);
+    }
 });
 
 async function buscarFornecedores(){
@@ -12,7 +20,7 @@ async function buscarFornecedores(){
         }
         const data = await response.json();
         if(data !== null ){
-            const searchInputsAvailable = criarSearchInputEvent(data, "fornecedores");
+            const searchInputsAvailable = criarSearchInputEvent(data, dominio);
             document.dispatchEvent(searchInputsAvailable);
         }
     } catch (error) {

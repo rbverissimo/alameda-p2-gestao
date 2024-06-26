@@ -526,6 +526,20 @@ export function criarSearchInputEvent(obj, dominio){
       return event;
 }
 
+/**
+ * 
+ * @param {*} obj
+ * @param {*} dominio 
+ * @returns CustomEvent('onSearchInputSelected')
+ */
+export function criarSelectedSearchInputEvent(obj, dominio){
+      const selectedEvent = new CustomEvent('onSearchInputSelected', {
+            detail: obj
+      });
+      selectedEvent.dominio = dominio;
+      return selectedEvent;
+}
+
 window.showMensagem = showMensagem;
 window.apenasNumeros = apenasNumeros;
 window.anoMesMascara = anoMesMascara;
@@ -542,3 +556,4 @@ window.swapPontosVirgulas = swapPontosVirgulas;
 window.showDataFormatadaDMY = showDataFormatadaDMY;
 window.navigateToLastRoute = navigateToLastRoute;
 window.criarSearchInputEvent = criarSearchInputEvent;
+window.criarSelectedSearchInputEvent = criarSelectedSearchInputEvent;
