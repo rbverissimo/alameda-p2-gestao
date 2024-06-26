@@ -23,7 +23,8 @@ td {
 }
 
 tr > td:first-child {
-      max-width: 4vw !important;
+      min-width: 8vw;
+      max-width: 10vw;
 }
 
 tr > td:last-child {

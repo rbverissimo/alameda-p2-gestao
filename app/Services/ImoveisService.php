@@ -13,9 +13,12 @@ class ImoveisService {
      * Retorna dos imóveis ligados àquele usuário logado
      */
     public static function getImoveisByUsuarioLogado(){
-        $usuarioLogado = UsuarioService::getUsuarioLogado();
-
-        return UsuarioImovel::where('idUsuario', $usuarioLogado)->get();
+        $user = UsuarioService::getUsuarioLogado();
+        $usuario_imoveis = UsuarioImovel::select('idImovel')
+        ->where('idUsuario', $user)
+        ->groupBy('idImovel')
+        ->get();
+        return $usuario_imoveis->pluck('idImovel')->toArray();
     }
 
     /**

@@ -117,6 +117,7 @@ Route::prefix('compras')->middleware('autenticacao')->group(function(){
 
 Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){
     Route::get('/buscar', [FornecedorController::class, 'fornecedores'])->name('buscar-fornecedores');
+    Route::get('/l/fornecedores', [FornecedorController::class, 'index'])->name('listar-fornecedores');
 });
 
 Route::middleware('autenticacao')->group(function(){

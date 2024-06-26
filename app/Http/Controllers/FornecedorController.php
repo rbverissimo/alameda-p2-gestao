@@ -3,10 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Services\FornecedoresService;
-use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
 {
+
+
+    public function index(){
+
+        $titulo = 'Painel de fornecedores';
+
+        try {
+            $fornecedores = FornecedoresService::getFornecedores();
+
+            return view('app.painel-fornecedores', compact('titulo','fornecedores'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('erros', 'Não foi possível encontrar os dados dos fornecedores '.$th->getMessage());
+        }
+    }
+
     public function fornecedores(){
 
         $fornecedores = FornecedoresService::getFornecedores()->keyBy('cnpj');

@@ -11,7 +11,12 @@
             <button onclick="redirecionarPara('{{ route('cadastrar-compra')}}')" class="button action-button" >
                   Cadastrar nova compra
             </button>
-      </div>
+        </div>
+        <div class="col-3">
+            <button onclick="redirecionarPara('{{ route('listar-fornecedores')}}')" class="button action-button" >
+                  Ver fornecedores
+            </button>
+        </div>
     </div>
 </div>
     @if (isset($compras[0]))

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Compra;
 use App\Models\Fornecedor;
+use Illuminate\Support\Facades\DB;
 
 class FornecedoresService {
 
@@ -19,5 +20,19 @@ class FornecedoresService {
             $query->whereIn('imovel', $imoveis);
         })->get();
         return $fornecedores;
+    }
+
+    /**
+     * Esse método procura pelos dados básicos de uma lista de fornecedores
+     * no banco de dados para retorná-los ao front-end. O método busca
+     * pelos primeiros 15 resultados paginados.
+     * 
+     */
+    public static function getDadosFornecedoresTabela(){
+        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
+        return DB::table('fornecedores')->select('fornecedores.cnpj', 'fornecedores.nome_fornecedor')
+            ->whereIn('imovel', $imoveis)
+            ->orderByDesc('fornecedores.id')
+            ->paginate(15);
     }
 }
