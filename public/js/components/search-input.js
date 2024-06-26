@@ -1,9 +1,16 @@
 
-const dataMap = {
-    "123": { key: '123', value: 'banana'},
-    "1255" : { key: '1234', value: 'limão'},
-    "324" :{ key: '324', value: 'pera'},
-};
+var dataMap;
+const dominio = document.getElementById('dominio').innerHTML;
+
+
+document.addEventListener('onSearchInputsAvailable', (event) => {
+    const eventDominio = event['dominio'];
+    if(eventDominio === dominio){
+        dataMap = event['detail'];
+        console.log(dataMap);
+    }
+    
+});
 
 const searchInput = document.getElementById('search');
 const sugestoes = document.getElementById('sugestoes');

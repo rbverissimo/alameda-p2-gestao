@@ -518,10 +518,12 @@ export function showDataFormatadaDMY(data){
       return `${dia}-${mes}-${ano}`;
 }
 
-export function criarSearchInputEvent(obj){
-      return new CustomEvent('onSearchInputsAvailable', {
+export function criarSearchInputEvent(obj, dominio){
+      const event = new CustomEvent('onSearchInputsAvailable', {
             detail: obj
       });
+      event.dominio = dominio;
+      return event;
 }
 
 window.showMensagem = showMensagem;

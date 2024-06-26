@@ -10,13 +10,22 @@ class SearchInput extends Component
     public $placeholder;
 
     /**
+     * Esse atributo especifica qual o domínio
+     * esse input mapeará ao receber os dados do back-end. 
+     * 
+     * @var string
+     */
+    public $dominio;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($placeholder)
+    public function __construct($placeholder, $dominio)
     {
         $this->placeholder = $placeholder;
+        $this->dominio = $dominio;
     }
 
     /**

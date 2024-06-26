@@ -1,4 +1,4 @@
-export var fornecedores;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     buscarFornecedores();
@@ -12,9 +12,7 @@ async function buscarFornecedores(){
         }
         const data = await response.json();
         if(data !== null ){
-            fornecedores = data;
-            const searchInputsAvailable = criarSearchInputEvent(data);
-            console.log(searchInputsAvailable);
+            const searchInputsAvailable = criarSearchInputEvent(data, "fornecedores");
             document.dispatchEvent(searchInputsAvailable);
         }
     } catch (error) {
