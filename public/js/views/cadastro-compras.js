@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('onSearchInputSelected', (event) => {
     if(dominio === event['dominio']){
-        objetoSelecionado = event['detail'];
-        console.log(objetoSelecionado);
+        renderizarFormulario(event['detail']);
     }
 });
 
@@ -27,4 +26,25 @@ async function buscarFornecedores(){
         showMensagem(error, 'falha', 5000);
         console.log(error);
     }
+}
+
+function renderizarFormulario(objToCreate){
+    console.log(objToCreate);
+    const divRenderSpace = document.getElementById('render-space');
+
+    const divRow1 = document.createElement('div');
+    divRow1.classList.add('row');
+
+
+    const divWrapperInputNomeFornecedor = document.createElement('div');
+    divWrapperInputNomeFornecedor.classList.add('col-6');
+    
+    const inputNomeFornecedor = document.createElement('input');
+    inputNomeFornecedor.name = 'nome-fornecedor';
+    inputNomeFornecedor.value = objToCreate?.value?.nome_fornecedor ?? '';
+
+    divWrapperInputNomeFornecedor.appendChild(inputNomeFornecedor)
+
+    divRow1.appendChild(divWrapperInputNomeFornecedor);
+    divRenderSpace.append(divRow1);
 }

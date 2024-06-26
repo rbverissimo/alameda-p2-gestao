@@ -17,15 +17,18 @@ class SearchInput extends Component
      */
     public $dominio;
 
+    public $labelText;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($placeholder, $dominio)
+    public function __construct($placeholder, $dominio, $labelText)
     {
         $this->placeholder = $placeholder;
         $this->dominio = $dominio;
+        $this->labelText = $labelText;
     }
 
     /**

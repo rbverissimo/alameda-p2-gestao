@@ -1,4 +1,3 @@
-
 var dataMap;
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 
@@ -56,6 +55,13 @@ function setCadastrarLi(){
     cadastrarLi.className = 'cadastrar';
     cadastrarLi.textContent = 'Cadastrar novo item';
     sugestoes.appendChild(cadastrarLi);
+
+    cadastrarLi.addEventListener('click', () => {
+        const selectedEvent = criarSelectedSearchInputEvent(undefined, dominio);
+        document.dispatchEvent(selectedEvent);
+        sugestoes.innerHTML = '';
+        searchInput.value = 'Cadastrar novo item';
+    });
 }
 
 searchInput.addEventListener('input', () => {
