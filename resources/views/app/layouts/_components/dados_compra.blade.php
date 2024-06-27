@@ -11,4 +11,5 @@
             </x-search-input>
         </div>
     </div>
+    {{-- <div class="" id="dynamic-wrap"></div> --}}
 </div>
