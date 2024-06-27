@@ -73,6 +73,7 @@
                         placeholder="Data do Vencimento: "
                         value="{{ isset($conta_imovel->dataVencimento) ? 
                               old('data-vencimento', $conta_imovel->dataVencimento) : old('data-vencimento')}}">
+                  <span class="errors-highlighted">{{ $errors->has('data-vencimento') ? $errors->first('data-vencimento') : ' '}}</span>             
             </div>
             <div class="col-6">
                   <input id="ano-mes-input"
