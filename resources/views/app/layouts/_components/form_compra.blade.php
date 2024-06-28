@@ -1,6 +1,6 @@
 <form action="" method="post" enctype="multipart/form-data">
     @csrf
-    @component('app.layouts._components.dados_compra')
+    @component('app.layouts._components.dados_compra', compact('formas_pagamento', 'imoveis'))
         
     @endcomponent
     <div class="row center-itens">

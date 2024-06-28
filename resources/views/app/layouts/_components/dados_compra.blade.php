@@ -56,14 +56,16 @@
                   </div>
         @endisset
     </div>
+
     <div class="row">
         @isset($formas_pagamento)
                   <div class="col-3">
-                        <select id="imoveis-compra-select" name="forma-pagamento">
+                        <label for="forma-pagament-compra-select">Escolha uma forma de pagamento: </label>
+                        <select id="forma-pagamento-compra-select" name="forma-pagamento">
                               @foreach ($formas_pagamento as $forma_pagamento)
-                                    <option value="{{$formas_pagamento->id}}"
+                                    <option value="{{$forma_pagamento->codigo}}"
                                           @isset($compra->forma_pagamento)
-                                                @if($compra->forma_pagamento == $formas_pagamento->id)
+                                                @if($compra->forma_pagamento === $forma_pagamento->codigo)
                                                 selected
                                                 @endif
                                           @endisset
@@ -105,7 +107,7 @@
                         old('qtde-dias-garantia', $compra->qtdeDiasGarantia) : old('qtde-dias-garantia')}}">
             <span class="errors-highlighted">{{ $errors->has('qtde-dias-garantia') ? $errors->first('qtde-dias-garantia') : ' '}}</span> 
         </div>
-        <div class="col-1">
+        <div class="col-1" style="text-align: center">
             <span class="basic-card-wrapper">Garantia?</span>
         </div>
         <div class="col-1">

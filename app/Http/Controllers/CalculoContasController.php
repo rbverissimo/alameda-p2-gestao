@@ -16,8 +16,6 @@ class CalculoContasController extends Controller
 {
     public function calculoContas(Request $request) {
 
-        $usuario = UsuarioService::getUsuarioLogado();
-        $idImoveisDoUsuario = UsuarioService::getImoveisBy($usuario);
         $imoveis = ImoveisService::getImoveis();
         
         $tipos_contas = [];
