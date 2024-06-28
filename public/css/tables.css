@@ -57,8 +57,9 @@ tr:hover {
 
 .crud-icon {
       cursor: pointer;
-      padding: 1.25%;
+      padding: 3%;
       border-radius: 3%;
+
 }
 
 .crud-icon:hover {
@@ -66,11 +67,7 @@ tr:hover {
 }
 
 .topo-table-wrapper {
-      display: flex;
-      width: 100%;
-      height: auto;
       background-color: var(--topo-table-bg);
-      border: 1px solid transparent;
       padding: 1%;
       border-radius: 10px;
 }

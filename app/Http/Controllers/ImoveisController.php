@@ -156,7 +156,7 @@ class ImoveisController extends Controller
             ->where('salas.imovelcodigo', $idImovel)
             ->orderBy('contas_imoveis.id', 'desc')
             ->groupBy('contas_imoveis.id', 'contas_imoveis.valor', 'contas_imoveis.tipocodigo', 'contas_imoveis.ano', 'contas_imoveis.mes')
-            ->paginate(15); 
+            ->paginate(12); 
 
         return $contas_imovel;
     }

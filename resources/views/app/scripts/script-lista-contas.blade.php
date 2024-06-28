@@ -23,7 +23,6 @@ function carregarContas() {
             processarRequestTableRows(request);
         } else {
             console.error(`Erro ${request.status}`);
-            console.log(request);
         }
     }
 }
@@ -45,7 +44,6 @@ function processarRequestTableRows(request){
 
 function criarRowsJson(jsonArray){
         const table = document.getElementById('lista-contas');
-        console.log(jsonArray);
             
         jsonArray.forEach(function(object){
             let tr = document.createElement('tr');
@@ -130,6 +128,21 @@ function requestDeletarRow(id) {
         showMensagem("Excluir o registro de ID: "+id+" não realizado", "neutra");
     }
 }
+
+function requestTrocarPagina(url){
+            const request = new XMLHttpRequest();
+                  request.open("GET", url);
+                  request.send();
+                  request.responseType = "json";
+                  request.onload = () => {
+                        if(request.readyState == 4 && request.status == 200){
+                              limparTabela();
+                              processarRequestTableRows(request);
+                        } else {
+                              console.log(`Erro: ${request.status}`);
+                        }
+                  }
+      }
 
 function limparTabela(){
     let counter = 0

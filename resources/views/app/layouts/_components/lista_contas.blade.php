@@ -1,7 +1,6 @@
 <div id="table-wrapper">
-      <div class="row">
-            @include('app.layouts._partials.topo-table')
-      </div>
+      
+      @include('app.layouts._partials.topo-table')
       <div class="row">
             <div class="col-12">     
                   <table id='lista-contas'>
