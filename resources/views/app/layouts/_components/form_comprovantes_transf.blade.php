@@ -11,7 +11,8 @@
       <div class="row">
             @isset($inquilinos)
                   <div class="col-12">
-                        <select name="inquilino">                 
+                        <label for="select-inquilino">Escolha um inquilino da lista: </label>
+                        <select id="select-inquilino" name="inquilino">                 
                                     @foreach ($inquilinos as $inquilino)
                                           <option value="{{$inquilino->id}}">
                                                 {{$inquilino->nome}}</option>

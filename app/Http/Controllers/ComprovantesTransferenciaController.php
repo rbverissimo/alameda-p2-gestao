@@ -6,6 +6,8 @@ use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
 use App\Services\ComprovantesService;
+use App\Services\ImoveisService;
+use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
@@ -43,16 +45,24 @@ class ComprovantesTransferenciaController extends Controller
         }
 
         $tipos_comprovantes = TipoComprovante::all();
+        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
 
-        $inquilinos_query = Inquilino::select('inquilinos.id', 'pessoas.nome')
-                ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
-                ->where('inquilinos.situacao', '=', 'A');
+        $inquilinos_query = InquilinosService::getListaInputInquilinos();
 
         if($id != null){
-            $inquilinos = $inquilinos_query->where('inquilinos.id', $id)->get();
+            $inquilinos = array_filter($inquilinos_query, function ($inquilino) use ($id){
+                return $inquilino->id === $id;
+            });
         } else {
-            $inquilinos = $inquilinos_query->get();
-        }   
+
+            $inquilino_vazio = new Inquilino();
+            $inquilino_vazio->id = '';
+            $inquilino_vazio->nome = '';
+
+            $inquilinos = $inquilinos_query->prepend($inquilino_vazio);
+        }
+        
+        
         
 
         return view('app.comprovantes-transferencia', 

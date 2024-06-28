@@ -278,5 +278,16 @@ class InquilinosService {
             
       }
 
+      public static function getListaInputInquilinos(){
+            $imoveis = ImoveisService::getImoveisByUsuarioLogado();
+            return  Inquilino::select('inquilinos.id', 'pessoas.nome')
+            ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+            ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
+            ->where('inquilinos.situacao', '=', 'A')
+            ->whereIn('salas.imovelcodigo', $imoveis)
+            ->get();
+
+      }
+
 
 }
