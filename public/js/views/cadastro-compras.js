@@ -18,13 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
     formaPagamentoSelect.addEventListener('change', habilitarQtdeParcelas);
     inputQtdeParcelas.addEventListener('keydown', apenasNumeros);
     inputQtdeDiasGarantia.addEventListener('keydown', apenasNumeros);
-    
+
     valorCompraInput.addEventListener('input', mascaraValorDinheiro);
     valorCompraInput.addEventListener('keydown', apenasNumeros);
 
     dataCompraInput.addEventListener('keydown', apenasNumeros);
     dataCompraInput.addEventListener('input', dataMascara);
-    dataCompraInput.addEventListener('blur', isDataValida);
+    dataCompraInput.addEventListener('blur', () => {
+        if(!isDataValida(event.target.value)){
+            event.target.value = '';
+        }
+    });
 });
 
 document.addEventListener('onSearchInputSelected', (event) => {
