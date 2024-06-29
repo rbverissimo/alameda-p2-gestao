@@ -59,7 +59,7 @@
 
     <div class="row">
         @isset($formas_pagamento)
-                  <div class="col-3">
+                  <div class="col-4">
                         <label for="forma-pagament-compra-select">Escolha uma forma de pagamento: </label>
                         <select id="forma-pagamento-compra-select" name="forma-pagamento">
                               @foreach ($formas_pagamento as $forma_pagamento)
@@ -81,12 +81,13 @@
             <input
                 id="qtde-parcelas-compra"
                 disabled
+                maxlength="2"
                 name="qtde-parcelas"
                 value="{{ isset($compra->qtdeParcelas) ? 
                     old('qtde-parcelas', $compra->qtdeParcelas) : old('qtde-parcelas')}}">
             <span class="errors-highlighted">{{ $errors->has('qtde-parcelas') ? $errors->first('qtde-parcelas') : ' '}}</span> 
         </div>
-        <div class="col-4">
+        <div class="col-5">
             <label for="nome-vendedor-compra">Nome do vendedor: </label>
             <input
                 id="nome-vendedor-compra"
@@ -103,11 +104,12 @@
             <input id="qtde-dias-garantia-input"
                         name="qtde-dias-garantia"
                         placeholder="30"
+                        maxlength="3"
                         value="{{ isset($compra->qtdeDiasGarantia) ? 
                         old('qtde-dias-garantia', $compra->qtdeDiasGarantia) : old('qtde-dias-garantia')}}">
             <span class="errors-highlighted">{{ $errors->has('qtde-dias-garantia') ? $errors->first('qtde-dias-garantia') : ' '}}</span> 
         </div>
-        <div class="col-1" style="text-align: center">
+        <div class="col-1">
             <span class="basic-card-wrapper">Garantia?</span>
         </div>
         <div class="col-1">

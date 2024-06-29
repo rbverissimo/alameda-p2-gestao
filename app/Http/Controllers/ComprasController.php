@@ -35,7 +35,7 @@ class ComprasController extends Controller
         $titulo = 'Cadastrar nova compra';
         try {
 
-            $formas_pagamento = ComprasService::getFormasPagamento();
+            $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getImoveis();
 
             return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis'));

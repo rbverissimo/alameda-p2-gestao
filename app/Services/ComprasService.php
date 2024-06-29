@@ -32,4 +32,16 @@ class ComprasService {
         return FormaPagamento::select('codigo', 'descricao')->get();
     }
 
+    /**
+     * Cria um array de objetos para ser enviado ao front
+     * como um elementos para um select
+     */
+    public static function getSelectOptionsFormasPagamento(){
+        $arr_db = ComprasService::getFormasPagamento();
+        $obj_vazio = new FormaPagamento();
+        $obj_vazio->codigo = '';
+        $obj_vazio->descricao = '';
+        return $arr_db->prepend($obj_vazio);
+    }
+
 }

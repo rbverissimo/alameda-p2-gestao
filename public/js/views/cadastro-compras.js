@@ -1,10 +1,16 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
+import { apenasNumeros } from "../validators/view-validation.js";
 
 const dominio = 'fornecedores';
-var objetoSelecionado;
+const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
+const inputQtdeDiasGarantia = document.getElementById('qtde-dias-garantia-input');
+const inputQtdeParcelas = document.getElementById('qtde-parcelas-compra');
 
 document.addEventListener('DOMContentLoaded', () => {
     buscarFornecedores();
+    formaPagamentoSelect.addEventListener('change', habilitarQtdeParcelas);
+    inputQtdeParcelas.addEventListener('keydown', apenasNumeros);
+    inputQtdeDiasGarantia.addEventListener('keydown', apenasNumeros);
 });
 
 document.addEventListener('onSearchInputSelected', (event) => {
@@ -124,4 +130,15 @@ function createLabel(forInput, text){
     label.for = forInput;
     label.innerHTML = text;
     return label; 
+}
+
+function habilitarQtdeParcelas(event){
+    const codigoFormaPagamento = event.target.value;
+
+    if(codigoFormaPagamento === '10001'){
+        inputQtdeParcelas.disabled = false;
+    } else {
+        inputQtdeParcelas.disabled = true;
+        inputQtdeParcelas.value = '';
+    }
 }
