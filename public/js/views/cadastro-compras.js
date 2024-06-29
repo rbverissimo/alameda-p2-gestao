@@ -1,16 +1,21 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { apenasNumeros } from "../validators/view-validation.js";
+import { mascaraValorDinheiro } from "../validators/view-validation.js";
 
 const dominio = 'fornecedores';
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
 const inputQtdeDiasGarantia = document.getElementById('qtde-dias-garantia-input');
 const inputQtdeParcelas = document.getElementById('qtde-parcelas-compra');
 
+const valorCompraInput = document.getElementById('valor-compra-input');
+
 document.addEventListener('DOMContentLoaded', () => {
     buscarFornecedores();
     formaPagamentoSelect.addEventListener('change', habilitarQtdeParcelas);
     inputQtdeParcelas.addEventListener('keydown', apenasNumeros);
     inputQtdeDiasGarantia.addEventListener('keydown', apenasNumeros);
+    valorCompraInput.addEventListener('input', mascaraValorDinheiro);
+    valorCompraInput.addEventListener('keydown', apenasNumeros);
 });
 
 document.addEventListener('onSearchInputSelected', (event) => {
