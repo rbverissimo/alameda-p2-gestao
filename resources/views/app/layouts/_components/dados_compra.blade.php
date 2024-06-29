@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <input id="data-input"
+            <input id="data-compra-input"
                         name="data-compra"
                         required
                         placeholder="Data da Compra: "

@@ -1,6 +1,8 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { apenasNumeros } from "../validators/view-validation.js";
-import { mascaraValorDinheiro } from "../validators/view-validation.js";
+import { mascaraValorDinheiro } from "../validators/view-masks.js";
+import { dataMascara } from "../validators/view-masks.js";
+import { isDataValida } from "../validators/view-validation.js";
 
 const dominio = 'fornecedores';
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
@@ -9,13 +11,20 @@ const inputQtdeParcelas = document.getElementById('qtde-parcelas-compra');
 
 const valorCompraInput = document.getElementById('valor-compra-input');
 
+const dataCompraInput = document.getElementById('data-compra-input');
+
 document.addEventListener('DOMContentLoaded', () => {
     buscarFornecedores();
     formaPagamentoSelect.addEventListener('change', habilitarQtdeParcelas);
     inputQtdeParcelas.addEventListener('keydown', apenasNumeros);
     inputQtdeDiasGarantia.addEventListener('keydown', apenasNumeros);
+    
     valorCompraInput.addEventListener('input', mascaraValorDinheiro);
     valorCompraInput.addEventListener('keydown', apenasNumeros);
+
+    dataCompraInput.addEventListener('keydown', apenasNumeros);
+    dataCompraInput.addEventListener('input', dataMascara);
+    dataCompraInput.addEventListener('blur', isDataValida);
 });
 
 document.addEventListener('onSearchInputSelected', (event) => {
