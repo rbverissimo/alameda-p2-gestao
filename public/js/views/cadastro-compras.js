@@ -1,8 +1,6 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
-import { apenasNumeros } from "../validators/view-validation.js";
-import { mascaraValorDinheiro } from "../validators/view-masks.js";
-import { dataMascara } from "../validators/view-masks.js";
-import { isDataValida } from "../validators/view-validation.js";
+import { apenasNumeros, isDataValida } from "../validators/view-validation.js";
+import { mascaraCnpj, writeMascaraCnpj, mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
 
 const dominio = 'fornecedores';
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
@@ -113,9 +111,10 @@ function inputCnpjFornecedor(objToCreate){
     const inputCnpjFornecedor = document.createElement('input');
     inputCnpjFornecedor.id = 'input-cnpj-fornecedor';
     inputCnpjFornecedor.name = 'cnpj-fornecedor';
-    inputCnpjFornecedor.value = objToCreate?.value?.cnpj ?? '';
+    inputCnpjFornecedor.value =  writeMascaraCnpj(objToCreate?.value?.cnpj) ?? '';
     inputCnpjFornecedor.required = true;
     inputCnpjFornecedor.maxLength = 18;
+    inputCnpjFornecedor.addEventListener('input', mascaraCnpj);
 
     divWrapperInputCnpjFornecedor.appendChild(createLabel(inputCnpjFornecedor.id, 'CNPJ cadastrado: '))
     divWrapperInputCnpjFornecedor.appendChild(inputCnpjFornecedor);
