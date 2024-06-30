@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dataCompraInput.addEventListener('blur', () => {
         if(!isDataValida(event.target.value)){
             event.target.value = '';
+            showMensagem('A data fornecida é inválida', 'falha');
         }
     });
 });
