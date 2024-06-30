@@ -45,8 +45,6 @@ class ComprovantesTransferenciaController extends Controller
         }
 
         $tipos_comprovantes = TipoComprovante::all();
-        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
-
         $inquilinos_query = InquilinosService::getListaInputInquilinos();
 
         if($id != null){

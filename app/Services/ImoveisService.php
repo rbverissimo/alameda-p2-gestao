@@ -75,6 +75,24 @@ class ImoveisService {
     }
 
     /**
+     * Esse método retorna uma lista dos pares ID, nomefantasia
+     * dos imóveis cadastrados em um usuário com um registro vazio no primeiro resultado.
+     * O intuito desse método é criar os campos select no front-end de forma correta
+     */
+    public static function getListaImoveisSelect(){
+        $imoveis = Imovel::select('imoveis.id', 'imoveis.nomefantasia')
+            ->whereIn('imoveis.id', ImoveisService::getImoveisByUsuarioLogado())
+            ->get();
+
+        $imovel_vazio = new Imovel();
+        $imovel_vazio->id = '';
+        $imovel_vazio->nomefantasia = '';
+
+        return $imoveis->prepend($imovel_vazio);
+
+    }
+
+    /**
      * Esse método retorna as salas cadastradas ao um imóvel específico
      * 
      * @return Illuminate\Database\Eloquent\Collection 

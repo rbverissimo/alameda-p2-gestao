@@ -23,6 +23,26 @@ class FornecedoresService {
     }
 
     /**
+     * Esse método busca apenas os principais atributos da tabela de fornecedores
+     * com o intuito de entregá-los ao front-end da aplicação (normalmente para um Select-Options)
+     * 
+     */
+    public static function getFornecedoresCnpjNome(){
+        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
+        return Fornecedor::select('fornecedores.cnpj', 'fornecedores.nome_fornecedor')
+            ->whereIn('imovel', $imoveis)
+            ->get();
+    }
+
+    public static function getSelectOptionsFornecedores(){
+        $arr_db = FornecedoresService::getFornecedoresCnpjNome();
+        $obj_vazio = new Fornecedor();
+        $obj_vazio->cnpj = '';
+        $obj_vazio->nome_fornecedor = '';
+        return $arr_db->prepend($obj_vazio);
+    }
+
+    /**
      * Esse método procura pelos dados básicos de uma lista de fornecedores
      * no banco de dados para retorná-los ao front-end. O método busca
      * pelos primeiros 15 resultados paginados.

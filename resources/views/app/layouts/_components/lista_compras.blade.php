@@ -18,7 +18,10 @@
                       class="table-link" >{{'R$'.$compra->valor}}</a>
                 </td>
                 <td>
-                    <img class="crud-icon" src="{{asset('icons/edit-icon.svg')}}" alt="edit">
+                    <img class="crud-icon" 
+                        onclick="redirecionarPara('{{route('editar-compra', $compra->id)}}')"    
+                        src="{{asset('icons/edit-icon.svg')}}" 
+                        alt="edit">
                     <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
                 </td>
           </tr>

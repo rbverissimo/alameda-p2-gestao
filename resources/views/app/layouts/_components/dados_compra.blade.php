@@ -14,7 +14,9 @@
         </div>
         @isset($imoveis)
                   <div class="col-3">
-                        <select id="imoveis-compra-select" name="imovel">
+                        <select id="imoveis-compra-select" 
+                        required
+                        name="imovel">
                               @foreach ($imoveis as $imovel)
                                     <option value="{{$imovel->id}}"
                                           @isset($compra->imovel)
@@ -161,20 +163,4 @@
             <span class="errors-highlighted">{{ $errors->has('nr-documento') ? $errors->first('nr-documento') : ' '}}</span> 
         </div>
     </div>
-</div>
-
-<div id="render-space" class="dashboard light-dashboard">
-    <div class="divisor-header secondary-divisor">
-        Informações sobre o fornecedor
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <x-search-input 
-                labelText="Digite o CNPJ para buscar: "
-                placeholder="12.345.678/0001-00" 
-                dominio="fornecedores">
-            </x-search-input>
-        </div>
-    </div>
-    {{-- <div class="" id="dynamic-wrap"></div> --}}
 </div>

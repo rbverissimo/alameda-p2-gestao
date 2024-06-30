@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\FormaPagamento;
+use App\Models\Fornecedor;
 use App\Models\UsuarioImovel;
 use Illuminate\Support\Facades\DB;
 
