@@ -1,6 +1,10 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { apenasNumeros, isDataValida } from "../validators/view-validation.js";
-import { mascaraCnpj, writeMascaraCnpj, mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
+import { mascaraCnpj, 
+    writeMascaraCnpj, 
+    writeMascaraTelefoneFixo,
+    mascaraTelefoneFixo,
+    mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
 
 const dominio = 'fornecedores';
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
@@ -114,6 +118,7 @@ function inputCnpjFornecedor(objToCreate){
     inputCnpjFornecedor.value =  writeMascaraCnpj(objToCreate?.value?.cnpj) ?? '';
     inputCnpjFornecedor.required = true;
     inputCnpjFornecedor.maxLength = 18;
+    inputCnpjFornecedor.addEventListener('input', apenasNumeros)
     inputCnpjFornecedor.addEventListener('input', mascaraCnpj);
 
     divWrapperInputCnpjFornecedor.appendChild(createLabel(inputCnpjFornecedor.id, 'CNPJ cadastrado: '))
@@ -132,8 +137,10 @@ function inputTelefoneFornecedor(objToCreate){
     const inputTelefoneFornecedor = document.createElement('input');
     inputTelefoneFornecedor.id = 'input-telefone-fornecedor';
     inputTelefoneFornecedor.name = 'telefone-fornecedor';
-    inputTelefoneFornecedor.value = objToCreate?.value?.telefone ?? '';
+    inputTelefoneFornecedor.value = writeMascaraTelefoneFixo(objToCreate?.value?.telefone) ?? '';
     inputTelefoneFornecedor.required = true;
+    inputTelefoneFornecedor.addEventListener('input', apenasNumeros);
+    inputTelefoneFornecedor.addEventListener('input', mascaraTelefoneFixo);
 
     divWrapperTelefoneFornecedor.appendChild(createLabel(inputTelefoneFornecedor.id, 'Telefone: '))
     divWrapperTelefoneFornecedor.appendChild(inputTelefoneFornecedor);

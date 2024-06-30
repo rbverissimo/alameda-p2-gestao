@@ -1,3 +1,4 @@
+import { isStringValida } from "./null-safe.js";
 
 /**
  * Monta uma máscara de acordo com o evento de Input recebido
@@ -82,8 +83,10 @@ export function mascaraCnpj(event){
 }
 
 export function writeMascaraCnpj(str){
-    const cleanStr = removerMascara(str, ['.', '/', '-']);
-    const resizeStr = cleanStr.slice(0, 14);
+    if(!isStringValida(str)){
+        return;
+    }
+    const resizeStr = str.slice(0, 14);
     let resultado = '';
 
     if(resizeStr.length > 12){
@@ -95,6 +98,47 @@ export function writeMascaraCnpj(str){
     }
     return resultado;
 }
+
+
+/**
+ * Esse método recebe um InputEvent e retorna um value
+ * de acordo com a máscara (dd)dddd-dddd que representa um 
+ * número de telefone
+ * 
+ * @param {InputEvent} event 
+ */
+export function mascaraTelefoneFixo(event){
+    const inputValue = event.target.value;
+    const cleanInput = removerMascara(inputValue, ['(', ')', '-']);
+    const resizedInput = cleanInput.slice(0, 10);
+
+    let resultado = '';
+
+    if(resizedInput.length > 6){
+        resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 6) + '-' + resizedInput.slice(6);
+    } else if(resizedInput.length > 2 && resizedInput.length <= 6){
+        resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2);
+    } else {
+        resultado = resizedInput;
+    }
+
+    event.target.value = `${resultado}`;
+}
+
+export function writeMascaraTelefoneFixo(strInput){
+    if(!isStringValida(strInput)){
+        return;
+    }
+    const resizedInput = strInput.slice(0, 10);
+    let resultado = '';
+
+    if(resizedInput.length > 6){
+        resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 6) + '-' + resizedInput.slice(6);
+    }
+
+    return resultado;
+}
+
 
 /**
  * 
