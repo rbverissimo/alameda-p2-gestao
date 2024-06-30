@@ -18,6 +18,20 @@ export function apenasNumeros(event) {
     }
 }
 
+export function apenasLetras(event) {
+
+      if (event.key === "Backspace" || event.key === "Delete" || event.key === "ArrowLeft" || event.key === "ArrowRight"
+            || event.key === "Tab" || event.key === "Escape" || event.key === "Enter") {
+            return;
+      }
+
+      const char = String.fromCharCode(event.keyCode);
+      const isLetra = char.match(/[a-zA-Z]/);
+      if (!isLetra) {
+        event.preventDefault();
+      }
+}
+
 export function isDataValida(dateString) {
       const regex = /^\d{2}-\d{2}-\d{4}$/;
       if(!regex.test(dateString)){

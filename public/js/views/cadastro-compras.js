@@ -119,7 +119,7 @@ function inputCnpjFornecedor(objToCreate){
     inputCnpjFornecedor.value =  writeMascaraCnpj(objToCreate?.value?.cnpj) ?? '';
     inputCnpjFornecedor.required = true;
     inputCnpjFornecedor.maxLength = 18;
-    inputCnpjFornecedor.addEventListener('input', apenasNumeros)
+    inputCnpjFornecedor.addEventListener('keydown', apenasNumeros)
     inputCnpjFornecedor.addEventListener('input', mascaraCnpj);
 
     divWrapperInputCnpjFornecedor.appendChild(createLabel(inputCnpjFornecedor.id, 'CNPJ cadastrado: '))
@@ -140,7 +140,7 @@ function inputTelefoneFornecedor(objToCreate){
     inputTelefoneFornecedor.name = 'telefone-fornecedor';
     inputTelefoneFornecedor.value = writeMascaraTelefoneFixo(objToCreate?.value?.telefone) ?? '';
     inputTelefoneFornecedor.required = true;
-    inputTelefoneFornecedor.addEventListener('input', apenasNumeros);
+    inputTelefoneFornecedor.addEventListener('keydown', apenasNumeros);
     inputTelefoneFornecedor.addEventListener('input', mascaraTelefoneFixo);
 
     divWrapperTelefoneFornecedor.appendChild(createLabel(inputTelefoneFornecedor.id, 'Telefone: '))

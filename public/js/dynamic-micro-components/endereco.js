@@ -1,3 +1,5 @@
+import { mascaraCEP } from "../validators/view-masks.js";
+import { apenasNumeros, apenasLetras } from "../validators/view-validation.js";
 
 export function criarComponenteEnderecoSimplificado(enderecoData, headerText){
 
@@ -58,6 +60,8 @@ function inputCep(endereco){
     input.value = endereco?.cep ?? '';
     input.required = true;
     input.maxLength = 9;
+    input.addEventListener('keydown', apenasNumeros);
+    input.addEventListener('input', mascaraCEP);
 
     divCol.appendChild(createLabel(input.id, 'CEP: '))
     divCol.appendChild(input);
@@ -92,6 +96,7 @@ function inputNumero(endereco){
     input.name = 'numero-endereco';
     input.value = endereco?.numero ?? '';
     input.required = true;
+    input.addEventListener('keydown', apenasNumeros);
 
     divCol.appendChild(createLabel(input.id, 'Número: '))
     divCol.appendChild(input);
@@ -145,6 +150,9 @@ function inputUf(endereco){
     input.value = endereco?.uf ?? '';
     input.required = true;
     input.maxLength = 2;
+    input.style.textTransform = 'uppercase';
+    input.addEventListener('keydown', apenasLetras);
+    
 
     divCol.appendChild(createLabel(input.id, 'UF: '))
     divCol.appendChild(input);

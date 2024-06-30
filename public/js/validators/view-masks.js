@@ -139,6 +139,39 @@ export function writeMascaraTelefoneFixo(strInput){
     return resultado;
 }
 
+/**
+ * CEP ddddd-ddd
+ * 
+ * @param {*} event 
+ */
+export function mascaraCEP(event){
+    const inputValue = event.target.value;
+    const cleanInput = removerMascara(inputValue, ['-']);
+    const resizedInput = cleanInput.slice(0, 8);
+
+    let resultado = resizedInput;
+
+    if(resizedInput.length > 5){
+        resultado = resizedInput.slice(0, 5) + '-' + resizedInput.slice(5);
+    } 
+
+    event.target.value = `${resultado}`
+}
+
+export function writeMascaraCEP(str){
+    if(!isStringValida(str)){
+        return;
+    }
+    const resizedInput = strInput.slice(0, 8);
+    let resultado = resizedInput;
+
+    if(resizedInput.length > 6){
+        resultado = resizedInput.slice(0, 5) + '-' + resizedInput.slice(5);
+    }
+
+    return resultado;
+}
+
 
 /**
  * 
