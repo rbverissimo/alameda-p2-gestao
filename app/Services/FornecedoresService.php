@@ -30,8 +30,9 @@ class FornecedoresService {
     public static function getFornecedoresCnpjNome(){
         $imoveis = ImoveisService::getImoveisByUsuarioLogado();
         return Fornecedor::select('fornecedores.cnpj', 'fornecedores.nome_fornecedor')
-            ->whereIn('imovel', $imoveis)
-            ->get();
+             ->whereHas('compra', function($query) use ($imoveis){
+                $query->whereIn('imovel', $imoveis);
+            })->get();
     }
 
     public static function getSelectOptionsFornecedores(){

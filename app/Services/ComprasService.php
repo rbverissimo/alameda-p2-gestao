@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\Compra;
 use App\Models\FormaPagamento;
-use App\Models\Fornecedor;
-use App\Models\UsuarioImovel;
 use Illuminate\Support\Facades\DB;
 
 class ComprasService {
 
+
+
+    public static function getCompraBy($id){
+        return Compra::with('fornecedor')->with('imovel')->find($id);
+    }
 
     /**
      * Esse método busca no banco de dados apenas

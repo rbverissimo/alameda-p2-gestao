@@ -37,8 +37,9 @@ class ComprasController extends Controller
 
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
+            $compra = '';
 
-            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis'));
+            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
         }
@@ -51,8 +52,10 @@ class ComprasController extends Controller
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = FornecedoresService::getSelectOptionsFornecedores();
+
+            $compra = ComprasService::getCompraBy($idCompra);
             
-            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'fornecedores'));
+            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'fornecedores', 'compra'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível editar a compra. Erro: '.$th->getMessage());
         }

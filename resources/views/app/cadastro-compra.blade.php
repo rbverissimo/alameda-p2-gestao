@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row">
-    @component('app.layouts._components.form_compra', compact('formas_pagamento', 'imoveis'))
+    @component('app.layouts._components.form_compra', compact('formas_pagamento', 'imoveis', 'compra'))
         
     @endcomponent()
 </div>

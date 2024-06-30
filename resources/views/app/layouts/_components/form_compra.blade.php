@@ -5,7 +5,7 @@
     @if (isset($compra->id))
         @method('PUT')
     @endif
-    @component('app.layouts._components.dados_compra', compact('formas_pagamento', 'imoveis'))
+    @component('app.layouts._components.dados_compra', compact('formas_pagamento', 'imoveis', 'compra'))
         
     @endcomponent
 
@@ -31,7 +31,7 @@
                   Fornecedor desta compra
             </div>
             <div class="row">
-                  @if(isset($compra->fornecedor) && isset($fornecedores))
+                  @if(isset($compra->fornecedor) && isset($fornecedores[0]))
                         <div class="col-6">
                               <label for="fornecedore-edit-select">Escolha um fornecedor: </label>
                               <select id="fornecedores-edit-select" name="fornecedor-select">
@@ -41,7 +41,7 @@
                                                 selected
                                                 @endif
                                           >
-                                                {{$forma_pagamento->descricao}}
+                                                {{$fornecedor->nome_fornecedor}}
                                           </option>
                                     @endforeach
                               </select>
