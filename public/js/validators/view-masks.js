@@ -162,7 +162,7 @@ export function writeMascaraCEP(str){
     if(!isStringValida(str)){
         return;
     }
-    const resizedInput = strInput.slice(0, 8);
+    const resizedInput = str.slice(0, 8);
     let resultado = resizedInput;
 
     if(resizedInput.length > 6){

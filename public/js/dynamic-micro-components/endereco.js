@@ -1,4 +1,4 @@
-import { mascaraCEP } from "../validators/view-masks.js";
+import { mascaraCEP, writeMascaraCEP } from "../validators/view-masks.js";
 import { apenasNumeros, apenasLetras } from "../validators/view-validation.js";
 
 export function criarComponenteEnderecoSimplificado(enderecoData, headerText){
@@ -57,7 +57,7 @@ function inputCep(endereco){
     const input = document.createElement('input');
     input.id = 'input-cep';
     input.name = 'cep';
-    input.value = endereco?.cep ?? '';
+    input.value = writeMascaraCEP(endereco?.cep) ?? '';
     input.required = true;
     input.maxLength = 9;
     input.addEventListener('keydown', apenasNumeros);
