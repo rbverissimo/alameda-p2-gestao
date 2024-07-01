@@ -35,9 +35,9 @@
                   <a>Contratos</a>
             </div>
       </div>
-      <div class="card">
+      <div onclick="redirecionarPara('{{ route('servicos') }}')" class="card">
             <div class="card-conteudo">
-                  <a>Serviços tomados</a>
+                  <a href="{{ route('servicos') }}" >Serviços tomados</a>
             </div>
       </div>
       <div class="card">

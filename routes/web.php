@@ -10,8 +10,10 @@ use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
+use App\Http\Controllers\PrestadorServicoController;
 use App\Http\Controllers\RaizController;
 use App\Http\Controllers\SalasController;
+use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TiposContasController;
 use App\Models\Fornecedor;
@@ -120,6 +122,16 @@ Route::prefix('compras')->middleware('autenticacao')->group(function(){
 Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){
     Route::get('/buscar', [FornecedorController::class, 'fornecedores'])->name('buscar-fornecedores');
     Route::get('/l/fornecedores', [FornecedorController::class, 'index'])->name('listar-fornecedores');
+});
+
+Route::prefix('servicos')->middleware('autenticacao')->group(function(){
+    Route::get('/', [ServicoController::class, 'index'])->name('servicos');
+    Route::get('/c', [ServicoController::class, 'cadastrar'])->name('cadastrar-servico');
+    Route::get('/e/{idServico}', [ServicoController::class, 'editar'])->name('editar-servico');
+});
+
+Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function(){
+    Route::get('/l', [PrestadorServicoController::class, 'buscar'])->name('buscar-prestadores');
 });
 
 Route::middleware('autenticacao')->group(function(){
