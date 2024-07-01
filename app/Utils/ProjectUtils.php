@@ -84,6 +84,17 @@ class ProjectUtils {
             });
       }
 
+      /**
+       * Esse método retorna uma máscara limpa de caractéres de forma otimizada
+       * através do uso explícito de regex e com a possibilidade de escolher
+       * quais caractéres serão retirados da string original
+       * 
+       */
+      public static function removerMascara($str_mascara, $caracteres = ".-/"){
+            $regex = "/[$caracteres]/";
+            return preg_replace($regex, "", $str_mascara);
+      }
+
       public static function tirarMascara($stringComMascara){
             $caracteres = array('/', '-', '_', '.');
             $stringSemMascara = str_replace($caracteres, '', $stringComMascara);

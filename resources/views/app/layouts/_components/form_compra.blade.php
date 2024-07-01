@@ -31,13 +31,13 @@
                   Fornecedor desta compra
             </div>
             <div class="row">
-                  @if(isset($compra->fornecedor) && isset($fornecedores[0]))
+                  @if(isset($compra->fornecedor) && !empty($fornecedores))
                         <div class="col-6">
                               <label for="fornecedore-edit-select">Escolha um fornecedor: </label>
                               <select id="fornecedores-edit-select" name="fornecedor-select">
                                     @foreach ($fornecedores as $fornecedor)
-                                          <option value="{{$fornecedor->id}}"
-                                                @if($compra->fornecedor === $fornecedor->id)
+                                          <option value="{{$fornecedor->cnpj}}"
+                                                @if($compra->getRelation('fornecedor')->cnpj === $fornecedor->cnpj)
                                                 selected
                                                 @endif
                                           >

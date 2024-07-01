@@ -140,7 +140,7 @@
             <label for="arquivo-nota"> 
                   Envie o comprovante:
             </label>
-            <input type="file" id="arquivo-nota" name="nota">
+            <input type="file" id="arquivo-nota" name="arquivo-nota">
         </div>
     </div>
     <div class="row">

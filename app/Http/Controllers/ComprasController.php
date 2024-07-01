@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compra;
 use App\Models\FormaPagamento;
 use App\Models\Fornecedor;
 use App\Services\ComprasService;
@@ -31,15 +32,35 @@ class ComprasController extends Controller
     }
 
 
-    public function cadastrar(){
+    public function cadastrar(Request $request){
         $titulo = 'Cadastrar nova compra';
         try {
 
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
-            $compra = '';
+            $fornecedores = [];
+            $compra = new Compra();
 
-            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra'));
+            if($request->isMethod('POST')){
+
+                $cnpj_fornecedor = $request->input('cnpj-fornecedor');
+
+                //Checar se o fornecedor já existe no banco
+                //Se ele não existir, cadastra-lo
+                //Se ele existir, extrair o ID do registro e anotar na compra
+
+                $filePath = null; 
+
+                if($request->hasFile('arquivo-nota')){
+                    $file = $request->file('arquivo-nota');
+                    $fileName = $file->getClientOriginalName();
+                    $filePath = $file->storeAs('notas', $fileName);
+                    $compra->arquivo_nova = $filePath;
+                }
+
+            }
+
+            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra', 'fornecedores'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
         }
@@ -52,9 +73,10 @@ class ComprasController extends Controller
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = FornecedoresService::getSelectOptionsFornecedores();
-
             $compra = ComprasService::getCompraBy($idCompra);
-            
+
+
+
             return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'fornecedores', 'compra'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível editar a compra. Erro: '.$th->getMessage());
