@@ -101,6 +101,36 @@ class ProjectUtils {
             return $stringSemMascara;
       }
 
+      /**
+       * Esse método recebe uma string representando o CNPJ 
+       * e adiciona a máscara de CNPJ à mesma. Existe uma validação
+       * em relação ao número de dígitos para garantir o funcionamento
+       * da função e facilitar no debug da mesma
+       */
+      public static function mascaraCnpj($cnpj) {
+            $cnpj = preg_replace('/\D/', '', $cnpj);
+
+            if(strlen($cnpj) !== 14){
+                  throw new InvalidArgumentException('O CNPJ avaliado não possui os 14 dígitos necessários. ');
+            }
+
+            $mascara = "##.###.###/####-##";
+            $resultado = "";
+            $i = 0;
+            for ($j = 0; $j < strlen($mascara); $j++) {
+              if (isset($mascara[$j]) && $mascara[$j] == "#") { // Check for equality with "#"
+                if (isset($cnpj[$i])) {
+                  $resultado .= $cnpj[$i];
+                  $i++;
+                }
+              } else {
+                $resultado .= $mascara[$j];
+              }
+            }
+          
+            return $resultado;
+          }
+
       public static function retirarMascaraMoeda($valor){
             $valor_sem_mascara = ProjectUtils::trocarVirgulaPorPonto($valor);
             return str_replace('R$', '', $valor_sem_mascara);
