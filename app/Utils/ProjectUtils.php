@@ -111,7 +111,7 @@ class ProjectUtils {
             $cnpj = preg_replace('/\D/', '', $cnpj);
 
             if(strlen($cnpj) !== 14){
-                  throw new InvalidArgumentException('O CNPJ avaliado não possui os 14 dígitos necessários. ');
+                  throw new InvalidArgumentException('O CNPJ não possui os 14 dígitos necessários. ');
             }
 
             $mascara = "##.###.###/####-##";
@@ -129,7 +129,7 @@ class ProjectUtils {
             }
           
             return $resultado;
-          }
+      }
 
       public static function retirarMascaraMoeda($valor){
             $valor_sem_mascara = ProjectUtils::trocarVirgulaPorPonto($valor);
