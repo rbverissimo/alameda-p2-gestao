@@ -8,6 +8,7 @@ use App\Models\Fornecedor;
 use App\Services\ComprasService;
 use App\Services\FornecedoresService;
 use App\Services\ImoveisService;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,11 +40,21 @@ class ComprasController extends Controller
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = [];
-            $compra = new Compra();
+            $compra = '';
 
             if($request->isMethod('POST')){
 
-                $cnpj_fornecedor = $request->input('cnpj-fornecedor');
+                $nova_compra = new Compra();
+
+                $cnpj_fornecedor = ProjectUtils::tirarMascara($request->input('cnpj-fornecedor'));
+
+                $fornecedor = FornecedoresService::getFornecedorBy($cnpj_fornecedor);
+
+                if($fornecedor){
+                    $nova_compra->fornecedor = $fornecedor->id;
+                } else {
+                    FornecedoresService::getFornecedorDTO($fornecedor);
+                }
 
                 //Checar se o fornecedor já existe no banco
                 //Se ele não existir, cadastra-lo
@@ -55,7 +66,7 @@ class ComprasController extends Controller
                     $file = $request->file('arquivo-nota');
                     $fileName = $file->getClientOriginalName();
                     $filePath = $file->storeAs('notas', $fileName);
-                    $compra->arquivo_nova = $filePath;
+                    $nova_compra->arquivo_nova = $filePath;
                 }
 
             }

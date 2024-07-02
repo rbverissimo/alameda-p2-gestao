@@ -74,3 +74,9 @@ searchInput.addEventListener('input', () => {
     }
 
 })
+
+document.addEventListener('click', (event) => {
+    if (!event.target.matches('#search') && !event.target.closest('#sugestoes')) {
+        sugestoes.innerHTML = '';
+    }
+});

@@ -43,6 +43,10 @@ class FornecedoresService {
         return $arr_db->prepend($obj_vazio);
     }
 
+    public static function getFornecedorBy($cnpj){
+        return Fornecedor::where('cnpj', $cnpj)->first();
+    }
+
     /**
      * Esse método procura pelos dados básicos de uma lista de fornecedores
      * no banco de dados para retorná-los ao front-end. O método busca
@@ -55,5 +59,10 @@ class FornecedoresService {
             ->whereIn('imovel', $imoveis)
             ->orderByDesc('fornecedores.id')
             ->paginate(15);
+    }
+
+
+    public static function getFornecedorDTO($fornecedor) {
+
     }
 }

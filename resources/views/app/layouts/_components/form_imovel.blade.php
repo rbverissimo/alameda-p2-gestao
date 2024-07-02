@@ -60,7 +60,7 @@
       </div>
       <div class="row">
             <div class="col-2">
-                  <label>Número: </label>
+                  <label for="form-cadastro-imovel-numero-imovel">Número: </label>
                   <input name="numero"
                         required
                         placeholder="Ex. 786, 1030: "
@@ -70,7 +70,7 @@
                   <span class="errors-highlighted">{{ $errors->has('numero') ? $errors->first('numero') : ' '}}</span>       
             </div>
             <div class="col-2">
-                  <label>Quadra: </label>
+                  <label for="form-cadastro-imovel-quadra-imovel">Quadra: </label>
                   <input name="quadra"
                         placeholder="Ex. 40, 2, 3: "
                         id="form-cadastro-imovel-quadra-imovel"
@@ -78,7 +78,7 @@
                         old('quadra', $imovel->quadra) : old('quadra') }}">
             </div>
             <div class="col-2">
-                  <label>Lote: </label>
+                  <label for="form-cadastro-imovel-lote-imovel">Lote: </label>
                   <input name="lote"
                         placeholder="Ex. 2, 3, 10: "
                         id="form-cadastro-imovel-lote-imovel"
