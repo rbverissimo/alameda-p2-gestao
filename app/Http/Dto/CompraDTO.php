@@ -4,6 +4,7 @@ namespace App\Http\Dto;
 
 class CompraDTO {
 
+    private int $id_fornecedor;
     private string $cnpj_fornecedor;
     private string $telefone_fornecedor;
     private string $nome_fornecedor;
@@ -27,6 +28,10 @@ class CompraDTO {
     private int $qtde_parcelas;
 
     //Getters
+    public function getIdFornecedor(): int {
+        return $this->id_fornecedor;
+    }
+
     public function getCnpjFornecedor(): string
     {
         return $this->cnpj_fornecedor;
@@ -131,95 +136,111 @@ class CompraDTO {
     {
         return $this->qtde_parcelas;
     }
+
   
+    public function setIdFornecedor(int $id_fornecedor): void
+    {
+        $this->id_fornecedor = $id_fornecedor;
+    }
+
     public function setCnpjFornecedor(string $cnpj_fornecedor): void
-  {
-      $this->cnpj_fornecedor = $cnpj_fornecedor;
-  }
+    {
+        $this->cnpj_fornecedor = $cnpj_fornecedor;
+    }
 
-  public function setTelefoneFornecedor(string $telefone_fornecedor): void
-  {
-      $this->telefone_fornecedor = $telefone_fornecedor;
-  }
+    public function setTelefoneFornecedor(string $telefone_fornecedor): void
+    {
+        $this->telefone_fornecedor = $telefone_fornecedor;
+    }
 
-  public function setNomeFornecedor(string $nome_fornecedor): void
-  {
-      $this->nome_fornecedor = $nome_fornecedor;
-  }
+    public function setNomeFornecedor(string $nome_fornecedor): void
+    {
+        $this->nome_fornecedor = $nome_fornecedor;
+    }
 
-  public function setCidadeFornecedor(string $cidade_fornecedor): void
-  {
-      $this->cidade_fornecedor = $cidade_fornecedor;
-  }
+    public function setCidadeFornecedor(string $cidade_fornecedor): void
+    {
+        $this->cidade_fornecedor = $cidade_fornecedor;
+    }
 
-  public function setLogradouroFornecedor(string $logradouro_fornecedor): void
-  {
-      $this->logradouro_fornecedor = $logradouro_fornecedor;
-  }
+    public function setLogradouroFornecedor(string $logradouro_fornecedor): void
+    {
+        $this->logradouro_fornecedor = $logradouro_fornecedor;
+    }
 
-  public function setUfFornecedor(string $uf_fornecedor): void
-  {
-      $this->uf_fornecedor = $uf_fornecedor;
-  }
+    public function setUfFornecedor(string $uf_fornecedor): void
+    {
+        $this->uf_fornecedor = $uf_fornecedor;
+    }
 
-  public function setBairroFornecedor(string $bairro_fornecedor): void
-  {
-      $this->bairro_fornecedor = $bairro_fornecedor;
-  }
+    public function setBairroFornecedor(string $bairro_fornecedor): void
+    {
+          $this->bairro_fornecedor = $bairro_fornecedor;
+    }
 
-  public function setNumeroEnderecoFornecedor(int $numero_endereco_fornecedor): void
-  {
-      $this->numero_endereco_fornecedor = $numero_endereco_fornecedor;
-  }
+    public function setNumeroEnderecoFornecedor(int $numero_endereco_fornecedor): void
+    {
+        $this->numero_endereco_fornecedor = $numero_endereco_fornecedor;
+    }
 
-  public function setCepFornecedor(string $cep_fornecedor): void
-  {
-      $this->cep_fornecedor = $cep_fornecedor;
-  }
+    public function setCepFornecedor(string $cep_fornecedor): void
+    {
+        $this->cep_fornecedor = $cep_fornecedor;
+    }
 
-  public function setImovelCompra(int $imovel_compra): void
-  {
-      $this->imovel_compra = $imovel_compra;
-  }
+    public function setImovelCompra(int $imovel_compra): void
+    {
+        $this->imovel_compra = $imovel_compra;
+    }
 
-  public function setTipoCompra(int $tipo_compra): void
-  {
-      $this->tipo_compra = $tipo_compra;
-  }
+    public function setTipoCompra(int $tipo_compra): void
+    {
+        $this->tipo_compra = $tipo_compra;
+    }
 
-  public function setDataCompra(string $data_compra): void
-  {
-      $this->data_compra = $data_compra;
-  }
+    public function setDataCompra(string $data_compra): void
+    {
+        $this->data_compra = $data_compra;
+    }
 
-  public function setValorCompra(float $valor_compra): void
-  {
-      $this->valor_compra = $valor_compra;
-  }
+    public function setValorCompra(float $valor_compra): void
+    {
+        $this->valor_compra = $valor_compra;
+    }
 
-  public function setDescricao(string $descricao): void
-  {
-      $this->descricao = $descricao;
-  }
+    public function setDescricao(string $descricao): void
+    {
+        $this->descricao = $descricao;
+    }
 
-  public function setNota(string $nota): void
-  {
-      $this->nota = $nota;
-  }
+    public function setNota(string $nota): void
+    {
+        $this->nota = $nota;
+    }
 
-  public function setNrDocumentoNota(string $nrDocumento_nota): void
-  {
-      $this->nrDocumento_nota = $nrDocumento_nota;
-  }
+    public function setNrDocumentoNota(string $nrDocumento_nota): void
+    {
+        $this->nrDocumento_nota = $nrDocumento_nota;
+    }
 
-  public function setGarantia(string $garantia): void
-  {
-      $this->garantia = $garantia;
-  }
+    public function setGarantia(string $garantia): void
+    {
+        $this->garantia = $garantia;
+    }
 
-  public function setQtdeDiasGarantia(int $qtde_dias_garantia): void
-  {
-      $this->qtde_dias_garantia = $qtde_dias_garantia;
-  }
+    public function setNomeVendedor(string $nome_vendedor): void
+    {
+        $this->nome_vendedor = $nome_vendedor;
+    }
+
+    public function setFormaPagamento(int $forma_pagamento): void
+    {
+        $this->forma_pagamento = $forma_pagamento;
+    }
+
+    public function setQtdeDiasGarantia(int $qtde_dias_garantia): void
+    {
+        $this->qtde_dias_garantia = $qtde_dias_garantia;
+    }
 
 }
