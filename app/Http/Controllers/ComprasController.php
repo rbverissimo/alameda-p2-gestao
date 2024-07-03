@@ -7,6 +7,7 @@ use App\Constants\Operacao;
 use App\Http\Dto\CompraDTOBuilder;
 use App\Http\Dto\FornecedorDTOBuilder;
 use App\Models\Compra;
+use App\Models\Endereco;
 use App\Models\FormaPagamento;
 use App\Models\Fornecedor;
 use App\Services\ComprasService;
@@ -14,6 +15,7 @@ use App\Services\FornecedoresService;
 use App\Services\ImoveisService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ComprasController extends Controller
@@ -41,6 +43,7 @@ class ComprasController extends Controller
         $titulo = 'Cadastrar nova compra';
         try {
 
+            $mensagem = [];
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = [];
@@ -56,7 +59,7 @@ class ComprasController extends Controller
                 $valorCompra = ProjectUtils::retirarMascaraMoeda($request->input('valor-compra')); 
                 $tipoCompra = $request->input('tipo-compra');
                 $formaPagamento = $request->input('forma-pagamento');
-
+                $qtdeParcelas = 0;
                 if($formaPagamento === FormasPagamento::CREDITO){
                     $qtdeParcelas = $request->input('qtde-parcelas');
                 }
@@ -67,6 +70,7 @@ class ComprasController extends Controller
                 $descricao = $request->input('descricao');
 
                 $filePath = null; 
+                $arquivo_nota = '';
                 if($request->hasFile('arquivo-nota')){
                     $file = $request->file('arquivo-nota');
                     $fileName = $file->getClientOriginalName();
@@ -90,19 +94,85 @@ class ComprasController extends Controller
                     ->withQtdeDiasGarantia($qtdeDiasGarantia)
                 ->build();
 
+                $fornecedor_dto = null;
                 if($fornecedor){
                     $compra_dto->setIdFornecedor($fornecedor->id);
+
+
                 } else {
 
-                    $fornecedor_dto = (new FornecedorDTOBuilder)
+                    $nome_fornecedor = $request->input('nome-fornecedor');
+                    $telefone_fornecedor = ProjectUtils::tirarMascara($request->input('telefone-fornecedor'));
+                    $cep_fornecedor = ProjectUtils::tirarMascara($request->input('cep'));
+                    $logradouro_fornecedor = $request->input('logradouro');
+                    $numero_endereco_fornecedor = $request->input('numero-endereco');
+                    $cidade_fornecedor = $request->input('cidade');
+                    $uf_fornecedor = $request->input('uf');
+                    $bairro_fornecedor = $request->input('bairro');
 
+                    $fornecedor_dto = (new FornecedorDTOBuilder)
+                        ->withCnpjFornecedor($cnpj_fornecedor)
+                        ->withNomeFornecedor($nome_fornecedor)
+                        ->withTelefoneFornecedor($telefone_fornecedor)
+                        ->withCepFornecedor($cep_fornecedor)
+                        ->withCidadeFornecedor($cidade_fornecedor)
+                        ->withUfFornecedor($uf_fornecedor)
+                        ->withLogradouroFornecedor($logradouro_fornecedor)
+                        ->withNumeroEnderecoFornecedor($numero_endereco_fornecedor)
+                        ->withBairroFornecedor($bairro_fornecedor)
                     ->build();
 
                 }
 
+                DB::transaction(function($closure_dto) use ($compra_dto, $fornecedor_dto){
+
+                    if(isset($fornecedor_dto)){
+
+                        Endereco::create([
+                            'cep' => $fornecedor_dto->getCepFornecedor(),
+                            'logradouro' => $fornecedor_dto->getLogradouroFornecedor(),
+                            'bairro' => $fornecedor_dto->getBairroFornecedor(),
+                            'numero' => $fornecedor_dto->getNumeroEnderecoFornecedor(),
+                            'uf' => $fornecedor_dto->getUfFornecedor(),
+                            'cidade' => $fornecedor_dto->getCidadeFornecedor()
+                        ]);
+
+                        Fornecedor::create([
+                            'nome_fornecedor' => $fornecedor_dto->getNomeFornecedor(),
+                            'cnpj' => $fornecedor_dto->getCnpjFornecedor(),
+                            'telefone' => $fornecedor_dto->getTelefoneFornecedor(),
+                            'endereco' => DB::getPdo()->lastInsertId()
+                        ]);
+
+                    }
+
+                    Compra::create([
+                        'fornecedor' => isset($fornecedor_dto) ? DB::getPdo()->lastInsertId() : $compra_dto->getIdFornecedor(),
+                        'imovel' => $compra_dto->getImovelCompra(), 
+                        'dataCompra' => $compra_dto->getDataCompra(),
+                        'valor' => $compra_dto->getValorCompra(),
+                        'descricao' => $compra_dto->getDescricao(),
+                        'nota' => $compra_dto->getNota(),
+                        'nrDocumento' => $compra_dto->getNrDocumentoNota(),
+                        'garantia' => $compra_dto->getGarantia(),
+                        'qtdeDiasGarantia' => $compra_dto->getQtdeDiasGarantia(),
+                        'nome_vendedor' => $compra_dto->getNomeVendedor(),
+                        'forma_pagamento' => $compra_dto->getFormaPagamento(),
+                        'qtdeParcelas' => $compra_dto->getQtdeParcelas() == 0 ? null : $compra_dto->getQtdeParcelas()
+                    ]);
+
+                });
+
+                $mensagem = [
+                    'status' => 'sucesso',
+                    'mensagem' => 'A compra foi cadastrada com sucesso'
+                ];
+
+                
+
             }
 
-            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra', 'fornecedores'));
+            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra', 'fornecedores', 'mensagem'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
         }

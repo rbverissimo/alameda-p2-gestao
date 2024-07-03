@@ -23,4 +23,5 @@
     <script src="{{ asset('js/validators/view-validation.js')}}" type="module"></script>
     <script src="{{ asset('js/components/search-input.js')}}" type="module"></script>
     <script src="{{asset('js/views/cadastro-compras.js')}}" type="module"></script>
+    @include('app.scripts.script-mensagem')
 @endsection

@@ -12,13 +12,21 @@ class Compra extends Model
 
     protected $table = 'compras';
 
-    protected $fillabe = [
+    protected $fillable = [
         'imovel',
         'tipoCompra', 
         'inquilino',
         'dataCompra',
         'valor',
-        'descricao'
+        'descricao',
+        'fornecedor',
+        'nota',
+        'nrDocumento',
+        'garantia',
+        'qtdeDiasGarantia',
+        'nome_vendedor',
+        'forma_pagamento',
+        'qtdeParcelas'
     ];
 
     public function fornecedor(): BelongsTo 

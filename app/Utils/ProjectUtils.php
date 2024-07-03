@@ -98,7 +98,7 @@ class ProjectUtils {
       }
 
       public static function tirarMascara($stringComMascara){
-            $caracteres = array('/', '-', '_', '.');
+            $caracteres = array('/', '-', '_', '.', '(', ')');
             $stringSemMascara = str_replace($caracteres, '', $stringComMascara);
             return $stringSemMascara;
       }

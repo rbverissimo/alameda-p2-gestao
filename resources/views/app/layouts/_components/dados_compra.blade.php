@@ -13,7 +13,7 @@
             <span class="errors-highlighted">{{ $errors->has('data-compra') ? $errors->first('data-compra') : ' '}}</span> 
         </div>
         @isset($imoveis)
-                  <div class="col-3">
+                  <div class="col-5">
                         <select id="imoveis-compra-select" 
                         required
                         name="imovel">
@@ -31,7 +31,7 @@
                         </select>
                   </div>
         @endisset
-        <div class="col-3">
+        <div class="col-4">
             <input id="valor-compra-input"
                         name="valor-compra"
                         required
@@ -61,7 +61,7 @@
 
     <div class="row">
         @isset($formas_pagamento)
-                  <div class="col-4">
+                  <div class="col-5">
                         <label for="forma-pagament-compra-select">Escolha uma forma de pagamento: </label>
                         <select id="forma-pagamento-compra-select" name="forma-pagamento">
                               @foreach ($formas_pagamento as $forma_pagamento)
@@ -111,15 +111,15 @@
                         old('qtde-dias-garantia', $compra->qtdeDiasGarantia) : old('qtde-dias-garantia')}}">
             <span class="errors-highlighted">{{ $errors->has('qtde-dias-garantia') ? $errors->first('qtde-dias-garantia') : ' '}}</span> 
         </div>
-        <div class="col-1">
+        <div class="col-2">
             <span class="basic-card-wrapper">Garantia?</span>
         </div>
-        <div class="col-1">
+        <div class="col-2">
             <x-toggle-switch attName="garantia"></x-toggle-switch>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             <label for="descricao-compra">Declare a motivação da compra:</label>
             <textarea name="descricao" id="descricao-compra" 
                 rows="3" 

@@ -111,7 +111,7 @@ function inputCnpjFornecedor(objToCreate){
 
     //<div class="col-4"></div>
     const divWrapperInputCnpjFornecedor = document.createElement('div');
-    divWrapperInputCnpjFornecedor.classList.add('col-3');
+    divWrapperInputCnpjFornecedor.classList.add('col-5');
 
     const inputCnpjFornecedor = document.createElement('input');
     inputCnpjFornecedor.id = 'input-cnpj-fornecedor';
@@ -133,7 +133,7 @@ function inputTelefoneFornecedor(objToCreate){
 
     //<div class="col-4"></div>
     const divWrapperTelefoneFornecedor = document.createElement('div');
-    divWrapperTelefoneFornecedor.classList.add('col-2');
+    divWrapperTelefoneFornecedor.classList.add('col-3');
 
     const inputTelefoneFornecedor = document.createElement('input');
     inputTelefoneFornecedor.id = 'input-telefone-fornecedor';

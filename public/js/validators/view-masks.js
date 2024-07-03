@@ -129,7 +129,9 @@ export function writeMascaraTelefoneFixo(strInput){
     if(!isStringValida(strInput)){
         return;
     }
-    const resizedInput = strInput.slice(0, 10);
+
+    const cleanInput = removerMascara(strInput, ['(', ')', '-']);
+    const resizedInput = cleanInput.slice(0, 10);
     let resultado = '';
 
     if(resizedInput.length > 6){
