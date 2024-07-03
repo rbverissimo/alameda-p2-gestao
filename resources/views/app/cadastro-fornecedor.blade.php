@@ -1,0 +1,26 @@
+@extends('app.layouts.template-basico')
+
+@section('conteudo')
+<div class="dashboard light-dashboard">
+    <div class="row">
+        <div onclick="navigateToLastRoute()" class="col-2">
+            <button class="button common-button">
+                Voltar</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @component('app.layouts._components.form_fornecedor', compact('fornecedor'))
+        
+    @endcomponent()
+</div>
+<div class="row">
+    <div class="whitespace-end-page"></div>
+</div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/validators/view-validation.js')}}" type="module"></script>
+    <script src="{{ asset('js/views/cadastro-fornecedor.js')}}" type="module"></script>
+    @include('app.scripts.script-mensagem')
+@endsection

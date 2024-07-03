@@ -13,7 +13,8 @@
                     <a class="table-link">{{$fornecedor->nome_fornecedor}}</a>
                 </td>
                 <td>
-                    <img class="crud-icon" src="{{asset('icons/edit-icon.svg')}}" alt="edit">
+                    <img onclick="redirecionarPara('{{route('editar-fornecedor', $fornecedor->id)}}')"  
+                         class="crud-icon"  src="{{asset('icons/edit-icon.svg')}}" alt="edit">
                     <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
                 </td>
           </tr>

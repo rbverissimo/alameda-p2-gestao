@@ -28,4 +28,14 @@ class FornecedorController extends Controller
         return response()->json(['search' => $fornecedores]);
 
     }
+
+    public function editar($idFornecedor){
+
+        $fornecedor = FornecedoresService::getFornecedorById($idFornecedor);
+        $titulo = 'Editando fornecedor '.$fornecedor->nome_fornecedor;
+        $mensagem = '';
+
+        return view('app.cadastro-fornecedor', compact('titulo', 'fornecedor', 'mensagem'));
+
+    }
 }

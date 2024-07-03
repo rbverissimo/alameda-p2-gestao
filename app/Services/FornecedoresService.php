@@ -47,6 +47,10 @@ class FornecedoresService {
         return Fornecedor::where('cnpj', $cnpj)->first();
     }
 
+    public static function getFornecedorById($id){
+        return Fornecedor::find($id);
+    }
+
     /**
      * Esse método procura pelos dados básicos de uma lista de fornecedores
      * no banco de dados para retorná-los ao front-end. O método busca
