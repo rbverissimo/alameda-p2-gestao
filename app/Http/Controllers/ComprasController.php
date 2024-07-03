@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\FormasPagamento;
+use App\Constants\Operacao;
+use App\Http\Dto\CompraDTOBuilder;
+use App\Http\Dto\FornecedorDTOBuilder;
 use App\Models\Compra;
 use App\Models\FormaPagamento;
 use App\Models\Fornecedor;
@@ -44,29 +48,56 @@ class ComprasController extends Controller
 
             if($request->isMethod('POST')){
 
-                $nova_compra = new Compra();
-
                 $cnpj_fornecedor = ProjectUtils::tirarMascara($request->input('cnpj-fornecedor'));
-
                 $fornecedor = FornecedoresService::getFornecedorBy($cnpj_fornecedor);
 
-                if($fornecedor){
-                    $nova_compra->fornecedor = $fornecedor->id;
-                } else {
-                    FornecedoresService::getFornecedorDTO($fornecedor);
+                $dataCompra = ProjectUtils::normalizarData($request->input('data-compra'), Operacao::SALVAR);
+                $imovel = $request->input('imovel');
+                $valorCompra = ProjectUtils::retirarMascaraMoeda($request->input('valor-compra')); 
+                $tipoCompra = $request->input('tipo-compra');
+                $formaPagamento = $request->input('forma-pagamento');
+
+                if($formaPagamento === FormasPagamento::CREDITO){
+                    $qtdeParcelas = $request->input('qtde-parcelas');
                 }
 
-                //Checar se o fornecedor já existe no banco
-                //Se ele não existir, cadastra-lo
-                //Se ele existir, extrair o ID do registro e anotar na compra
+                $nomeVendedor = $request->input('nome-vendedor');
+                $garantia = $request->input('garantia') === 'on' ? 'S' : 'N';
+                $qtdeDiasGarantia = $request->input('qtde-dias-garantia');
+                $descricao = $request->input('descricao');
 
                 $filePath = null; 
-
                 if($request->hasFile('arquivo-nota')){
                     $file = $request->file('arquivo-nota');
                     $fileName = $file->getClientOriginalName();
                     $filePath = $file->storeAs('notas', $fileName);
-                    $nova_compra->arquivo_nova = $filePath;
+                    $arquivo_nota = $filePath;
+                }
+
+                $nrDocumentoNota = $request->input('nr-documento');
+
+                $compra_dto = (new CompraDTOBuilder)
+                    ->withDataCompra($dataCompra)
+                    ->withValorCompra($valorCompra)
+                    ->withImovelCompra($imovel)
+                    ->withFormaPagamento($formaPagamento)
+                    ->withQtdeParcelas($qtdeParcelas)
+                    ->withNomeVendedor($nomeVendedor)
+                    ->withNota($arquivo_nota)
+                    ->withNrDocumentoNota($nrDocumentoNota)
+                    ->withDescricao($descricao)
+                    ->withGarantia($garantia)
+                    ->withQtdeDiasGarantia($qtdeDiasGarantia)
+                ->build();
+
+                if($fornecedor){
+                    $compra_dto->setIdFornecedor($fornecedor->id);
+                } else {
+
+                    $fornecedor_dto = (new FornecedorDTOBuilder)
+
+                    ->build();
+
                 }
 
             }

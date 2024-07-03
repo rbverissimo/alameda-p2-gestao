@@ -33,6 +33,8 @@ export function apenasLetras(event) {
 }
 
 export function isDataValida(dateString) {
+      const regexForwardSlahes = /\/+/g;
+      $date = dateString.replace(regexForwardSlahes, "-");
       const regex = /^\d{2}-\d{2}-\d{4}$/;
       if(!regex.test(dateString)){
             return false;

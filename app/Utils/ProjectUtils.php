@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use App\Constants\Operacao;
 use DateTime;
 use InvalidArgumentException;
 
@@ -144,6 +145,18 @@ class ProjectUtils {
 
       public static function trocarPontoPorVirgula($valor){
             return str_replace('.', ',', $valor);
+      }
+
+      public static function normalizarData(string $data, string $operacao){
+            $data_hifen = str_replace('/', '-', $data);
+
+            if($operacao === Operacao::SALVAR){
+                  return ProjectUtils::inverterDataParaSalvar($data_hifen);
+            } else if($operacao == Operacao::RENDERIZAR){
+                  return ProjectUtils::inverterDataParaRenderizar($data_hifen);
+            } else {
+                  throw new InvalidArgumentException('A data fornecida não é válida');
+            }
       }
 
       public static function inverterDataParaSalvar($data){

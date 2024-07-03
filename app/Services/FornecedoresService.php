@@ -61,8 +61,4 @@ class FornecedoresService {
             ->paginate(15);
     }
 
-
-    public static function getFornecedorDTO($fornecedor) {
-
-    }
 }

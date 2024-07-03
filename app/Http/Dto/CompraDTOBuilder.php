@@ -16,61 +16,7 @@ class CompraDTOBuilder {
         $this->compra_dto->setIdFornecedor($idFornecedor);
         return $this;
     }
-
-    public function withCnpjFornecedor(string $cnpjFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setCnpjFornecedor($cnpjFornecedor);
-        return $this;
-    }
-
-    public function withTelefoneFornecedor(string $telefoneFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setTelefoneFornecedor($telefoneFornecedor);
-        return $this;
-    }
-
-    public function withNomeFornecedor(string $nomeFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setNomeFornecedor($nomeFornecedor);
-        return $this;
-    }
-
-    public function withCidadeFornecedor(string $cidadeFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setCidadeFornecedor($cidadeFornecedor);
-        return $this;
-    }
-
-    public function withLogradouroFornecedor(string $logradouroFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setLogradouroFornecedor($logradouroFornecedor);
-        return $this;
-    }
-
-    public function withUfFornecedor(string $ufFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setUfFornecedor($ufFornecedor);
-        return $this;
-    }
-
-    public function withBairroFornecedor(string $bairroFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setBairroFornecedor($bairroFornecedor);
-        return $this;
-    }
-
-    public function withNumeroEnderecoFornecedor(int $numeroEnderecoFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setNumeroEnderecoFornecedor($numeroEnderecoFornecedor);
-        return $this;
-    }
-
-    public function withCepFornecedor(string $cepFornecedor): CompraDTOBuilder
-    {
-        $this->compra_dto->setCepFornecedor($cepFornecedor);
-        return $this;
-    }
-
+    
     public function withImovelCompra(int $imovelCompra): CompraDTOBuilder
     {
         $this->compra_dto->setImovelCompra($imovelCompra);
@@ -80,6 +26,12 @@ class CompraDTOBuilder {
     public function withTipoCompra(int $tipoCompra): CompraDTOBuilder
     {
         $this->compra_dto->setTipoCompra($tipoCompra);
+        return $this;
+    }
+
+    public function withQtdeParcelas(int $qtdeParcelas): CompraDTOBuilder
+    {
+        $this->compra_dto->setQtdeParcelas($qtdeParcelas);
         return $this;
     }
 
@@ -136,6 +88,7 @@ class CompraDTOBuilder {
         $this->compra_dto->setFormaPagamento($formaPagamento);
         return $this;
     }
+
 
     
     public function build(): CompraDTO {
