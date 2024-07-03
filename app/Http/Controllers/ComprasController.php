@@ -8,7 +8,6 @@ use App\Http\Dto\CompraDTOBuilder;
 use App\Http\Dto\FornecedorDTOBuilder;
 use App\Models\Compra;
 use App\Models\Endereco;
-use App\Models\FormaPagamento;
 use App\Models\Fornecedor;
 use App\Services\ComprasService;
 use App\Services\FornecedoresService;
@@ -16,7 +15,6 @@ use App\Services\ImoveisService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ComprasController extends Controller
 {
@@ -180,6 +178,7 @@ class ComprasController extends Controller
 
     public function editar(Request $request, $idCompra){
         $titulo = 'Editar compra ';
+        $mensagem = '';
         try {
 
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
@@ -189,7 +188,7 @@ class ComprasController extends Controller
 
 
 
-            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'fornecedores', 'compra'));
+            return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'fornecedores', 'compra', 'mensagem'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível editar a compra. Erro: '.$th->getMessage());
         }
