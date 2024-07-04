@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
 use App\Services\FornecedoresService;
 
 class FornecedorController extends Controller
@@ -37,5 +38,9 @@ class FornecedorController extends Controller
 
         return view('app.cadastro-fornecedor', compact('titulo', 'fornecedor', 'mensagem'));
 
+    }
+
+    public function deletar($idFornecedor){
+        return Fornecedor::where('id', $idFornecedor)->delete();
     }
 }

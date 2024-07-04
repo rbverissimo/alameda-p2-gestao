@@ -15,7 +15,11 @@
                 <td>
                     <img onclick="redirecionarPara('{{route('editar-fornecedor', $fornecedor->id)}}')"  
                          class="crud-icon"  src="{{asset('icons/edit-icon.svg')}}" alt="edit">
-                    <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
+                    <img 
+                    onclick="deletarRegistro('{{route('deletar-fornecedor', $fornecedor->id)}}', '{{ $fornecedor->id}}')"
+                    class="crud-icon" 
+                    src="{{asset('icons/delete-icon.svg')}}" 
+                    alt="deletar fornecedor">
                 </td>
           </tr>
     @endforeach
