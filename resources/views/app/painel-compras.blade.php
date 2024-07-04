@@ -1,6 +1,8 @@
 @extends('app.layouts.template-basico')
 
 @section('conteudo')
+@include('app.layouts._partials.simple-modal')
+@include('app.layouts._partials.spinner')
 <div class="dashboard light-dashboard">
     <div class="row">
         <div onclick="navigateToLastRoute()" class="col-2">

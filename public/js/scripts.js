@@ -1,3 +1,5 @@
+import { toggleModal, toggleOverlay } from "./comportamento-dinamico.js";
+
 export function setLiveRoute(rota){
       localStorage.setItem('liveRoute', rota);
 
@@ -381,6 +383,56 @@ export function redirecionarPara(route){
       window.location.href = route;
 }
 
+export function deletarRegistro(route, idRegistro){
+
+      const botaoConfirmar = document.getElementById('botao-confirmar-modal');
+      botaoConfirmar.textContent = 'Confirmar';
+
+      const botaoCancelar = document.getElementById('botao-cancelar-modal');
+      botaoCancelar.textContent = 'Cancelar';
+
+      botaoCancelar.addEventListener('click', function(){
+            toggleModal(overlay, wrapperModal);  
+      });
+
+      const mensagemModal = document.getElementById('mensagem-modal');
+      mensagemModal.textContent = `Deseja mesmo excluir o registro ${idRegistro}?`;
+      
+      const wrapperModal = document.getElementById('dashboard-modal-wrapper');
+      const overlay = document.getElementsByClassName('overlay')[0];
+      const loadingOverlay = document.getElementById('loading-overlay');
+
+      toggleModal(overlay, wrapperModal);
+      
+    
+    
+      botaoConfirmar.addEventListener('click', () => {
+            fetch(route)
+                .then(response => {
+                    toggleOverlay(loadingOverlay); 
+                    if(!response.ok){
+                        throw new Error('Não foi possível se conectar com o servidor. ');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    toggleOverlay(loadingOverlay);
+                    console.log(data);
+                    if(data > 0){
+                        showMensagem(`Registro ${idRegistro} deletado com sucesso!`, 'sucesso');      
+                    }
+                })
+                .catch(error => {
+                    toggleOverlay(loadingOverlay);
+                    console.error('Não foi possível concluir a operação', error);
+                }).then(complete => {
+                    toggleModal(overlay, wrapperModal);
+                    setTimeout(location.reload(), 5000);  
+                });
+    
+        });
+}
+
 /**
  * 
  * @param {*} referencia que será convertida, recebida em 6 dígitos no formato AAAAdd
@@ -558,3 +610,4 @@ window.showDataFormatadaDMY = showDataFormatadaDMY;
 window.navigateToLastRoute = navigateToLastRoute;
 window.criarSearchInputEvent = criarSearchInputEvent;
 window.criarSelectedSearchInputEvent = criarSelectedSearchInputEvent;
+window.deletarRegistro = deletarRegistro;

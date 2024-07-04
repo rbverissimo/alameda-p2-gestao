@@ -20,8 +20,12 @@
                   </td>
                   <td>
                         <img class="crud-icon" onclick="redirecionarPara('{{route('painel-inquilino', $inquilino->id)}}')"
-                              src="{{asset('icons/info-icon.svg')}}" alt="info">
-                        <img class="crud-icon" onclick="redirecionarPara('{{route('detalhar-inquilino', $inquilino->id)}}')" src="{{asset('icons/edit-icon.svg')}}" alt="edit" srcset="">
+                              src="{{asset('icons/info-icon.svg')}}" alt="mais informações">
+                        <img class="crud-icon" 
+                              onclick="redirecionarPara('{{route('detalhar-inquilino', $inquilino->id)}}')" 
+                              src="{{asset('icons/edit-icon.svg')}}" 
+                              alt="detalhar inquinlino" 
+                        >
                   </td>
             </tr>
       @endforeach

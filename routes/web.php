@@ -114,9 +114,10 @@ Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
 
 Route::prefix('compras')->middleware('autenticacao')->group(function(){
     Route::get('/', [ComprasController::class, 'index'])->name('compras');
-    Route::get('/cadastrar', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
-    Route::post('/cadastrar', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
-    Route::get('/editar/{idCompra}', [ComprasController::class, 'editar'])->name('editar-compra');
+    Route::get('/c', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
+    Route::post('/c', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
+    Route::get('/e/{idCompra}', [ComprasController::class, 'editar'])->name('editar-compra');
+    Route::get('/d/{idCompra}', [ComprasController::class, 'deletar'])->name('deletar-compra');
 });
 
 Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){

@@ -196,6 +196,6 @@ class ComprasController extends Controller
     }
 
     public function deletar($idCompra){
-
+        return Compra::where('id', $idCompra)->delete(); 
     }
 }
