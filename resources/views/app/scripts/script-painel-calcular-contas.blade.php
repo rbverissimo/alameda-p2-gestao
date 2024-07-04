@@ -6,6 +6,7 @@
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
     import { mascaraReferenciaSlider } from "{{ asset('js/scripts.js') }}";
     import { showMensagem } from "{{ asset('js/scripts.js') }}";
+    import { loadSimpleModal } from "{{ asset('js/partials/simple-modal.js')}}";
 
 
     const referenciaCalculo = @json($referencia_calculo);
@@ -39,17 +40,11 @@
     });
 
     if(!isArrayEmpty(contas)){
-        document.getElementById('botao-realizar-calculos').addEventListener('click', function(){
-            toggleModal();
-        });
-    
-    
-        document.getElementById('botao-cancelar-modal').addEventListener('click', function(){
-            toggleModal();  
-        });
-    
-    
-        document.getElementById('botao-confirmar-modal').addEventListener('click', () => {
+        loadSimpleModal(`Deseja realizar cálculos das contas do imóvel ${idImovel} para a referência ${referenciaCalculo}?`, 'Sim', 'Cancelar', confirmarCalcularContasHandler);
+    }
+
+    function confirmarCalcularContasHandler(){
+
             fetch("{{ route('realizar-calculo', ['id' => $idImovel, 'ref' => $referencia_calculo])}}")
                 .then(response => {
                     toggleOverlay(loadingOverlay); 
@@ -71,13 +66,6 @@
                     toggleModal();
                 });
     
-        });
-    }
-
-
-    function toggleModal(){
-        overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
-        wrapperModal.style.display = wrapperModal.style.display === 'none' ? 'block' : 'none';
     }
 
     function renderizarResultado(data){

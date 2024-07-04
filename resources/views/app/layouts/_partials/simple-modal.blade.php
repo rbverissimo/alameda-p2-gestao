@@ -1,4 +1,4 @@
-<div class="overlay"></div>
+<div id="simple-modal-shade-overlay" class="overlay"></div>
 <div id="dashboard-modal-wrapper" class="dashboard-modal light-dashboard big-modal">
     <div class="row">
         <div id="mensagem-modal" style="text-align: center" class="col-12"></div>
