@@ -89,7 +89,7 @@ function inputLogradouro(endereco){
 function inputNumero(endereco){
     //<div class="col-3"></div>
     const divCol = document.createElement('div');
-    divCol.classList.add('col-2');
+    divCol.classList.add('col-3');
 
     const input = document.createElement('input');
     input.id = 'input-numero-endereco';

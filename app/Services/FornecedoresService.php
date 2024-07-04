@@ -48,7 +48,7 @@ class FornecedoresService {
     }
 
     public static function getFornecedorById($id){
-        return Fornecedor::find($id);
+        return Fornecedor::with('endereco')->find($id);
     }
 
     /**

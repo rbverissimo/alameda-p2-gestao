@@ -1,3 +1,32 @@
+const unidadesFederativas = [
+      'AL',
+      'AM',
+      'RO',
+      'AC',
+      'RR',
+      'PA',
+      'AP',
+      'TO',
+      'MA',
+      'PI',
+      'CE',
+      'RN',
+      'PB',
+      'PE',
+      'BA',
+      'MG',
+      'MT',
+      'MS',
+      'GO',
+      'SP',
+      'ES',
+      'PR',
+      'SC',
+      'RS',
+      'RJ',
+      'DF'
+];
+
 export function apenasNumeros(event) {
             
     // Permissões
@@ -45,4 +74,14 @@ export function isDataValida(dateString) {
       const day = parseInt(dateString.slice(0, 2), 10);
 
       return month >= 1 && month <= 12 && day >= 1 && day <= 31;
+}
+
+export function isCNPJValido(cnpj){
+      const cleanInput = cnpj.replace(/\D/g, '');
+      console.log(cleanInput);
+      return cleanInput.length === 14;
+}
+
+export function isUFValida(uf){
+      return unidadesFederativas.includes(uf);
 }

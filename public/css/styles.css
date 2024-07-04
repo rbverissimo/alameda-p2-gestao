@@ -87,6 +87,11 @@ input {
       transition: border-color 0.3s ease-in-out;
 }
 
+.error-state {
+      border: 2px solid var(--erro-color-highlight);
+      transition: border-color 0.3s ease-in-out;
+}
+
 a {
       color: var(--text-black);
       text-decoration: none;
