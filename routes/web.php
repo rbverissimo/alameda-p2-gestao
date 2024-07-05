@@ -126,7 +126,7 @@ Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){
     Route::get('/l/fornecedores', [FornecedorController::class, 'index'])->name('listar-fornecedores');
     Route::get('/e/{id}', [FornecedorController::class, 'editar'])->name('editar-fornecedor');
     Route::put('/e/{id}', [FornecedorController::class, 'editar'])->name('editar-fornecedor');
-    Route::delete('/d/{id}', [FornecedorController::class, 'deletar'])->name('deletar-fornecedor');
+    Route::get('/d/{id}', [FornecedorController::class, 'deletar'])->name('deletar-fornecedor');
 });
 
 Route::prefix('servicos')->middleware('autenticacao')->group(function(){

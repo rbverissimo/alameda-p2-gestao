@@ -1,12 +1,12 @@
 const modalOverlay = document.getElementById('simple-modal-shade-overlay');
 const modalWrapper = document.getElementById('dashboard-modal-wrapper');
 
-const mensagemModal = document.getElementById('mensagem-modal');
+export const mensagemModal = document.getElementById('mensagem-modal');
 export const confirmarButton = document.getElementById('botao-confirmar-modal');
 export const cancelarButton = document.getElementById('botao-cancelar-modal');
 
 
-export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, confirmarButtonClickHandler){
+export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, handlerConfirmar){
 
     removeAllEventListenersFrom(confirmarButton);
     removeAllEventListenersFrom(cancelarButton);
@@ -15,12 +15,17 @@ export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, 
     confirmarButton.textContent = textConfirmar;
     cancelarButton.textContent = textCancelar;
 
-    cancelarButton.addEventListener('click', toggleModal);
-    confirmarButton.addEventListener('click', confirmarButtonClickHandler);
+    cancelarButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleModal();
+    });
 
     toggleModal();
 
+    confirmarButton.addEventListener('click', handlerConfirmar);
+
 }
+
 
 /**
  * O intuito de criar essa função é oferecer uma interface única e desacoplável 
@@ -30,6 +35,12 @@ export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, 
  * @param {*} wrapperModal 
  */
 export function toggleModal(){
+
+    if(modalOverlay.style.display === '' && modalWrapper.style.display === ''){
+        modalOverlay.style.display = 'none';
+        modalWrapper.style.display = 'none';
+    }
+
     modalOverlay.style.display = modalOverlay.style.display === 'none' ? 'block' : 'none';
     modalWrapper.style.display = modalWrapper.style.display === 'none' ? 'block' : 'none';
 }

@@ -14,16 +14,3 @@ export function toggleOverlay(loadingOverlay){
         loadingOverlay.style.display = 'block';
     }
 }
-
-/**
- * O intuito de criar essa função é oferecer uma interface única e desacoplável 
- * para fazer o toggle tanto do overlay quando do wrapper do modal
- * 
- * @param {*} overlay 
- * @param {*} wrapperModal 
- */
-export function toggleModal(overlay, wrapperModal){
-    overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
-    wrapperModal.style.display = wrapperModal.style.display === 'none' ? 'block' : 'none';
-}
-
