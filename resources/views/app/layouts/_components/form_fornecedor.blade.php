@@ -1,5 +1,8 @@
-<form action="" method="GET">
+<form action="{{ route('editar-fornecedor', ['id' => $fornecedor->id]) }}" method="POST">
     @csrf
+    @if (isset($fornecedor->id))
+        @method('PUT')
+    @endif
     @component('app.layouts._components.dados_fornecedor', compact('fornecedor'))
         
     @endcomponent

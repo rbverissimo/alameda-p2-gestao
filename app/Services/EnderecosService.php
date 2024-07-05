@@ -14,4 +14,8 @@ class EnderecosService {
         return Endereco::max('id');
     }
 
+    public static function getEnderecoBy($id){
+        return Endereco::find($id);
+    }
+
 }
