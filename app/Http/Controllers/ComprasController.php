@@ -53,7 +53,7 @@ class ComprasController extends Controller
                 $regras = [
                     'cnpj-fornecedor' => 'required|size:18',
                     'data-compra' => 'required|date',
-                    'imovel' => 'required|string',
+                    'imovel' => 'required|exists:imoveis',
                     'valor-compra' => 'required',
                     'forma-pagamento' => 'required',
                     'arquivo-nota' => 'required|file',
@@ -62,7 +62,7 @@ class ComprasController extends Controller
                 $feedback = [
                     'cnpj-fornecedor.size' => 'O CNPJ do fornecedor não está correto. ',
                     'arquivo-nota.file' => 'A nota fiscal da compra não está correta. ',
-                    'imovel.string' => 'Escolha um imóvel.',
+                    'imovel.exists' => 'Escolha um imóvel válido.',
                     'data-compra.date' => 'Defina um data válida. ',
 
                     'required' => 'O :attribute é obrigatório.',
