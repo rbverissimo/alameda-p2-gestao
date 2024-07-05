@@ -384,6 +384,8 @@ export function redirecionarPara(route){
 }
 
 export function deletarRegistro(route, idRegistro){
+      const wrapperModal = document.getElementById('dashboard-modal-wrapper');
+      const overlay = document.getElementsByClassName('overlay')[0];
 
       const botaoConfirmar = document.getElementById('botao-confirmar-modal');
       botaoConfirmar.textContent = 'Confirmar';
@@ -397,15 +399,10 @@ export function deletarRegistro(route, idRegistro){
 
       const mensagemModal = document.getElementById('mensagem-modal');
       mensagemModal.textContent = `Deseja mesmo excluir o registro ${idRegistro}?`;
-      
-      const wrapperModal = document.getElementById('dashboard-modal-wrapper');
-      const overlay = document.getElementsByClassName('overlay')[0];
       const loadingOverlay = document.getElementById('loading-overlay');
 
       toggleModal(overlay, wrapperModal);
       
-    
-    
       botaoConfirmar.addEventListener('click', () => {
             fetch(route)
                 .then(response => {
