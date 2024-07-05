@@ -270,7 +270,7 @@ select:focus {
 }
 
 .errors-highlighted {
-      color: var(--alert-dashboard-header);
+      color: var(--erro-color-highlight);
       font-weight: bold;
       font-size: 0.85rem;
 }

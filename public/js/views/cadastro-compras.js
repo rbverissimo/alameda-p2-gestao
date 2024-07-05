@@ -1,5 +1,5 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
-import { apenasNumeros, isDataValida } from "../validators/view-validation.js";
+import { apenasNumeros, inputStateValidation, isCNPJValido, isDataValida } from "../validators/view-validation.js";
 import { mascaraCnpj, 
     writeMascaraCnpj, 
     writeMascaraTelefoneFixo,
@@ -26,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dataCompraInput.addEventListener('keydown', apenasNumeros);
     dataCompraInput.addEventListener('input', dataMascara);
-    dataCompraInput.addEventListener('blur', () => {
-        if(!isDataValida(event.target.value)){
-            event.target.value = '';
-            showMensagem('A data fornecida é inválida', 'falha');
-        }
+    dataCompraInput.addEventListener('blur', (event) => {
+        const labelDataCompra = document.getElementById('label-input-data-compra');
+        const spanDataCompra = document.getElementById('span-errors-data-compra');
+        const spanMessage = 'A data não é válida.';
+        inputStateValidation(labelDataCompra, dataCompraInput, spanDataCompra, event.target.value, isDataValida, spanMessage);
+
     });
 });
 
@@ -121,9 +122,18 @@ function inputCnpjFornecedor(objToCreate){
     inputCnpjFornecedor.maxLength = 18;
     inputCnpjFornecedor.addEventListener('keydown', apenasNumeros)
     inputCnpjFornecedor.addEventListener('input', mascaraCnpj);
+    inputCnpjFornecedor.addEventListener('blur', (event) => {
 
-    divWrapperInputCnpjFornecedor.appendChild(createLabel(inputCnpjFornecedor.id, 'CNPJ cadastrado: '))
+        const labelCnpj = document.getElementById('label-cnpj-fornecedor');
+        const spanCnpjErrors = document.getElementById('span-errors-cnpj-fornecedor');
+        const spanMessage = 'O CPNJ não está correto. ';
+        inputStateValidation(labelCnpj, inputCnpjFornecedor, spanCnpjErrors, event.target.value, isCNPJValido, spanMessage);
+
+    })
+
+    divWrapperInputCnpjFornecedor.appendChild(createLabel(inputCnpjFornecedor.id, 'CNPJ cadastrado: ', 'label-cnpj-fornecedor'));
     divWrapperInputCnpjFornecedor.appendChild(inputCnpjFornecedor);
+    divWrapperInputCnpjFornecedor.appendChild(createSpanErrors('span-errors-cnpj-fornecedor'));
 
     return divWrapperInputCnpjFornecedor;
 
@@ -150,11 +160,19 @@ function inputTelefoneFornecedor(objToCreate){
 
 }
 
-function createLabel(forInput, text){
+function createLabel(forInput, text, id = null){
     const label = document.createElement('label');
+    label.id = id;
     label.for = forInput;
     label.innerHTML = text;
     return label; 
+}
+
+function createSpanErrors(id){
+    const span = document.createElement('span');
+    span.classList.add('errors-highlighted');
+    span.id = id;
+    return span;
 }
 
 function habilitarQtdeParcelas(event){

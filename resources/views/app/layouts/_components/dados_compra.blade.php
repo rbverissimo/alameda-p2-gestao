@@ -4,16 +4,18 @@
     </div>
     <div class="row">
         <div class="col-3">
+            <label for="data-compra-input" id="label-input-data-compra">Data da Compra:</label>
             <input id="data-compra-input"
                         name="data-compra"
                         required
                         placeholder="Data da Compra: "
                         value="{{ isset($compra->dataCompra) ? 
                         old('data-compra', $compra->dataCompra) : old('data-compra')}}">
-            <span class="errors-highlighted">{{ $errors->has('data-compra') ? $errors->first('data-compra') : ' '}}</span> 
+            <span id="span-errors-data-compra" class="errors-highlighted">{{ $errors->has('data-compra') ? $errors->first('data-compra') : ' '}}</span> 
         </div>
         @isset($imoveis)
                   <div class="col-5">
+                    <label for="imoveis-compra-select">Selecione um imóvel: </label>
                         <select id="imoveis-compra-select" 
                         required
                         name="imovel">
@@ -32,6 +34,7 @@
                   </div>
         @endisset
         <div class="col-4">
+            <label for="valor-compra-input">Valor: </label>
             <input id="valor-compra-input"
                         name="valor-compra"
                         required

@@ -1,5 +1,5 @@
 import { mascaraCEP, mascaraCnpj, mascaraTelefoneFixo, writeMascaraCEP, writeMascaraCnpj, writeMascaraTelefoneFixo } from "../validators/view-masks.js";
-import { apenasLetras, apenasNumeros, isCNPJValido, isUFValida } from "../validators/view-validation.js";
+import { apenasLetras, apenasNumeros, inputStateValidation, isCNPJValido, isUFValida } from "../validators/view-validation.js";
 
 const inputCnpjFornecedor = document.getElementById('input-cnpj-fornecedor');
 const inputTelefoneFornecedor = document.getElementById('input-telefone-fornecedor');
@@ -12,14 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     inputCnpjFornecedor.value = writeMascaraCnpj(inputCnpjFornecedor.value);
     inputCnpjFornecedor.addEventListener('input', mascaraCnpj);
     inputCnpjFornecedor.addEventListener('keydown', apenasNumeros);
+    
     inputCnpjFornecedor.addEventListener('blur', (event) => {
-        if(!isCNPJValido(event.target.value)){
-            inputCnpjFornecedor.classList.add('error-state');
-        } else {
-            if(inputCnpjFornecedor.classList.contains('error-state')){
-                inputCnpjFornecedor.classList.remove('error-state');
-            }
-        }
+        const spanErrors = document.getElementById('errors-cnpj');
+        const labelCnpj = document.getElementById('label-cnpj-fornecedor')
+        const spanMessage = 'O CNPJ não está correto.';
+        inputStateValidation(labelCnpj, inputCnpjFornecedor, spanErrors, event.target.value, isCNPJValido, spanMessage);
+        
     })
 
     inputTelefoneFornecedor.value = writeMascaraTelefoneFixo(inputTelefoneFornecedor.value);

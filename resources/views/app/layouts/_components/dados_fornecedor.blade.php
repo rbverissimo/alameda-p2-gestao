@@ -11,14 +11,16 @@
             name="nome-fornecedor"
             value="{{ isset($fornecedor->nome_fornecedor) ? 
                     old('nome-fornecedor', $fornecedor->nome_fornecedor) : old('nome-fornecedor')}}">
+            <span class="errors-highlighted">{{ $errors->has('nome-fornecedor') ? $errors->first('nome-fornecedor') : ' '}}</span>         
         </div>
         <div class="col-4">
-            <label for="input-cnpj-fornecedor">CNPJ:</label>
+            <label id="label-cnpj-fornecedor" for="input-cnpj-fornecedor">CNPJ:</label>
             <input type="text" 
             id="input-cnpj-fornecedor" 
             name="cnpj-fornecedor" required
             value="{{ isset($fornecedor->cnpj) ? 
                     old('cnpj-fornecedor', $fornecedor->cnpj) : old('cnpj-fornecedor')}}">
+            <span id="errors-cnpj" class="errors-highlighted">{{ $errors->has('cnpj-fornecedor') ? $errors->first('cnpj-fornecedor') : ' '}}</span>         
         </div>
         <div class="col-4">
             <label for="input-telefone-fornecedor">Telefone:</label>

@@ -63,9 +63,9 @@ export function apenasLetras(event) {
 
 export function isDataValida(dateString) {
       const regexForwardSlahes = /\/+/g;
-      $date = dateString.replace(regexForwardSlahes, "-");
+      const date = dateString.replace(regexForwardSlahes, "-");
       const regex = /^\d{2}-\d{2}-\d{4}$/;
-      if(!regex.test(dateString)){
+      if(!regex.test(date)){
             return false;
       }
 
@@ -83,5 +83,22 @@ export function isCNPJValido(cnpj){
 }
 
 export function isUFValida(uf){
+      if(uf.length !== 2){
+            return false;
+      }
       return unidadesFederativas.includes(uf);
+}
+
+export function inputStateValidation(label, input, span, value, isValid, spanMessage){
+      if(!isValid(value)){
+            input.classList.add('error-state');
+            span.textContent = spanMessage;
+            label.style.color = '#fb7a53';
+      } else {
+            if(input.classList.contains('error-state')){
+                  input.classList.remove('error-state');
+                  span.textContent = '';
+                  label.style.color = '#333';
+            }
+      }
 }

@@ -49,6 +49,26 @@ class ComprasController extends Controller
 
             if($request->isMethod('POST')){
 
+                $regras = [
+                    'cnpj-fornecedor' => 'required|size:18',
+                    'data-compra' => 'required|date',
+                    'imovel' => 'required',
+                    'valor-compra' => 'required',
+                    'forma-pagamento' => 'required',
+                    'arquivo-nota' => 'required|file',
+                ];
+
+                $feedback = [
+                    'cnpj-fornecedor.size' => 'O CNPJ do fornecedor não está correto. ',
+                    'data-compra.date' => 'A data da compra não está correta. ',
+                    'arquivo-nota.file' => 'A nota fiscal da compra não está correta. ',
+
+                    'required' => 'O :attribute é obrigatório.',
+                ];
+
+                $request->validate($regras, $feedback);
+
+
                 $cnpj_fornecedor = ProjectUtils::tirarMascara($request->input('cnpj-fornecedor'));
                 $fornecedor = FornecedoresService::getFornecedorBy($cnpj_fornecedor);
 
