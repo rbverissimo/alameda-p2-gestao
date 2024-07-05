@@ -134,4 +134,10 @@ class ImoveisService {
         return TipoSala::where('id', $idTipoSala)->pluck('descricao')->first();
     }
 
+    public static function podeSalvarNoImovel($idImovel) {
+        $usuario = UsuarioService::getUsuarioLogado();
+        $imoveis_usuario = UsuarioService::getImoveisBy($usuario);
+        return in_array($idImovel, $imoveis_usuario);
+    }
+
 }

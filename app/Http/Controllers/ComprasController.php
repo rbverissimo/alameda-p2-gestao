@@ -13,9 +13,11 @@ use App\Services\ComprasService;
 use App\Services\FornecedoresService;
 use App\Services\ImoveisService;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\MensagemVO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class ComprasController extends Controller
 {
@@ -52,10 +54,10 @@ class ComprasController extends Controller
 
                 $regras = [
                     'cnpj-fornecedor' => 'required|size:18',
-                    'data-compra' => 'required|date',
-                    'imovel' => 'required|exists:imoveis',
+                    'data-compra' => 'required',
+                    'imovel' => 'required|exists:imoveis,id',
                     'valor-compra' => 'required',
-                    'forma-pagamento' => 'required',
+                    'forma-pagamento' => 'required|exists:formas_pagamentos,codigo',
                     'arquivo-nota' => 'required|file',
                 ];
 
@@ -211,6 +213,41 @@ class ComprasController extends Controller
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = FornecedoresService::getSelectOptionsFornecedores();
             $compra = ComprasService::getCompraBy($idCompra);
+
+            if($request->isMethod('PUT')){
+
+                $compra->dataCompra = ProjectUtils::normalizarData($request->input('data-compra'), Operacao::SALVAR);
+                $compra->imovel = ImoveisService::podeSalvarNoImovel($request->input('imovel')) ? $request->input('imovel') : '';
+
+                if($compra->imovel === ''){
+                    throw new InvalidArgumentException("Usuário não autorizado a usar imóvel. ");
+                }
+
+    
+                $compra->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-compra'));
+                $compra->descricao = $request->input('descricao');
+                $compra->tipoCompra = $request->input('tipo-compra');
+                $compra->forma_pagamento = $request->input('forma-pagamento');
+                $compra->qtdeParcelas = $request->input('qtde-parcelas');
+                $compra->nome_vendedor = $request->input('nome-vendedor');
+                $compra->garantia = $request->input('garantia') === 'on' ? 'S' : 'N';
+                $compra->qtdeDiasGarantia = $request->input('qtde-dias-garantia');
+                $compra->fornecedor = FornecedoresService::getIDFornecedorBy($request->input('fornecedor-select'));
+                $compra->nrDocumento = $request->input('nr-documento');
+
+                if($request->hasFile('arquivo-nota')){
+                    $file = $request->file('arquivo-nota');
+                    $fileName = $file->getClientOriginalName();
+                    $filePath = $file->storeAs('notas', $fileName);
+                    $compra->nota = $filePath;
+                }
+
+                $compra->save();
+
+                $mensagem_vo = new MensagemVO('sucesso', 'O registro da compra foi editado com sucesso');
+                $mensagem = $mensagem_vo->getJson();
+
+            }
 
 
 

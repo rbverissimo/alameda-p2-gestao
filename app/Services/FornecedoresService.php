@@ -65,4 +65,8 @@ class FornecedoresService {
             ->paginate(15);
     }
 
+    public static function getIDFornecedorBy($cnpj){
+        return Fornecedor::where('cnpj', $cnpj)->pluck('id')->first();
+    }
+
 }

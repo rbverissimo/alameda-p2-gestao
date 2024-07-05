@@ -71,7 +71,7 @@
                               @foreach ($formas_pagamento as $forma_pagamento)
                                     <option value="{{$forma_pagamento->codigo}}"
                                           @isset($compra->forma_pagamento)
-                                                @if($compra->forma_pagamento === $forma_pagamento->codigo)
+                                                @if($compra->forma_pagamento == $forma_pagamento->codigo)
                                                 selected
                                                 @endif
                                           @endisset
@@ -128,8 +128,8 @@
             <textarea name="descricao" id="descricao-compra" 
                 rows="3" 
                 required
-                value="{{ isset($compra->descricao) ?
-                    old('descricao', $compra->descricao) : old('descricao') }}"></textarea>
+            >{{ isset($compra->descricao) ?
+                    old('descricao', $compra->descricao) : old('descricao') }}</textarea>
             <span class="errors-highlighted">{{ $errors->has('descricao') ? $errors->first('descricao') : ' '}}</span> 
         </div>
     </div>

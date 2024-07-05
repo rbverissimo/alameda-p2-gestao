@@ -117,6 +117,7 @@ Route::prefix('compras')->middleware('autenticacao')->group(function(){
     Route::get('/c', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
     Route::post('/c', [ComprasController::class, 'cadastrar'])->name('cadastrar-compra');
     Route::get('/e/{idCompra}', [ComprasController::class, 'editar'])->name('editar-compra');
+    Route::put('/e/{idCompra}', [ComprasController::class, 'editar'])->name('editar-compra');
     Route::get('/d/{idCompra}', [ComprasController::class, 'deletar'])->name('deletar-compra');
 });
 
