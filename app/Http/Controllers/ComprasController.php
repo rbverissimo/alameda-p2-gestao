@@ -15,6 +15,7 @@ use App\Services\ImoveisService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ComprasController extends Controller
 {
@@ -52,7 +53,7 @@ class ComprasController extends Controller
                 $regras = [
                     'cnpj-fornecedor' => 'required|size:18',
                     'data-compra' => 'required|date',
-                    'imovel' => 'required',
+                    'imovel' => 'required|string',
                     'valor-compra' => 'required',
                     'forma-pagamento' => 'required',
                     'arquivo-nota' => 'required|file',
@@ -60,8 +61,9 @@ class ComprasController extends Controller
 
                 $feedback = [
                     'cnpj-fornecedor.size' => 'O CNPJ do fornecedor não está correto. ',
-                    'data-compra.date' => 'A data da compra não está correta. ',
                     'arquivo-nota.file' => 'A nota fiscal da compra não está correta. ',
+                    'imovel.string' => 'Escolha um imóvel.',
+                    'data-compra.date' => 'Defina um data válida. ',
 
                     'required' => 'O :attribute é obrigatório.',
                 ];
@@ -191,8 +193,12 @@ class ComprasController extends Controller
             }
 
             return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra', 'fornecedores', 'mensagem'));
-        } catch (\Throwable $th) {
-            redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
+        } catch (\Throwable | ValidationException $th) {
+            if(!($th instanceof ValidationException)){
+                redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
+            } else {
+                return back()->withErrors($th->validator->errors())->withInput($request->all()); 
+            }
         }
     }
 

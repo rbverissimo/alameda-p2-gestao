@@ -31,6 +31,7 @@
                                     </option>
                               @endforeach
                         </select>
+                        <span class="errors-highlighted">{{ $errors->has('imovel') ? $errors->first('imovel') : ' '}}</span>
                   </div>
         @endisset
         <div class="col-4">
@@ -144,6 +145,7 @@
                   Envie o comprovante:
             </label>
             <input type="file" id="arquivo-nota" name="arquivo-nota">
+            <span class="errors-highlighted">{{ $errors->has('arquivo-nota') ? $errors->first('arquivo-nota') : ' '}}</span> 
         </div>
     </div>
     <div class="row">
