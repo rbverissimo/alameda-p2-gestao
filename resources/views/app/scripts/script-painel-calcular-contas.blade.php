@@ -6,15 +6,12 @@
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
     import { mascaraReferenciaSlider } from "{{ asset('js/scripts.js') }}";
     import { showMensagem } from "{{ asset('js/scripts.js') }}";
-    import { loadSimpleModal } from "{{ asset('js/partials/simple-modal.js')}}";
+    import { loadSimpleModal, toggleModal } from "{{ asset('js/partials/simple-modal.js')}}";
 
 
-    const referenciaCalculo = @json($referencia_calculo);
-    const idImovel = @json($idImovel);
-    const contas = @json($contas_imovel);
-
-    const wrapperModal = document.getElementById('dashboard-modal-wrapper');
-    const overlay = document.getElementsByClassName('overlay')[0];
+    const referenciaCalculo = window.appData['referencia_calculo'];
+    const idImovel = window.appData['idImovel'];
+    const contas = window.appData['contas_imovel'];
     const loadingOverlay = document.getElementById('loading-overlay');
 
 
@@ -40,7 +37,12 @@
     });
 
     if(!isArrayEmpty(contas)){
-        loadSimpleModal(`Deseja realizar cálculos das contas do imóvel ${idImovel} para a referência ${referenciaCalculo}?`, 'Sim', 'Cancelar', confirmarCalcularContasHandler);
+        document.getElementById('botao-realizar-calculos').addEventListener('click', () => {
+            console.log('clicado');
+            loadSimpleModal(
+                `Deseja realizar cálculos das contas do imóvel ${idImovel} para a referência ${referenciaCalculo}?`, 
+                'Sim', 'Cancelar', confirmarCalcularContasHandler);
+        });
     }
 
     function confirmarCalcularContasHandler(){

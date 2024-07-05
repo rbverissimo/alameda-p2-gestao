@@ -44,4 +44,5 @@
     <script type="module" src="{{ asset('js/comportamento-dinamico.js')}}"></script>
     @include('app.scripts.script-painel-calcular-contas')
     @include('app.scripts.script-carousel')
+    @include('app.scripts.script-app-data')
 @endsection

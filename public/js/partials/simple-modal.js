@@ -29,7 +29,7 @@ export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, 
  * @param {*} overlay 
  * @param {*} wrapperModal 
  */
-function toggleModal(){
+export function toggleModal(){
     modalOverlay.style.display = modalOverlay.style.display === 'none' ? 'block' : 'none';
     modalWrapper.style.display = modalWrapper.style.display === 'none' ? 'block' : 'none';
 }

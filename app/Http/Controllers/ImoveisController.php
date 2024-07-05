@@ -194,11 +194,14 @@ class ImoveisController extends Controller
         }
 
         $itens_carrossel = [$referencia_calculo-1, $referencia_calculo, $referencia_calculo+1];
-        $mensagemConfirmacaoModal = 'Deseja realizar o cálculo das contas do imóvel '.$nomeImovel->first().
-            ' para o período de referência: '.$referencia_calculo.'?';
+        $appData = [
+            'idImovel' => $idImovel,
+            'referencia_calculo' => $referencia_calculo,
+            'contas_imovel' => $contas_imovel
+        ];
 
         return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 
-            'mensagemConfirmacaoModal', 'idImovel', 'referencia_calculo'));
+            'appData', 'idImovel', 'referencia_calculo'));
 
     }
 
