@@ -1,4 +1,4 @@
-import { cancelarButton, confirmarButton, loadSimpleModal, mensagemModal, toggleModal } from "./partials/simple-modal.js";
+import { cancelarButton, confirmarButton, loadMessages, toggleModal } from "./partials/simple-modal.js";
 import { toggleOverlay } from "./comportamento-dinamico.js";
 
 export function setLiveRoute(rota){
@@ -385,6 +385,41 @@ export function redirecionarPara(route){
 }
 
 export function deletarRegistro(route, idRegistro){
+
+      const textMensagemModal = `Deseja mesmo excluir o registro ${idRegistro} ?`;
+      loadMessages(textMensagemModal);
+
+      toggleModal();
+
+      cancelarButton.addEventListener('click', () => {
+            toggleModal();
+      }, {once: true, capture: true});
+
+      confirmarButton.addEventListener('click', () => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            fetch(route)
+                .then(response => {
+                    toggleOverlay(loadingOverlay); 
+                    if(!response.ok){
+                        throw new Error('Não foi possível se conectar com o servidor. ');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    toggleOverlay(loadingOverlay);
+                    console.log(data);
+                    if(data > 0){
+                        showMensagem(`Registro ${idRegistro} deletado com sucesso!`, 'sucesso');      
+                    }
+                })
+                .catch(error => {
+                    toggleOverlay(loadingOverlay);
+                    console.error('Não foi possível concluir a operação', error);
+                }).then(complete => {
+                    toggleModal();
+                    setTimeout(location.reload(), 8000);  
+                });
+        } , {once: true, capture: true});
       
 }
 

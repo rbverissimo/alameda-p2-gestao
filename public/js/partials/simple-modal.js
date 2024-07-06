@@ -8,23 +8,27 @@ export const cancelarButton = document.getElementById('botao-cancelar-modal');
 
 export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, handlerConfirmar){
 
-    removeAllEventListenersFrom(confirmarButton);
-    removeAllEventListenersFrom(cancelarButton);
-
     mensagemModal.textContent = textMensagemModal;
     confirmarButton.textContent = textConfirmar;
     cancelarButton.textContent = textCancelar;
 
     cancelarButton.addEventListener('click', (event) => {
-        event.stopPropagation();
         toggleModal();
-    });
+        event.stopPropagation();
+    }, {once: true});
 
     toggleModal();
 
-    confirmarButton.addEventListener('click', handlerConfirmar);
+    confirmarButton.addEventListener('click', handlerConfirmar, {once: true});
 
 }
+
+export function loadMessages(textMensagemModal, textConfirmar = 'Sim', textCancelar = 'Cancelar'){
+    mensagemModal.textContent = textMensagemModal;
+    confirmarButton.textContent = textConfirmar;
+    cancelarButton.textContent = textCancelar;
+}
+
 
 
 /**
@@ -43,14 +47,4 @@ export function toggleModal(){
 
     modalOverlay.style.display = modalOverlay.style.display === 'none' ? 'block' : 'none';
     modalWrapper.style.display = modalWrapper.style.display === 'none' ? 'block' : 'none';
-}
-
-function removeAllEventListenersFrom(element){
-    const listeners = element.eventListeners;
-    if(listeners){
-        for(let i = listeners.length - 1; i >= 0; i--){
-            const listener = listeners[i];
-            element.removeEventListener(listener.type, listener.handler);
-        }
-    }
 }
