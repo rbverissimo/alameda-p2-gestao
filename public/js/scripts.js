@@ -391,11 +391,13 @@ export function deletarRegistro(route, idRegistro){
 
       toggleModal();
 
-      cancelarButton.addEventListener('click', () => {
+      cancelarButton.addEventListener('click', (event) => {
             toggleModal();
-      }, {once: true, capture: true});
+            confirmarButton.removeEventListener('click', (event) => {}, {once: true});
+            event.stopImmediatePropagation();
+      }, {once: true });
 
-      confirmarButton.addEventListener('click', () => {
+      confirmarButton.addEventListener('click', (event) => {
             const loadingOverlay = document.getElementById('loading-overlay');
             fetch(route)
                 .then(response => {
@@ -419,7 +421,8 @@ export function deletarRegistro(route, idRegistro){
                     toggleModal();
                     setTimeout(location.reload(), 8000);  
                 });
-        } , {once: true, capture: true});
+                event.stopImmediatePropagation();
+        } , {once: true});
       
 }
 
