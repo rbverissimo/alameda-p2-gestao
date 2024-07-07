@@ -28,5 +28,6 @@
 
 @section('scripts')
     <script type="module" src="{{ asset('js/views/cadastro-inquilino.js')}}"></script>
+    @include('app.scripts.script-app-data')
     @include('app.scripts.script-detalhe-inquilino')
 @endsection

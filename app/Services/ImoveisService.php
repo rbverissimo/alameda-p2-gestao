@@ -140,4 +140,8 @@ class ImoveisService {
         return in_array($idImovel, $imoveis_usuario);
     }
 
+    public static function getImovelBySala($sala){
+        return Sala::where('id', $sala)->pluck('imovelcodigo')->first();
+    }
+
 }

@@ -1,6 +1,10 @@
+import { getSalasSelectedImovel } from "../components/imoveis-search.js";
+import { loadMessages } from "../partials/simple-modal.js";
 import { cpfMascara, mascaraFatorDivisor } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
+
+let appData = {};
 
 const inputTelefoneCelular = document.getElementById('form-inquilino-telefone-celular');
 const inputTelefoneTrabalho = document.getElementById('form-inquilino-telefone-trabalho');
@@ -20,43 +24,20 @@ inputFatorDivisor.addEventListener('keydown', apenasNumeros);
 
 
 imoveisSelect.addEventListener('change', (option) => {
-    const imovelSelecionado = option.target.value;
-    const url = '/salas/listar-salas/' + imovelSelecionado;
-    salasSelect.innerHTML = '';
-    salasSelect.style.display = 'none';
-
-    fetch(url)
-        .then(response => {
-            if(response.status === 200){
-                return response.json();
-            } else {
-                throw new Error(`Erro ao buscar as informações no servidor ${response.status}`);
-            }
-        })
-        .then(data => {
-            createSalasOptions(data);
-        })
-        .catch(err => {
-            showMensagem(err, 'falha', 5000);
-            console.error(err);
-        })
-
+    getSalasSelectedImovel(salasSelect, option.target.value);
 });
 
-function createSalasOptions(data){
-    for(const object of data){
-        const option = document.createElement('option');
-        option.value = object.id;
-        option.text = object.nomesala;
 
-        salasSelect.appendChild(option);
-    }
-    
-    if(data.length > 0){
-        salasSelect.style.display = 'block';
-    }
-    
-}
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.addEventListener('appData', (data) => {
+        if(data['dominio'] === 'detalhes_inquilino'){
+            appData = data.detail; 
+            loadMessages(`Você tem certeza que deseja alterar a situação do inquilino ${appData.nome_inquilino} ?`);
+        }
+    });
+
+})
 
 
 
