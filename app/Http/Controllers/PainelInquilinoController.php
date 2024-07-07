@@ -38,12 +38,13 @@ class PainelInquilinoController extends Controller
 
     public function detalharInquilino($id){
         $inquilino = InquilinosService::getDetalhesInquilino($id);
+
         $titulo = 'Detalhes do Inquilino: '.$inquilino->nome; 
         $mensagem = null; 
         $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
 
         $imoveis = ImoveisService::getImoveis();
-        $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
+        $salas = [];
         $contrato = InquilinosService::getContratoVigente($id);
 
         return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'mensagemConfirmacaoModal'));

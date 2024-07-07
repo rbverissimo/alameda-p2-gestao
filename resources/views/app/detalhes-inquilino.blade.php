@@ -20,12 +20,13 @@
         </div>
     </div>
     <div class="row">
-        @component('app.layouts._components.form_inquilinos', compact('contrato'))
+        @component('app.layouts._components.form_inquilinos', compact('contrato', 'inquilino', 'imoveis'))
             
         @endcomponent
     </div>
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{ asset('js/views/cadastro-inquilino.js')}}"></script>
     @include('app.scripts.script-detalhe-inquilino')
 @endsection

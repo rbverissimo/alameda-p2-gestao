@@ -18,6 +18,6 @@
 @endsection
 
 @section('scripts')
-    @include('app.scripts.script-cadastro-inquilino')
+    <script type="module" src="{{ asset('js/views/cadastro-inquilino.js')}}"></script>
     @include('app.scripts.script-dados-contrato')
 @endsection
