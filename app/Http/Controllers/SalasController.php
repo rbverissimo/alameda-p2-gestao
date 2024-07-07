@@ -77,4 +77,8 @@ class SalasController extends Controller
 
     }
 
+    public function listarSalas($idImovel){
+        return Sala::where('imovelcodigo', $idImovel)->get();
+    }
+
 }

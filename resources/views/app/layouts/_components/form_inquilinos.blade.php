@@ -99,23 +99,10 @@
                   </select> 
             </div>
             @endisset 
-            @isset($salas)
             <div class="col-3">
-                <select id="sala-select" name="sala">
-                    @foreach ($salas as $sala)
-                          <option value="{{$sala->id}}"
-                                @isset($conta_imovel->salacodigo)
-                                      @if ($conta_imovel->salacodigo == $sala->id)
-                                                selected
-                                      @endif
-                                @endisset
-                                >
-                                    {{$sala->nomesala}}
-                            </option>
-                    @endforeach
+                <select style="display: none" id="sala-select" name="sala">
                 </select>
             </div>
-            @endisset
         </div>
     </div>
     @component('app.layouts._components.dados_contrato', compact('contrato'))

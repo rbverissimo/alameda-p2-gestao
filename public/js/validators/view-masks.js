@@ -101,6 +101,58 @@ export function writeMascaraCnpj(str){
 
 
 /**
+ * máscara: ddd.ddd.ddd-dd
+ * @param {*} event 
+ */
+export function cpfMascara(event){
+    const inputValue = event.target.value;
+    const cleanInput = removerMascara(inputValue);
+    const resizedInput = cleanInput.slice(0, 11);
+    let resultado = '';
+
+    if(resizedInput.length > 9){
+        resultado = resizedInput.slice(0, 3) + '.'
+            + resizedInput.slice(3, 6) + '.'
+            + resizedInput.slice(6, 9) + '-'
+            + resizedInput.slice(9);
+    } else if(resizedInput.length > 6 && resizedInput.length <= 9){
+        resultado = resizedInput.slice(0, 3) + '.'
+            + resizedInput.slice(3, 6) + '.'
+            + resizedInput.slice(6);
+    } else if(resizedInput.length > 3 && resizedInput.length <= 6 ){
+        resultado = resizedInput.slice(0, 3) + '.'
+            + resizedInput.slice(3);
+    } else {
+        resultado = resizedInput;
+    }
+
+    event.target.value = resultado;
+}
+
+/**
+ * 
+ * @param {string} str 
+ * @returns Uma string com uma máscara de CPF adicionada
+ */
+export function writeMascaraCpf(str){
+    if(!isStringValida(str)){
+        return;
+    }
+    const resizeStr = str.slice(0, 14);
+    let resultado = '';
+
+    if(resizeStr.length > 9){
+        resultado = resizedInput.slice(0, 3) + '.'
+            + resizedInput.slice(3, 6) + '.'
+            + resizedInput.slice(6, 9) + '-'
+            + resizedInput.slice(9);
+    }
+    return resultado;
+}
+
+
+
+/**
  * Esse método recebe um InputEvent e retorna um value
  * de acordo com a máscara (dd)dddd-dddd que representa um 
  * número de telefone
@@ -177,11 +229,40 @@ export function writeMascaraCEP(str){
 
 /**
  * 
+ * @param {InputEvent} event 
+ * @returns 0 ao value do Input se o valor digitado for maior do que 1
+ */
+export function mascaraFatorDivisor(event){
+    const fator = event.target.value;
+    const fatorNormalizado = fator.replace(/[^0-9]/g, "");
+    const arrFator = fatorNormalizado.split("");
+    let resultado = '';
+    
+    if(arrFator[0] > 1){
+          event.target.value = 0;
+          return;
+    }
+
+    
+    for(let i = 0; i < arrFator.length; i++){
+          if(i === 1){
+                resultado += '.';
+          }
+          resultado += arrFator[i];
+    }
+    
+
+    event.target.value = resultado;  
+}
+
+
+/**
+ * 
  * @param {string} strValue 
  * @param {string[]} charsToRemove
  * @returns uma string limpa dos caractéres passados no array charsToRemove
  */
-function removerMascara(strValue, charsToRemove){
+function removerMascara(strValue, charsToRemove = ['.', '-', '(', ')', '/']){
     let cleanString = "";
   for (let i = 0; i < strValue.length; i++) {
     const char = strValue[i];

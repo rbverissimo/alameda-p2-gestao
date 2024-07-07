@@ -43,7 +43,7 @@ class PainelInquilinoController extends Controller
         $mensagem = null; 
         $mensagemConfirmacaoModal = 'Você tem certeza que deseja alterar a situação do inquilino '.$inquilino->nome.'?';
 
-        $imoveis = ImoveisService::getImoveis();
+        $imoveis = ImoveisService::getListaImoveisSelect();
         $salas = [];
         $contrato = InquilinosService::getContratoVigente($id);
 

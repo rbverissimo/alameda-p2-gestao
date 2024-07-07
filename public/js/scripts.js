@@ -330,34 +330,6 @@ function agrouparMilhares(valor){
       }
 
       return resultado.split("").reverse().join("");
-}
-
-/**
- * 
- * @param {InputEvent} event 
- * @returns 0 ao value do Input se o valor digitado for maior do que 1
- */
-export function mascaraFatorDivisor(event){
-      const fator = event.target.value;
-      const fatorNormalizado = fator.replace(/[^0-9]/g, "");
-      const arrFator = fatorNormalizado.split("");
-      let resultado = '';
-      
-      if(arrFator[0] > 1){
-            event.target.value = 0;
-            return;
-      }
-
-      
-      for(let i = 0; i < arrFator.length; i++){
-            if(i === 1){
-                  resultado += '.';
-            }
-            resultado += arrFator[i];
-      }
-      
-
-      event.target.value = resultado;  
 } 
 
 export function isNullOrUndefined(value){
@@ -604,3 +576,5 @@ window.navigateToLastRoute = navigateToLastRoute;
 window.criarSearchInputEvent = criarSearchInputEvent;
 window.criarSelectedSearchInputEvent = criarSelectedSearchInputEvent;
 window.deletarRegistro = deletarRegistro;
+window.telefoneFixoMascara = telefoneFixoMascara;
+window.telefoneCelularMascara = telefoneCelularMascara;
