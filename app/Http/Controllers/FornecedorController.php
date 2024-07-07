@@ -101,6 +101,8 @@ class FornecedorController extends Controller
         } catch (\Throwable $th) {
             if($th instanceof ValidationException){
                 return back()->withErrors($th->validator->errors())->withInput($request->all()); 
+            } else {
+                redirect()->back()->with('erros', 'Não foi possível editar o fornecedor. Erro: '.$th->getMessage());
             }
         }
 

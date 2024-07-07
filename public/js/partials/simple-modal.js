@@ -14,6 +14,7 @@ export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, 
 
     cancelarButton.addEventListener('click', (event) => {
         toggleModal();
+        confirmarButton.removeEventListener('click', handlerConfirmar, {once: true});
         event.stopPropagation();
     }, {once: true});
 
@@ -28,8 +29,6 @@ export function loadMessages(textMensagemModal, textConfirmar = 'Sim', textCance
     confirmarButton.textContent = textConfirmar;
     cancelarButton.textContent = textCancelar;
 }
-
-
 
 /**
  * O intuito de criar essa função é oferecer uma interface única e desacoplável 
