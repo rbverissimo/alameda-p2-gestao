@@ -1,3 +1,5 @@
+import { isStringValida } from "./null-safe.js";
+
 const unidadesFederativas = [
       'AL',
       'AM',
@@ -87,6 +89,17 @@ export function isUFValida(uf){
             return false;
       }
       return unidadesFederativas.includes(uf);
+}
+
+export function isValorDinheiroValido(valor){
+
+      if(!isStringValida){
+            return false;
+      }
+
+      const semCaracterizacaoMoeda = valor.replace(/^R\$/, "");
+      const cleanInputAsFloat = parseFloat(semCaracterizacaoMoeda.replace(',', '.')); 
+      return cleanInputAsFloat > 0.00;
 }
 
 export function inputStateValidation(label, input, span, value, isValid, spanMessage){
