@@ -2,8 +2,8 @@ import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components
 import { apenasNumeros, inputStateValidation, isCNPJValido, isDataValida } from "../validators/view-validation.js";
 import { mascaraCnpj, 
     writeMascaraCnpj, 
-    writeMascaraTelefoneFixo,
-    mascaraTelefoneFixo,
+    writeMascaraTelefone,
+    mascaraTelefone,
     mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
 
 const dominio = 'fornecedores';
@@ -148,10 +148,10 @@ function inputTelefoneFornecedor(objToCreate){
     const inputTelefoneFornecedor = document.createElement('input');
     inputTelefoneFornecedor.id = 'input-telefone-fornecedor';
     inputTelefoneFornecedor.name = 'telefone-fornecedor';
-    inputTelefoneFornecedor.value = writeMascaraTelefoneFixo(objToCreate?.value?.telefone) ?? '';
+    inputTelefoneFornecedor.value = writeMascaraTelefone(objToCreate?.value?.telefone) ?? '';
     inputTelefoneFornecedor.required = true;
     inputTelefoneFornecedor.addEventListener('keydown', apenasNumeros);
-    inputTelefoneFornecedor.addEventListener('input', mascaraTelefoneFixo);
+    inputTelefoneFornecedor.addEventListener('input', mascaraTelefone);
 
     divWrapperTelefoneFornecedor.appendChild(createLabel(inputTelefoneFornecedor.id, 'Telefone: '))
     divWrapperTelefoneFornecedor.appendChild(inputTelefoneFornecedor);

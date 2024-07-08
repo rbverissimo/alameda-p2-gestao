@@ -154,19 +154,26 @@ export function writeMascaraCpf(str){
 
 /**
  * Esse método recebe um InputEvent e retorna um value
- * de acordo com a máscara (dd)dddd-dddd que representa um 
- * número de telefone
+ * de acordo com o tamanho do value do input event. 
+ * 
+ * Se o input for menor do que 11 dígitos, o algoritimo entende que 
+ * se trata de um telefone fixo e monta a máscara: (dd)dddd-dddd
+ * Caso seja um input de 11 dígitos, ele montará a máscara: (dd)ddddd-dddd
+ * 
  * 
  * @param {InputEvent} event 
  */
-export function mascaraTelefoneFixo(event){
+export function mascaraTelefone(event){
     const inputValue = event.target.value;
     const cleanInput = removerMascara(inputValue, ['(', ')', '-']);
-    const resizedInput = cleanInput.slice(0, 10);
+    const resizedInput = cleanInput.slice(0, 11);
 
     let resultado = '';
 
-    if(resizedInput.length > 6){
+    if(resizedInput.length > 10){
+        resultado =  '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 7) + '-' + resizedInput.slice(7);
+    }
+    else if(resizedInput.length > 6 && resizedInput.length <= 10){
         resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 6) + '-' + resizedInput.slice(6);
     } else if(resizedInput.length > 2 && resizedInput.length <= 6){
         resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2);
@@ -177,16 +184,18 @@ export function mascaraTelefoneFixo(event){
     event.target.value = `${resultado}`;
 }
 
-export function writeMascaraTelefoneFixo(strInput){
+export function writeMascaraTelefone(strInput){
     if(!isStringValida(strInput)){
         return;
     }
 
     const cleanInput = removerMascara(strInput, ['(', ')', '-']);
-    const resizedInput = cleanInput.slice(0, 10);
+    const resizedInput = cleanInput.slice(0, 11);
     let resultado = '';
 
-    if(resizedInput.length > 6){
+    if(resizedInput.length > 10){
+        resultado =  '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 7) + '-' + resizedInput.slice(7);
+    } else if(resizedInput.length > 6 && resizedInput.length <= 10){
         resultado = '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 6) + '-' + resizedInput.slice(6);
     }
 

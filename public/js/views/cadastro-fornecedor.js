@@ -1,4 +1,4 @@
-import { mascaraCEP, mascaraCnpj, mascaraTelefoneFixo, writeMascaraCEP, writeMascaraCnpj, writeMascaraTelefoneFixo } from "../validators/view-masks.js";
+import { mascaraCEP, mascaraCnpj, mascaraTelefone, writeMascaraCEP, writeMascaraCnpj, writeMascaraTelefone } from "../validators/view-masks.js";
 import { apenasLetras, apenasNumeros, inputStateValidation, isCNPJValido, isUFValida } from "../validators/view-validation.js";
 
 const inputCnpjFornecedor = document.getElementById('input-cnpj-fornecedor');
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
     })
 
-    inputTelefoneFornecedor.value = writeMascaraTelefoneFixo(inputTelefoneFornecedor.value);
-    inputTelefoneFornecedor.addEventListener('input', mascaraTelefoneFixo);
+    inputTelefoneFornecedor.value = writeMascaraTelefone(inputTelefoneFornecedor.value);
+    inputTelefoneFornecedor.addEventListener('input', mascaraTelefone);
     inputTelefoneFornecedor.addEventListener('keydown', apenasNumeros);
 
     inputCep.value = writeMascaraCEP(inputCep.value);
