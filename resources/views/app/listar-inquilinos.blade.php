@@ -42,6 +42,11 @@
             </div>
           
       @endif
+      <div class="row">
+            <div class="whitespace-end-page"></div>
+      </div>
 @endsection
 
-@include('app.scripts.script-listar-inquilinos')
+@section('scripts')
+    <script src="{{ asset('js/views/listar-inquilinos.js')}}" type="module"></script>
+@endsection

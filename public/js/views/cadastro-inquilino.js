@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    if(salasSelect.childElementCount > 0){
+        salasSelect.style.display = 'block';
+    }
+
 })
 
 

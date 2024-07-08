@@ -101,6 +101,19 @@
             @endisset 
             <div class="col-3">
                 <select style="display: none" id="sala-select" name="sala">
+                    @isset($salas)
+                        @foreach ($salas as $sala)
+                            <option value="{{$sala->id}}"
+                                @isset($inquilino->salacodigo)
+                                    @if ($inquilino->salacodigo == $sala->id)
+                                        selected
+                                    @endif
+                                @endisset
+                                >
+                                {{$sala->nomesala}}
+                            </option>
+                        @endforeach
+                    @endisset
                 </select>
             </div>
         </div>

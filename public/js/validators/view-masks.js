@@ -256,6 +256,16 @@ export function mascaraFatorDivisor(event){
 }
 
 
+export function swapPontosVirgulas(valor){
+    if (valor.includes('.')) {
+          return valor.replace(/\./g, ',');
+    } else if(valor.includes(',')) {
+          return valor.replace(/,/g, '.');
+    } else {
+          return valor; 
+    }
+}
+
 /**
  * 
  * @param {string} strValue 

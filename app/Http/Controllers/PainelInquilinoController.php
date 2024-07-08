@@ -44,6 +44,7 @@ class PainelInquilinoController extends Controller
         $mensagem = null;
 
         $imoveis = ImoveisService::getListaImoveisSelect();
+        $salas = ImoveisService::getSalaBy($inquilino->imovel);
         $contrato = InquilinosService::getContratoVigente($id);
 
         $dominio = 'detalhes_inquilino';
@@ -52,7 +53,7 @@ class PainelInquilinoController extends Controller
             'id_inquilino' => $inquilino->id
         ];
 
-        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'contrato', 'mensagem', 'dominio', 'appData'));
+        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'dominio', 'appData'));
 
     }
 
