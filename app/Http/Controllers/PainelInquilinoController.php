@@ -180,41 +180,10 @@ class PainelInquilinoController extends Controller
         try {
 
             $titulo = $this->titulo;
-            $inquilino = InquilinosService::getInquilinoBy($id);
-            $inquilino_aluguel = InquilinosService::getAluguel($id);
-            $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($id);
-            $pessoa = PessoasService::getPessoaBy($inquilino->pessoacodigo);
-
-            $pessoa->nome = $request->input('nome');
-            $pessoa->cpf = $request->input('cpf');
-            $pessoa->profissao = $request->input('profissao');
-            $pessoa->telefone_celular = $request->input('telefone-celular');
-            $pessoa->telefone_fixo = $request->input('telefone-fixo');
-            $pessoa->telefone_trabalho = $request->input('telefone-trabalho');
-
-            $pessoa->save();
-
-            $inquilino_aluguel->valorAluguel = $request->input('valor-aluguel');
-
-            $inquilino_aluguel->save();
-
-            $fator_divisor->fatorDivisor = $request->input('fator-divisor');
+            //Buscar um objeto complexo de inquilino com seu contrato, aluguel e pessoa 
             
-            $fator_divisor->save();
 
-            $inquilino->nome = $pessoa->nome;
-            $inquilino->cpf = $pessoa->cpf;
-            $inquilino->profissao = $pessoa->profissao;
-            $inquilino->telefone_celular = $pessoa->telefone_celular;
-            $inquilino->telefone_fixo = $pessoa->telefone_fixo;
-            $inquilino->telefone_trabalho = $pessoa->telefone_trabalho;
-            $inquilino->fatorDivisor = $fator_divisor->fatorDivisor;
-            $inquilino->valorAluguel = $inquilino_aluguel->valorAluguel;
-
-
-            $mensagem = 'sucesso';
-
-            return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem', 'mensagemConfirmacaoModal'));
+            return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem'));
 
         } catch (\Exception $e) {
             return redirect()->back()->with('erros', $e->getMessage());
