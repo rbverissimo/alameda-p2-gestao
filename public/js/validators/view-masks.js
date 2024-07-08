@@ -185,13 +185,13 @@ export function mascaraTelefone(event){
 }
 
 export function writeMascaraTelefone(strInput){
+    let resultado = '';
     if(!isStringValida(strInput)){
-        return;
+        return resultado;
     }
 
     const cleanInput = removerMascara(strInput, ['(', ')', '-']);
     const resizedInput = cleanInput.slice(0, 11);
-    let resultado = '';
 
     if(resizedInput.length > 10){
         resultado =  '(' + resizedInput.slice(0, 2) + ')' + resizedInput.slice(2, 7) + '-' + resizedInput.slice(7);

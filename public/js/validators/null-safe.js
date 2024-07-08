@@ -13,7 +13,8 @@ export function isNotNullOrUndefined(value){
 }
 
 export function isBlank(value){
-    return value === '';
+    let trimmedString = value.trim();
+    return trimmedString === '';
 }
 
 export function isArrayEmpty(array){

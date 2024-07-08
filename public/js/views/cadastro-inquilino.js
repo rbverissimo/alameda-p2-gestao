@@ -1,6 +1,6 @@
 import { getSalasSelectedImovel } from "../components/imoveis-search.js";
 import { loadMessages } from "../partials/simple-modal.js";
-import { cpfMascara, mascaraFatorDivisor } from "../validators/view-masks.js";
+import { cpfMascara, mascaraFatorDivisor, mascaraTelefone, writeMascaraTelefone } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
 
@@ -14,6 +14,16 @@ const inputFatorDivisor = document.getElementById('input-fator-divisor');
 
 const imoveisSelect = document.getElementById('imoveis-conta-select');
 const salasSelect = document.getElementById('sala-select');
+
+
+inputTelefoneCelular.addEventListener('input', mascaraTelefone);
+inputTelefoneCelular.addEventListener('keydown', apenasNumeros);
+
+inputTelefoneTrabalho.addEventListener('input', mascaraTelefone);
+inputTelefoneTrabalho.addEventListener('keydown', apenasNumeros);
+
+inputTelefoneFixo.addEventListener('input', mascaraTelefone);
+inputTelefoneFixo.addEventListener('keydown', apenasNumeros);
 
 inputCpf.addEventListener('input', cpfMascara);
 inputCpf.addEventListener('keydown', apenasNumeros);
@@ -40,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if(salasSelect.childElementCount > 0){
         salasSelect.style.display = 'block';
     }
+
+    inputTelefoneCelular.value = writeMascaraTelefone(inputTelefoneCelular.value);
+    inputTelefoneFixo.value = writeMascaraTelefone(inputTelefoneFixo.value);
+    inputTelefoneTrabalho.value = writeMascaraTelefone(inputTelefoneTrabalho.value);
 
 })
 
