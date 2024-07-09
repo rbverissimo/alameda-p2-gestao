@@ -12,15 +12,23 @@ class ToggleSwitch extends Component
      */
     public $attName;
 
+    /**
+     * @var bool
+     */
+    public $checked;
+
 
     /**
      * Create a new component instance.
      *
+     * @param string $attName, o nome do atributo
+     * @param bool $isChecked, o estado do switch
      * @return void
      */
-    public function __construct($attName)
+    public function __construct($attName, $checked = false)
     {
         $this->attName = $attName;
+        $this->checked = $checked;
     }
 
     /**
@@ -31,5 +39,9 @@ class ToggleSwitch extends Component
     public function render()
     {
         return view('components.toggle-switch');
+    }
+
+    public function isChecked(): bool {
+        return $this->checked;
     }
 }

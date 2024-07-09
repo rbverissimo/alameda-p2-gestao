@@ -1,6 +1,6 @@
 import { getSalasSelectedImovel } from "../components/imoveis-search.js";
 import { loadMessages } from "../partials/simple-modal.js";
-import { cpfMascara, mascaraFatorDivisor, mascaraTelefone, writeMascaraTelefone } from "../validators/view-masks.js";
+import { cpfMascara, mascaraFatorDivisor, mascaraTelefone, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
 
@@ -27,6 +27,7 @@ inputTelefoneFixo.addEventListener('keydown', apenasNumeros);
 
 inputCpf.addEventListener('input', cpfMascara);
 inputCpf.addEventListener('keydown', apenasNumeros);
+inputCpf.value = writeMascaraCpf(inputCpf.value);
 
 
 inputFatorDivisor.addEventListener('input', mascaraFatorDivisor);

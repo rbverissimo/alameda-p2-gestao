@@ -1,4 +1,4 @@
-import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
+import { dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasNumeros, isDataValida, inputStateValidation, isValorDinheiroValido } from "../validators/view-validation.js";
 
 const inputValorAluguel = document.getElementById('input-valor-aluguel');
@@ -13,6 +13,7 @@ inputValorAluguel.addEventListener('blur', (event) => {
     const spanMessage = 'Valor inválido';
     inputStateValidation(label, inputValorAluguel, span, event.target.value, isValorDinheiroValido, spanMessage);
 })
+inputValorAluguel.value = writeMascaraValorDinheiro(inputValorAluguel.value);
 
 inputDataAssinatura.addEventListener('input', dataMascara);
 inputDataAssinatura.addEventListener('keydown', apenasNumeros);
@@ -23,6 +24,7 @@ inputDataAssinatura.addEventListener('blur', (event) => {
         inputStateValidation(label, inputDataAssinatura, span, event.target.value, isDataValida, spanMessage);
     
 });
+inputDataAssinatura.value = writeDataMascara(inputDataAssinatura.value);
 
 
 inputDataExpiracao.addEventListener('input', dataMascara);
@@ -34,3 +36,4 @@ inputDataExpiracao.addEventListener('blur', (event) => {
         inputStateValidation(labelDataExpiracao, inputDataExpiracao, spanDataExpiracao, event.target.value, isDataValida, spanMessage);
 
 });
+inputDataExpiracao.value = writeDataMascara(inputDataExpiracao.value);

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Pessoa extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'cpf', 'profissão',
+    protected $fillable = ['nome', 'cpf', 'profissao',
         'telefone_celular', 'telefone_fixo', 'telefone_trabalho'];
     
     public function inquilino(): HasOne {

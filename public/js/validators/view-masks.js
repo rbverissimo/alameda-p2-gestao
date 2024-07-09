@@ -18,6 +18,15 @@ export function dataMascara(event) {
     event.target.value = inputValue;
 }
 
+export function writeDataMascara(str){
+    let resultado = '';
+    if(!isStringValida(str)){
+        return resultado;
+    }
+    const [ano, mes, dia] = str.split('-');
+    return `${dia}/${mes}/${ano}`;
+}
+
 export function mascaraValorDinheiro(event){
     const input = event.target.value.trim();
     let resultado = '';
@@ -38,9 +47,18 @@ export function mascaraValorDinheiro(event){
 
           resultado = `${parteNaoDecimal},${ultimosDoisDigitos}`;
     }
+    event.target.value = `R$${resultado}`;    
+}
 
-    event.target.value = `R$${resultado}`;
+export function writeMascaraValorDinheiro(str){
+    const [parteInteira, parteDecimal] = str.split('.');
+    let resultado = `R$${parteInteira},${parteDecimal}`;
+
+    if(parteDecimal.length == 1){
+        return resultado+'0';
+    }
     
+    return resultado;
 }
 
 /**
@@ -142,10 +160,10 @@ export function writeMascaraCpf(str){
     let resultado = '';
 
     if(resizeStr.length > 9){
-        resultado = resizedInput.slice(0, 3) + '.'
-            + resizedInput.slice(3, 6) + '.'
-            + resizedInput.slice(6, 9) + '-'
-            + resizedInput.slice(9);
+        resultado = resizeStr.slice(0, 3) + '.'
+            + resizeStr.slice(3, 6) + '.'
+            + resizeStr.slice(6, 9) + '-'
+            + resizeStr.slice(9);
     }
     return resultado;
 }

@@ -22,7 +22,7 @@
                 name="cpf" 
                 placeholder="CPF: "
                 id="form-inquilino-cpf"
-                value="{{ isset($inqulino->cpf) ? old('cpf', $inqulino->cpf) : old('cpf')}}">
+                value="{{ isset($inquilino->cpf) ? old('cpf', $inquilino->cpf) : old('cpf')}}">
             <span id="span-errors-inquilino-cpf" class="errors-highlighted">{{ $errors->has('cpf') ? $errors->first('cpf') : ' '}}</span>
         </div>
         @if (isset($inquilino->id))

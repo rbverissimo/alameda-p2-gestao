@@ -29,7 +29,11 @@
             <span class="basic-card-wrapper">Renovação automática de contrato?</span>
         </div>
         <div class="col-1">
-            <x-toggle-switch attName="renovacao-automatica"></x-toggle-switch>
+            @if (isset($contrato))
+                <x-toggle-switch attName="renovacao-automatica" :checked="$contrato->renovacaoAutomatica === 'S'" />
+            @else
+                <x-toggle-switch attName="renovacao-automatica"/>
+            @endif
         </div>
     </div>
     <div class="row">
