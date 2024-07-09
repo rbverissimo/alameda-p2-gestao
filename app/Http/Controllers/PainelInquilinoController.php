@@ -249,7 +249,17 @@ class PainelInquilinoController extends Controller
             $mensagem_vo = new MensagemVO('sucesso', 'Os dados do(a) inquilino(a) '.$request->input('nome').' foram atualizados com sucesso!');
             $mensagem = $mensagem_vo->getJson();
 
-            return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem'));
+            $imoveis = ImoveisService::getListaImoveisSelect();
+            $salas = ImoveisService::getSalaBy($inquilino->imovel);
+            $contrato = InquilinosService::getContratoVigente($id);
+
+            $dominio = 'detalhes_inquilino';
+            $appData = [
+                'nome_inquilino' => $inquilino->nome,
+                'id_inquilino' => $inquilino->id
+            ];
+
+            return view('app.detalhes-inquilino', compact('titulo', 'dominio', 'appData', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem'));
 
         } catch (\Exception $e) {
             if($e instanceof ValidationException){
