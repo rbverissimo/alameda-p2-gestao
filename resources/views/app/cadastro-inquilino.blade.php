@@ -20,4 +20,5 @@
 @section('scripts')
     <script type="module" src="{{ asset('js/views/cadastro-inquilino.js')}}"></script>
     <script type="module" src="{{ asset('js/views/dados-contrato.js')}}"></script>
+    @include('app.scripts.script-mensagem')
 @endsection

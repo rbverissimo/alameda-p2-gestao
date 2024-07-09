@@ -8,7 +8,7 @@ class InquilinoBO {
             $regras = [
                   'data-assinatura' => 'required',
                   'valor-aluguel' => 'required',
-                  'arquivo-contrato' => 'required|file',
+                  'arquivo-contrato' => 'file',
                   'sala' => 'required|exists:salas,id',
                   'nome' => 'required',
                   'cpf' => 'required',

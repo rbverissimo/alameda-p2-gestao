@@ -8,6 +8,7 @@ use App\Models\Contrato;
 use App\Models\ContratoModel;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
+use App\Models\InquilinoFatorDivisor;
 use App\Models\Pessoa;
 use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
@@ -40,8 +41,12 @@ class PainelInquilinoController extends Controller
         return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira', 'mensagemConfirmacaoModal'));
     }
 
+    /**
+     * Esse é o método que busca as informações do inquilino para a edição
+     */
     public function detalharInquilino($id){
         $inquilino = InquilinosService::getDetalhesInquilino($id);
+
         $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
 
         $titulo = 'Detalhes do Inquilino: '.$inquilino->nome; 
@@ -104,26 +109,35 @@ class PainelInquilinoController extends Controller
                 DB::transaction(function($closure) use ($request){
                     $pessoa = Pessoa::create([
                         "nome" => $request->input('nome'),
-                        "cpf" => ProjectUtils::removerMascara($request->input('cpf')),
+                        "cpf" => ProjectUtils::tirarMascara($request->input('cpf')),
                         "profissao" => $request->input('profissao'),
                         "telefone_celular" => ProjectUtils::tirarMascara($request->input('telefone-celular')),
                         "telefone_fixo" => ProjectUtils::tirarMascara($request->input('telefone-fixo')),
                         "telefone_trabalho" => ProjectUtils::tirarMascara($request->input('telefone-trabalho'))
                     ]);
-    
+
+                    
                     $inquilino = Inquilino::create([
                         'pessoacodigo' => DB::getPdo()->lastInsertId(),
                         'salacodigo' => $request->input('sala')
                     ]);
-    
-                    $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-assinatura'));
-                    $fimValidade_aluguel = ProjectUtils::getReferenciaFromDate($request->input('data-expiracao'));
-    
+                    
+                    $inicioValidade_aluguel = ProjectUtils::getReferenciaFromDate(ProjectUtils::normalizarData($request->input('data-assinatura'), Operacao::NORMALIZAR));
+                    $fimValidade_aluguel = $request->input('data-expiracao') !== null ?
+                        ProjectUtils::getReferenciaFromDate(ProjectUtils::normalizarData($request->input('data-expiracao'), Operacao::NORMALIZAR)) : null;
+                    
+                    $inquilino_id_inserido = DB::getPdo()->lastInsertId(); // snapshot desse momento    
+
                     $inquilino_aluguel = InquilinoAluguel::create([
-                        'inquilino' => DB::getPdo()->lastInsertId(), 
+                        'inquilino' => $inquilino_id_inserido, 
                         'valorAluguel' => ProjectUtils::retirarMascaraMoeda($request->input('valor-aluguel')),
                         'inicioValidade' => $inicioValidade_aluguel,
                         'fimValidade' => $fimValidade_aluguel
+                    ]);
+
+                    $inquilino_fator_divisor = InquilinoFatorDivisor::create([
+                        'inquilino_id' => $inquilino_id_inserido,
+                        'fatorDivisor' => $request->input('fator-divisor') !== null ? $request->input('fator-divisor') : 1.0
                     ]);
     
                     $renovacao_automatica = $request->input('renovacao-automatica') === 'on' ? 'S' : 'N'; 
@@ -138,7 +152,7 @@ class PainelInquilinoController extends Controller
                     $contrato = Contrato::create([
                         'aluguel' => DB::getPdo()->lastInsertId(),
                         'dataAssinatura' => ProjectUtils::normalizarData($request->input('data-assinatura'), Operacao::SALVAR),
-                        'dataExpiracao' => ProjectUtils::normalizarData($request->input('data-expiracao'), Operacao::SALVAR),
+                        'dataExpiracao' => $request->input('data-expiracao') ? ProjectUtils::normalizarData($request->input('data-expiracao'), Operacao::SALVAR) : null,
                         'renovacaoAutomatica' => $renovacao_automatica,
                         'contrato' => $contratoPath
                     ]);
@@ -168,6 +182,13 @@ class PainelInquilinoController extends Controller
             
             $regras_feedback = InquilinoBO::getRegrasValidacao();
             $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
+
+            DB::transaction(function($closure) use($request, $inquilino){
+
+                dd($inquilino, $request->all());
+
+
+            });
 
             return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem'));
 

@@ -3,7 +3,8 @@
 namespace App\Utils;
 
 use App\Constants\Operacao;
-use DateTime;
+use Doctrine\Common\Cache\Psr6\InvalidArgument;
+use Exception;
 use InvalidArgumentException;
 
 class ProjectUtils {
@@ -23,9 +24,22 @@ class ProjectUtils {
 
       /**
        * Retorna o anoMês (ou seja, a referência) que o sistema lê
+       * @return string a string formatada em AAAA-mm
        */
       public static function getAnoMesSistema(){
             return date('Y-m');
+      }
+
+      /**
+       * Retorna uma referência AAAAmm inteira útil para comparações entre referências
+       * @return int referência do sistema
+       */
+      public static function getReferenciaSistema(){
+            $ano_mes = ProjectUtils::getAnoMesSistema();
+            $arr = explode('-', $ano_mes);
+            $ano = (int) $arr[0];
+            $mes = (int) $arr[1];
+            return $ano * 100 + $mes;
       }
 
       public static function getAnoFromReferencia($referencia){
@@ -44,9 +58,14 @@ class ProjectUtils {
        */
       public static function getReferenciaFromDate($dateString){
            $data = explode('-', $dateString, 3);
-           $mes = intval($data[1]);
-           $ano = intval($data[2]);
-           return $ano * 100 + $mes;
+           try {
+                 $mes = intval($data[1]);
+                 $ano = intval($data[2]);
+
+                 return $ano * 100 + $mes;
+           } catch(\Throwable $th) {
+                  throw new \Exception("A data fornecida não está normalizada. Erro: " + $th->getMessage());
+           }
       }
 
       public static function adicionarMascaraReferencia($referencia){
@@ -154,6 +173,8 @@ class ProjectUtils {
                   return ProjectUtils::inverterDataParaSalvar($data_hifen);
             } else if($operacao == Operacao::RENDERIZAR){
                   return ProjectUtils::inverterDataParaRenderizar($data_hifen);
+            } else if($operacao == Operacao::NORMALIZAR){
+                  return $data_hifen;
             } else {
                   throw new InvalidArgumentException('A data fornecida não é válida');
             }

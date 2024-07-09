@@ -12,6 +12,11 @@ class InquilinoFatorDivisor extends Model
     use HasFactory;
 
     protected $table = 'inquilinos_fator_divisor';
+    
+    protected $fillable = [
+        'inquilino_id',
+        'fatorDivisor'
+    ];
 
     public function inquilino(): BelongsTo {
         return $this->belongsTo(Inquilino::class, 'inquilino_id');
