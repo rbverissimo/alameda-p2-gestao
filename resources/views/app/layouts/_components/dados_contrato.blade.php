@@ -54,7 +54,7 @@
             <label for="arquivo-contrato"> 
                   Envie o comprovante:
             </label>
-            <input required type="file" id="arquivo-contrato" name="contrato">
+            <input type="file" id="arquivo-contrato" name="contrato">
             <span class="errors-highlighted">{{ $errors->has('arquivo-contrato') ? $errors->first('arquivo-contrato') : ' '}}</span>
       </div>
     </div>
