@@ -179,16 +179,75 @@ class PainelInquilinoController extends Controller
 
             $titulo = $this->titulo;
             $inquilino = InquilinosService::getInquilinoCompletoBy($id);
+            $mensagem = '';
             
             $regras_feedback = InquilinoBO::getRegrasValidacao();
             $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
 
             DB::transaction(function($closure) use($request, $inquilino){
 
-                dd($inquilino, $request->all());
+                $aluguel = $inquilino->getRelation('aluguel')[0];
+                $contrato = null;
+                if($aluguel->contrato !== null){
+                    dd('its dropping here');
+                    $contratoPath = null;
+    
+                    $contrato = $aluguel->contrato;
+
+                    if($request->hasFile('contrato')){
+                        $file = $request->file('contrato');
+                        $fileName = $file->getClientOriginalName();
+                        $contratoPath = $file->storeAs('contratos', $fileName);
+                    }
+
+                    $contrato->contrato = $contratoPath;
+
+                    if($contratoPath !== null){
+                        $contrato->dataAssinatura = ProjectUtils::normalizarData($request->input('data-assinatura'), Operacao::SALVAR);
+    
+                        $dataExpiracao = $request->input('data-expiracao');
+                        if($dataExpiracao !== null){
+                            $contrato->dataExpiracao = ProjectUtils::normalizarData($dataExpiracao, Operacao::SALVAR);
+                        }
+
+                        $renovacao_automatica = $request->input('renovacao-automatica') === 'on' ? 'S' : 'N'; 
+
+                        $contrato->renovacaoAutomatica = $renovacao_automatica;
+
+                    }
+
+                    $contrato->save();
+
+                }
+                
+
+                $fator_divisor = $inquilino->getRelation('fator_divisor');
+                $fator_divisor->fatorDivisor = $request->input('fator-divisor');
+                $fator_divisor->save();
+
+                $aluguel->valorAluguel = ProjectUtils::retirarMascaraMoeda($request->input('valor-aluguel'));
+
+                $aluguel->save();
+
+                $pessoa = $inquilino->getRelation('pessoa');
+                $pessoa->nome = $request->input('nome');
+                $pessoa->cpf = ProjectUtils::tirarMascara($request->input('cpf'));
+                $pessoa->profissao = $request->input('profissao');
+                $pessoa->telefone_celular = ProjectUtils::tirarMascara($request->input('telefone-celular'));
+                $pessoa->telefone_fixo = ProjectUtils::tirarMascara($request->input('telefone-fixo'));
+                $pessoa->telefone_trabalho = ProjectUtils::tirarMascara($request->input('telefone-trabalho'));
+
+                $pessoa->save();
+
+                $inquilino->salacodigo = $request->input('sala');
+
+                $inquilino->save();
 
 
             });
+
+            $mensagem_vo = new MensagemVO('sucesso', 'Os dados do(a) inquilino(a) '.$request->input('nome').' foram atualizados com sucesso!');
+            $mensagem = $mensagem_vo->getJson();
 
             return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem'));
 

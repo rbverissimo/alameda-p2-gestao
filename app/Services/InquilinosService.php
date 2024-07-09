@@ -287,7 +287,13 @@ class InquilinosService {
       public static function getContratoVigente($idInquilino){
             $aluguel = InquilinosService::getAluguel($idInquilino);
             $contrato = Contrato::where('aluguel', $aluguel->id)->first();
+            
+            if($contrato === null ){
+                  $contrato = new Contrato();
+            }
+            
             $contrato->valorAluguel = $aluguel->valorAluguel;
+      
             return $contrato; 
             
       }
