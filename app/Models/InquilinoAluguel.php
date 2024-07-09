@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InquilinoAluguel extends Model
 {
@@ -16,6 +17,10 @@ class InquilinoAluguel extends Model
 
     public function inquilino(): BelongsTo {
         return $this->belongsTo(Inquilino::class, 'inquilino');
+    }
+
+    public function contrato(): HasOne {
+        return $this->hasOne(Contrato::class, 'aluguel');
     }
 
 }

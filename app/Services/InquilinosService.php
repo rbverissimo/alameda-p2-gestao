@@ -123,6 +123,22 @@ class InquilinosService {
                   ->get();
       }
 
+      /**
+       * Esse método retorno uma inquilino com todas as principais relações ligadas a ele
+       * @param id do inquilino que será buscado no banco de dados
+       * @return \App\Models\Inquilino 
+       */
+      public static function getInquilinoCompletoBy($id){
+            return Inquilino::with([
+                  'pessoa',
+                  'sala',
+                  'fator_divisor',
+                  'aluguel' => function($query){
+                        $query->with('contrato')->orderBy('id', 'desc')->limit(1);
+                  }
+            ])->where('id', $id)->first();
+      }
+
       public static function getInquilinosAtivosByImovel($idImovel){
             return array_filter(InquilinosService::getInquilinosBy($idImovel)->toArray(), function($inquilino){
                   return $inquilino['situacao'] === 'A';

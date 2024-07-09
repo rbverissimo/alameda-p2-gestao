@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Operacao;
+use App\Models\BusinessObjects\InquilinoBO;
 use App\Models\Contrato;
 use App\Models\ContratoModel;
 use App\Models\Inquilino;
@@ -97,25 +98,8 @@ class PainelInquilinoController extends Controller
             
             if($request->isMethod('POST')){
 
-                $regras = [
-                    'data-assinatura' => 'required',
-                    'valor-aluguel' => 'required',
-                    'arquivo-contrato' => 'required|file',
-                    'sala' => 'required|exists:salas,id',
-                    'nome' => 'required',
-                    'cpf' => 'required',
-                    'telefone-celular' => 'required'
-    
-                ];
-    
-                $feedback = [
-                    'sala.exists' => 'A sala informada é inválida. ',
-                    'arquivo-contrato.file' => 'O contrato fornecido é inválido. ',
-
-                    'required' => 'O :attribute é obrigatório.'
-                ];
-    
-                $request->validate($regras, $feedback);
+                $regras_feedback = InquilinoBO::getRegrasValidacao();
+                $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
                 
                 DB::transaction(function($closure) use ($request){
                     $pessoa = Pessoa::create([
@@ -180,12 +164,17 @@ class PainelInquilinoController extends Controller
         try {
 
             $titulo = $this->titulo;
-            //Buscar um objeto complexo de inquilino com seu contrato, aluguel e pessoa 
+            $inquilino = InquilinosService::getInquilinoCompletoBy($id);
             
+            $regras_feedback = InquilinoBO::getRegrasValidacao();
+            $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
 
             return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'mensagem'));
 
         } catch (\Exception $e) {
+            if($e instanceof ValidationException){
+                back()->withErrors($e->validator->errors())->withInput($request->all());
+            }
             return redirect()->back()->with('erros', $e->getMessage());
         }        
     }
@@ -199,7 +188,7 @@ class PainelInquilinoController extends Controller
             if (!is_numeric($referencia_situacao_financeira)) {
                 throw new InvalidArgumentException('A referência da situação financeira deve ser uma representação válida de ano e mês como 
                     202404, representando o ano de 2024 e o mês de abril (04)');
-              }
+            }
             
             $titulo = 'Situacao Financeira do Inquilino: '.$inquilino->nome;
     
