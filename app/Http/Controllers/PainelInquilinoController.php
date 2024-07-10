@@ -247,7 +247,6 @@ class PainelInquilinoController extends Controller
             $mensagem = $mensagem_vo->getJson();
 
             return $this->detalharInquilino($id, $mensagem);
-            //return view('app.detalhes-inquilino', compact('titulo', 'dominio', 'appData', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem'));
 
         } catch (\Exception $e) {
             if($e instanceof ValidationException){

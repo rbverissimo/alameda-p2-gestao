@@ -5,6 +5,7 @@ import { apenasNumeros } from "../validators/view-validation.js";
 
 
 let appData = {};
+const dominio = 'detalhes_inquilino';
 
 const inputTelefoneCelular = document.getElementById('form-inquilino-telefone-celular');
 const inputTelefoneTrabalho = document.getElementById('form-inquilino-telefone-trabalho');
@@ -42,7 +43,7 @@ imoveisSelect.addEventListener('change', (option) => {
 document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('appData', (data) => {
-        if(data['dominio'] === 'detalhes_inquilino'){
+        if(data['dominio'] === dominio){
             appData = data.detail; 
             loadMessages(`Você tem certeza que deseja alterar a situação do inquilino ${appData.nome_inquilino} ?`);
         }

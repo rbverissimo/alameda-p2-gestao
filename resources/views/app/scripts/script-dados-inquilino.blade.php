@@ -26,7 +26,6 @@
       
       
       function confirmarConsolidarSaldo(){
-            console.log('Consolidar saldo clicado');
             toggleModal();
       }
       

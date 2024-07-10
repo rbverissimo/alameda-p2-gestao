@@ -28,7 +28,8 @@
 @endsection
 
 @section('scripts')
-      <script type="module" src="{{ asset('js/comportamento-dinamico.js')}}"></script>
-      @include('app.scripts.script-dados-inquilino')
+      <script src="{{ asset('js/views/dados-inquilino.js')}}" type="module"></script>
       @include('app.scripts.script-lista-comprovantes')
+      @include('app.scripts.script-mensagem')
+      @include('app.scripts.script-app-data')
 @endsection
