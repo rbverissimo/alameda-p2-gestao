@@ -16,6 +16,7 @@ use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Services\PessoasService;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
 use Exception;
 use Illuminate\Http\Request;
@@ -44,25 +45,22 @@ class PainelInquilinoController extends Controller
     /**
      * Esse é o método que busca as informações do inquilino para a edição
      */
-    public function detalharInquilino($id){
-        $inquilino = InquilinosService::getDetalhesInquilino($id);
+    public function detalharInquilino($id, $mensagem = null){
 
-        $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
+        $detalhes = InquilinoBO::getDetalhesInquilino($id);
+        $inquilino = $detalhes['inquilino'];
+        $imoveis = $detalhes['imoveis'];
+        $salas = $detalhes['salas'];
+        $contrato = $detalhes['contrato'];
 
         $titulo = 'Detalhes do Inquilino: '.$inquilino->nome; 
-        $mensagem = null;
-
-        $imoveis = ImoveisService::getListaImoveisSelect();
-        $salas = ImoveisService::getSalaBy($inquilino->imovel);
-        $contrato = InquilinosService::getContratoVigente($id);
-
-        $dominio = 'detalhes_inquilino';
-        $appData = [
+        $appData_vo = new AppDataVO('detalhes_inquilino', [
             'nome_inquilino' => $inquilino->nome,
             'id_inquilino' => $inquilino->id
-        ];
+        ]);
+        $appData = $appData_vo->getJson();
 
-        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'dominio', 'appData'));
+        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'appData'));
 
     }
 
@@ -248,19 +246,8 @@ class PainelInquilinoController extends Controller
             $mensagem_vo = new MensagemVO('sucesso', 'Os dados do(a) inquilino(a) '.$request->input('nome').' foram atualizados com sucesso!');
             $mensagem = $mensagem_vo->getJson();
 
-            $inquilino = InquilinosService::getDetalhesInquilino($id);
-            $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
-            $imoveis = ImoveisService::getListaImoveisSelect();
-            $salas = ImoveisService::getSalaBy($inquilino->imovel);
-            $contrato = InquilinosService::getContratoVigente($id);
-
-            $dominio = 'detalhes_inquilino';
-            $appData = [
-                'nome_inquilino' => $inquilino->nome,
-                'id_inquilino' => $inquilino->id
-            ];
-
-            return view('app.detalhes-inquilino', compact('titulo', 'dominio', 'appData', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem'));
+            return $this->detalharInquilino($id, $mensagem);
+            //return view('app.detalhes-inquilino', compact('titulo', 'dominio', 'appData', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem'));
 
         } catch (\Exception $e) {
             if($e instanceof ValidationException){

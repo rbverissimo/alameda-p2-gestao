@@ -1,7 +1,12 @@
 <script type="module">
 
+    import { isNotNullOrUndefined } from "{{ asset('js/validators/null-safe.js') }} ";
     import { showMensagem } from "{{ asset('js/scripts.js')}}";
+    
     const mensagem = @json($mensagem);
-    if(mensagem['status'] === 'sucesso') showMensagem(mensagem['mensagem'], "sucesso");
+    
+    if(isNotNullOrUndefined(mensagem)){
+        showMensagem(mensagem['mensagem'], mensagem['status']);
+    }
     
 </script>

@@ -1,11 +1,9 @@
 <script type="module">
-    const dominio = @json($dominio);
     const appData = @json($appData);
     const appDataEvent = new CustomEvent("appData", {
-        detail: appData 
+        detail: appData['appData']
     });
-    appDataEvent.dominio = dominio;
-
+    appDataEvent.dominio = appData['dominio'];
     document.addEventListener('DOMContentLoaded', () => {
         document.dispatchEvent(appDataEvent);
     });
