@@ -1,5 +1,5 @@
 import { cancelarButton, confirmarButton, loadMessages, toggleModal } from "./partials/simple-modal.js";
-import { toggleOverlay } from "./comportamento-dinamico.js";
+import { toggleOverlay } from "./partials/spinner.js";
 
 export function setLiveRoute(rota){
       localStorage.setItem('liveRoute', rota);

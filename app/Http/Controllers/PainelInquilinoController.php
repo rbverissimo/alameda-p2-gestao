@@ -287,7 +287,7 @@ class PainelInquilinoController extends Controller
     }
 
     public function consolidarSaldo($idInquilino){
-        
+        return ['cheguei' => 'cheguei, parça'];
     }
 
 }

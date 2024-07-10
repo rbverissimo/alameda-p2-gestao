@@ -1,12 +1,12 @@
 import { loadModalModoSimples, toggleModal } from "../partials/simple-modal.js";
-import { toggleOverlay } from "../partials/spinner.js";
+import { spinnerOverlay, toggleOverlay } from "../partials/spinner.js";
 
 
 let idInquilino = null;
 let appData = {};
 const dominio = 'dados_inquilino';
 const botaoConsolidarSaldo = document.getElementById('consolidar-saldo-button-painel-inquilino');
-const routeConsolidarSaldo = '/consolidar/s/';
+const routeConsolidarSaldo = '/inquilino/consolidar/s/';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
                   appData = data.detail; 
                   loadModalModoSimples(`Você tem certeza que deseja consolidar o saldo do(a) inquilino(a) ${appData.nome_inquilino} ?`, consolidarSaldo);
                   idInquilino = appData['inquilino_id'];
-                  console.log(idInquilino);
             }
       });
 
@@ -33,13 +32,13 @@ botaoMaisInfo.addEventListener('click', function(){
 
 
 function consolidarSaldo(){
-      
       fetch(routeConsolidarSaldo + idInquilino)
             .then(response => {
                   toggleOverlay();
                   if(!response.ok){
                         throw new Error('Não foi possível se conectar com o servidor');
                   }
+                  console.log(response);
                   return response.json();
             })
             .then(data => {
@@ -49,12 +48,12 @@ function consolidarSaldo(){
                   console.log("Não foi possível completar a operação", error);
 
             }).then(complete => {
-                  toggleOverlay();
                   toggleModal();
+                  toggleOverlay();
             });
         
 }
 
 function renderizarResultado(){
-      
+
 }

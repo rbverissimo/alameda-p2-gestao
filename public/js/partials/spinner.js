@@ -1,4 +1,6 @@
 
+export const spinnerOverlay = document.getElementById('loading-overlay');
+
 /**
  * Esse método faz o toggle do overlay de carregamento.
  * Esse overlay possui nele a animação do Spinner e, geralmente, é usado em
@@ -7,7 +9,7 @@
  * 
  * @param {*} loadingOverlay 
  */
-export function toggleOverlay(loadingOverlay = document.getElementById('loading-overlay')){
+export function toggleOverlay(loadingOverlay = spinnerOverlay){
     if(loadingOverlay.style.display === 'block'){
         loadingOverlay.style.display = 'none';
     } else {
