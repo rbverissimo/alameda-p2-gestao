@@ -9,14 +9,17 @@
                     Voltar</button>
             </div>
             @if ($inquilino->situacao == 'A')
-                <div class="col-2">
-                    <button id="botao-inativar-inquilino-painel" class="button action-button">Inativar inqulino</button>
+                <div class="col-4">
+                    <button id="botao-inativar-inquilino-painel" class="button action-button">Inativar inquilino</button>
                 </div>
             @else 
-                <div class="col-2">
-                    <button id="botao-inativar-inquilino-painel" class="button action-button">Ativar inqulino</button>
+                <div class="col-4">
+                    <button id="botao-inativar-inquilino-painel" class="button action-button">Ativar inquilino</button>
                 </div>
             @endif
+            <div class="col-3">
+                <button id="acessar-contratos-button" class="button action-button">Contratos</button>
+            </div>
         </div>
     </div>
     <div class="row">

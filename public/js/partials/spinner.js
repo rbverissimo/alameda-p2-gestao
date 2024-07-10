@@ -7,7 +7,7 @@
  * 
  * @param {*} loadingOverlay 
  */
-export function toggleOverlay(loadingOverlay){
+export function toggleOverlay(loadingOverlay = document.getElementById('loading-overlay')){
     if(loadingOverlay.style.display === 'block'){
         loadingOverlay.style.display = 'none';
     } else {

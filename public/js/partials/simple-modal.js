@@ -6,7 +6,7 @@ export const confirmarButton = document.getElementById('botao-confirmar-modal');
 export const cancelarButton = document.getElementById('botao-cancelar-modal');
 
 
-export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, handlerConfirmar){
+export function loadSimpleModal(textMensagemModal, textConfirmar = 'Sim', textCancelar = 'Cancelar', handlerConfirmar){
 
     mensagemModal.textContent = textMensagemModal;
     confirmarButton.textContent = textConfirmar;
@@ -22,6 +22,26 @@ export function loadSimpleModal(textMensagemModal, textConfirmar, textCancelar, 
 
     confirmarButton.addEventListener('click', handlerConfirmar, {once: true});
 
+}
+
+/**
+ * O modo simples recebe dois parâmetros: o texto do modal e o handler do confirmar
+ * Esse método é direcionado ao caso de uso em que o modal carregado na view terá apenas
+ * um propósito e não será necessário ficar montando e desmontando o modal a cada clique em
+ * um botão. Para esse fim, use o método loadSimpleModal que é mais reflexível e seguro em relação
+ * ao bubbling do evento de clique
+ * 
+ * @param {*} textMensagemModal 
+ * @param {*} handlerConfirmar 
+ */
+export function loadModalModoSimples(textMensagemModal, handlerConfirmar){
+    loadMessages(textMensagemModal);
+
+    cancelarButton.addEventListener('click', (event) => {
+        toggleModal();
+    });
+
+    confirmarButton.addEventListener('click', handlerConfirmar);
 }
 
 export function loadMessages(textMensagemModal, textConfirmar = 'Sim', textCancelar = 'Cancelar'){

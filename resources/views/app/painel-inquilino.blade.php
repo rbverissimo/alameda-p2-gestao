@@ -11,7 +11,7 @@
       <div class="col-3">
             <button class="button common-button" onclick="carregarComprovantes()" type="button">Comprovantes</button>
       </div>
-      <div class="col-3">
+      <div class="col-4">
             <button class="button common-button" onclick="carregarSituacaoFinanceira()" type="button">Situação financeira</button>
       </div>
 </div>

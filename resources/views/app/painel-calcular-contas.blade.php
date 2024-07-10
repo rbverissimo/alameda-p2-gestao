@@ -41,7 +41,7 @@
 @endsection
 
 @section('scripts')
-    <script type="module" src="{{ asset('js/comportamento-dinamico.js')}}"></script>
+    <script type="module" src="{{ asset('js/partials/spinner.js')}}"></script>
     @include('app.scripts.script-painel-calcular-contas')
     @include('app.scripts.script-carousel')
     @include('app.scripts.script-app-data')

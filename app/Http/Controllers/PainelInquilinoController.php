@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Constants\Operacao;
 use App\Models\BusinessObjects\InquilinoBO;
 use App\Models\Contrato;
-use App\Models\ContratoModel;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
 use App\Models\InquilinoFatorDivisor;
@@ -14,7 +13,6 @@ use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
-use App\Services\PessoasService;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
@@ -33,13 +31,18 @@ class PainelInquilinoController extends Controller
         $inquilino = InquilinosService::getInfoPainelInquilino($id);
 
         $titulo = 'Painel do Inquilino: '.$inquilino->nome;
-
         $situacao_financeira_service = new SituacaoFinanceiraService();
         $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, ProjectUtils::getAnoMesSistemaSemMascara());
+        $mensagem = null;
 
-        $mensagemConfirmacaoModal = 'Consolidar o saldo do inquilino '.$inquilino->nome.' de acordo com as informações financeiras atuais?';
+        $appData_vo = new AppDataVO('dados_inquilino', [
+            'inquilino_id' => $inquilino->id,
+            'nome_inquilino' => $inquilino->nome
+        ]);
 
-        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira', 'mensagemConfirmacaoModal'));
+        $appData = $appData_vo->getJson();
+
+        return view('app.painel-inquilino', compact('inquilino', 'titulo', 'situacao_financeira', 'mensagem', 'appData'));
     }
 
     /**
@@ -281,6 +284,10 @@ class PainelInquilinoController extends Controller
             return redirect()->back()->with('erros', $e->getMessage());   
         }
 
+    }
+
+    public function consolidarSaldo($idInquilino){
+        
     }
 
 }
