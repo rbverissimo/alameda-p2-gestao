@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Comprovante;
 use App\Models\TipoComprovante;
+use Illuminate\Database\Eloquent\Collection;
 
 class ComprovantesService {
 
@@ -39,6 +40,20 @@ class ComprovantesService {
             ->where('inquilino', $inquilino_id)
             ->where('referencia', $referencia)
             ->sum('valor');
+      }
+
+      /**
+       * @return float
+       */
+      public static function getSomaComprovantesTodosRegistrados($inquilino_id): float
+      {
+            return Comprovante::where('inquilino', $inquilino_id)
+                  ->aggregate('sum', ['valor']);
+      }
+
+      public static function getComprovantesTodosRegistrados($inquilino_id): Collection
+      {
+            return Comprovante::where('inquilino', $inquilino_id)->get();
       }
       
 }

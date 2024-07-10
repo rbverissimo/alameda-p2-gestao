@@ -29,6 +29,11 @@
       color: var(--text-black);
 }
 
+.special-action-button {
+      background-color: var(--special-action-button);
+      color: var(--text-black);
+}
+
 .light-button {
       background-color: var(--alternative-primary-button);
       color: var(--text-white);

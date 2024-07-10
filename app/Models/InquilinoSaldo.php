@@ -13,6 +13,13 @@ class InquilinoSaldo extends Model
 
     protected $table = 'inquilinos_saldo';
 
+    protected $fillable = [
+        'inquilinocodigo',
+        'saldo_anterior',
+        'saldo_atual',
+        'observacoes'
+    ];
+
     public function inquilino(): BelongsTo
     {
         return $this->belongsTo(Inquilino::class, 'inquilinocodigo');

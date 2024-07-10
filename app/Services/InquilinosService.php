@@ -309,5 +309,47 @@ class InquilinosService {
 
       }
 
+      /**
+       * Esse método busca a soma de todas as contas registradas no banco de 
+       * dados para o inquilino passado no parâmetro
+       * 
+       * @return float do valor de todas as contas registradas
+       */
+      public static function getSomaDeTodasContasRegistradas($idInquilino): float
+      {
+           return InquilinoConta::where('inquilinocodigo', $idInquilino)
+            ->aggregate('sum', ['valorinquilino']);
+      }
+
+      public static function getTodasContasRegistradas($idInquilino): array 
+      {
+            $contas = InquilinoConta::where('inquilinocodigo', $idInquilino)->get();
+            $soma = array_sum(array_column($contas->toArray(), 'valorinquilino'));
+
+            $contas_auditoria = [];
+            foreach ($contas as $conta) {
+                  $contas_auditoria[] = $conta->toArray();
+            }
+
+            $contas_auditoria = json_encode($contas_auditoria);
+
+            return ['soma' => $soma, 'contas' => $contas_auditoria ];
+      }
+
+      public static function getSomaDeTodosOsComprovantesRegistrados($idInquilino): array
+      {
+            $comprovantes = ComprovantesService::getComprovantesTodosRegistrados($idInquilino);
+            $soma = array_sum(array_column($comprovantes->toArray(), 'valor'));
+
+            $comprovantes_auditoria = [];
+            foreach ($comprovantes as $comprovante) {
+                  $comprovantes_auditoria[] = $comprovante->toArray();
+            }
+
+            $comprovantes_auditoria = json_encode($comprovantes_auditoria);
+
+            return [ 'soma' => $soma, 'comprovantes' => $comprovantes];
+      }
+
 
 }

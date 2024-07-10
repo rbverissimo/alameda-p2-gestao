@@ -3,7 +3,7 @@
 @section('conteudo')
     @include('app.layouts._partials.spinner')
     <div class="row center-itens">
-        <div class="col-3">
+        <div style="min-width: 200px;" class="col-3">
             @include('app.layouts._partials.simple-carousel')
         </div>
     </div>

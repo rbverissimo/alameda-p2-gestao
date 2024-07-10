@@ -38,11 +38,15 @@ function consolidarSaldo(){
                   if(!response.ok){
                         throw new Error('Não foi possível se conectar com o servidor');
                   }
-                  console.log(response);
                   return response.json();
             })
             .then(data => {
-                 console.log(data); 
+                  const mensagem = data['mensagem'];
+                  showMensagem(mensagem['mensagem'], mensagem['status'], 5000);
+
+                  if(mensagem['status'] === 'falha'){
+                        throw new Error(mensagem['mensagem']);
+                  }
             })
             .catch(error => {
                   console.log("Não foi possível completar a operação", error);
@@ -56,4 +60,7 @@ function consolidarSaldo(){
 
 function renderizarResultado(){
 
+      /**
+       * TODO: implementar o resultado de renderização do saldo na tela
+       */
 }

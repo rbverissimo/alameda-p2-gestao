@@ -7,7 +7,9 @@ use App\Models\BusinessObjects\InquilinoBO;
 use App\Models\Contrato;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
+use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
+use App\Models\InquilinoSaldo;
 use App\Models\Pessoa;
 use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
@@ -287,7 +289,49 @@ class PainelInquilinoController extends Controller
     }
 
     public function consolidarSaldo($idInquilino){
-        return ['cheguei' => 'cheguei, parça'];
+
+        try {
+            $mensagem_estado = "O saldo foi consolidado, porém sem alteração nos registros de saldos";
+            $soma_todas_contas = InquilinosService::getTodasContasRegistradas($idInquilino);
+            $soma_todos_comprovantes = InquilinosService::getSomaDeTodosOsComprovantesRegistrados($idInquilino);
+
+            $saldo_atual = $soma_todos_comprovantes['soma'] - $soma_todas_contas['soma'];
+
+            $saldo_atual_ja_consolidado = InquilinosService::getSaldoAtualBy($idInquilino);
+
+            $observacoes = json_encode(array_merge(json_decode($soma_todas_contas['contas']), json_decode($soma_todos_comprovantes['comprovantes'])));
+
+            if($saldo_atual !== $saldo_atual_ja_consolidado){
+
+
+                InquilinoSaldo::create(
+                    [
+                        'inquilinocodigo' => $idInquilino,
+                        'saldo_atual' => $saldo_atual,
+                        'saldo_anterior' => $saldo_atual_ja_consolidado,
+                        'observacoes' => $observacoes
+                    ]
+                );
+
+                $mensagem_estado = "O saldo foi consolidado com a criação de um novo registro de saldos";
+
+            }
+
+            $mensagem_vo = new MensagemVO('sucesso', $mensagem_estado);
+            $mensagem = $mensagem_vo->getJson();
+
+            
+            return response()->json(['saldo_atual' => $saldo_atual, 'observacoes' => $observacoes, 'mensagem' => $mensagem]);
+        } catch (\Throwable $th) {
+
+            $mensagem_vo = new MensagemVO('falha', $th->getMessage());
+            $mensagem = $mensagem_vo->getJson();
+
+            return response()->json(['mensagem' => $mensagem]);
+        }
+
+
+        
     }
 
 }

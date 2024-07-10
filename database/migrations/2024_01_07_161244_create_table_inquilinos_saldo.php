@@ -16,7 +16,7 @@ class CreateTableInquilinosSaldo extends Migration
         Schema::create('table_inquilinos_saldo', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('inquilinocodigo')->unique();
+            $table->unsignedBigInteger('inquilinocodigo');
             $table->double('saldo_atual');
             $table->double('saldo_anterior')->nullable();
             $table->string('observacoes', 400)->nullable();

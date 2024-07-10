@@ -4,7 +4,7 @@
 @include('app.layouts._partials.simple-modal')
 @include('app.layouts._partials.spinner')
 <div class="row center-itens">
-    <div class="col-3">
+    <div style="min-width: 200px" class="col-3">
         @include('app.layouts._partials.simple-carousel')
     </div>
 </div>
@@ -16,7 +16,7 @@
         </div>
         <div class="dashboard light-dashboard">
             <div class="row">
-                <div class="col-2">
+                <div class="col-3">
                     <button id="botao-realizar-calculos" class="button confirmacao-button">Realizar cálculos</button>
                 </div>
             </div>
