@@ -189,7 +189,6 @@ class PainelInquilinoController extends Controller
                 $aluguel = $inquilino->getRelation('aluguel')[0];
                 $contrato = null;
                 if($aluguel->contrato !== null){
-                    dd('its dropping here');
                     $contratoPath = null;
     
                     $contrato = $aluguel->contrato;
@@ -249,6 +248,8 @@ class PainelInquilinoController extends Controller
             $mensagem_vo = new MensagemVO('sucesso', 'Os dados do(a) inquilino(a) '.$request->input('nome').' foram atualizados com sucesso!');
             $mensagem = $mensagem_vo->getJson();
 
+            $inquilino = InquilinosService::getDetalhesInquilino($id);
+            $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
             $imoveis = ImoveisService::getListaImoveisSelect();
             $salas = ImoveisService::getSalaBy($inquilino->imovel);
             $contrato = InquilinosService::getContratoVigente($id);

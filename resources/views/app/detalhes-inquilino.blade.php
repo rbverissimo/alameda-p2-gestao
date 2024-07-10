@@ -34,4 +34,5 @@
     <script type="module" src="{{ asset('js/views/detalhe-inquilino.js')}}"></script>
     <script type="module" src="{{ asset('js/views/dados-contrato.js')}}"></script>
     @include('app.scripts.script-app-data')
+    @include('app.scripts.script-mensagem')
 @endsection

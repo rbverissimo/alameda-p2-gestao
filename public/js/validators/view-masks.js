@@ -153,11 +153,11 @@ export function cpfMascara(event){
  * @returns Uma string com uma máscara de CPF adicionada
  */
 export function writeMascaraCpf(str){
+    let resultado = '';
     if(!isStringValida(str)){
-        return;
+        return resultado;
     }
     const resizeStr = str.slice(0, 14);
-    let resultado = '';
 
     if(resizeStr.length > 9){
         resultado = resizeStr.slice(0, 3) + '.'
