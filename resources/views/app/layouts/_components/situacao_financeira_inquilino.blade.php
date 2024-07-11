@@ -26,13 +26,7 @@
                         <span class="basic-card-wrapper">Aluguel: {{ $situacao_financeira->aluguel }}</span>
                   </div>
                   <div class="col-3">
-                        <span class="basic-card-wrapper">Luz: {{ $situacao_financeira->luz}} </span>
-                  </div>
-                  <div class="col-3">
-                        <span class="basic-card-wrapper">Água: {{ $situacao_financeira->agua }}</span>
-                  </div>
-                  <div class="col-3">
-                        <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total }}</span>
+                        <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}</span>
                   </div>
             </div>
             <div class="divisor-header special-divisor">
@@ -41,14 +35,16 @@
             <div class="row">
                   <div class="col-6">
                         <p>Saldo parcial mensal: 
-                              <span id="saldo">{{$situacao_financeira->saldo}}</span>
+                              <span id="saldo">{{$situacao_financeira->saldo_parcial}}</span>
                         </p>
                   </div>
             </div>
-            @if (isset($saldo_atual))
+            @if (isset($situacao_financeira->saldo_atual))
                   <div class="row">
                         <div id="saldo-atual-consolidado" class="col-6">
-
+                              <p>Saldo atual consolidado:
+                                    <span>{{ $situacao_financeira->saldo_atual }}</span>
+                              </p>
                         </div>
                         <div id="saldo-atual-ultima-atualizacao" class="col-6">
 

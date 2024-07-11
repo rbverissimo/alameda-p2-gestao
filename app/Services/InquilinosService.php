@@ -178,7 +178,8 @@ class InquilinosService {
        * 
        * @return float saldo anterior salvo na tabela inquilinos_saldos de acordo com o  inquilino
        */
-      public static function getSaldoAtualBy($inquilino){
+      public static function getSaldoAtualBy($inquilino) : float
+      {
             $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
             return $saldo ? $saldo->saldo_atual : 0.0;
       }

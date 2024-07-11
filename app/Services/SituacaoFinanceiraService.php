@@ -14,53 +14,57 @@ class SituacaoFinanceiraService {
             
       }
 
-      public function buscarSituacaoFinanceira($inquilino_id, $referencia){
+      public function buscarSituacaoFinanceira($inquilino_id, $referencia): SituacaoFinanceiraVO
+      {
 
             $ano = ProjectUtils::getAnoFromReferencia($referencia);
             $mes = ProjectUtils::getMesFromReferencia($referencia);
 
 
             $aluguel = InquilinosService::getAluguelAtualizado($inquilino_id);
+            $contas = $this->getValorInquilinoBy($inquilino_id, $ano, $mes);
+            $saldo_atual = InquilinosService::getSaldoAtualBy($inquilino_id);
+            
+            $tupla_contas = [];
+            $total = $aluguel;
 
-            $conta_luz = $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes) != null ? 
-                  $this->getValorInquilinoBy(2, $inquilino_id, $ano, $mes)->valorinquilino  : 0.0;
+            foreach ($contas as $conta) {
+                  $tupla_contas[$conta->descricao] = ProjectUtils::arrendondarParaDuasCasasDecimais($conta->valorinquilino);
+                  $total += $conta->valorinquilino;
+            }
 
-            $conta_agua = $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes) != null ?
-                  $this->getValorInquilinoBy(1, $inquilino_id, $ano, $mes)->valorinquilino : 0.0;
+            $saldo_parcial = ComprovantesService::getSomaComprovantesReferencia($inquilino_id, $referencia) - $total;
 
-            $total_contas = $this->somarContas($aluguel, $conta_luz, $conta_agua);
+            $vo = new SituacaoFinanceiraVO();
+            $vo->setReferencia($referencia);
+            $vo->setAluguel($aluguel);
+            $vo->setTotalContasMensais($total);
+            $vo->setContasInquilino($tupla_contas);
+            $vo->setSaldoAtual($saldo_atual);
+            $vo->setSaldoParcial($saldo_parcial);
 
-            $saldo = $this->getSaldoParcial($total_contas, $inquilino_id, $referencia);
 
-            $saldo_mes = $this->getSaldoMes($inquilino_id, $referencia);
 
-            $situacao_financeira = new SituacaoFinanceiraVO(
-            ProjectUtils::adicionarMascaraReferencia($referencia), 
-            $aluguel, 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_luz), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($conta_agua), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($total_contas), 
-            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo),
-            ProjectUtils::arrendondarParaDuasCasasDecimais($saldo_mes));
-
-            return $situacao_financeira;
+            return $vo;
 
       }
 
       /**
-       * Busca o valor de uma conta de acordo seu tipo, inquilino, ano e mês
+       * Busca a descrição do tipo da conta e o valor da mesma para todas as contas
+       * registradas de um determinado inquilino para o ano e o mês passados todos os
+       * três atributos pelos parâmetros do método
        * 
        */
-      private function getValorInquilinoBy($tipoconta, $inquilino_id, $ano, $mes){
-
-            return DB::table('inquilinos_contas')->select('inquilinos_contas.valorinquilino')
+      public function getValorInquilinoBy($inquilino_id, $ano, $mes){
+            return DB::table('inquilinos_contas')->select('tipocontas.descricao', 'contas_imoveis.tipocodigo', 'inquilinos_contas.valorinquilino')
                   ->join('contas_imoveis', 'inquilinos_contas.contacodigo', '=', 'contas_imoveis.id')
-                  ->where('contas_imoveis.tipocodigo', $tipoconta)
-                  ->where('inquilinos_contas.inquilinocodigo', $inquilino_id)
-                  ->where('contas_imoveis.ano', $ano)
-                  ->where('contas_imoveis.mes', $mes)
-                  ->orderByDesc('contas_imoveis.id')
-                  ->first();
+                  ->join('tipocontas', 'tipocontas.id', '=', 'contas_imoveis.tipocodigo')
+                  ->where([
+                        ['inquilinos_contas.inquilinocodigo', $inquilino_id], 
+                        ['contas_imoveis.ano', $ano], 
+                        ['contas_imoveis.mes', $mes]])
+                  ->orderBy('contas_imoveis.id', 'desc')
+                  ->get();
       }
 
 
@@ -81,10 +85,10 @@ class SituacaoFinanceiraService {
       private function getSaldoParcial($valor_total_contas, $inquilino_id, $referencia){
 
             $valores_mes =  ComprovantesService::getSomaComprovantesReferencia($inquilino_id, $referencia);       
-            $saldo_nao_consolidado = InquilinosService::getSaldoAtualBy($inquilino_id);
+            $saldo_atual = InquilinosService::getSaldoAtualBy($inquilino_id);
             $saldo_mes = $valores_mes - $valor_total_contas; 
 
-            return $saldo_nao_consolidado + $saldo_mes;
+            return $saldo_atual + $saldo_mes;
       }
 
 
