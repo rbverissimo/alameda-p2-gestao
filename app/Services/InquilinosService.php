@@ -35,11 +35,11 @@ class InquilinosService {
        * @return Inquilino
        */
       public static function getInquilinoBy($id){
-            return Inquilino::find($id)->first();
+            return Inquilino::where('id',$id)->first();
       }
 
       public static function getInquilinoFatorDivisorBy($idInquilino){
-            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->first();
+            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->pluck('fatorDivisor')->first();
       }
 
       public static function getInquilinoNome($id) {
@@ -55,6 +55,13 @@ class InquilinosService {
       public static function getInquilinoIdFromComprovante($id_comprovante){
             $query = Comprovante::where('id', $id_comprovante)->first();
             return $query->inquilino;
+      }
+
+      public static function getInquilinosBySala($sala){
+            return Inquilino::where([
+                  ['salacodigo', $sala],
+                  ['situacao', 'A']
+            ])->pluck('id');
       }
 
       /**
@@ -98,6 +105,7 @@ class InquilinosService {
             return Inquilino::select('inquilinos.id')
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where('salas.imovelcodigo', $idImovel)
+                  ->where('inquilinos.situacao', 'A')
                   ->get();
       }
 
@@ -196,7 +204,8 @@ class InquilinosService {
 
       /**
        * Esse método busca o valor do aluguel de um inquilino em uma determinada referência
-       * passada no segundo parâmetro da assinatura da função
+       * passada no segundo parâmetro da assinatura da função.
+       * Esse método é null-safe caso o final da validade do aluguel não esteja setado no banco de dados
        * 
        * @param inquilino reflete o ID do inquilino que será buscado no banco de dados;
        * @param referencia reflete a referência procurada nos intervalos de inicioValidade e fimValidade 
@@ -205,7 +214,10 @@ class InquilinosService {
       public static function getAluguelBy($inquilino, $referencia){
             return InquilinoAluguel::where('inquilino', $inquilino)
                   ->where('iniciovalidade', '<=', $referencia)
-                  ->where('fimvalidade', '>=', $referencia)
+                  ->where(function ($query) use ($referencia){
+                        $query->where('fimvalidade', '>=', $referencia)
+                              ->orWhereNull('fimvalidade');
+                  })
                   ->orderBy('id', 'desc')
                   ->first();
       }

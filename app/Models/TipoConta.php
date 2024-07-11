@@ -12,6 +12,12 @@ class TipoConta extends Model
     use HasFactory;
     protected $table = 'tipocontas';
 
+    protected $fillable = [
+        'codigo',
+        'descricao',
+        'sistema',
+        'isFatorDivisor'
+    ];
 
     public function imoveis(): BelongsToMany
     {

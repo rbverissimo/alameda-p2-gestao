@@ -7,6 +7,7 @@ import { colocaMascaraReferencia } from "../validators/view-masks.js";
 
 const dominio = 'painel-calcular-contas';
 const pathReferencia = '/imoveis/executar-calculo/{id}/{ref?}';
+const pathExecutar = '/imoveis/executar-calculo/c/{id}/{ref}';
 let referenciaCalculo = 0;
 let idImovel = 0;
 let nomeImovel = '';
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function confirmarCalcularContasHandler(){
 
-        fetch("{{ route('realizar-calculo', ['id' => $idImovel, 'ref' => $referencia_calculo])}}")
+        fetch(pathExecutar.replace('{id}', idImovel).replace('{ref}', referenciaCalculo))
             .then(response => {
                 toggleOverlay(); 
                 if(!response.ok){

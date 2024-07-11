@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Models\ContaImovel;
 use App\Models\Inquilino;
 use App\Models\InquilinoConta;
-use App\Models\InquilinoFatorDivisor;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\CalculoContasVO;
 
 class CalculoContasService {
 
@@ -40,104 +40,89 @@ class CalculoContasService {
         //imovel -> salas 
         // Salas: contas de uma sala serão divididas pelo número de inquilinos * fatorDivisor de cada inquilino
         // Salas que não tiverem inquilinos registrados nelas terão suas contas dividas por igual em relação ao total de inquilinos
-        // Se o tipo da conta tiver o flag para levar em consideração o fatorDivisor, ele será levado em consideração em todos os cenários; 
+        // Se o tipo da conta tiver o flag para levar em consideração o fatorDivisor, ele será levado em consideração em todos os cenários;
 
-        $conta_agua = ContaImovel::where('tipocodigo', 1)
-            ->where('ano', $ano_referencia)
-            ->where('mes', $mes_referencia)
-            ->get();
+        $salas_calculoVO = [];
 
-        $soma_valor_conta_agua = $conta_agua->sum('valor');
+        foreach ($contas_imovel as $conta) {
+           $sala = $conta->salacodigo;
+            if(!array_key_exists($sala, $salas_calculoVO)){
 
-        $conta_luz_sala1 = ContaImovel::where('tipocodigo', 2)
-            ->where('salacodigo', 1)->where('ano', $ano_referencia)
-            ->where('mes', $mes_referencia)
-            ->get();
+                $inquilinos = InquilinosService::getInquilinosBySala($sala)->toArray();
+                $contas = [$conta];
+                $vo = new CalculoContasVO($sala, $inquilinos, $contas);
+                $salas_calculoVO[$sala] = $vo;
 
-        $soma_valor_luz_sala_1 = $conta_luz_sala1->sum('valor');
+            } else {
+                $vo = $salas_calculoVO[$sala];
+                $vo->getContasSala()[] = $conta;
+            }
+           
+        }
 
-        $conta_luz_sala2 = ContaImovel::where('tipocodigo', 2)
-            ->where('salacodigo', 2)->where('ano', $ano_referencia)
-            ->where('mes', $mes_referencia)
-            ->get();
+        foreach($salas_calculoVO as $key => $value){
+            $vo = $value;
 
-        $soma_valor_luz_sala_2 = $conta_luz_sala2->sum('valor');
-
-        $conta_luz_sala3 = ContaImovel::where('tipocodigo', 2)
-            ->where('salacodigo', 3)->where('ano', $ano_referencia)
-            ->where('mes', $mes_referencia)
-            ->get();
-
-        $soma_valor_luz_sala_3 = $conta_luz_sala3->sum('valor');
-
-        
-        $inquilinos = Inquilino::where('situacao', 'A')->get();
-        
-        $inquilinos_sala1 = $inquilinos->filter(function($item) {
-            return $item->salacodigo == 1;
-        });
-
-        
-        $inquilinos_sala2 = $inquilinos->filter(function($item) {
-            return $item->salacodigo == 2;
-        });
-        
-        $numero_inquilinos_sala1 = count($inquilinos_sala1);
-        $numero_inquilinos_sala2 = count($inquilinos_sala2);
-        $fator_casa_3 = $this->getFatorCasa3($soma_valor_luz_sala_3, $numero_inquilinos_sala1 + $numero_inquilinos_sala2);
-        
-        foreach($inquilinos as $inquilino){
-
-            $fator_divisor_inquilino = InquilinoFatorDivisor::where('inquilino_id', $inquilino->id)->orderByDesc('id')->first();
+            $inquilinos = $value->getInquilinos();
+            $numero_inquilinos_sala = count($inquilinos);
+            $contas = $value->getContasSala();
             
-            switch($inquilino->salacodigo){
-                case 1:
-                    $valor_conta = $this->calculoEnergiaCasa1($soma_valor_luz_sala_1, $numero_inquilinos_sala1,
-                         $fator_casa_3, $fator_divisor_inquilino->fatorDivisor);
-                    InquilinoConta::create([
-                        'inquilinocodigo' => $inquilino->id,
-                        'contacodigo'=>$conta_luz_sala1[0]->id,
-                        'valorinquilino'=>$valor_conta,
-                        'dataVencimento'=>$conta_luz_sala1[0]->dataVencimento
-                    ]);
-                    break;
-                case 2:
-                    $valor_conta = $this->calculoEnergiaCasa2($soma_valor_luz_sala_2, $numero_inquilinos_sala2, 
-                        $fator_casa_3, $fator_divisor_inquilino->fatorDivisor);
-                    InquilinoConta::create([
-                        'inquilinocodigo' => $inquilino->id,
-                        'contacodigo'=>$conta_luz_sala2[0]->id,
-                        'valorinquilino'=>$valor_conta,
-                        'dataVencimento'=>$conta_luz_sala2[0]->dataVencimento
-                    ]);
-                    break;
+            if($numero_inquilinos_sala > 0){
+
+
+                foreach ($inquilinos as $inquilino) {
+
+                    $fatorDivisor = InquilinosService::getInquilinoFatorDivisorBy($inquilino);
+
+                    foreach($contas as $conta){
+                        
+                        $valor_inquilino = ($conta->valor / $numero_inquilinos_sala) * $fatorDivisor; 
+                        
+                        InquilinoConta::create([
+                            'inquilinocodigo' => $inquilino,
+                            'contacodigo' => $conta->id,
+                            'valorinquilino' => $valor_inquilino,
+                            'dataVencimento' => $conta->dataVencimento,
+                        ]);
+                    }
+                    
+                }
+            } else {
+
+                // Se não existem inquilinos na sala, a conta é dividida por todos de acordo com flag do fator divisor
+                // Se o tipo da conta incluir o flag para fator divisor a fórmula será
+                // valorInquilino =  (valorConta / todos os inquilinos ) * fatorDivisor
+                // Caso contrário será apenas uma divisão
+                $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
+
+                foreach($inquilinos_imovel as $inquilino){
+
+                    $fatorDivisor = InquilinosService::getInquilinoFatorDivisorBy($inquilino->id);
+
+                    foreach ($contas as $conta) {
+                        $isFatorDivisor = TipoContasService::isTipoContaFatorDivisor($conta->tipocodigo);
+                        $valor_inquilino = ($conta->valor / count($inquilinos_imovel->toArray()));
+
+                        if($isFatorDivisor){
+                            $valor_inquilino = $valor_inquilino * $fatorDivisor;
+                        }
+
+                        InquilinoConta::create([
+                            'inquilinocodigo' => $inquilino->id,
+                            'contacodigo' => $conta->id,
+                            'valorinquilino' => $valor_inquilino,
+                            'dataVencimento' => $conta->dataVencimento,
+                        ]);
+                        
+                    }
+                }
+
+
             }
 
-            $valor_conta_agua = $this->calculoAgua($soma_valor_conta_agua, $numero_inquilinos_sala1 + $numero_inquilinos_sala2, 
-                $fator_divisor_inquilino->fatorDivisor);
-            InquilinoConta::create([
-                'inquilinocodigo' => $inquilino->id,
-                'contacodigo'=>$conta_agua[0]->id,
-                'valorinquilino'=>$valor_conta_agua,
-                'dataVencimento'=>$conta_agua[0]->dataVencimento
-            ]);
         }
-    }
 
-    private function getFatorCasa3($valor_casa_3, $nr_inquilinos_imovel){
-        return $valor_casa_3 / $nr_inquilinos_imovel;
-    }
-
-    private function calculoEnergiaCasa1($energia_casa_1, $nr_inquilinos_sala1, $fator_casa_3, $fator_divisor){
-        return  (($energia_casa_1 / $nr_inquilinos_sala1) * $fator_divisor) + $fator_casa_3;
-    }
-
-    private function calculoEnergiaCasa2($energia_casa_2, $nr_inquilinos_sala2, $fator_casa_3, $fator_divisor){
-        return  (($energia_casa_2 / $nr_inquilinos_sala2) * $fator_divisor) + $fator_casa_3;
-    }
-
-    private function calculoAgua($conta_agua, $nr_inquilinos_imovel, $fator_divisor){
-        return ($conta_agua / $nr_inquilinos_imovel) * $fator_divisor;
+        
     }
 
 }

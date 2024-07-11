@@ -97,7 +97,7 @@ Route::prefix('imoveis')->middleware('autenticacao')->group(function(){
     Route::get('/{id}', [ImoveisController::class, 'detalharImovel'])->name('imoveis-detalhar');
     Route::get('/listar-contas/{id}', [ImoveisController::class, 'listarContas'])->name('imoveis-listar-contas');
     Route::get('/executar-calculo/{id}/{ref?}', [ImoveisController::class, 'executarCalculoContas'])->name('executar-calculo-contas');
-    Route::get('/executar-calculo/calculo/{id}/{ref}', [ImoveisController::class, 'calculo'])->name('realizar-calculo');
+    Route::get('/executar-calculo/c/{id}/{ref}', [ImoveisController::class, 'calculo'])->name('realizar-calculo');
     Route::get('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
     Route::post('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
 });
