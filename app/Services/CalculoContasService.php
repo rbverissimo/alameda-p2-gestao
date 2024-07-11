@@ -37,22 +37,10 @@ class CalculoContasService {
 
         $contas_imovel = ImoveisService::getContasAnoMes($ano_referencia, $mes_referencia, $idImovel);
 
-        $salas_contas = [];
-        foreach ($contas_imovel as $conta) {
-            $sala = (int) $conta->salacodigo;
-
-            if(!isset($salas_contas[$sala])){
-                $salas_contas[] = $sala;
-            }
-
-            $salas_contas[$sala][] = $conta; 
-        }
-
-        
-        foreach ($salas_contas as $sala => $arr_contas) {
-            
-        }
-
+        //imovel -> salas 
+        // Salas: contas de uma sala serão divididas pelo número de inquilinos * fatorDivisor de cada inquilino
+        // Salas que não tiverem inquilinos registrados nelas terão suas contas dividas por igual em relação ao total de inquilinos
+        // Se o tipo da conta tiver o flag para levar em consideração o fatorDivisor, ele será levado em consideração em todos os cenários; 
 
         $conta_agua = ContaImovel::where('tipocodigo', 1)
             ->where('ano', $ano_referencia)
