@@ -15,6 +15,7 @@ use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
+use App\Utils\InquilinosUtils;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
@@ -89,7 +90,6 @@ class PainelInquilinoController extends Controller
         } catch (\Exception $e) {
             return response()->json(['mensagem' => 'Erro alterar a situação do inquilino: ', 'error' => $e->getMessage()], 500);
         }
-        // $this->detalharInquilino($id);
     }
 
 
@@ -295,10 +295,12 @@ class PainelInquilinoController extends Controller
             $soma_todas_contas = InquilinosService::getTodasContasRegistradas($idInquilino);
             $soma_todos_comprovantes = InquilinosService::getSomaDeTodosOsComprovantesRegistrados($idInquilino);
 
+            $soma_todos_alugueis = InquilinosUtils::getSomaDeTodosAlugueisBy($idInquilino);
+
             $creditos_json = $soma_todos_comprovantes['comprovantes'];
             $debitos_json = $soma_todas_contas['contas'];
 
-            $saldo_atual = $soma_todos_comprovantes['soma'] - $soma_todas_contas['soma'];
+            $saldo_atual = $soma_todos_comprovantes['soma'] - ($soma_todas_contas['soma'] + $soma_todos_alugueis);
             $saldo_atual_ja_consolidado = InquilinosService::getSaldoAtualBy($idInquilino);
 
 

@@ -17,7 +17,9 @@ class InquilinoSaldo extends Model
         'inquilinocodigo',
         'saldo_anterior',
         'saldo_atual',
-        'observacoes'
+        'observacoes',
+        'creditos_json',
+        'debitos_json'
     ];
 
     public function inquilino(): BelongsTo

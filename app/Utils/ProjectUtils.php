@@ -34,7 +34,8 @@ class ProjectUtils {
        * Retorna uma referência AAAAmm inteira útil para comparações entre referências
        * @return int referência do sistema
        */
-      public static function getReferenciaSistema(){
+      public static function getReferenciaSistema(): int
+      {
             $ano_mes = ProjectUtils::getAnoMesSistema();
             $arr = explode('-', $ano_mes);
             $ano = (int) $arr[0];
@@ -186,6 +187,38 @@ class ProjectUtils {
 
       public static function inverterDataParaRenderizar($data){
             return date('d-m-Y', strtotime($data));
+      }
+
+      /**
+       * Esse método recebe duas referências: sendo uma a referência inicial e a outra a referência final
+       * e descobre a quantidade de mes que existe entre as duas referências retornando esse valor
+       * 
+       * @return int quantidade de meses entre referências
+       */
+      public static function getDiferencaDeMesesEntreReferencias(int $referencia_inicial,  int $referencia_final): int
+      {
+            $ano_inicial = (int) $referencia_inicial / 100;
+            $mes_inicial = (int) $referencia_inicial % 100;
+            
+            $ano_final = (int) $referencia_final / 100;
+            $mes_final = (int) $referencia_final % 100;
+
+            $modulo_anos = $ano_final - $ano_inicial;
+            $diferenca_meses = 0;
+            if($modulo_anos > 0){
+
+                  if($mes_final < $mes_inicial){
+                        $modulo_anos = $modulo_anos - 1;
+                        $diferenca_meses = $mes_final + 12 - $mes_inicial;
+                  } else {
+                        $diferenca_meses = $mes_final - $mes_inicial;
+                  }
+            } else {
+                  $diferenca_meses = $mes_final - $mes_inicial;
+            }
+
+            return $modulo_anos * 12 + $diferenca_meses;
+
       }
 
       public static function converterMes($mes){

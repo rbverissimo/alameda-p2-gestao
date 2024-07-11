@@ -100,6 +100,11 @@
       color: var(--text-white);
 }
 
+.special-divisor {
+      background-color: var(--special-dashboard-header);
+      color: var(--text-white);
+}
+
 .alert-divisor {
       background-color: var(--alert-dashboard-header);
       color: var(--text-white);

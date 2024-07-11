@@ -47,6 +47,7 @@ function consolidarSaldo(){
                   if(mensagem['status'] === 'falha'){
                         throw new Error(mensagem['mensagem']);
                   }
+                  console.log(data);
             })
             .catch(error => {
                   console.log("Não foi possível completar a operação", error);

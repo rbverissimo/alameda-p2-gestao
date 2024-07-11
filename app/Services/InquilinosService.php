@@ -203,6 +203,14 @@ class InquilinosService {
       }
 
       /**
+       * Esse método busca todos os objetos InquilinoAluguel no banco de dados
+       * e os retorna em ordem decrescente de acordo com o ID do objeto
+       */
+      public static function getAluguelTodos($idInquilino){
+            return InquilinoAluguel::where('inquilino', $idInquilino)->orderBy('id','desc')->get();
+      }
+
+      /**
        * Esse método busca o valor do aluguel de um inquilino em uma determinada referência
        * passada no segundo parâmetro da assinatura da função.
        * Esse método é null-safe caso o final da validade do aluguel não esteja setado no banco de dados
