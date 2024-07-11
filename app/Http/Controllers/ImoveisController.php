@@ -165,7 +165,7 @@ class ImoveisController extends Controller
     public function executarCalculoContas($idImovel, $periodoReferencia = null){
 
         $titulo = 'Executar cálculo de contas do imóvel';
-        $nomeImovel = Imovel::find($idImovel)->pluck('nomefantasia');
+        $nomeImovel = Imovel::where('id',$idImovel)->pluck('nomefantasia');
         $referencia_calculo = $periodoReferencia != null ? $periodoReferencia : ProjectUtils::getAnoMesSistemaSemMascara();
 
         
@@ -194,18 +194,18 @@ class ImoveisController extends Controller
             $conta->tipoconta = TipoContasService::getDescricaoTipoContaBy($conta->tipocodigo);   
         }
 
-        $itens_carrossel = [$referencia_calculo-1, $referencia_calculo, $referencia_calculo+1];
 
         $appData_vo = new AppDataVO('painel-calcular-contas', [
             'idImovel' => $idImovel,
             'referencia_calculo' => $referencia_calculo,
-            'contas_imovel' => $contas_imovel
+            'contas_imovel' => $contas_imovel,
+            'nome_imovel' => $nomeImovel
         ]);
         
         $appData = $appData_vo->getJson();
+        $itens_carrossel = [$referencia_calculo];
 
-        return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 
-            'appData', 'idImovel', 'referencia_calculo'));
+        return view('app.painel-calcular-contas', compact('titulo', 'itens_carrossel', 'appData', 'contas_imovel'));
 
     }
 

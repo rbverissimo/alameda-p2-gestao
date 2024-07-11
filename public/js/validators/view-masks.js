@@ -309,3 +309,19 @@ function removerMascara(strValue, charsToRemove = ['.', '-', '(', ')', '/']){
   }
   return cleanString;
 }
+
+
+/**
+ * Esse método torna uma referência com 6 digitos formatada para AAAAmm
+ * 
+ * @param {*} referencia o parâmetro que será mascarado
+ * @returns o parâmetro recebido no formato AAAA-mm 
+ */
+export function colocaMascaraReferencia(referencia){
+    if(referencia.length != 6) return referencia; 
+
+    const ano = referencia.substring(0,4);
+    const mes = referencia.substring(4);
+
+    return `${ano}-${mes}`;
+}

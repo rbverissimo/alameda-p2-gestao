@@ -478,40 +478,6 @@ export function converterMes(mes){
       return resultado; 
 }
 
-/**
- * Esse método torna uma referência com 6 digitos formatada para AAAAmm
- * 
- * @param {*} referencia o parâmetro que será mascarado
- * @returns o parâmetro recebido no formato AAAA-mm 
- */
-export function colocaMascaraReferencia(referencia){
-      if(referencia.length != 6) return referencia; 
-
-      const ano = referencia.substring(0,4);
-      const mes = referencia.substring(4);
-
-      return `${ano}-${mes}`;
-}
-
-
-/**
- *
- * Esse método busca pelas referências fornecidas no carrossel 
- * e adiciona máscara a cada uma delas;
- */
-export function mascaraReferenciaSlider(){
-      const container = document.querySelector('.carousel-container');
-      if(container){
-          const itensCarrossel = container.querySelectorAll('.slide-carousel');
-          itensCarrossel.forEach(item => {
-              const referenciaItem = item.textContent.trim();
-              const referenciaComMascara = colocaMascaraReferencia(referenciaItem);
-              item.textContent = referenciaComMascara;
-          });
-      } else {
-          throw new Error('Erro ao ler a referência. ');
-      }
-  }
 
 
 export function navigateBack(rotaAnterior) {
