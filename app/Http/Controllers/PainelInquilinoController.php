@@ -98,7 +98,7 @@ class PainelInquilinoController extends Controller
         try {
 
             $titulo = 'Cadastro de Inquilinos';
-            $mensagem = '';
+            $mensagem = null;
             $imoveis = ImoveisService::getImoveis();
             $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
             $contrato = null;

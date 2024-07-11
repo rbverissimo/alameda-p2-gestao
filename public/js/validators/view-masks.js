@@ -1,4 +1,4 @@
-import { isStringValida } from "./null-safe.js";
+import { isBlank, isStringValida } from "./null-safe.js";
 
 /**
  * Monta uma máscara de acordo com o evento de Input recebido
@@ -51,8 +51,15 @@ export function mascaraValorDinheiro(event){
 }
 
 export function writeMascaraValorDinheiro(str){
+
+    let resultado = '';
+    if(!isStringValida(str)){
+        return resultado;
+    }
+
     const [parteInteira, parteDecimal] = str.split('.');
-    let resultado = `R$${parteInteira},${parteDecimal}`;
+
+    resultado = `R$${parteInteira},${parteDecimal}`;
 
     if(parteDecimal.length == 1){
         return resultado+'0';
@@ -101,11 +108,13 @@ export function mascaraCnpj(event){
 }
 
 export function writeMascaraCnpj(str){
-    if(!isStringValida(str)){
-        return;
-    }
-    const resizeStr = str.slice(0, 14);
     let resultado = '';
+    
+    if(!isStringValida(str)){
+        return resultado;
+    }
+
+    const resizeStr = str.slice(0, 14);
 
     if(resizeStr.length > 12){
         resultado = resizeStr.slice(0, 2) + '.' 
