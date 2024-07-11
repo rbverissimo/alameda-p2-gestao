@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ContaImovel;
 use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\TipoSala;
@@ -148,6 +149,15 @@ class ImoveisService {
      */
     public static function getImovelBySala($sala){
         return Sala::where('id', $sala)->pluck('imovelcodigo')->first();
+    }
+
+    public static function getContasAnoMes($ano, $mes, $idImovel){
+        return ContaImovel::whereHas('sala', function($query) use ($idImovel){
+            $query->where('imovelcodigo', $idImovel);
+        })->where([
+            ['ano', $ano],
+            ['mes', $mes]
+        ])->get();
     }
 
 }

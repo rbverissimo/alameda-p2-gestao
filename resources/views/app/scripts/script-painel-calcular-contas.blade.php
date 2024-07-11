@@ -1,6 +1,6 @@
 <script type="module">
 
-    import { toggleOverlay } from "{{ asset('js/comportamento-dinamico.js') }}";
+    import { toggleOverlay } from "{{ asset('js/partials/spinner.js') }}";
     import { isArrayEmpty } from "{{ asset('js/scripts.js') }}";
     import { isNotNullOrUndefined } from "{{ asset('js/scripts.js') }}";
     import { redirecionarPara } from "{{ asset('js/scripts.js') }}";
@@ -9,10 +9,10 @@
     import { loadSimpleModal, toggleModal } from "{{ asset('js/partials/simple-modal.js')}}";
 
 
-    const referenciaCalculo = window.appData['referencia_calculo'];
-    const idImovel = window.appData['idImovel'];
-    const contas = window.appData['contas_imovel'];
-    const loadingOverlay = document.getElementById('loading-overlay');
+    const dominio = 'painel-calcular-contas';
+    let referenciaCalculo = 0;
+    let idImovel = 0;
+    let contas = [];
 
 
     document.querySelector('.prev-carousel').addEventListener('click', () => {
@@ -34,11 +34,18 @@
         } catch (error) {
             showMensagem(error.message, "falha");
         }
+
+        document.addEventListener('appData', (data) => {
+            if(data['dominio'] === dominio){
+                referenciaCalculo = data.detail['referencia_calculo'];
+                idImovel = data.detail['idImovel'];
+                contas = data.detail['contas_imovel'];
+            }
+        });
     });
 
     if(!isArrayEmpty(contas)){
         document.getElementById('botao-realizar-calculos').addEventListener('click', () => {
-            console.log('clicado');
             loadSimpleModal(
                 `Deseja realizar cálculos das contas do imóvel ${idImovel} para a referência ${referenciaCalculo}?`, 
                 'Sim', 'Cancelar', confirmarCalcularContasHandler);
@@ -49,20 +56,20 @@
 
             fetch("{{ route('realizar-calculo', ['id' => $idImovel, 'ref' => $referencia_calculo])}}")
                 .then(response => {
-                    toggleOverlay(loadingOverlay); 
+                    toggleOverlay(); 
                     if(!response.ok){
                         throw new Error('Não foi possível se conectar com o servidor. ');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    toggleOverlay(loadingOverlay);
+                    toggleOverlay();
                     console.log(data);
                     renderizarResultado(data['inquilinos']);
                     showMensagem(data['mensagem']['mensagem'], data['mensagem']['status']);
                 })
                 .catch(error => {
-                    toggleOverlay(loadingOverlay);
+                    toggleOverlay();
                     console.error('Não foi possível concluir a operação', error);
                 }).then(complete => {
                     toggleModal();

@@ -15,6 +15,11 @@ class CalculoContasService {
         return ContaImovel::find($id);
     }
 
+    /**
+     * Esse método realiza a parte central da divisão das contas do imóvel
+     * para os inquilinos do imóvel 
+     * 
+     */
     public function calcularContasInquilinos($idImovel, $periodo_referencia){
 
         $ano_referencia = ProjectUtils::getAnoFromReferencia($periodo_referencia);
@@ -28,6 +33,24 @@ class CalculoContasService {
                     InquilinoConta::where('id', $conta_calculada->id)->delete();
                 }
             }
+        }
+
+        $contas_imovel = ImoveisService::getContasAnoMes($ano_referencia, $mes_referencia, $idImovel);
+
+        $salas_contas = [];
+        foreach ($contas_imovel as $conta) {
+            $sala = (int) $conta->salacodigo;
+
+            if(!isset($salas_contas[$sala])){
+                $salas_contas[] = $sala;
+            }
+
+            $salas_contas[$sala][] = $conta; 
+        }
+
+        
+        foreach ($salas_contas as $sala => $arr_contas) {
+            
         }
 
 

@@ -17,6 +17,7 @@ use App\Services\InquilinosService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\AppDataVO;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -194,11 +195,14 @@ class ImoveisController extends Controller
         }
 
         $itens_carrossel = [$referencia_calculo-1, $referencia_calculo, $referencia_calculo+1];
-        $appData = [
+
+        $appData_vo = new AppDataVO('painel-calcular-contas', [
             'idImovel' => $idImovel,
             'referencia_calculo' => $referencia_calculo,
             'contas_imovel' => $contas_imovel
-        ];
+        ]);
+        
+        $appData = $appData_vo->getJson();
 
         return view('app.painel-calcular-contas', compact('titulo', 'contas_imovel', 'itens_carrossel', 
             'appData', 'idImovel', 'referencia_calculo'));

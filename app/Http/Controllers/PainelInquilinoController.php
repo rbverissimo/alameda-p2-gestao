@@ -295,11 +295,12 @@ class PainelInquilinoController extends Controller
             $soma_todas_contas = InquilinosService::getTodasContasRegistradas($idInquilino);
             $soma_todos_comprovantes = InquilinosService::getSomaDeTodosOsComprovantesRegistrados($idInquilino);
 
-            $saldo_atual = $soma_todos_comprovantes['soma'] - $soma_todas_contas['soma'];
+            $creditos_json = $soma_todos_comprovantes['comprovantes'];
+            $debitos_json = $soma_todas_contas['contas'];
 
+            $saldo_atual = $soma_todos_comprovantes['soma'] - $soma_todas_contas['soma'];
             $saldo_atual_ja_consolidado = InquilinosService::getSaldoAtualBy($idInquilino);
 
-            $observacoes = json_encode(array_merge(json_decode($soma_todas_contas['contas']), json_decode($soma_todos_comprovantes['comprovantes'])));
 
             if($saldo_atual !== $saldo_atual_ja_consolidado){
 
@@ -309,7 +310,8 @@ class PainelInquilinoController extends Controller
                         'inquilinocodigo' => $idInquilino,
                         'saldo_atual' => $saldo_atual,
                         'saldo_anterior' => $saldo_atual_ja_consolidado,
-                        'observacoes' => $observacoes
+                        'creditos_json' => $creditos_json,
+                        'debitos_json' => $debitos_json
                     ]
                 );
 
@@ -321,7 +323,7 @@ class PainelInquilinoController extends Controller
             $mensagem = $mensagem_vo->getJson();
 
             
-            return response()->json(['saldo_atual' => $saldo_atual, 'observacoes' => $observacoes, 'mensagem' => $mensagem]);
+            return response()->json(['saldo_atual' => $saldo_atual, 'creditos' => $creditos_json, 'debitos' => $debitos_json, 'mensagem' => $mensagem]);
         } catch (\Throwable $th) {
 
             $mensagem_vo = new MensagemVO('falha', $th->getMessage());
