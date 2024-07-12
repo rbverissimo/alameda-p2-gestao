@@ -4,12 +4,11 @@
                   Situação financeira do mês com saldo consolidado de meses anteriores: 
             </div>
             <div class="row">
-                  <div class="col-3">
+                  <div class="col-5">
                         <span class="basic-card-wrapper">
                               Referência: {{ $situacao_financeira->referencia }}
                         </span>
                   </div>
-                  <div class="col-2"></div>
                   <div class="col-3">
                         <button id="consolidar-saldo-button-painel-inquilino" class="button action-button">
                               Consolidar saldo
@@ -25,6 +24,20 @@
                   <div class="col-3">
                         <span class="basic-card-wrapper">Aluguel: {{ $situacao_financeira->aluguel }}</span>
                   </div>
+            </div>
+            <div class="row">
+                  @for ($i = 0; $i < count($situacao_financeira->contas_inquilino) ; $i++)
+                        @php
+                              $key = key($situacao_financeira->contas_inquilino);   
+                        @endphp
+                        <div class="col-3">
+                              <span class="basic-card-wrapper">{{ $key }}: 
+                                    {{ $situacao_financeira->contas_inquilino[$key] }}  </span>
+                              </span>
+                        </div>
+                  @endfor
+            </div>
+            <div class="row">
                   <div class="col-3">
                         <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}</span>
                   </div>
