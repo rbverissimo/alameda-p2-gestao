@@ -25,18 +25,24 @@
                         <span class="basic-card-wrapper">Aluguel: {{ $situacao_financeira->aluguel }}</span>
                   </div>
             </div>
-            <div class="row">
-                  @for ($i = 0; $i < count($situacao_financeira->contas_inquilino) ; $i++)
-                        @php
-                              $key = key($situacao_financeira->contas_inquilino);   
-                        @endphp
-                        <div class="col-3">
-                              <span class="basic-card-wrapper">{{ $key }}: 
-                                    {{ $situacao_financeira->contas_inquilino[$key] }}  </span>
-                              </span>
+
+            @forelse ($situacao_financeira->contas_inquilino as $contas)
+                  <div class="row">
+                        @foreach ($contas as $key => $value)
+                              <div class="col-3">
+                                          <span class="basic-card-wrapper">{{ $key }}: {{ $value }}</span>
+                                    </div>
+                        @endforeach
+                  </div>
+            @empty
+                  <div class="row">
+                        <div class="col-6">
+                              <span class="basic-card-wrapper">Ainda não foram calculadas as contas da referência atual para o imóvel desse inquilino</span>
                         </div>
-                  @endfor
-            </div>
+                  </div>
+                
+            @endforelse
+                  
             <div class="row">
                   <div class="col-3">
                         <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}</span>

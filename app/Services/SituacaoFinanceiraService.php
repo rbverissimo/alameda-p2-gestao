@@ -68,8 +68,32 @@ class SituacaoFinanceiraService {
       }
 
 
-      private function somarContas($aluguel, $conta_luz, $conta_agua){
-            return $aluguel + $conta_luz + $conta_agua;
+      public function getContasDivididasEmRows($contas, $numero_contas_por_row = 4): array
+      {
+            $rows = array();
+            if(!empty($contas)){
+                  $counter = 0;
+                  $row[] = array();
+                  foreach ($contas as $key => $value) {
+                        
+                        if($counter > $numero_contas_por_row){
+                              $slicedArray = array_slice($row, 1);
+                              $rows[] = $slicedArray;
+                              $row = [];
+                              $counter = 0;                                    
+                        }
+
+                        $row[$key] =  $value;
+                        $counter++;
+                  }
+
+                  if(!empty($row)){
+                        $slicedArray = array_slice($row, 1);
+                        $rows[] = $slicedArray;
+                  }
+            }
+
+            return $rows;
       }
 
       /**

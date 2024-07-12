@@ -36,6 +36,11 @@ class PainelInquilinoController extends Controller
         $titulo = 'Painel do Inquilino: '.$inquilino->nome;
         $situacao_financeira_service = new SituacaoFinanceiraService();
         $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, ProjectUtils::getAnoMesSistemaSemMascara());
+        
+        if(!empty($situacao_financeira->contas_inquilino)){
+            $situacao_financeira->contas_inquilino = $situacao_financeira_service->getContasDivididasEmRows($situacao_financeira->contas_inquilino);
+        }
+
         $mensagem = null;
 
         $appData_vo = new AppDataVO('dados_inquilino', [
