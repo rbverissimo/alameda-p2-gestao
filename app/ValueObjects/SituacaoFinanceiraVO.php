@@ -11,7 +11,7 @@ class SituacaoFinanceiraVO {
       public float $aluguel;
       public float $total_contas_mensais;
       public array $contas_inquilino;
-
+      public bool $is_saldo_defasado;
 
       public function getReferencia(): int
       {
@@ -48,6 +48,11 @@ class SituacaoFinanceiraVO {
             return $this->contas_inquilino;
       }
 
+      public function isSaldoDesafado(): bool
+      {
+            return $this->is_saldo_defasado;
+      }
+
       public function setReferencia(int $referencia): void
       {
             $this->referencia = $referencia;
@@ -81,6 +86,11 @@ class SituacaoFinanceiraVO {
       public function setContasInquilino(array $contasInquilino): void
       {
             $this->contas_inquilino = $contasInquilino;
+      }
+
+      public function setIsSaldoDefasado(bool $is_saldo_defasado): void
+      {
+            $this->is_saldo_defasado = $is_saldo_defasado;
       }
 
 

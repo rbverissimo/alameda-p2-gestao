@@ -16,13 +16,7 @@
                 <span>Aluguel: {{ $situacao_financeira->aluguel }}</span>
             </div>
             <div class="col-3">
-                <span>Luz: {{ $situacao_financeira->luz }}</span>
-            </div>
-            <div class="col-3">
-                <span>Água: {{ $situacao_financeira->agua }}</span>
-            </div>
-            <div class="col-3">
-                <span>Total: {{ $situacao_financeira->total }}</span>
+                <span>Total: {{ $situacao_financeira->total_contas_mensais }}</span>
             </div>
         </div>
     </div>
@@ -49,7 +43,7 @@
     @endif
     <div class="dashboard light-dashboard">
         <div id="painel-financeiro-saldo" class="divisor-header alert-divisor">
-            Saldo do mês: {{ $situacao_financeira->saldoReferencia }}
+            Saldo do mês: {{ $situacao_financeira->saldo_parcial }}
         </div>
     </div>
     <div class="row">

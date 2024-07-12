@@ -266,5 +266,12 @@ class ProjectUtils {
 
             return $resultado; 
       }
+      
+      public static function mergeJson(...$jsons)
+      {
+            $decodedArrays = array_map('json_decode', $jsons, [true]);
+            $jsonsValidos = array_filter($decodedArrays, 'is_array');
+            return json_encode(array_merge(...$jsonsValidos));
+      } 
 
 }

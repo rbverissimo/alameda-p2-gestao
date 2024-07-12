@@ -50,7 +50,7 @@
                   <div class="col-6">
                         <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}
                               <br>
-                              <span style="font-size:0.65rem; font-weight: bold">Aluguel + Contas do mês</span>
+                              <span class="crumble-text">Aluguel + Contas do mês</span>
                         </span>
                         
                   </div>
@@ -67,13 +67,22 @@
             </div>
             @if (isset($situacao_financeira->saldo_atual))
                   <div class="row">
-                        <div id="saldo-atual-consolidado" class="col-6">
-                              <p>Saldo atual consolidado:
-                                    <span>{{ $situacao_financeira->saldo_atual }}</span>
+                        <div id="saldo-atual-consolidado" class="col-5">
+                              <p>Saldo atual:
+                                    <span>{{ $situacao_financeira->saldo_atual }}</span><br>
+                                    <span class="crumble-text">Já consolidado</span>
                               </p>
                         </div>
-                        <div id="saldo-atual-ultima-atualizacao" class="col-6">
-
+                        <div id="saldo-atual-ultima-atualizacao" class="col-7">
+                              <p>Data da consolidação: 
+                                    <span> {{ $situacao_financeira->data_ultimo_saldo_atual }}</span>
+                                    @isset($situacao_financeira->is_saldo_defasado)
+                                        @if ($situacao_financeira->is_saldo_defasado)
+                                          <br>
+                                          <span class="errors-highlighted">Saldo defasado. Consolide o saldo para atualizar. </span> 
+                                        @endif
+                                    @endisset
+                              </p>
                         </div>
                   </div>
             @endif

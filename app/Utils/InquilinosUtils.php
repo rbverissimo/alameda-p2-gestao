@@ -7,15 +7,20 @@ use App\Services\InquilinosService;
 class InquilinosUtils {
 
 
-    public static function getSomaDeTodosAlugueisBy($inquilino): float
+    public static function getSomaDeTodosAlugueisBy($inquilino, $alugueis = null): float
     {
-        $alugueis = InquilinosService::getAluguelTodos($inquilino);
+        $_alugueis = $alugueis;
+
+        if($alugueis === null){
+            $_alugueis = InquilinosService::getAluguelTodos($inquilino);
+        }
+
         $max_id_aluguel = $alugueis[0]->id;
         $inicio_validade_aluguel_posterior = 0;
 
         $total = 0.0;
 
-        foreach ($alugueis as $aluguel) {
+        foreach ($_alugueis as $aluguel) {
             $inicoValidade = $aluguel->inicioValidade;
             $inicio_validade_aluguel_posterior = $inicoValidade;
             $fimValidade = $aluguel->fimValidade ?? null;
@@ -35,6 +40,6 @@ class InquilinosUtils {
 
         return $total;
 
-    }
+    }   
 
 }

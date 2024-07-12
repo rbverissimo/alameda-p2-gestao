@@ -9,6 +9,7 @@ use App\Models\InquilinoAluguel;
 use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
+use App\Utils\InquilinosUtils;
 use Illuminate\Support\Facades\DB;
 
 class InquilinosService {
@@ -176,12 +177,15 @@ class InquilinosService {
        * Se não houver um saldo, retorna 0.0. 
        * 
        * 
-       * @return float saldo anterior salvo na tabela inquilinos_saldos de acordo com o  inquilino
+       * @return InquilinoSaldo saldo anterior salvo na tabela inquilinos_saldos de acordo com o  inquilino
        */
-      public static function getSaldoAtualBy($inquilino) : float
+      public static function getSaldoAtualBy($inquilino)
       {
-            $saldo = InquilinoSaldo::where('inquilinocodigo', $inquilino)->first();
-            return $saldo ? $saldo->saldo_atual : 0.0;
+            return InquilinoSaldo::select('saldo_atual', 'saldo_anterior', 'observacoes', 'updated_at')
+                  ->where('inquilinocodigo', $inquilino)
+                  ->orderBy('id', 'desc')
+                  ->first();
+      
       }
 
 
@@ -207,7 +211,8 @@ class InquilinosService {
        * Esse método busca todos os objetos InquilinoAluguel no banco de dados
        * e os retorna em ordem decrescente de acordo com o ID do objeto
        */
-      public static function getAluguelTodos($idInquilino){
+      public static function getAluguelTodos($idInquilino)
+      {
             return InquilinoAluguel::where('inquilino', $idInquilino)->orderBy('id','desc')->get();
       }
 
@@ -331,6 +336,16 @@ class InquilinosService {
       }
 
       /**
+       * Esse método busca pela data da conta mais recente inserida na tabela inquilinos_contas
+       */
+      public static function getDataUltimoCalculoContas($inquilino){
+            return InquilinoConta::select('created_at')
+                  ->where('inquilinocodigo', $inquilino)
+                  ->orderBy('id', 'desc')
+                  ->first();
+      }
+
+      /**
        * Esse método busca a soma de todas as contas registradas no banco de 
        * dados para o inquilino passado no parâmetro
        * 
@@ -369,7 +384,22 @@ class InquilinosService {
 
             $comprovantes_auditoria = json_encode($comprovantes_auditoria);
 
-            return [ 'soma' => $soma, 'comprovantes' => $comprovantes];
+            return [ 'soma' => $soma, 'comprovantes' => $comprovantes_auditoria];
+      }
+
+      public static function getSomaTodosAlugueis($inquilino){
+
+            $alugueis = InquilinosService::getAluguelTodos($inquilino);
+            $soma = InquilinosUtils::getSomaDeTodosAlugueisBy($inquilino, $alugueis);
+
+            $alugueis_auditoria = [];
+            foreach ($alugueis as $aluguel) {
+                  $alugueis_auditoria[] = $aluguel->toArray();
+            }
+
+            $alugueis_auditoria = json_encode($alugueis_auditoria);
+
+            return [ 'soma' => $soma, 'alugueis' => $alugueis_auditoria ];
       }
 
 

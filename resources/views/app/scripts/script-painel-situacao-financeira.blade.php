@@ -8,7 +8,7 @@
 
     const listaComprovantes = document.getElementById('lista-comprovantes');
     const saldoDiv = document.getElementById('painel-financeiro-saldo');
-    const saldoReferencia = +@json($situacao_financeira->saldoReferencia);
+    const saldoReferencia = -1;
 
     document.addEventListener('DOMContentLoaded', () => {
         try {

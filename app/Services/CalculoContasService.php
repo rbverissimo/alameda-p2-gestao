@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\ContaImovel;
-use App\Models\Inquilino;
 use App\Models\InquilinoConta;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\CalculoContasVO;
@@ -36,11 +35,6 @@ class CalculoContasService {
         }
 
         $contas_imovel = ImoveisService::getContasAnoMes($ano_referencia, $mes_referencia, $idImovel);
-
-        //imovel -> salas 
-        // Salas: contas de uma sala serão divididas pelo número de inquilinos * fatorDivisor de cada inquilino
-        // Salas que não tiverem inquilinos registrados nelas terão suas contas dividas por igual em relação ao total de inquilinos
-        // Se o tipo da conta tiver o flag para levar em consideração o fatorDivisor, ele será levado em consideração em todos os cenários;
 
         $salas_calculoVO = [];
 
@@ -89,10 +83,6 @@ class CalculoContasService {
                 }
             } else {
 
-                // Se não existem inquilinos na sala, a conta é dividida por todos de acordo com flag do fator divisor
-                // Se o tipo da conta incluir o flag para fator divisor a fórmula será
-                // valorInquilino =  (valorConta / todos os inquilinos ) * fatorDivisor
-                // Caso contrário será apenas uma divisão
                 $inquilinos_imovel = InquilinosService::getInquilinosByImovel($idImovel);
 
                 foreach($inquilinos_imovel as $inquilino){

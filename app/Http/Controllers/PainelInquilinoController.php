@@ -300,14 +300,18 @@ class PainelInquilinoController extends Controller
             $soma_todas_contas = InquilinosService::getTodasContasRegistradas($idInquilino);
             $soma_todos_comprovantes = InquilinosService::getSomaDeTodosOsComprovantesRegistrados($idInquilino);
 
-            $soma_todos_alugueis = InquilinosUtils::getSomaDeTodosAlugueisBy($idInquilino);
+            $soma_todos_alugueis = InquilinosService::getSomaTodosAlugueis($idInquilino);
 
             $creditos_json = $soma_todos_comprovantes['comprovantes'];
-            $debitos_json = $soma_todas_contas['contas'];
+            $debitos_json = ProjectUtils::mergeJson($soma_todos_alugueis['alugueis'], $soma_todas_contas['contas']);
 
-            $saldo_atual = $soma_todos_comprovantes['soma'] - ($soma_todas_contas['soma'] + $soma_todos_alugueis);
-            $saldo_atual_ja_consolidado = InquilinosService::getSaldoAtualBy($idInquilino);
+            $saldo_atual = $soma_todos_comprovantes['soma'] - ($soma_todas_contas['soma'] + $soma_todos_alugueis['soma']);
 
+            $saldo_atual_ja_consolidado = 0.0;
+            $saldo_atual_anterior = InquilinosService::getSaldoAtualBy($idInquilino);
+            if($saldo_atual_anterior !== null){
+                $saldo_atual_ja_consolidado = $saldo_atual_anterior->saldo_atual;
+            }
 
             if($saldo_atual !== $saldo_atual_ja_consolidado){
 

@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class SituacaoFinanceiraService {
 
-      public function __construct()
-      {
-            
-      }
-
       public function buscarSituacaoFinanceira($inquilino_id, $referencia): SituacaoFinanceiraVO
       {
 
@@ -23,12 +18,24 @@ class SituacaoFinanceiraService {
 
             $aluguel = InquilinosService::getAluguelAtualizado($inquilino_id);
             $contas = $this->getValorInquilinoBy($inquilino_id, $ano, $mes);
-            $saldo_atual = InquilinosService::getSaldoAtualBy($inquilino_id);
+            $saldo_consolidado = InquilinosService::getSaldoAtualBy($inquilino_id);
+
+            $saldo_atual = 0.0;
+            $data_ultimo_saldo_atual = 'Nunca';
+            $data_ultimo_calculo = InquilinosService::getDataUltimoCalculoContas($inquilino_id)->created_at;
+            $is_saldo_defasado = false;
+
+            if($saldo_consolidado !== null){
+                  $saldo_atual = $saldo_consolidado->saldo_atual;
+                  $data_ultimo_saldo_atual = date('d-M-Y H:i', strtotime($saldo_consolidado->updated_at));
+
+                  if($data_ultimo_calculo !== null){
+                        $is_saldo_defasado = strtotime($saldo_consolidado->updated_at) < strtotime($data_ultimo_calculo);
+                  }
+            }
             
             $tupla_contas = [];
             $total = $aluguel;
-
-
             foreach ($contas as $conta) {
                   if(array_key_exists($conta->descricao, $tupla_contas)){
                         $tupla_contas[$conta->descricao] += ProjectUtils::arrendondarParaDuasCasasDecimais($conta->valorinquilino);
@@ -47,8 +54,8 @@ class SituacaoFinanceiraService {
             $vo->setContasInquilino($tupla_contas);
             $vo->setSaldoAtual($saldo_atual);
             $vo->setSaldoParcial($saldo_parcial);
-
-
+            $vo->setDataUltimoSaldoAtual($data_ultimo_saldo_atual);
+            $vo->setIsSaldoDefasado($is_saldo_defasado);
 
             return $vo;
 
@@ -104,25 +111,6 @@ class SituacaoFinanceiraService {
             }
 
             return $rows;
-      }
-
-      /**
-       * Esse método recebe o valor total de contas do mês e busca os comprovantes 
-       * na tabela de comprovantes para um determinado inquilino representado pelo seu ID
-       * Ainda, é feita uma consulta pelo saldo_atual na tabela inquilinos_saldos.
-       * O retorno dessa função é a diferença do valor devido do mês menos os valores de comprovantes
-       * somado ao saldo_nao_consolidado resultando em um saldo parcial do que é devido pelo inquilino
-       * 
-       * @return float
-       * 
-       */
-      private function getSaldoParcial($valor_total_contas, $inquilino_id, $referencia){
-
-            $valores_mes =  ComprovantesService::getSomaComprovantesReferencia($inquilino_id, $referencia);       
-            $saldo_atual = InquilinosService::getSaldoAtualBy($inquilino_id);
-            $saldo_mes = $valores_mes - $valor_total_contas; 
-
-            return $saldo_atual + $saldo_mes;
       }
 
 

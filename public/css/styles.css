@@ -271,11 +271,17 @@ select:focus {
       margin-bottom: 5em;
 }
 
+.crumble-text {
+      font-size:0.65rem; 
+      font-weight: bold
+}
+
 .errors-highlighted {
       color: var(--erro-color-highlight);
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
 }
+
 
 @media only screen and (min-width: 769px){
       .col-1 { width: 8.33%;}
