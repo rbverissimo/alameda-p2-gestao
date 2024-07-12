@@ -69,17 +69,17 @@
                   <div class="row">
                         <div id="saldo-atual-consolidado" class="col-5">
                               <p>Saldo atual:
-                                    <span>{{ $situacao_financeira->saldo_atual }}</span><br>
+                                    <span id="span-valor-saldo-atual">{{ $situacao_financeira->saldo_atual }}</span><br>
                                     <span class="crumble-text">Já consolidado</span>
                               </p>
                         </div>
                         <div id="saldo-atual-ultima-atualizacao" class="col-7">
                               <p>Data da consolidação: 
-                                    <span> {{ $situacao_financeira->data_ultimo_saldo_atual }}</span>
+                                    <span id="span-data-ultimo-saldo-atual"> {{ $situacao_financeira->data_ultimo_saldo_atual }}</span>
                                     @isset($situacao_financeira->is_saldo_defasado)
                                         @if ($situacao_financeira->is_saldo_defasado)
                                           <br>
-                                          <span class="errors-highlighted">Saldo defasado. Consolide o saldo para atualizar. </span> 
+                                          <span id="span-saldo-defasado" class="errors-highlighted">Saldo defasado. Consolide o saldo para atualizar. </span> 
                                         @endif
                                     @endisset
                               </p>

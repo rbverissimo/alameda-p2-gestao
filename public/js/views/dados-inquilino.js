@@ -1,11 +1,16 @@
 import { loadModalModoSimples, toggleModal } from "../partials/simple-modal.js";
 import { spinnerOverlay, toggleOverlay } from "../partials/spinner.js";
+import { isNotNullOrUndefined } from "../validators/null-safe.js";
 
 
 let idInquilino = null;
 let appData = {};
 const dominio = 'dados_inquilino';
 const botaoConsolidarSaldo = document.getElementById('consolidar-saldo-button-painel-inquilino');
+const spanSaldo = document.getElementById('saldo');
+const spanValorSaldoAtual = document.getElementById('span-valor-saldo-atual');
+const spanDataUltimoSaldoAtual = document.getElementById('span-data-ultimo-saldo-atual');
+const spanSaldoDefasado = document.getElementById('span-saldo-defasado');
 const routeConsolidarSaldo = '/inquilino/consolidar/s/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,12 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
                   appData = data.detail; 
                   loadModalModoSimples(`Você tem certeza que deseja consolidar o saldo do(a) inquilino(a) ${appData.nome_inquilino} ?`, consolidarSaldo);
                   idInquilino = appData['inquilino_id'];
+
             }
       });
 
       botaoConsolidarSaldo.addEventListener('click', () => {
             toggleModal();
       })
+
+      getCorSaldo(spanValorSaldoAtual);
+      getCorSaldo(spanSaldo);
 
 });
 
@@ -47,7 +56,16 @@ function consolidarSaldo(){
                   if(mensagem['status'] === 'falha'){
                         throw new Error(mensagem['mensagem']);
                   }
-                  console.log(data);
+
+                  spanValorSaldoAtual.textContent = data['saldo_atual'];
+                  getCorSaldo(spanValorSaldoAtual);
+
+                  spanDataUltimoSaldoAtual.textContent = data['data_atualizacao'];
+                  
+                  if(isNotNullOrUndefined(spanSaldoDefasado)){
+                        removerSaldoDefasado();
+                  }
+
             })
             .catch(error => {
                   console.log("Não foi possível completar a operação", error);
@@ -64,4 +82,17 @@ function renderizarResultado(){
       /**
        * TODO: implementar o resultado de renderização do saldo na tela
        */
+}
+
+function getCorSaldo(span){
+      const valorSaldoAtual = +span.textContent;
+      if(valorSaldoAtual < 0.00){
+            span.style.color = '#AE2709';
+      }
+}
+
+
+function removerSaldoDefasado(){
+      spanSaldoDefasado.textContent = '';
+      spanSaldoDefasado.style.display = 'none';
 }

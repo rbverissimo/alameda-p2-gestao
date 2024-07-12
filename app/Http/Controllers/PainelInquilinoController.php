@@ -333,8 +333,11 @@ class PainelInquilinoController extends Controller
             $mensagem_vo = new MensagemVO('sucesso', $mensagem_estado);
             $mensagem = $mensagem_vo->getJson();
 
+            $data_atualizacao = InquilinosService::getSaldoAtualBy($idInquilino)->updated_at;
+            $data_atualizacao = date('d-M-Y H:i', strtotime($data_atualizacao));
+
             
-            return response()->json(['saldo_atual' => $saldo_atual, 'creditos' => $creditos_json, 'debitos' => $debitos_json, 'mensagem' => $mensagem]);
+            return response()->json(['saldo_atual' => $saldo_atual, 'data_atualizacao' => $data_atualizacao,  'mensagem' => $mensagem]);
         } catch (\Throwable $th) {
 
             $mensagem_vo = new MensagemVO('falha', $th->getMessage());
