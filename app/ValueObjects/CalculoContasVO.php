@@ -4,9 +4,9 @@ namespace App\ValueObjects;
 
 class CalculoContasVO {
 
-    private int $sala;
-    private array $inquilinos;
-    private array $contas_sala;
+    public int $sala;
+    public array $inquilinos;
+    public array $contas_sala;
 
     public function __construct(int $sala, array $inquilinos, $contas_sala) {
         $this->sala = $sala;

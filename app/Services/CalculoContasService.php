@@ -55,7 +55,7 @@ class CalculoContasService {
 
             } else {
                 $vo = $salas_calculoVO[$sala];
-                $vo->getContasSala()[] = $conta;
+                $vo->contas_sala[] = $conta;
             }
            
         }

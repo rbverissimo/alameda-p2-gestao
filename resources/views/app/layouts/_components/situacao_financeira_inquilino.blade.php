@@ -26,6 +26,9 @@
                   </div>
             </div>
 
+            <div class="divisor-header secondary-divisor">
+                  Contas consolidadas do mês: 
+            </div>
             @forelse ($situacao_financeira->contas_inquilino as $contas)
                   <div class="row">
                         @foreach ($contas as $key => $value)
@@ -44,11 +47,15 @@
             @endforelse
                   
             <div class="row">
-                  <div class="col-3">
-                        <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}</span>
+                  <div class="col-6">
+                        <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}
+                              <br>
+                              <span style="font-size:0.65rem; font-weight: bold">Aluguel + Contas do mês</span>
+                        </span>
+                        
                   </div>
             </div>
-            <div class="divisor-header special-divisor">
+            <div class="divisor-header secondary-divisor">
                   Saldos
             </div>
             <div class="row">

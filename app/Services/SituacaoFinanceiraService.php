@@ -28,8 +28,13 @@ class SituacaoFinanceiraService {
             $tupla_contas = [];
             $total = $aluguel;
 
+
             foreach ($contas as $conta) {
-                  $tupla_contas[$conta->descricao] = ProjectUtils::arrendondarParaDuasCasasDecimais($conta->valorinquilino);
+                  if(array_key_exists($conta->descricao, $tupla_contas)){
+                        $tupla_contas[$conta->descricao] += ProjectUtils::arrendondarParaDuasCasasDecimais($conta->valorinquilino);
+                  } else {
+                        $tupla_contas[$conta->descricao] = ProjectUtils::arrendondarParaDuasCasasDecimais($conta->valorinquilino);
+                  }
                   $total += $conta->valorinquilino;
             }
 
@@ -83,7 +88,12 @@ class SituacaoFinanceiraService {
                               $counter = 0;                                    
                         }
 
-                        $row[$key] =  $value;
+                        if(array_key_exists($key, $row)){
+                              $row[$key] += $value;
+                        } else {
+                              $row[$key] = $value;
+                        }
+
                         $counter++;
                   }
 
