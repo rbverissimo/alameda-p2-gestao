@@ -248,12 +248,16 @@ class InquilinosService {
 
       public static function getContasInquilinoBy($idInquilino, $referencia)
       {
-            return InquilinoConta::select('inquilinos_contas.dataVencimento', 'inquilinos_contas.valorinquilino', 'inquilnos_contas.quitada')
+
+            $ano_referencia = ProjectUtils::getAnoFromReferencia($referencia);
+            $mes_referencia = ProjectUtils::getMesFromReferencia($referencia);
+
+            return InquilinoConta::select('inquilinos_contas.dataVencimento', 'inquilinos_contas.valorinquilino', 'inquilinos_contas.quitada')
                   ->join('contas_imoveis', 'contas_imoveis.id', '=', 'inquilinos_contas.contacodigo')
                   ->where([
                         ['inquilinos_contas.inquilinocodigo', $idInquilino],
-                        ['contas_imoveis.ano', ProjectUtils::getAnoFromReferencia($referencia)],
-                        ['contas_imoveis.mes', ProjectUtils::getMesFromReferencia($referencia)]
+                        ['contas_imoveis.ano', $ano_referencia],
+                        ['contas_imoveis.mes', $mes_referencia]
                   ])
                   ->get();
       }

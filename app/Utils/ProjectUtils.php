@@ -43,11 +43,13 @@ class ProjectUtils {
             return $ano * 100 + $mes;
       }
 
-      public static function getAnoFromReferencia($referencia){
-            return floor($referencia / 100);
+      public static function getAnoFromReferencia($referencia): int
+      {
+            return (int) floor($referencia / 100);
       }
 
-      public static function getMesFromReferencia($referencia){
+      public static function getMesFromReferencia($referencia)
+      {
             return $referencia % 100; 
       }
 

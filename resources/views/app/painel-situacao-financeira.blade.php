@@ -20,20 +20,27 @@
             </div>
         </div>
     </div>
-    <div class="dashboard light-dashboard">
-        <div class="divisor-header secondary-divisor">
-            Contas detalhadas:
+    @if (!$contas_referencia->isEmpty())    
+        <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">
+                Contas detalhadas:
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    @component('app.layouts._components.lista_contas_inquilino', ['contas' => $contas_referencia])
+
+                    @endcomponent
+                </div>
+            </div>
         </div>
-        <div class="row">
-    
-        </div>
-    </div>
+    @endif
     @if(!$comprovantes->isEmpty())
         <div class="dashboard light-dashboard">
             <div class="divisor-header secondary-divisor">
                 Comprovantes de transferência:
             </div>
-            @component('app.layouts._components.lista_comprovantes', ['comprovantes' => $comprovantes])  
+            @component('app.layouts._components.lista_comprovantes', ['comprovantes' => $comprovantes, 'incluir_topo' => false]) 
+        
             @endcomponent
         </div>
     @else

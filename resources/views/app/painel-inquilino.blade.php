@@ -16,7 +16,8 @@
       </div>
 </div>
 
-@include('app.layouts._components.lista_comprovantes')
+@component('app.layouts._components.lista_comprovantes', ['incluir_topo' => true])
+@endcomponent
 
 <div class="row">
       @include('app.layouts._components.situacao_financeira_inquilino')

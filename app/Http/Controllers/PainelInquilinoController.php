@@ -284,7 +284,7 @@ class PainelInquilinoController extends Controller
             $situacao_financeira_service = new SituacaoFinanceiraService();
             $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, $referencia_situacao_financeira);
             $comprovantes = ComprovantesService::getComprovantesBy($inquilino->id, $referencia_situacao_financeira);
-            $contas_referencia = InquilinosService::getContasInquilinoBy($idInquilino, $referencia);
+            $contas_referencia = InquilinosService::getContasInquilinoBy($idInquilino, $referencia_situacao_financeira);
 
             $appData_vo = new AppDataVO('painel_situacao_financeira', [
                 'inquilino_id' => $idInquilino,

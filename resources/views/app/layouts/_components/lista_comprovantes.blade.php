@@ -1,6 +1,6 @@
 <div id="table-wrapper">
       <div class="row">
-            @include('app.layouts._partials.topo-table')
+            @includeWhen( $incluir_topo, 'app.layouts._partials.topo-table')
       </div>
       <div class="row">
             <div class="col-12">     
