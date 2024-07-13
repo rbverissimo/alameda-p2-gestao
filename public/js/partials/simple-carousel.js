@@ -1,5 +1,8 @@
 import { colocaMascaraReferencia } from "../validators/view-masks.js";
 
+export const prevButton = document.querySelector('.prev-carousel');
+export const nextButton = document.querySelector('.next-carousel');
+
 /**
 *
 * Esse método busca pelas referências fornecidas no carrossel 
@@ -16,6 +19,14 @@ export function mascaraReferenciaSlider(){
         });
     } else {
         throw new Error('Erro ao ler a referência. ');
+    }
+}
+
+
+export function getCarouselData(){
+    const items = document.getElementsByClassName('slide-carousel');
+    if(items.length > 0){
+        return items;
     }
 }
 

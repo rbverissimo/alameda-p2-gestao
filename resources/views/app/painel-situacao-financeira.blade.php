@@ -20,7 +20,14 @@
             </div>
         </div>
     </div>
-    <div class="row"></div>
+    <div class="dashboard light-dashboard">
+        <div class="divisor-header secondary-divisor">
+            Contas detalhadas:
+        </div>
+        <div class="row">
+    
+        </div>
+    </div>
     @if(!$comprovantes->isEmpty())
         <div class="dashboard light-dashboard">
             <div class="divisor-header secondary-divisor">
@@ -53,6 +60,7 @@
 
 
 @section('scripts')
+    <script src="{{ asset('js/views/painel-situacao-financeira.js') }}" type="module"></script>
     @include('app.scripts.script-carousel')
-    @include('app.scripts.script-painel-situacao-financeira')
+    @include('app.scripts.script-app-data')
 @endsection

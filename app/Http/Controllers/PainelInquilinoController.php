@@ -284,9 +284,17 @@ class PainelInquilinoController extends Controller
             $situacao_financeira_service = new SituacaoFinanceiraService();
             $situacao_financeira = $situacao_financeira_service->buscarSituacaoFinanceira($inquilino->id, $referencia_situacao_financeira);
             $comprovantes = ComprovantesService::getComprovantesBy($inquilino->id, $referencia_situacao_financeira);
+            $contas_referencia = InquilinosService::getContasInquilinoBy($idInquilino, $referencia);
+
+            $appData_vo = new AppDataVO('painel_situacao_financeira', [
+                'inquilino_id' => $idInquilino,
+                'referencia' => $referencia_situacao_financeira
+            ]);
+
+            $appData = $appData_vo->getJson();
     
             return view('app.painel-situacao-financeira', compact('titulo', 'itens_carrossel', 'inquilino', 
-                'situacao_financeira', 'referencia_situacao_financeira', 'comprovantes'));
+                'situacao_financeira', 'appData', 'comprovantes', 'contas_referencia'));
         } catch (\InvalidArgumentException | Exception $e) {
             return redirect()->back()->with('erros', $e->getMessage());   
         }

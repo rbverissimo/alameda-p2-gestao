@@ -10,6 +10,7 @@ use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 use App\Utils\InquilinosUtils;
+use App\Utils\ProjectUtils;
 use Illuminate\Support\Facades\DB;
 
 class InquilinosService {
@@ -245,11 +246,24 @@ class InquilinosService {
             return InquilinoAluguel::where('inquilino', $inquilino)->orderBy('id','desc')->first(); 
       }
 
+      public static function getContasInquilinoBy($idInquilino, $referencia)
+      {
+            return InquilinoConta::select('inquilinos_contas.dataVencimento', 'inquilinos_contas.valorinquilino', 'inquilnos_contas.quitada')
+                  ->join('contas_imoveis', 'contas_imoveis.id', '=', 'inquilinos_contas.contacodigo')
+                  ->where([
+                        ['inquilinos_contas.inquilinocodigo', $idInquilino],
+                        ['contas_imoveis.ano', ProjectUtils::getAnoFromReferencia($referencia)],
+                        ['contas_imoveis.mes', ProjectUtils::getMesFromReferencia($referencia)]
+                  ])
+                  ->get();
+      }
+
       /**
        * 
        * @return Collection um array com os ID das contas 
        */
-      public static function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia){
+      public static function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia)
+      {
             return InquilinoConta::select('inquilinos_contas.id')
                 ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
                 ->where('inquilinos_contas.inquilinocodigo', $idInquilino)
