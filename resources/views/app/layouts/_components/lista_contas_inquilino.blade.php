@@ -13,7 +13,9 @@
                 <td><a class="table-link">{{ $conta->quitada}}</a></td>
                 <td>
                     <div class="col-3">
-                        <img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">
+                        <img class="crud-icon" 
+                        onclick="redirecionarPara( '{{ route('editar-conta-inquilino', $conta->id )}}' )"
+                        src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">
                     </div>
                 </td>
             </tr>

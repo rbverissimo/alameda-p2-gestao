@@ -358,4 +358,12 @@ class PainelInquilinoController extends Controller
         
     }
 
+    public function editarContaInquilino($idConta){
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
 }
