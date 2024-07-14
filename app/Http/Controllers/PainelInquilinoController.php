@@ -358,9 +358,15 @@ class PainelInquilinoController extends Controller
         
     }
 
-    public function editarContaInquilino($idConta){
+    public function editarContaInquilino(Request $request, $idConta){
         try {
-            //code...
+
+            $titulo = 'Editar conta '.$idConta.' do inquilino';
+
+            $conta = InquilinosService::getInquilinoContaById($idConta);
+            
+            return view('app.cadastro-conta-inquilino', compact('titulo', 'conta'));
+            
         } catch (\Throwable $th) {
             //throw $th;
         }

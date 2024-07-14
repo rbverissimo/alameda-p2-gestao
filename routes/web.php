@@ -74,6 +74,7 @@ Route::prefix('inquilino')->middleware('autenticacao')->group(function(){
     Route::get('/show-situacao-financeira/{id}/{ref?}', [PainelInquilinoController::class, 'mostrarSituacaoFinanceira'])->name('mostrar-situacao-financeira');
     Route::get('/consolidar/s/{idInquilino}', [PainelInquilinoController::class, 'consolidarSaldo'])->name('consolidar-saldo');
     Route::put('/conta/e/{idConta}/', [PainelInquilinoController::class, 'editarContaInquilino'])->name('editar-conta-inquilino');
+    Route::get('/conta/e/{idConta}/', [PainelInquilinoController::class, 'editarContaInquilino'])->name('editar-conta-inquilino');
 });
 
 

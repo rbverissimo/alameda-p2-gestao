@@ -237,6 +237,7 @@ class InquilinosService {
                   ->first();
       }
 
+
       /**
        * Esse método busca o registro do aluguel mais atualizado de acordo com o ID máximo 
        * do inquilino fornecido atavés do parâmetro
@@ -246,13 +247,18 @@ class InquilinosService {
             return InquilinoAluguel::where('inquilino', $inquilino)->orderBy('id','desc')->first(); 
       }
 
+      public static function getInquilinoContaById($idConta){
+            return InquilinoConta::where('id', $idConta)->first();
+      }
+
       public static function getContasInquilinoBy($idInquilino, $referencia)
       {
 
             $ano_referencia = ProjectUtils::getAnoFromReferencia($referencia);
             $mes_referencia = ProjectUtils::getMesFromReferencia($referencia);
 
-            return InquilinoConta::select('inquilinos_contas.dataVencimento', 'inquilinos_contas.valorinquilino', 'inquilinos_contas.quitada')
+            return InquilinoConta::select('inquilinos_contas.id', 'inquilinos_contas.dataVencimento', 
+                  'inquilinos_contas.valorinquilino', 'inquilinos_contas.quitada')
                   ->join('contas_imoveis', 'contas_imoveis.id', '=', 'inquilinos_contas.contacodigo')
                   ->where([
                         ['inquilinos_contas.inquilinocodigo', $idInquilino],
