@@ -6,7 +6,7 @@
             <input type="text" 
                 id="input-valor-inquilino" 
                 name="valor-inquilino"
-                value="{{isset($conta->valorinquilino) ? old('valor-inquilino', $conta->valorinquilino) ? old('valor-inquilino')}}">
+                value="{{isset($conta->valorinquilino) ? old('valor-inquilino', $conta->valorinquilino) : old('valor-inquilino')}}">
                 <span class="erros-highlighted" id="span-errors-valor-inquilino">
                     {{ $errors->has('valor-inquilino') ? $errors->first('valor-inquilino') : '' }}
                 </span>
