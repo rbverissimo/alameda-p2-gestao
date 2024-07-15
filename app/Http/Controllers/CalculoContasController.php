@@ -8,6 +8,7 @@ use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
 use App\Services\ImoveisService;
+use App\Services\InquilinosService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class CalculoContasController extends Controller
 {
     public function calculoContas(Request $request) {
 
+        $conta_imovel = null;
         $imoveis = ImoveisService::getImoveis();
         
         $tipos_contas = [];
@@ -64,7 +66,7 @@ class CalculoContasController extends Controller
         $titulo = 'Calcular Contas';
 
         
-        return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'));
+        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
@@ -74,6 +76,7 @@ class CalculoContasController extends Controller
             $tipos_contas = TipoConta::all();
             $tipos_salas = Sala::all();
             $conta_imovel = CalculoContasService::getContaBy($idConta);
+            $contas_inquilino_associadas = InquilinosService::getListaContasInquilinosByIdImovel($idConta);
 
             $mensagem = null; 
 
@@ -113,7 +116,7 @@ class CalculoContasController extends Controller
                 $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaRenderizar($conta_imovel->dataVencimento);
             }
 
-            return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas','imoveis', 'conta_imovel', 'mensagem')); 
+            return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas','imoveis', 'conta_imovel', 'mensagem', 'contas_inquilino_associadas')); 
         } catch (\Throwable $th) {
             return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }

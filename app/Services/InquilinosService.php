@@ -268,6 +268,12 @@ class InquilinosService {
                   ->get();
       }
 
+      public static function getListaContasInquilinosByIdImovel($idContaImovel){
+            return InquilinoConta::select('id', 'dataVencimento', 'valorinquilino', 'quitada')->
+                  where('contacodigo', $idContaImovel)
+                  ->get();
+      }
+
       /**
        * 
        * @return Collection um array com os ID das contas 

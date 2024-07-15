@@ -2,21 +2,38 @@
 
 @section('conteudo')
 
-@include('app.layouts._partials.crud-header')
-<h4>Declare as contas e o mês de referência: </h4>
+<div class="dashboard light-dashboard">
+      <div class="row">
+          <div onclick="navigateToLastRoute()" class="col-2">
+              <button class="button common-button">
+                  Voltar</button>
+          </div>
+      </div>
+</div>
+<div class="dashboard light-dashboard">
       <div>
-            <div>
-                  @if (isset($conta_imovel))
-                        @component('app.layouts._components.form_contas', 
-                              compact('tipos_contas', 'tipos_salas', 'conta_imovel', 'imoveis', 'mensagem'))
+            @component('app.layouts._components.form_contas', 
+                  compact('tipos_contas', 'tipos_salas', 'conta_imovel', 'imoveis', 'mensagem'))
+            @endcomponent
+      </div>
+</div>
+@if (isset($contas_inquilino_associadas[0]))
+      <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">Contas de inquilinos associadas à esta</div>
+            <div class="row">
+                  <div class="col-12">
+                        @component('app.layouts._components.lista_contas_inquilino', ['contas' => $contas_inquilino_associadas])
+                            
                         @endcomponent
-                  @else    
-                        @component('app.layouts._components.form_contas', 
-                              compact('tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'))
-                        @endcomponent
-                  @endif
+                  </div>
             </div>
       </div>
+@endif
+<div class="row">
+      <div class="whitespace-end-page"></div>
+</div>
 @endsection
 
-@include('app.scripts.script-contas')
+@section('scripts')
+    <script type="module" src="{{ asset('js/views/dados-conta-imovel.js')}}"></script>
+@endsection

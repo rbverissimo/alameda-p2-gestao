@@ -6,8 +6,11 @@
       <div class="row">
             
             @isset($imoveis)
-                  <div class="col-3">
-                        <select id="imoveis-conta-select" name="imovelcodigo">
+                  <div class="col-4">
+                        <label id="label-imoveis-conta-select" for="imoveis-conta-select">Selecione o imóvel:</label>
+                        <select id="imoveis-conta-select" 
+                              required      
+                              name="imovelcodigo">
                               @foreach ($imoveis as $imovel)
                                     <option value="{{$imovel->id}}"
                                           @isset($conta_imovel->imovelcodigo)
@@ -23,9 +26,10 @@
                   
                   </div>
             @endisset
-            <div class="col-3">
+            <div class="col-4">
                   
                   @isset($tipos_contas)
+                        <label for="tipo-conta-select" id="label-tipo-conta-select">Selecione o tipo: </label>
                         <select id="tipo-conta-select" name="tipo_conta">
                               @foreach ($tipos_contas as $conta)
                                                 <option value="{{$conta->id}}"
@@ -40,9 +44,10 @@
                         </select>
                   @endisset
             </div>
-            <div class="col-3">
+            <div class="col-4">
                   @isset($tipos_salas)
-                        <select id="sala-select" style="display: none" name="sala">
+                        <label for="sala-select" id="label-sala-select">Selecione a sala:</label>
+                        <select id="sala-select" name="sala">
                               @foreach ($tipos_salas as $sala)
                                     <option value="{{$sala->id}}"
                                           @isset($conta_imovel->salacodigo)
@@ -57,16 +62,18 @@
                         </select>
                   @endisset
             </div>
-            <div class="col-3">
+      </div>
+      <div class="row">
+            <div class="col-4">
+                  <label for="input-valor" id="label-input-valor">Indique o valor:</label>
                   <input id="input-valor"
                         required
                         name="valor-conta"
                         placeholder="Valor da conta em reais: "
                         value="{{ isset($conta_imovel->valor) ? old('valor-conta', $conta_imovel->valor) : old('valor-conta')}}">
             </div>
-      </div>
-      <div class="row">
             <div class="col-6">
+                  <label for="data-input" id="label-data-input">Determine a data de vencimento:</label>
                   <input id="data-input"
                         name="data-vencimento"
                         required
@@ -75,7 +82,19 @@
                               old('data-vencimento', $conta_imovel->dataVencimento) : old('data-vencimento')}}">
                   <span class="errors-highlighted">{{ $errors->has('data-vencimento') ? $errors->first('data-vencimento') : ' '}}</span>             
             </div>
+      </div>
+      <div class="row">
             <div class="col-6">
+                  <label for="input-numero-documento" id="label-numero-input">Nº do documento: </label>
+                  <input class="numero-input"
+                        id="input-numero-documento" 
+                        name="numero-documento"
+                        placeholder="Número do documento: "
+                        value="{{ isset($conta_imovel->nrDocumento) ?
+                              old('numero-documento', $conta_imovel->nrDocumento) : old('numero-documento')}}">
+            </div>
+            <div class="col-6">
+                  <label for="ano-mes-input" id="label-ano-mes-input">Referência da Conta:</label>
                   <input id="ano-mes-input"
                         name="referencia"
                         required
@@ -86,15 +105,10 @@
             </div>
       </div>
       <div class="row">
-            <div class="col-6">
-                  <input class="numero-input" 
-                        name="numero-documento"
-                        placeholder="Número do documento: "
-                        value="{{ isset($conta_imovel->nrDocumento) ?
-                              old('numero-documento', $conta_imovel->nrDocumento) : old('numero-documento')}}">
-            </div>
             <div class="col-4">
+                  <label for="input-ano-conta" id="label-input-ano-conta">Ano da cobrança: </label>
                   <input class="numero-input"
+                        id="input-ano-conta"
                         name="ano"
                         required
                         minlength="2" 
@@ -103,8 +117,10 @@
                         value="{{ isset($conta_imovel->ano) ?
                               old('ano', $conta_imovel->ano) : old('ano')}}">
             </div>
-            <div class="col-2">
+            <div class="col-3">
+                  <label for="input-mes-conta" id="label-input-mes-conta">Mês da cobrança: </label>
                   <input class="numero-input"
+                        id="input-mes-conta"
                         name="mes"
                         required
                         minlength="1"
@@ -133,7 +149,7 @@
       </div>
       <div class="row center-itens">
             <div class="col-3">
-                  <button class="button confirmacao-button" type="submit">OK</button>
+                  <button class="button confirmacao-button" type="submit">Salvar</button>
             </div>
       </div>
 </form>

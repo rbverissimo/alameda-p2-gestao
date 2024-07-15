@@ -334,3 +334,24 @@ export function colocaMascaraReferencia(referencia){
 
     return `${ano}-${mes}`;
 }
+
+
+/**
+ * Esse método adiciona uma máscara de referência ao input. 
+ * Não é necessário lidar com inputs que não sejam números, nem com o hifen
+ * que acontece no meio da máscara. Máscara resultado: AAAA-mm. 
+ * 
+ * @param {*} event 
+ */
+export function anoMesMascara(event) {
+    let inputValue = event.target.value;
+
+    inputValue = inputValue.replace(/\D/g, '');
+    inputValue = inputValue.slice(0, 6);
+    
+    if (inputValue.length > 4) {
+          inputValue = inputValue.slice(0, 4) + '-' + inputValue.slice(4);
+    }
+
+    event.target.value = inputValue;
+}
