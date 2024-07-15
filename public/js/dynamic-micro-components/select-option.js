@@ -1,13 +1,11 @@
-export let salasSelect = undefined;
+export let selectElement = undefined;
 
-export function getSalasSelectedImovel(select, value){
-    salasSelect = select;
-    const imovelSelecionado = value;
-    const url = '/salas/listar-salas/' + imovelSelecionado;
-    salasSelect.innerHTML = '';
-    salasSelect.style.display = 'none';
+export function getSelectOptions(select, paramValue, url){
+    selectElement = select;
+    selectElement.innerHTML = '';
+    selectElement.style.display = 'none';
 
-    fetch(url)
+    fetch(`${url}${paramValue}`)
         .then(response => {
             if(response.status === 200){
                 return response.json();
@@ -16,7 +14,7 @@ export function getSalasSelectedImovel(select, value){
             }
         })
         .then(data => {
-            createSalasOptions(data);
+            createOptions(data);
         })
         .catch(err => {
             showMensagem(err, 'falha', 5000);
@@ -25,17 +23,17 @@ export function getSalasSelectedImovel(select, value){
 
 }
 
-function createSalasOptions(data){
+function createOptions(data){
     for(const object of data){
         const option = document.createElement('option');
-        option.value = object.id;
-        option.text = object.nomesala;
+        option.value = object.value;
+        option.text = object.view;
 
-        salasSelect.appendChild(option);
+        selectElement.appendChild(option);
     }
     
     if(data.length > 0){
-        salasSelect.style.display = 'block';
+        selectElement.style.display = 'block';
     }
     
 }

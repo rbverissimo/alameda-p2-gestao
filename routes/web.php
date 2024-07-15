@@ -113,6 +113,7 @@ Route::prefix('salas')->middleware('autenticacao')->group(function(){
 
 Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
     Route::post('/cadastrar-tipos/{idImovel}', [TiposContasController::class, 'cadastrar'])->name('cadastrar-tipos-contas');
+    Route::get('/ls/{id}', [TiposContasController::class, 'listarPorSala'])->name('listar-tipos-contas-sala');
 });
 
 Route::prefix('compras')->middleware('autenticacao')->group(function(){

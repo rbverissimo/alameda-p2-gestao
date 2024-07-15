@@ -4,7 +4,6 @@
             @method('PUT') 
       @endif
       <div class="row">
-            
             @isset($imoveis)
                   <div class="col-4">
                         <label id="label-imoveis-conta-select" for="imoveis-conta-select">Selecione o imóvel:</label>
@@ -23,44 +22,33 @@
                                     </option>
                               @endforeach
                         </select>
-                  
                   </div>
             @endisset
             <div class="col-4">
-                  
-                  @isset($tipos_contas)
-                        <label for="tipo-conta-select" id="label-tipo-conta-select">Selecione o tipo: </label>
-                        <select id="tipo-conta-select" name="tipo_conta">
-                              @foreach ($tipos_contas as $conta)
-                                                <option value="{{$conta->id}}"
-                                                      @isset($conta_imovel->tipocodigo)
-                                                            @if ($conta_imovel->tipocodigo == $conta->id)
-                                                            selected
-                                                            @endif
-                                                      @endisset
-                                                >
-                                                      {{$conta->descricao}}</option>
-                              @endforeach   
-                        </select>
-                  @endisset
+                  <select style="display: none" required id="sala-select" name="sala">
+                      @isset($salas)
+                          @foreach ($salas as $sala)
+                              <option value="{{$sala->id}}"
+                                  @endisset
+                                  >
+                                  {{$sala->nomesala}}
+                              </option>
+                          @endforeach
+                      @endisset
+                  </select>
             </div>
             <div class="col-4">
-                  @isset($tipos_salas)
-                        <label for="sala-select" id="label-sala-select">Selecione a sala:</label>
-                        <select id="sala-select" name="sala">
-                              @foreach ($tipos_salas as $sala)
-                                    <option value="{{$sala->id}}"
-                                          @isset($conta_imovel->salacodigo)
-                                                @if ($conta_imovel->salacodigo == $sala->id)
-                                                      selected
-                                                @endif
-                                          @endisset
-                                    >
-                                          {{$sala->nomesala}}
-                                    </option>
-                              @endforeach
-                        </select>
-                  @endisset
+                  <select style="display: none" required id="tipos-conta-select" name="tipo-conta">
+                      @isset($tipos_conta)
+                          @foreach ($tipos_conta as $tipo)
+                              <option value="{{$tipo->id}}"
+                                  @endisset
+                                  >
+                                  {{$tipo->descricao}}
+                              </option>
+                          @endforeach
+                      @endisset
+                  </select>
             </div>
       </div>
       <div class="row">

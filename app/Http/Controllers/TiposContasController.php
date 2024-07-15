@@ -115,4 +115,8 @@ class TiposContasController extends Controller {
 
     }
 
+    public function listarPorSala($idSala){
+
+    }
+
 }

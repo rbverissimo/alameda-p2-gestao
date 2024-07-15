@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContaImovel;
-use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
-use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
@@ -19,15 +17,7 @@ class CalculoContasController extends Controller
 
         $conta_imovel = null;
         $imoveis = ImoveisService::getImoveis();
-        
-        $tipos_contas = [];
-        $tipos_salas = []; 
 
-        if(!empty($imoveis)){
-            $tipos_contas = ImoveisService::getTipoContasBy($imoveis[0]->id);
-            $tipos_salas = ImoveisService::getSalaBy($imoveis[0]->id);
-        }
-        
         $mensagem = null; 
         
         if($request->isMethod('post')){
@@ -66,7 +56,7 @@ class CalculoContasController extends Controller
         $titulo = 'Calcular Contas';
 
         
-        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'tipos_contas', 'tipos_salas', 'imoveis', 'mensagem'));
+        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'imoveis', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
