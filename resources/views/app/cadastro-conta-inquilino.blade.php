@@ -18,4 +18,5 @@
 
 @section('scripts')
     <script type="module" src="{{ asset('js/views/cadastro-conta-inquilino.js')}}"></script>
+    @include('app.scripts.script-mensagem')
 @endsection

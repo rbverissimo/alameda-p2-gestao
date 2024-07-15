@@ -362,36 +362,48 @@ class PainelInquilinoController extends Controller
         try {
 
             $titulo = 'Editar conta '.$idConta.' do inquilino';
-
+            $mensagem = null; 
             $conta = InquilinosService::getInquilinoContaById($idConta);
 
             if($request->isMethod('PUT')){
 
-                $valor_conta_imovel = ImoveisService::getContaImovelValorById($conta->contacodigo);
-                $soma_outras_contas_inquilinos = ImoveisService::getSomaContasInquilinoByContaImovelExceto($conta->codigo, $idConta);
+                $mensagem_exception = "O valor da conta do inquilino está inválido pois 
+                (a soma de todas as contas de inquilino para essa conta de imóvel) é inferior ao valor da conta do imóvel";
 
-                $valorinquilino = $request->input('valor-inquilino');
+                $valor_conta_imovel = ImoveisService::getContaImovelValorById($conta->contacodigo);
+                $soma_outras_contas_inquilinos = ImoveisService::getSomaContasInquilinoByContaImovelExceto($conta->contacodigo, $idConta);
+
+                $valorinquilino = floatval(ProjectUtils::retirarMascaraMoeda($request->input('valor-inquilino')));
 
                 if($valorinquilino + $soma_outras_contas_inquilinos < $valor_conta_imovel){
-                    // return, throw exception
+                    throw new InvalidArgumentException($mensagem_exception);
                 }
 
                 if($valorinquilino < $conta->valorinquilino){
-                    // estabelecer um limite etc. 
+                    $limite = $valor_conta_imovel - $soma_outras_contas_inquilinos;
+                    if($valorinquilino < $limite){
+                        throw new InvalidArgumentException($mensagem_exception);
+                    }
                 }
+
+                $data_pagamento = $request->input('data-pagamento') !== null ?
+                     ProjectUtils::normalizarData($request->input('data-pagamento'), Operacao::SALVAR)
+                     : null;
+                     
+                $quitada = $request->input('quitada') === 'on' ? 'S' : 'N';
 
                 $conta->valorinquilino = $valorinquilino;
                 $conta->save();
 
-
-
+                $mensagem_vo = new MensagemVO('sucesso', 'A conta do inquilino foi alterada com sucesso');
+                $mensagem = $mensagem_vo->getJson();
 
             }
             
-            return view('app.cadastro-conta-inquilino', compact('titulo', 'conta'));
+            return view('app.cadastro-conta-inquilino', compact('titulo', 'conta', 'mensagem'));
             
         } catch (\Throwable $th) {
-            //throw $th;
+            return redirect()->back()->with('erros', $th->getMessage());
         }
     }
 

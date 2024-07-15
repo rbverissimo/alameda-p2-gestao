@@ -176,7 +176,8 @@ class ImoveisService {
         return ContaImovel::where('id', $idConta)->pluck('valor')->first();
     }
 
-    public static function getSomaContasInquilinoByContaImovelExceto($conta_imovel, $idConta){
+    public static function getSomaContasInquilinoByContaImovelExceto($conta_imovel, $idConta): float
+    {
         return InquilinoConta::where('contacodigo', $conta_imovel)
             ->whereRaw('id <> ?', $idConta)
             ->sum('valorinquilino');

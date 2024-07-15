@@ -170,6 +170,11 @@ class ProjectUtils {
       }
 
       public static function normalizarData(string $data, string $operacao){
+
+            if($data === null){
+                  return; 
+            }
+
             $data_hifen = str_replace('/', '-', $data);
 
             if($operacao === Operacao::SALVAR){
