@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ContaImovel;
 use App\Models\Imovel;
+use App\Models\InquilinoConta;
 use App\Models\Sala;
 use App\Models\TipoSala;
 use App\Models\UsuarioImovel;
@@ -164,9 +165,21 @@ class ImoveisService {
         ])->get();
     }
 
+    /**
+     * Esse método busca apenas o valor de uma conta do imóvel de acordo
+     * com o ID da conta passado no parâmetro
+     * 
+     * @return float
+     */
     public static function getContaImovelValorById($idConta): float
     {
         return ContaImovel::where('id', $idConta)->pluck('valor')->first();
+    }
+
+    public static function getSomaContasInquilinoByContaImovelExceto($conta_imovel, $idConta){
+        return InquilinoConta::where('contacodigo', $conta_imovel)
+            ->whereRaw('id <> ?', $idConta)
+            ->sum('valorinquilino');
     }
 
 }

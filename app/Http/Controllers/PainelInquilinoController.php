@@ -367,7 +367,23 @@ class PainelInquilinoController extends Controller
 
             if($request->isMethod('PUT')){
 
-                $valor_conta_imovel = ImoveisService::getContaImovelValorById($idConta);
+                $valor_conta_imovel = ImoveisService::getContaImovelValorById($conta->contacodigo);
+                $soma_outras_contas_inquilinos = ImoveisService::getSomaContasInquilinoByContaImovelExceto($conta->codigo, $idConta);
+
+                $valorinquilino = $request->input('valor-inquilino');
+
+                if($valorinquilino + $soma_outras_contas_inquilinos < $valor_conta_imovel){
+                    // return, throw exception
+                }
+
+                if($valorinquilino < $conta->valorinquilino){
+                    // estabelecer um limite etc. 
+                }
+
+                $conta->valorinquilino = $valorinquilino;
+                $conta->save();
+
+
 
 
             }
