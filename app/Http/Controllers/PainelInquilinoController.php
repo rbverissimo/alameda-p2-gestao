@@ -364,6 +364,7 @@ class PainelInquilinoController extends Controller
             $titulo = 'Editar conta '.$idConta.' do inquilino';
             $mensagem = null; 
             $conta = InquilinosService::getInquilinoContaById($idConta);
+            $contas_imovel = ImoveisService::getContasImovelById($conta->contacodigo);
 
             if($request->isMethod('PUT')){
 
@@ -400,7 +401,7 @@ class PainelInquilinoController extends Controller
 
             }
             
-            return view('app.cadastro-conta-inquilino', compact('titulo', 'conta', 'mensagem'));
+            return view('app.cadastro-conta-inquilino', compact('titulo', 'conta', 'mensagem', 'contas_imovel'));
             
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', $th->getMessage());

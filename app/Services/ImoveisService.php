@@ -165,6 +165,10 @@ class ImoveisService {
         ])->get();
     }
 
+    public static function getContasImovelById($idContaImovel){
+        return ContaImovel::with('tipo_conta')->where('id', $idContaImovel)->get();
+    }
+
     /**
      * Esse método busca apenas o valor de uma conta do imóvel de acordo
      * com o ID da conta passado no parâmetro
