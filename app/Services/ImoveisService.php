@@ -151,6 +151,10 @@ class ImoveisService {
         return Sala::where('id', $sala)->pluck('imovelcodigo')->first();
     }
 
+    /**
+     * Esse método busca uma conta de acordo com seu imóvel e uma referências
+     * ambos passados no parâmetro do imóvel
+     */
     public static function getContasAnoMes($ano, $mes, $idImovel){
         return ContaImovel::whereHas('sala', function($query) use ($idImovel){
             $query->where('imovelcodigo', $idImovel);
@@ -158,6 +162,11 @@ class ImoveisService {
             ['ano', $ano],
             ['mes', $mes]
         ])->get();
+    }
+
+    public static function getContaImovelValorById($idConta): float
+    {
+        return ContaImovel::where('id', $idConta)->pluck('valor')->first();
     }
 
 }

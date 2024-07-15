@@ -364,6 +364,13 @@ class PainelInquilinoController extends Controller
             $titulo = 'Editar conta '.$idConta.' do inquilino';
 
             $conta = InquilinosService::getInquilinoContaById($idConta);
+
+            if($request->isMethod('PUT')){
+
+                $valor_conta_imovel = ImoveisService::getContaImovelValorById($idConta);
+
+
+            }
             
             return view('app.cadastro-conta-inquilino', compact('titulo', 'conta'));
             
