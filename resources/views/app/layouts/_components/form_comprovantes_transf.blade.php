@@ -24,7 +24,8 @@
       <div class="row" >
             @isset($tipos_comprovantes)
                   <div class="col-6">
-                        <select name="tipo-comprovante">
+                        <label for="tipo-comprovante-input">Selecione o tipo: </label>
+                        <select name="tipo-comprovante" id="tipo-comprovante-input">
                               @foreach ($tipos_comprovantes as $tipo)    
                               <option value="{{$tipo->codigosistema}}"
             
@@ -38,7 +39,9 @@
                   </div>
             @endisset
             <div class="col-6">
-                  <input name="valor-comprovante" id="input-valor-comprovante" type="text" placeholder="Valor do comprovante: "
+                  <label for="input-valor-comprovante">Digite o valor: </label>
+                  <input name="valor-comprovante" id="input-valor-comprovante" type="text"
+                        placeholder="R$0,00"
                   value="{{ isset($comprovante->valor) ?
                   old('valor-comprovante', $comprovante->valor) : old('valor-comprovante') }}">
             </div>
@@ -46,23 +49,26 @@
       </div>
       <div class="row">
             <div class="col-12">
-                  <textarea name="descricao" rows="3" cols="12" placeholder="Observações sobre o comprovante: " >
-                        {{ isset($comprovante->descricao) ? 
-                        old('descricao', $comprovante->descricao) : old('descricao') }}
-                  </textarea>
+                  <label for="observacoes-comprovante">Observações sobre o comprovante: </label>
+                  <textarea name="descricao" rows="3" cols="12" 
+                        id="observacoes-comprovante" 
+                        placeholder="Escreva aqui informações relevantes sobre este comprovante ">{{ isset($comprovante->descricao) ? 
+                        old('descricao', $comprovante->descricao) : old('descricao') }}</textarea>
             </div>
       </div>
 
       <div class="row">
             <div class="col-6">
-            <input name="data-comprovante" id="data-input" type="text" placeholder="Data formato AAAA-mm-dd: "
-            value="{{ isset($comprovante->dataComprovante) ? 
-                  old('data-comprovante', $comprovante->dataComprovante) : 
-                        old('data-comprovante') }}">
+                  <label for="data-input">Data de recebimento: </label>
+                  <input name="data-comprovante" id="data-input" type="text" placeholder="Ex: 10/02/2024"
+                  value="{{ isset($comprovante->dataComprovante) ? 
+                        old('data-comprovante', $comprovante->dataComprovante) : 
+                              old('data-comprovante') }}">
             </div>
             <div class="col-6">
-            <input name="referencia" id="ano-mes-input" type="text" placeholder="Ano/mês da referência: "
-                  value="{{ isset($comprovante->referencia) ?
+                  <label for="ano-mes-input">Ano e mês da referência: </label>
+                  <input name="referencia" id="ano-mes-input" type="text" placeholder="Ex: 2024-07"
+                      value="{{ isset($comprovante->referencia) ?
                   old('referencia', $comprovante->referencia) : old('referencia') }}">
             </div>
       </div>

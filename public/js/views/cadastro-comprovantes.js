@@ -1,4 +1,9 @@
-import { anoMesMascara, dataMascara, mascaraValorDinheiro, writeMascaraValorDinheiro } from "../validators/view-masks.js";
+import { anoMesMascara, 
+    colocaMascaraReferencia, 
+    dataMascara, 
+    mascaraValorDinheiro, 
+    writeDataMascara, 
+    writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { isDataValida, isReferenciaValida } from "../validators/view-validation.js";
 
 const anoMesInput = document.getElementById('ano-mes-input');
@@ -26,4 +31,7 @@ valorInput.addEventListener('input', mascaraValorDinheiro);
 document.addEventListener('DOMContentLoaded', () => {
 
     valorInput.value = writeMascaraValorDinheiro(valorInput.value);
+    dataInput.value = writeDataMascara(dataInput.value);
+    anoMesInput.value = colocaMascaraReferencia(anoMesInput.value);
+
 });

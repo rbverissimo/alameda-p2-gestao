@@ -19,6 +19,7 @@ class ComprovantesTransferenciaController extends Controller
     public function index(Request $request, $id = null){
 
         $mensagem = null; 
+        $imoveis = ImoveisService::getListaImoveisSelect();
 
         if($request->isMethod('post')){
             
@@ -60,11 +61,10 @@ class ComprovantesTransferenciaController extends Controller
             $inquilinos = $inquilinos_query->prepend($inquilino_vazio);
         }
         
-        
-        
 
         return view('app.comprovantes-transferencia', 
-            ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes, 'mensagem'=>$mensagem]);
+            ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes, 
+            'mensagem'=>$mensagem, 'imoveis' => $imoveis]);
     }
 
     public function comprovantesPorInquilino($id){

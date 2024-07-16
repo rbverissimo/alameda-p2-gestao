@@ -26,6 +26,6 @@
 @endsection
 
 @section('scripts')
-      <script src="{{ asset('js/view/cadastro-comprovantes.js')}}" type="module"></script>
+      <script src="{{ asset('js/views/cadastro-comprovantes.js')}}" type="module"></script>
       @include('app.scripts.script-mensagem')
 @endsection
