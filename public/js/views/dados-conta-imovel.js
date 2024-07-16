@@ -1,6 +1,6 @@
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_SALAS, LISTAR_TIPOS_CONTAS_IMOVEL } from "../routes.js";
-import { anoMesMascara, dataMascara, mascaraValorDinheiro  } from "../validators/view-masks.js";
+import { anoMesMascara, dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro  } from "../validators/view-masks.js";
 import { apenasNumeros, isDataValida  } from "../validators/view-validation.js";
 
 const anoMesInput = document.getElementById('ano-mes-input');
@@ -31,10 +31,24 @@ for(const e of elementosApenasNumeros){
 }
 
 imoveisSelect.addEventListener('change', (option) => {
-      console.log('change');
-      getSelectOptions(salasSelect, option.target.value, LISTAR_SALAS);
-      getSelectOptions(tiposContaSelect, option.target.value, LISTAR_TIPOS_CONTAS_IMOVEL);
+      getSelectOptions(salasSelect, labelSalaSelect, option.target.value, LISTAR_SALAS);
+      getSelectOptions(tiposContaSelect, labelTipoContaSelect, option.target.value, LISTAR_TIPOS_CONTAS_IMOVEL);
 
-      labelSalaSelect.style.display = 'block';
-      labelTipoContaSelect.style.display = 'block';
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+      checarOptionsVisiveis(labelSalaSelect, salasSelect);
+      checarOptionsVisiveis(labelTipoContaSelect, tiposContaSelect);
+
+      valorInput.value = writeMascaraValorDinheiro(valorInput.value);
+      dataInput.value = writeDataMascara(dataInput.value);
+
+});
+
+function checarOptionsVisiveis(label, select){
+      if(select.hasChildNodes){
+            label.style.display = 'block'
+            select.style.display = 'block';
+      }
+}

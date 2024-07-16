@@ -13,7 +13,7 @@
 <div class="dashboard light-dashboard">
       <div>
             @component('app.layouts._components.form_contas', 
-                  compact('conta_imovel', 'imoveis', 'mensagem'))
+                  compact('conta_imovel', 'imoveis', 'salas', 'tipos_conta'))
             @endcomponent
       </div>
 </div>
@@ -36,4 +36,5 @@
 
 @section('scripts')
     <script type="module" src="{{ asset('js/views/dados-conta-imovel.js')}}"></script>
+    @include('app.scripts.script-mensagem')
 @endsection

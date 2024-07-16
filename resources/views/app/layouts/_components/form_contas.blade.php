@@ -30,7 +30,11 @@
                       @isset($salas)
                           @foreach ($salas as $sala)
                               <option value="{{$sala->id}}"
-                                  
+                                    @isset($conta_imovel->salacodigo)
+                                          @if ($conta_imovel->salacodigo == $sala->id)
+                                          selected
+                                          @endif
+                                    @endisset
                                   >
                                   {{$sala->nomesala}}
                               </option>
@@ -44,7 +48,11 @@
                       @isset($tipos_conta)
                           @foreach ($tipos_conta as $tipo)
                               <option value="{{$tipo->id}}"
-                                  
+                                    @isset($conta_imovel->tipocodigo)
+                                          @if ($conta_imovel->tipocodigo == $tipo->id)
+                                          selected
+                                          @endif
+                                    @endisset 
                                   >
                                   {{$tipo->descricao}}
                               </option>
@@ -96,7 +104,7 @@
       </div>
       <div class="row">
             <div class="col-4">
-                  <label for="input-ano-conta" id="label-input-ano-conta">Ano da cobrança: </label>
+                  <label for="input-ano-conta" id="label-input-ano-conta">Ano cobrança: </label>
                   <input class="numero-input"
                         id="input-ano-conta"
                         name="ano"
@@ -108,7 +116,7 @@
                               old('ano', $conta_imovel->ano) : old('ano')}}">
             </div>
             <div class="col-3">
-                  <label for="input-mes-conta" id="label-input-mes-conta">Mês da cobrança: </label>
+                  <label for="input-mes-conta" id="label-input-mes-conta">Mês cobrança: </label>
                   <input class="numero-input"
                         id="input-mes-conta"
                         name="mes"

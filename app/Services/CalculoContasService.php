@@ -11,7 +11,7 @@ class CalculoContasService {
 
 
     public static function getContaBy($id){
-        return ContaImovel::find($id);
+        return ContaImovel::with('sala')->where('id', $id)->first();
     }
 
     /**

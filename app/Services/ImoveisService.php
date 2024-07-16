@@ -38,7 +38,7 @@ class ImoveisService {
      * @return App\Models\Imovel
      */
     public static function getImovelBy($idImovel){
-        return Imovel::with('endereco')->find($idImovel);
+        return Imovel::with('endereco')->where('id',$idImovel)->get();
     }
 
 
@@ -87,7 +87,7 @@ class ImoveisService {
             ->get();
 
         $imovel_vazio = new Imovel();
-        $imovel_vazio->id = '';
+        $imovel_vazio->id = 0;
         $imovel_vazio->nomefantasia = '';
 
         return $imoveis->prepend($imovel_vazio);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Operacao;
 use App\Models\ContaImovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
@@ -9,6 +10,7 @@ use App\Services\CalculoContasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\MensagemVO;
 use Illuminate\Http\Request;
 
 class CalculoContasController extends Controller
@@ -22,22 +24,18 @@ class CalculoContasController extends Controller
         
         if($request->isMethod('post')){
 
-            $tipo_conta = $request->input('tipo_conta');
+            $tipo_conta = $request->input('tipo-conta');
 
             $conta_imovel = new ContaImovel();
-            $conta_imovel->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-conta'));
+            $conta_imovel->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-conta'));
             $conta_imovel->ano = $request->input('ano');
             $conta_imovel->mes = $request->input('mes');
-            $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaSalvar($request->input('data-vencimento'));
+            $conta_imovel->dataVencimento = ProjectUtils::normalizarData($request->input('data-vencimento'), Operacao::SALVAR);
             $conta_imovel->referenciaConta = ProjectUtils::tirarMascara($request->input('referencia'));
             $conta_imovel->nrDocumento = $request->input('numero-documento');
             $conta_imovel->tipocodigo = $tipo_conta;
+            $conta_imovel->salacodigo = $request->input('sala');
 
-            if($tipo_conta === '2'){
-                $conta_imovel->salacodigo = $request->input('sala');
-            } else if($tipo_conta == '1') {
-                $conta_imovel->salacodigo = 4;
-            }
 
             $filePath = null; 
 
@@ -50,44 +48,46 @@ class CalculoContasController extends Controller
             $conta_imovel->arquivo_conta = $filePath;
 
             $conta_imovel->save();
-            $mensagem = 'sucesso';
+            $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi cadastrado com sucesso!');
+            $mensagem = $mensagem_vo->getJson();
         }
 
         $titulo = 'Calcular Contas';
 
-        
-        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'imoveis', 'mensagem'));
+        $tipos_conta = null;
+        $salas = null;
+
+        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'imoveis', 'tipos_conta', 'salas', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
         
         try {
             $titulo = 'Edição de registro de contas';
-            $tipos_contas = TipoConta::all();
-            $tipos_salas = Sala::all();
+            $mensagem = null; 
+            
             $conta_imovel = CalculoContasService::getContaBy($idConta);
+            $imovel_codigo = $conta_imovel->getRelation('sala')->imovelcodigo;
+            $conta_imovel->imovelcodigo = $imovel_codigo;
             $contas_inquilino_associadas = InquilinosService::getListaContasInquilinosByIdImovel($idConta);
 
-            $mensagem = null; 
-
-            $imoveis = ImoveisService::getImoveis();
+            
+            
+            $imoveis = ImoveisService::getListaImoveisSelect();
+            $salas = ImoveisService::getSalaBy($imovel_codigo);
+            $tipos_conta = ImoveisService::getTipoContasBy($imovel_codigo);
 
             if($request->isMethod('put')){
 
                 $tipo_conta = $request->input('tipo_conta');
-
-                $conta_imovel->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-conta'));
-                $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaSalvar($request->input('data-vencimento'));
+                
+                $conta_imovel->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-conta'));
+                $conta_imovel->dataVencimento = ProjectUtils::normalizarData($request->input('data-vencimento'), Operacao::SALVAR);
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
                 $conta_imovel->mes = $request->input('mes');
                 $conta_imovel->tipocodigo = $tipo_conta;
-
-                if($tipo_conta === '2'){
-                    $conta_imovel->salacodigo = $request->input('sala');
-                } else if($tipo_conta == '1') {
-                    $conta_imovel->salacodigo = 4;
-                }
+                $conta_imovel->salacodigo = $request->input('sala');
 
                 $filePath = null; 
 
@@ -99,14 +99,25 @@ class CalculoContasController extends Controller
                 }
                 
                 $conta_imovel->save();
-                $mensagem = "sucesso";
+
+
+                if(!empty($contas_inquilino_associadas)){
+
+                    $referencia = $conta_imovel->ano * 100 + $conta_imovel->mes;
+                    $calculo = new CalculoContasService();
+                    $calculo->calcularContasInquilinos($imovel_codigo, $referencia);
+                    $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso e um novo cálculo de contas
+                    da referência '.$conta_imovel->ano.'-'.$imovel_codigo->mes.' foi realizado');
+                    
+                }
+
+
+                $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso!');
+                $mensagem = $mensagem_vo->getJson();
             }
 
-            if($conta_imovel->dataVencimento != null){
-                $conta_imovel->dataVencimento = ProjectUtils::inverterDataParaRenderizar($conta_imovel->dataVencimento);
-            }
-
-            return view('app.calculo-contas', compact('titulo', 'tipos_contas', 'tipos_salas','imoveis', 'conta_imovel', 'mensagem', 'contas_inquilino_associadas')); 
+            return view('app.calculo-contas', compact('titulo', 'tipos_conta', 'salas', 'imoveis', 
+                'conta_imovel', 'mensagem', 'contas_inquilino_associadas')); 
         } catch (\Throwable $th) {
             return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }

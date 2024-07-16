@@ -23,8 +23,8 @@ td {
 }
 
 tr > td:first-child {
-      min-width: 8vw;
-      max-width: 10vw;
+      min-width: 10vw;
+      max-width: 20vw;
 }
 
 tr > td:last-child {
