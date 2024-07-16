@@ -1,5 +1,5 @@
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
-import { LISTAR_SALAS, LISTAR_TIPOS_CONTAS_SALA } from "../routes.js";
+import { LISTAR_SALAS, LISTAR_TIPOS_CONTAS_IMOVEL } from "../routes.js";
 import { anoMesMascara, dataMascara, mascaraValorDinheiro  } from "../validators/view-masks.js";
 import { apenasNumeros, isDataValida  } from "../validators/view-validation.js";
 
@@ -11,6 +11,9 @@ const elementosApenasNumeros = document.getElementsByClassName('numero-input');
 const imoveisSelect = document.getElementById('imoveis-conta-select');
 const salasSelect = document.getElementById('sala-select');
 const tiposContaSelect = document.getElementById('tipos-conta-select');
+
+const labelSalaSelect = document.getElementById('label-sala-select');
+const labelTipoContaSelect = document.getElementById('label-tipo-conta-select');
 
 
 anoMesInput.addEventListener('input', anoMesMascara);
@@ -30,5 +33,8 @@ for(const e of elementosApenasNumeros){
 imoveisSelect.addEventListener('change', (option) => {
       console.log('change');
       getSelectOptions(salasSelect, option.target.value, LISTAR_SALAS);
-      getSelectOptions(tiposContaSelect, option.target.value, LISTAR_TIPOS_CONTAS_SALA);
+      getSelectOptions(tiposContaSelect, option.target.value, LISTAR_TIPOS_CONTAS_IMOVEL);
+
+      labelSalaSelect.style.display = 'block';
+      labelTipoContaSelect.style.display = 'block';
 });

@@ -25,6 +25,7 @@
                   </div>
             @endisset
             <div class="col-4">
+                  <label for="sala-select" style="display: none" id="label-sala-select">Selecione a sala: </label>
                   <select style="display: none" required id="sala-select" name="sala">
                       @isset($salas)
                           @foreach ($salas as $sala)
@@ -38,6 +39,7 @@
                   </select>
             </div>
             <div class="col-4">
+                  <label for="tipos-conta-select" style="display: none" id="label-tipo-conta-select">Indique o tipo: </label>
                   <select style="display: none" required id="tipos-conta-select" name="tipo-conta">
                       @isset($tipos_conta)
                           @foreach ($tipos_conta as $tipo)

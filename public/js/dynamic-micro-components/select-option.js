@@ -12,7 +12,7 @@ export function getSelectOptions(select, paramValue, url){
             }
         })
         .then(data => {
-            createOptions(data);
+            createOptions(data, selectElement);
         })
         .catch(err => {
             showMensagem(err, 'falha', 5000);
