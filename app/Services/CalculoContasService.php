@@ -93,15 +93,13 @@ class CalculoContasService {
                         
                     }
                 }
-
-
             }
 
         }
     }
 
     public function atualizarCalculoContasInquilinos(){
-        
+
     }
 
     public function gerarSalasCalculcoVO($contas_imovel)

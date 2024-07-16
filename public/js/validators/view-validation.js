@@ -102,6 +102,16 @@ export function isValorDinheiroValido(valor){
       return cleanInputAsFloat > 0.00;
 }
 
+export function isReferenciaValida(referencia){
+      const regex = /^\d{4}-\d{2}$/;
+      if(!regex.test(referencia)){
+            return false;
+      }
+      const month = parseInt(referencia.slice(5, 7), 10);
+      return month > 0 && month < 13;
+}
+
+
 export function inputStateValidation(label, input, span, value, isValid, spanMessage){
       if(!isValid(value)){
             input.classList.add('error-state');
