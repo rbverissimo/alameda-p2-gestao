@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Operacao;
 use App\Models\Comprovante;
 use App\Models\Inquilino;
 use App\Models\TipoComprovante;
@@ -9,6 +10,7 @@ use App\Services\ComprovantesService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\MensagemVO;
 use Illuminate\Http\Request;
 
 class ComprovantesTransferenciaController extends Controller
@@ -25,8 +27,8 @@ class ComprovantesTransferenciaController extends Controller
             
             $comprovante = new Comprovante();
             $comprovante->inquilino = $request->input('inquilino');
-            $comprovante->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-comprovante'));
-            $comprovante->dataComprovante = ProjectUtils::inverterDataParaSalvar($request->input('data-comprovante'));
+            $comprovante->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-comprovante'));
+            $comprovante->dataComprovante = ProjectUtils::normalizarData($request->input('data-comprovante'), Operacao::SALVAR);
             $comprovante->referencia = ProjectUtils::tirarMascara($request->input('referencia'));
             $comprovante->descricao = $request->input('descricao');
             $comprovante->tipocomprovante = $request->input('tipo-comprovante');
@@ -41,7 +43,8 @@ class ComprovantesTransferenciaController extends Controller
             }
 
             $comprovante->save();
-            $mensagem = "sucesso";
+            $mensagem_vo = new MensagemVO('sucesso', 'O comprovante foi inserido com sucesso!');
+            $mensagem = $mensagem_vo->getJson();
 
         }
 
@@ -73,13 +76,16 @@ class ComprovantesTransferenciaController extends Controller
             $titulo = $this->titulo;
             $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
             $comprovante = ComprovantesService::getComprovante($id);
+            $imoveis = ImoveisService::getListaImoveisSelect();
+            $inquilino = InquilinosService::getInquilinoBy($comprovante->inquilino);
+            $inquilinos = InquilinosService::getInquilinosImovelUsingSala($inquilino->salacodigo);
 
             
             $mensagem = null; 
             
             if($request->isMethod('put')){
-                $comprovante->valor = ProjectUtils::trocarVirgulaPorPonto($request->input('valor-comprovante'));
-                $comprovante->dataComprovante = ProjectUtils::inverterDataParaSalvar($request->input('data-comprovante'));
+                $comprovante->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-comprovante'));
+                $comprovante->dataComprovante = ProjectUtils::normalizarData($request->input('data-comprovante'), Operacao::SALVAR);
                 $comprovante->referencia = ProjectUtils::tirarMascara($request->input('referencia'));
                 $comprovante->descricao = $request->input('descricao');
                 $comprovante->tipocomprovante = $request->input('tipo-comprovante');
@@ -92,7 +98,8 @@ class ComprovantesTransferenciaController extends Controller
                 }
 
                 $comprovante->save();
-                $mensagem = "sucesso";
+                $mensagem_vo = new MensagemVO('sucesso', 'O comprovante foi atualizado com sucesso!');
+                $mensagem = $mensagem_vo->getJson();
             }
             
             if($comprovante->dataComprovante != null){
@@ -101,7 +108,7 @@ class ComprovantesTransferenciaController extends Controller
             }
             
 
-            return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'mensagem')); 
+            return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'imoveis', 'inquilinos', 'mensagem')); 
         } catch (\Exception $e) {
             return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
         }

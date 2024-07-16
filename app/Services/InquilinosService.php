@@ -362,7 +362,23 @@ class InquilinosService {
             ->where('inquilinos.situacao', '=', 'A')
             ->whereIn('salas.imovelcodigo', $imoveis)
             ->get();
+      }
 
+      /**
+       * Esse método busca todos os inquilinos de um imóvel com base
+       * em um sala passada no parâmetro da função
+       */
+      public static function getInquilinosImovelUsingSala($idSala){
+            $inquilinos = Inquilino::select('inquilinos.id', 'p.nome')
+                  ->join('pessoas as p', 'p.id', '=', 'inquilinos.pessoacodigo')
+                  ->join('salas as s', 's.id', '=', 'inquilinos.salacodigo')
+                  ->join('imoveis as im', 'im.id', '=', 's.imovelcodigo')
+                  ->where('inquilinos.situacao', 'A')
+                  ->whereIn('im.id', function($query) use ($idSala){
+                      $query->select('imovelcodigo')->from('salas')->where('id', $idSala); 
+                  })
+                  ->get();
+            return $inquilinos;        
       }
 
       /**
