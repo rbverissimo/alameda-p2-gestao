@@ -21,10 +21,10 @@
             </div>
             @isset($inquilinos)
                   <div class="col-6">
-                        <label style="display: nome" 
+                        <label style="display: none" 
                               for="select-inquilino" 
                               id="label-select-inquilino">Escolha um inquilino da lista: </label>
-                        <select style="display: nome" id="select-inquilino" name="inquilino">                 
+                        <select style="display: none" id="select-inquilino" name="inquilino">                 
                                     @foreach ($inquilinos as $inquilino)
                                           <option value="{{$inquilino->id}}">
                                                 {{$inquilino->nome}}</option>

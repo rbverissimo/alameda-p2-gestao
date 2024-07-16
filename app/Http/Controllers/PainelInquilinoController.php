@@ -409,6 +409,15 @@ class PainelInquilinoController extends Controller
     }
 
     public function listarInquilinosSelectByImovel($idImovel){
+        $inquilinos = InquilinosService::getListaInputInquilinos($idImovel);
+        $inquilinos_json = [];
+        foreach ($inquilinos as $inquilino) {
+            $inquilinos_json[] = [
+                'value' => $inquilino->id,
+                'view' => $inquilino->nome
+            ];
+        }
+        return $inquilinos_json;
 
     }
 

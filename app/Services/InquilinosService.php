@@ -354,8 +354,8 @@ class InquilinosService {
             
       }
 
-      public static function getListaInputInquilinos(){
-            $imoveis = ImoveisService::getImoveisByUsuarioLogado();
+      public static function getListaInputInquilinos($idImovel = null){
+            $imoveis = $idImovel === null ? ImoveisService::getImoveisByUsuarioLogado() : [$idImovel];
             return  Inquilino::select('inquilinos.id', 'pessoas.nome')
             ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
             ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')

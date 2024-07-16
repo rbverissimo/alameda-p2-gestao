@@ -46,20 +46,7 @@ class ComprovantesTransferenciaController extends Controller
         }
 
         $tipos_comprovantes = TipoComprovante::all();
-        $inquilinos_query = InquilinosService::getListaInputInquilinos();
-
-        if($id != null){
-            $inquilinos = array_filter($inquilinos_query, function ($inquilino) use ($id){
-                return $inquilino->id === $id;
-            });
-        } else {
-
-            $inquilino_vazio = new Inquilino();
-            $inquilino_vazio->id = '';
-            $inquilino_vazio->nome = '';
-
-            $inquilinos = $inquilinos_query->prepend($inquilino_vazio);
-        }
+        $inquilinos = [];
         
 
         return view('app.comprovantes-transferencia', 

@@ -50,7 +50,7 @@ function createOptions(data, selectElement, label){
 }
 
 export function checarOptionsVisiveis(label, select){
-    if(select.hasChildNodes){
+    if(select.childElementCount > 0){
           label.style.display = 'block'
           select.style.display = 'block';
     }
