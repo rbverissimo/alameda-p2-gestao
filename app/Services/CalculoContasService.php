@@ -35,25 +35,12 @@ class CalculoContasService {
         }
 
         $contas_imovel = ImoveisService::getContasAnoMes($ano_referencia, $mes_referencia, $idImovel);
+        $this->inserirCalculoContasInquilinos($this->gerarSalasCalculcoVO($contas_imovel), $idImovel);
 
-        $salas_calculoVO = [];
+        
+    }
 
-        foreach ($contas_imovel as $conta) {
-           $sala = $conta->salacodigo;
-            if(!array_key_exists($sala, $salas_calculoVO)){
-
-                $inquilinos = InquilinosService::getInquilinosBySala($sala)->toArray();
-                $contas = [$conta];
-                $vo = new CalculoContasVO($sala, $inquilinos, $contas);
-                $salas_calculoVO[$sala] = $vo;
-
-            } else {
-                $vo = $salas_calculoVO[$sala];
-                $vo->contas_sala[] = $conta;
-            }
-           
-        }
-
+    public function inserirCalculoContasInquilinos($salas_calculoVO, $idImovel){
         foreach($salas_calculoVO as $key => $value){
             $vo = $value;
 
@@ -111,8 +98,32 @@ class CalculoContasService {
             }
 
         }
+    }
 
+    public function atualizarCalculoContasInquilinos(){
         
+    }
+
+    public function gerarSalasCalculcoVO($contas_imovel)
+    {
+        $salas_calculoVO = [];
+        foreach ($contas_imovel as $conta) {
+            $sala = $conta->salacodigo;
+             if(!array_key_exists($sala, $salas_calculoVO)){
+ 
+                 $inquilinos = InquilinosService::getInquilinosBySala($sala)->toArray();
+                 $contas = [$conta];
+                 $vo = new CalculoContasVO($sala, $inquilinos, $contas);
+                 $salas_calculoVO[$sala] = $vo;
+ 
+             } else {
+                 $vo = $salas_calculoVO[$sala];
+                 $vo->contas_sala[] = $conta;
+             }
+            
+        }
+
+        return $salas_calculoVO;
     }
 
 }
