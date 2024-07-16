@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Imovel;
 use App\Models\TipoConta;
 
 class TipoContasService {
@@ -37,5 +38,10 @@ class TipoContasService {
      */
     public static function isTipoContaFatorDivisor($idTipoConta): bool {
         return TipoConta::where('id', $idTipoConta)->pluck('isFatorDivisor')->first() === 'S';
+    }
+
+    public static function getTiposContasByImovel($idImovel){
+        $imoveis_tipos_contas = Imovel::with('tipos_contas')->where('id', $idImovel)->first();
+        return $imoveis_tipos_contas->getRelation('tipos_contas');
     }
 }

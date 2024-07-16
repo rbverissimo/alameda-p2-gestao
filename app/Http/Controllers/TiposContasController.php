@@ -115,7 +115,13 @@ class TiposContasController extends Controller {
 
     }
 
-    public function listarPorSala($idSala){
+    public function listarPorSala($idImovel){
+
+        $tipos_contas = TipoContasService::getDescricaoTipoContaBy($idImovel);
+        foreach ($tipos_contas as $tipo) {
+            $tipo->view = $tipo->descricao;
+        }
+        return $tipos_contas;
 
     }
 

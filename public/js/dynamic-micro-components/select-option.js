@@ -1,7 +1,5 @@
-export let selectElement = undefined;
-
 export function getSelectOptions(select, paramValue, url){
-    selectElement = select;
+    const selectElement = select;
     selectElement.innerHTML = '';
     selectElement.style.display = 'none';
 
@@ -23,7 +21,7 @@ export function getSelectOptions(select, paramValue, url){
 
 }
 
-function createOptions(data){
+function createOptions(data, selectElement){
     for(const object of data){
         const option = document.createElement('option');
         option.value = object.value;

@@ -13,7 +13,7 @@
 <div class="dashboard light-dashboard">
       <div>
             @component('app.layouts._components.form_contas', 
-                  compact('tipos_contas', 'tipos_salas', 'conta_imovel', 'imoveis', 'mensagem'))
+                  compact('conta_imovel', 'imoveis', 'mensagem'))
             @endcomponent
       </div>
 </div>

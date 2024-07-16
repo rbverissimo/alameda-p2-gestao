@@ -16,7 +16,7 @@ class CalculoContasController extends Controller
     public function calculoContas(Request $request) {
 
         $conta_imovel = null;
-        $imoveis = ImoveisService::getImoveis();
+        $imoveis = ImoveisService::getListaImoveisSelect();
 
         $mensagem = null; 
         

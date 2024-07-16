@@ -29,7 +29,7 @@
                       @isset($salas)
                           @foreach ($salas as $sala)
                               <option value="{{$sala->id}}"
-                                  @endisset
+                                  
                                   >
                                   {{$sala->nomesala}}
                               </option>
@@ -42,7 +42,7 @@
                       @isset($tipos_conta)
                           @foreach ($tipos_conta as $tipo)
                               <option value="{{$tipo->id}}"
-                                  @endisset
+                                  
                                   >
                                   {{$tipo->descricao}}
                               </option>

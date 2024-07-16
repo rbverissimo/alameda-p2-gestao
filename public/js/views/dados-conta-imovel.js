@@ -28,9 +28,7 @@ for(const e of elementosApenasNumeros){
 }
 
 imoveisSelect.addEventListener('change', (option) => {
+      console.log('change');
       getSelectOptions(salasSelect, option.target.value, LISTAR_SALAS);
-})
-
-salasSelect.addEventListener('change', (option) => {
       getSelectOptions(tiposContaSelect, option.target.value, LISTAR_TIPOS_CONTAS_SALA);
 });

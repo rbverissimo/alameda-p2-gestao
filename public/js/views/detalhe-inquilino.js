@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function(){
             appData = data.detail;
             idInquilino = appData.id_inquilino;
             nomeInquilino = appData.nome_inquilino;
-
         }
     });
 });

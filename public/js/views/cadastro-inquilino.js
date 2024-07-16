@@ -1,5 +1,6 @@
-import { getSalasSelectedImovel } from "../components/imoveis-search.js";
+import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { loadMessages } from "../partials/simple-modal.js";
+import { LISTAR_SALAS } from "../routes.js";
 import { cpfMascara, mascaraFatorDivisor, mascaraTelefone, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
@@ -36,7 +37,7 @@ inputFatorDivisor.addEventListener('keydown', apenasNumeros);
 
 
 imoveisSelect.addEventListener('change', (option) => {
-    getSalasSelectedImovel(salasSelect, option.target.value);
+    getSelectOptions(salasSelect, option.target.value, LISTAR_SALAS);
 });
 
 
