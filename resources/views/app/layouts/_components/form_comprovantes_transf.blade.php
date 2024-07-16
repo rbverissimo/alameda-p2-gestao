@@ -13,7 +13,13 @@
                   <label for="select-imovel">Escolha o imóvel: </label>
                   <select name="imovel" id="select-imovel">
                         @foreach ($imoveis as $imovel)
-                            <option value="{{$imovel->id}}">
+                            <option value="{{$imovel->id}}"
+                              @isset($comprovante->imovel)
+                                    @if ($comprovante->imovel == $imovel->id)
+                                          selected
+                                    @endif
+                              @endisset 
+                              >
                               {{ $imovel->nomefantasia}}
                             </option>
                         @endforeach
@@ -26,7 +32,13 @@
                               id="label-select-inquilino">Escolha um inquilino da lista: </label>
                         <select style="display: none" id="select-inquilino" name="inquilino">                 
                                     @foreach ($inquilinos as $inquilino)
-                                          <option value="{{$inquilino->id}}">
+                                          <option value="{{$inquilino->id}}"
+                                                @isset($comprovante->inquilino)
+                                                      @if ($comprovante->inquilino == $inquilino->id)
+                                                            selected
+                                                      @endif
+                                                @endisset       
+                                                >
                                                 {{$inquilino->nome}}</option>
                                     @endforeach               
                         </select>

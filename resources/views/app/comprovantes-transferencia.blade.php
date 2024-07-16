@@ -4,25 +4,12 @@
 
 @include('app.layouts._partials.crud-header')
 <h4>Declare um comprovante </h4>
-      @isset($inquilinos)
+      @component('app.layouts._components.form_comprovantes_transf',
+                  compact('inquilinos', 'tipos_comprovantes', 'comprovante', 'imoveis'))
+      @endcomponent
       <div class="row">
-            <div class="end-page-margin">
-                  @component('app.layouts._components.form_comprovantes_transf',
-                  compact('inquilinos', 'tipos_comprovantes', 'imoveis'))
-                  @endcomponent
-            </div>
-      </div>
-      @endisset
-
-      @isset($comprovante)
-      <div class="row">
-            <div class="end-page-margin">
-                  @component('app.layouts._components.form_comprovantes_transf', 
-                  compact('tipos_comprovantes', 'comprovante', 'imoveis'))
-                  @endcomponent
-            </div>
-      </div>
-      @endisset
+            <div class="whitespace-end-page"></div>
+      </div>            
 @endsection
 
 @section('scripts')

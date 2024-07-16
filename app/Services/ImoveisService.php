@@ -153,6 +153,16 @@ class ImoveisService {
     }
 
     /**
+     * Dado um inquilino, fornecido no parâmetro, esse método retorna
+     * o ID do imóvel em que esse inquilino está
+     */
+    public static function getImovelByInquilino($inquilino): int
+    {
+       $sala = InquilinosService::getInquilinoBy($inquilino)->salacodigo;
+       return ImoveisService::getImovelBySala($sala);
+    }
+
+    /**
      * Esse método busca uma conta de acordo com seu imóvel e uma referências
      * ambos passados no parâmetro do imóvel
      */

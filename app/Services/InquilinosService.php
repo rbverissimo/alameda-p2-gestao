@@ -366,9 +366,9 @@ class InquilinosService {
 
       /**
        * Esse método busca todos os inquilinos de um imóvel com base
-       * em um sala passada no parâmetro da função
+       * em uma sala passada pelo parâmetro da função
        */
-      public static function getInquilinosImovelUsingSala($idSala){
+      public static function getInquilinosImovelUseSala($idSala){
             $inquilinos = Inquilino::select('inquilinos.id', 'p.nome')
                   ->join('pessoas as p', 'p.id', '=', 'inquilinos.pessoacodigo')
                   ->join('salas as s', 's.id', '=', 'inquilinos.salacodigo')
@@ -379,6 +379,27 @@ class InquilinosService {
                   })
                   ->get();
             return $inquilinos;        
+      }
+
+      /**
+       * Esse método busca todos os inquilinos de um imóvel a partir de um
+       * único inquilino fornecido através do parâmetro
+       */
+      public static function getInquilinosImovelUseInquilino($inquilino){
+            $inquilinos = Inquilino::select('inquilinos.id', 'p.nome')
+                  ->join('pessoas as p', 'p.id', '=', 'inquilinos.pessoacodigo')
+                  ->join('salas as s', 's.id', '=', 'inquilinos.salacodigo')
+                  ->join('imoveis as im', 'im.id', '=', 's.imovelcodigo')
+                  ->where('inquilinos.situacao', 'A')
+                  ->whereIn('im.id', function($query) use ($inquilino){
+                $query->select('imovelcodigo')->from('salas')
+                        ->join('inquilinos as iss', 'iss.salacodigo', '=', 'salas.id')
+                        ->where('salas.id', $inquilino)
+                        ->groupBy('salas.id'); 
+            })
+            ->get();
+
+            return $inquilinos;
       }
 
       /**

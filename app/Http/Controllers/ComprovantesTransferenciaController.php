@@ -21,6 +21,7 @@ class ComprovantesTransferenciaController extends Controller
     public function index(Request $request, $id = null){
 
         $mensagem = null; 
+        $comprovante = null; 
         $imoveis = ImoveisService::getListaImoveisSelect();
 
         if($request->isMethod('post')){
@@ -54,7 +55,7 @@ class ComprovantesTransferenciaController extends Controller
 
         return view('app.comprovantes-transferencia', 
             ['inquilinos'=>$inquilinos, 'titulo'=>$this->titulo, 'tipos_comprovantes'=>$tipos_comprovantes, 
-            'mensagem'=>$mensagem, 'imoveis' => $imoveis]);
+            'mensagem'=>$mensagem, 'imoveis' => $imoveis, 'comprovante' => $comprovante]);
     }
 
     public function comprovantesPorInquilino($id){
@@ -76,10 +77,9 @@ class ComprovantesTransferenciaController extends Controller
             $titulo = $this->titulo;
             $tipos_comprovantes = ComprovantesService::getTiposComprovantes();
             $comprovante = ComprovantesService::getComprovante($id);
+            $comprovante->imovel = ImoveisService::getImovelByInquilino($comprovante->inquilino);
             $imoveis = ImoveisService::getListaImoveisSelect();
-            $inquilino = InquilinosService::getInquilinoBy($comprovante->inquilino);
-            $inquilinos = InquilinosService::getInquilinosImovelUsingSala($inquilino->salacodigo);
-
+            $inquilinos = InquilinosService::getInquilinosImovelUseInquilino($comprovante->inquilino);
             
             $mensagem = null; 
             
@@ -101,12 +101,6 @@ class ComprovantesTransferenciaController extends Controller
                 $mensagem_vo = new MensagemVO('sucesso', 'O comprovante foi atualizado com sucesso!');
                 $mensagem = $mensagem_vo->getJson();
             }
-            
-            if($comprovante->dataComprovante != null){
-                $dataNaoInvertida = $comprovante->dataComprovante;
-                $comprovante->dataComprovante = ProjectUtils::inverterDataParaRenderizar($dataNaoInvertida);
-            }
-            
 
             return view('app.comprovantes-transferencia', compact('titulo', 'tipos_comprovantes', 'comprovante', 'imoveis', 'inquilinos', 'mensagem')); 
         } catch (\Exception $e) {
