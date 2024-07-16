@@ -9,10 +9,22 @@
       <input name="id-comprovante" placeholder="ID" value="{{$comprovante->id}}" type="hidden">
       @endisset
       <div class="row">
+            <div class="col-6">
+                  <label for="select-imovel">Escolha o imóvel: </label>
+                  <select name="imovel" id="select-imovel">
+                        @foreach ($imoveis as $imovel)
+                            <option value="{{$imovel->id}}">
+                              {{ $imovel->nomefantasia}}
+                            </option>
+                        @endforeach
+                  </select>
+            </div>
             @isset($inquilinos)
-                  <div class="col-12">
-                        <label for="select-inquilino">Escolha um inquilino da lista: </label>
-                        <select id="select-inquilino" name="inquilino">                 
+                  <div class="col-6">
+                        <label style="display: nome" 
+                              for="select-inquilino" 
+                              id="label-select-inquilino">Escolha um inquilino da lista: </label>
+                        <select style="display: nome" id="select-inquilino" name="inquilino">                 
                                     @foreach ($inquilinos as $inquilino)
                                           <option value="{{$inquilino->id}}">
                                                 {{$inquilino->nome}}</option>

@@ -48,3 +48,10 @@ function createOptions(data, selectElement, label){
     }
     
 }
+
+export function checarOptionsVisiveis(label, select){
+    if(select.hasChildNodes){
+          label.style.display = 'block'
+          select.style.display = 'block';
+    }
+}

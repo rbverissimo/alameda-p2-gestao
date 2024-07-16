@@ -408,4 +408,8 @@ class PainelInquilinoController extends Controller
         }
     }
 
+    public function listarInquilinosSelectByImovel($idImovel){
+
+    }
+
 }

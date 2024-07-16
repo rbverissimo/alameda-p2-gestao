@@ -8,7 +8,7 @@
       <div class="row">
             <div class="end-page-margin">
                   @component('app.layouts._components.form_comprovantes_transf',
-                  compact('inquilinos', 'tipos_comprovantes', 'mensagem'))
+                  compact('inquilinos', 'tipos_comprovantes', 'imoveis'))
                   @endcomponent
             </div>
       </div>
@@ -18,7 +18,7 @@
       <div class="row">
             <div class="end-page-margin">
                   @component('app.layouts._components.form_comprovantes_transf', 
-                  compact('tipos_comprovantes', 'comprovante', 'mensagem'))
+                  compact('tipos_comprovantes', 'comprovante', 'imoveis'))
                   @endcomponent
             </div>
       </div>

@@ -1,4 +1,4 @@
-import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
+import { checarOptionsVisiveis, getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_SALAS, LISTAR_TIPOS_CONTAS_IMOVEL } from "../routes.js";
 import { anoMesMascara, dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro  } from "../validators/view-masks.js";
 import { apenasNumeros, isDataValida  } from "../validators/view-validation.js";
@@ -45,10 +45,3 @@ document.addEventListener('DOMContentLoaded', () => {
       dataInput.value = writeDataMascara(dataInput.value);
 
 });
-
-function checarOptionsVisiveis(label, select){
-      if(select.hasChildNodes){
-            label.style.display = 'block'
-            select.style.display = 'block';
-      }
-}
