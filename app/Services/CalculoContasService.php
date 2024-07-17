@@ -106,7 +106,14 @@ class CalculoContasService {
         $conta_atualizada = ImoveisService::getContasImovelById($idContaImovel);
         $valor_atualizado_conta_imovel = $conta_atualizada->valor;
 
-        $is_conta_fator_divisor = $conta_atualizada->getRelation('tipo_conta')->isFatorDivisor === 'S';
+        $is_conta_fator_divisor = $conta_atualizada->getRelation('tipo_conta');
+        
+        if(!is_null($is_conta_fator_divisor)){
+            $is_conta_fator_divisor = $is_conta_fator_divisor->isFatorDivisor === 'S';
+        } 
+
+        $is_conta_fator_divisor = false;
+
 
         foreach ($contas as $conta) {
             $conta->valorinquilino = ($valor_atualizado_conta_imovel / $numero_inquilinos);

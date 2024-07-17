@@ -180,7 +180,7 @@ class ImoveisService {
      * a partir do seu ID passado pelo parâmetro.
      */
     public static function getContasImovelById($idContaImovel){
-        return ContaImovel::with('tipo_conta')->where('id', $idContaImovel)->get();
+        return ContaImovel::with('tipo_conta')->where('id', $idContaImovel)->first();
     }
 
     /**

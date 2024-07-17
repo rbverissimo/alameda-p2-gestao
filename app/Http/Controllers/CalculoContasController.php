@@ -68,25 +68,24 @@ class CalculoContasController extends Controller
             
             $conta_imovel = CalculoContasService::getContaBy($idConta);
             $sala_conta = $conta_imovel->salacodigo;
-            $imovel_codigo = $conta_imovel->getRelation('sala')->imovelcodigo;
-            $conta_imovel->imovelcodigo = $imovel_codigo;
+            $imovel_conta_codigo = $conta_imovel->getRelation('sala')->imovelcodigo;
             $contas_inquilino_associadas = InquilinosService::getListaContasInquilinosByIdImovel($idConta);
 
             
             
             $imoveis = ImoveisService::getListaImoveisSelect();
-            $salas = ImoveisService::getSalaBy($imovel_codigo);
-            $tipos_conta = ImoveisService::getTipoContasBy($imovel_codigo);
+            $salas = ImoveisService::getSalaBy($imovel_conta_codigo);
+            $tipos_conta = ImoveisService::getTipoContasBy($imovel_conta_codigo);
 
             if($request->isMethod('put')){
 
-                $tipo_conta = $request->input('tipo_conta');
                 
                 $conta_imovel->valor = ProjectUtils::retirarMascaraMoeda($request->input('valor-conta'));
                 $conta_imovel->dataVencimento = ProjectUtils::normalizarData($request->input('data-vencimento'), Operacao::SALVAR);
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
                 $conta_imovel->mes = $request->input('mes');
+                $tipo_conta = $request->input('tipo_conta');
                 $conta_imovel->tipocodigo = $tipo_conta;
                 $conta_imovel->salacodigo = $request->input('sala');
 
@@ -98,7 +97,7 @@ class CalculoContasController extends Controller
                     $filePath = $file->storeAs('contas-imovel', $fileName);
                     $conta_imovel->arquivo_conta = $filePath;
                 }
-                
+
                 $conta_imovel->save();
 
 
@@ -107,7 +106,7 @@ class CalculoContasController extends Controller
                     $calculo = new CalculoContasService();
                     $calculo->atualizarCalculoContasInquilinos($sala_conta, $idConta);
                     $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso e um novo cálculo de contas
-                    da referência '.$conta_imovel->ano.'-'.$imovel_codigo->mes.' foi realizado');
+                    da referência '.$conta_imovel->ano.'-'.$conta_imovel->mes.' foi realizado');
                     
                 }
 
@@ -117,9 +116,9 @@ class CalculoContasController extends Controller
             }
 
             return view('app.calculo-contas', compact('titulo', 'tipos_conta', 'salas', 'imoveis', 
-                'conta_imovel', 'mensagem', 'contas_inquilino_associadas')); 
+                'conta_imovel', 'mensagem', 'contas_inquilino_associadas', 'imovel_conta_codigo')); 
         } catch (\Throwable $th) {
-            return redirect()->back()->with("falha", "Não foi possível modificar esse registro");
+            return redirect()->back()->with("erros", $th->getMessage());
         }
     }
 

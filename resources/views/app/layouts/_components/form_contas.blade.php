@@ -12,8 +12,8 @@
                               name="imovelcodigo">
                               @foreach ($imoveis as $imovel)
                                     <option value="{{$imovel->id}}"
-                                          @isset($conta_imovel->imovelcodigo)
-                                                @if($conta_imovel->imovelcodigo == $imovel->id)
+                                          @isset($imovel_conta_codigo)
+                                                @if($imovel_conta_codigo == $imovel->id)
                                                 selected
                                                 @endif
                                           @endisset
