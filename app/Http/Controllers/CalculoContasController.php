@@ -67,6 +67,7 @@ class CalculoContasController extends Controller
             $mensagem = null; 
             
             $conta_imovel = CalculoContasService::getContaBy($idConta);
+            $sala_conta = $conta_imovel->salacodigo;
             $imovel_codigo = $conta_imovel->getRelation('sala')->imovelcodigo;
             $conta_imovel->imovelcodigo = $imovel_codigo;
             $contas_inquilino_associadas = InquilinosService::getListaContasInquilinosByIdImovel($idConta);
@@ -105,7 +106,7 @@ class CalculoContasController extends Controller
 
                     $referencia = $conta_imovel->ano * 100 + $conta_imovel->mes;
                     $calculo = new CalculoContasService();
-                    $calculo->calcularContasInquilinos($imovel_codigo, $referencia);
+                    //$calculo->calcularContasInquilinos($imovel_codigo, $referencia);
                     $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso e um novo cálculo de contas
                     da referência '.$conta_imovel->ano.'-'.$imovel_codigo->mes.' foi realizado');
                     

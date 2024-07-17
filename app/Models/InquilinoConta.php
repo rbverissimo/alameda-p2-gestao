@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InquilinoConta extends Model
 {
     use HasFactory;
     protected $table = 'inquilinos_contas';
-    protected $fillable = ['inquilinocodigo', 'contacodigo', 'valorinquilino', 'dataVencimento', 'dataPagamento', 'quitada'];
+    protected $fillable = ['inquilinocodigo', 
+        'contacodigo', 
+        'valorinquilino', 
+        'dataVencimento', 
+        'dataPagamento', 
+        'quitada', 
+        'calculo_json'];
 
     public function conta_imovel(): BelongsTo
     {

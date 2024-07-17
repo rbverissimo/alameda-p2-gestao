@@ -44,6 +44,15 @@ class InquilinosService {
             return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->pluck('fatorDivisor')->first();
       }
 
+      /**
+       * Busca o model InquilinoFatorDivisor do banco de dados 
+       * dado um inquilino passado pelo parâmetro. 
+       */
+      public static function getInquilinoFatorDivisor($idInquilino)
+      {
+            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->first();
+      }
+
       public static function getInquilinoNome($id) {
             
             $query = Inquilino::select('pessoas.nome')
@@ -271,6 +280,20 @@ class InquilinosService {
       public static function getListaContasInquilinosByIdImovel($idContaImovel){
             return InquilinoConta::select('id', 'dataVencimento', 'valorinquilino', 'quitada')->
                   where('contacodigo', $idContaImovel)
+                  ->get();
+      }
+
+      /**
+       * Esse método retorna as contas de inqulinos de uma determinada sala 
+       * passada no primeiro parâmetro a partir da conta do imóvel conectada a ela
+       * 
+       */
+      public static function getContasInquilinoBySala($sala, $idContaImovel)
+      {
+            return InquilinoConta::select('inquilinos_contas.*')->from('inquilinos_contas')
+                  ->join('contas_imoveis', 'contas_imoveis.id', '=', 'inquilinos_contas.contacodigo')
+                  ->join('salas', 'salas.id', '=', 'contas_imoveis.salacodigo')
+                  ->where([['salas.id', $sala], ['contas_imoveis.id', $idContaImovel]])
                   ->get();
       }
 

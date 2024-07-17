@@ -98,7 +98,23 @@ class CalculoContasService {
         }
     }
 
-    public function atualizarCalculoContasInquilinos(){
+    public function atualizarCalculoContasInquilinos($idSala, $idContaImovel){
+
+        $contas = InquilinosService::getContasInquilinoBySala($idSala, $idContaImovel);
+        $numero_inquilinos = count($contas);
+        $valor_atualizado_conta_imovel = ImoveisService::getContaImovelValorById($idContaImovel);
+        $is_conta_fator_divisor = TipoContasService::isTipoContaFatorDivisorByContaImovel($idContaImovel);
+
+        foreach ($contas as $conta) {
+            if(!$is_conta_fator_divisor){
+                
+            }
+            $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($conta->inquilinocodigo);
+            $conta->valorinquilino = ($valor_atualizado_conta_imovel / $numero_inquilinos) * $fator_divisor;
+            $conta->calculo_json = '';
+            $conta->save();
+        }
+
 
     }
 

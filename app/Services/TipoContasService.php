@@ -36,8 +36,17 @@ class TipoContasService {
      * todos os inquilinos de uma determinada sala
      * @return bool true se o flag for 'S' no banco de dados
      */
-    public static function isTipoContaFatorDivisor($idTipoConta): bool {
+    public static function isTipoContaFatorDivisor($idTipoConta): bool 
+    {
         return TipoConta::where('id', $idTipoConta)->pluck('isFatorDivisor')->first() === 'S';
+    }
+
+    public static function isTipoContaFatorDivisorByContaImovel($idContaImovel){
+        return TipoConta::select('tipocontas.isFatorDivisor')->from('tipocontas')
+            ->join('contas_imoveis', 'contas_imoveis.tipocodigo', '=', 'tipocontas.id')
+            ->where('contas_imoveis.id', $idContaImovel)
+            ->pluck('isFatorDivisor')
+            ->first() === 'S';
     }
 
     public static function getTiposContasByImovel($idImovel){
