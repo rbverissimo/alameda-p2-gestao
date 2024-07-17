@@ -50,7 +50,9 @@ class InquilinosService {
        */
       public static function getInquilinoFatorDivisor($idInquilino)
       {
-            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)->first();
+            return InquilinoFatorDivisor::where('inquilino_id', $idInquilino)
+                  ->orderBy('id','desc')
+                  ->first();
       }
 
       public static function getInquilinoNome($id) {

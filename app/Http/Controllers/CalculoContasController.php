@@ -104,9 +104,8 @@ class CalculoContasController extends Controller
 
                 if(!empty($contas_inquilino_associadas)){
 
-                    $referencia = $conta_imovel->ano * 100 + $conta_imovel->mes;
                     $calculo = new CalculoContasService();
-                    //$calculo->calcularContasInquilinos($imovel_codigo, $referencia);
+                    $calculo->atualizarCalculoContasInquilinos($sala_conta, $idConta);
                     $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso e um novo cálculo de contas
                     da referência '.$conta_imovel->ano.'-'.$imovel_codigo->mes.' foi realizado');
                     

@@ -274,10 +274,17 @@ class ProjectUtils {
             return $resultado; 
       }
       
+      /**
+       * Esse método recebe qualquer número de JSON e os transforma em arrays.
+       * Com isso, os arrays são verificados e misturados em um único JSON
+       * que é devolvido no return
+       */
       public static function mergeJson(...$jsons)
       {
             $decodedArrays = array_map('json_decode', $jsons, [true]);
-            $jsonsValidos = array_filter($decodedArrays, 'is_array');
+            $jsonsValidos = array_filter($decodedArrays, function($data){
+                  return is_array($data) && !empty($data);
+            });
             return json_encode(array_merge(...$jsonsValidos));
       } 
 

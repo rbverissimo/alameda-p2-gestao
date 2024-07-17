@@ -102,17 +102,28 @@ class CalculoContasService {
 
         $contas = InquilinosService::getContasInquilinoBySala($idSala, $idContaImovel);
         $numero_inquilinos = count($contas);
-        $valor_atualizado_conta_imovel = ImoveisService::getContaImovelValorById($idContaImovel);
-        $is_conta_fator_divisor = TipoContasService::isTipoContaFatorDivisorByContaImovel($idContaImovel);
+        
+        $conta_atualizada = ImoveisService::getContasImovelById($idContaImovel);
+        $valor_atualizado_conta_imovel = $conta_atualizada->valor;
+
+        $is_conta_fator_divisor = $conta_atualizada->getRelation('tipo_conta')->isFatorDivisor === 'S';
 
         foreach ($contas as $conta) {
-            $fator_divisor = InquilinosService::getInquilinoFatorDivisorBy($conta->inquilinocodigo);
-            $conta->valorinquilino = ($valor_atualizado_conta_imovel / $numero_inquilinos) * $fator_divisor;
-            $conta->calculo_json = '';
+            $conta->valorinquilino = ($valor_atualizado_conta_imovel / $numero_inquilinos);
+            $conta->dataVencimento = $conta_atualizada->dataVencimento;
+
+            $inquilino_fator_divisor = [];
+            if($is_conta_fator_divisor){
+                $inquilino_fator_divisor = InquilinosService::getInquilinoFatorDivisor($conta->inquilinocodigo);
+                $conta->valorinquilino = $conta->valorinquilino * $inquilino_fator_divisor->fatorDivisor;
+            }
+
+            $conta->calculo_json = ProjectUtils::mergeJson(json_encode($inquilino_fator_divisor), json_encode($conta_atualizada));
+
             $conta->save();
+
         }
-
-
+        
     }
 
     public function gerarSalasCalculcoVO($contas_imovel)
