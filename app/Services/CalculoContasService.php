@@ -53,7 +53,8 @@ class CalculoContasService {
 
                 foreach ($inquilinos as $inquilino) {
 
-                    $fatorDivisor = InquilinosService::getInquilinoFatorDivisorBy($inquilino);
+                    $inquilino_fator_divisor = InquilinosService::getInquilinoFatorDivisor($inquilino);
+                    $fatorDivisor = $inquilino_fator_divisor->fatorDivisor;
 
                     foreach($contas as $conta){
                         
@@ -64,6 +65,7 @@ class CalculoContasService {
                             'contacodigo' => $conta->id,
                             'valorinquilino' => $valor_inquilino,
                             'dataVencimento' => $conta->dataVencimento,
+                            'calculo_json' => ProjectUtils::mergeJson(json_encode($inquilino_fator_divisor), json_encode($conta))
                         ]);
                     }
                     
@@ -74,14 +76,18 @@ class CalculoContasService {
 
                 foreach($inquilinos_imovel as $inquilino){
 
-                    $fatorDivisor = InquilinosService::getInquilinoFatorDivisorBy($inquilino->id);
+                    $inquilino_fator_divisor = InquilinosService::getInquilinoFatorDivisor($inquilino);
+                    $fatorDivisor = $inquilino_fator_divisor->fatorDivisor;
 
                     foreach ($contas as $conta) {
+                        
                         $isFatorDivisor = TipoContasService::isTipoContaFatorDivisor($conta->tipocodigo);
                         $valor_inquilino = ($conta->valor / count($inquilinos_imovel->toArray()));
+                        $fatorDivisor_json = [];
 
                         if($isFatorDivisor){
                             $valor_inquilino = $valor_inquilino * $fatorDivisor;
+                            $fatorDivisor_json = $inquilino_fator_divisor;
                         }
 
                         InquilinoConta::create([
@@ -89,6 +95,7 @@ class CalculoContasService {
                             'contacodigo' => $conta->id,
                             'valorinquilino' => $valor_inquilino,
                             'dataVencimento' => $conta->dataVencimento,
+                            'calculo_json' => ProjectUtils::mergeJson(json_encode($fatorDivisor_json), json_encode($conta))
                         ]);
                         
                     }

@@ -11,7 +11,7 @@
         @foreach ($contas_imovel as $conta_imovel)
             <tr class="table-row">
                 <td><a class="table-link">{{ $conta_imovel->getRelation('tipo_conta')->descricao}}</a></td>
-                <td><a class="table-link">{{ $conta_imovel->valor}}</a></td>
+                <td><a class="table-link table-valores-em-real">{{ $conta_imovel->valor}}</a></td>
                 <td><a class="table-link">{{ $conta_imovel->mes.'/'.$conta_imovel->ano}}</a></td>
                 <td>
                     <div class="col-3">

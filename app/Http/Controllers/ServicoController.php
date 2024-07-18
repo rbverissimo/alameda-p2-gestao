@@ -11,14 +11,28 @@ class ServicoController extends Controller
         try {
             return view('app.painel-servicos', compact('titulo'));
         } catch (\Throwable $th) {
-            redirect()->back()->with('erros', 'Não foi possível os serviços tomados '.$th->getMessage());
+            redirect()->back()->with('erros', 'Não foi possível encontrar os serviços tomados '.$th->getMessage());
         }
     }
 
     public function cadastrar(Request $request){
-        return 'Cadastrando servico';
+        try {
+            $titulo = 'Cadastrando serviço';
+            $mensagem = null;
+
+            return view('app.cadastro-servico', compact('titulo', 'mensagem'));
+        } catch (\Throwable $th) {
+            redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+        }
     }
     public function editar(Request $request, $idServico){
-        return 'Chegando até aqui no servico: ' + $idServico;
+        try {
+            $titulo = 'Editando serviço '.$idServico;
+            $mensagem = null;
+
+            return view('app.cadastro-servico', compact('titulo', 'mensagem'));
+        } catch (\Throwable $th) {
+            redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+        }
     }
 }

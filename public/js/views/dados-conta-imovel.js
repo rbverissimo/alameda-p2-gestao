@@ -8,6 +8,10 @@ const dataInput = document.getElementById('data-input');
 const valorInput = document.getElementById('input-valor');
 const elementosApenasNumeros = document.getElementsByClassName('numero-input');
 
+const elementosTabelaValoresEmReal = document.getElementsByClassName('table-valores-em-real');
+const elementosTabelaTipoData = document.getElementsByClassName('table-data-view');
+const elementosTabelaTipoQuitada = document.getElementsByClassName('table-quitacao-view');
+
 const imoveisSelect = document.getElementById('imoveis-conta-select');
 const salasSelect = document.getElementById('sala-select');
 const tiposContaSelect = document.getElementById('tipos-conta-select');
@@ -43,5 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       valorInput.value = writeMascaraValorDinheiro(valorInput.value);
       dataInput.value = writeDataMascara(dataInput.value);
+
+      for(const e of elementosTabelaValoresEmReal){
+            e.textContent = writeMascaraValorDinheiro(e.textContent);
+      }
+
+      for(const e of elementosTabelaTipoData){
+            e.textContent = writeDataMascara(e.textContent);
+      }
+
+      for(const e of elementosTabelaTipoQuitada){
+            e.textContent = e.textContent === 'S' ? 'Sim' : 'Não';
+      }
 
 });

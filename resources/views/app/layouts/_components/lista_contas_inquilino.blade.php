@@ -8,9 +8,9 @@
     @isset($contas)
         @foreach ($contas as $conta)
             <tr class="table-row">
-                <td><a class="table-link">{{ $conta->dataVencimento}}</a></td>
-                <td><a class="table-link">{{ $conta->valorinquilino}}</a></td>
-                <td><a class="table-link">{{ $conta->quitada}}</a></td>
+                <td><a class="table-link table-data-view">{{ $conta->dataVencimento}}</a></td>
+                <td><a class="table-link table-valores-em-real">{{ $conta->valorinquilino}}</a></td>
+                <td><a class="table-link table-quitacao-view">{{ $conta->quitada}}</a></td>
                 <td>
                     <div class="col-3">
                         <img class="crud-icon" 
