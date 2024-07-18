@@ -281,11 +281,11 @@ class ProjectUtils {
        */
       public static function mergeJson(...$jsons)
       {
-            $decodedArrays = array_map('json_decode', $jsons, [true]);
+            $decodedArrays = array_map('json_decode', $jsons);
             $jsonsValidos = array_filter($decodedArrays, function($data){
-                  return is_array($data) && !empty($data);
+                  return !empty($data);
             });
-            return json_encode(array_merge(...$jsonsValidos));
+            return json_encode(array_merge($jsonsValidos));
       } 
 
 }

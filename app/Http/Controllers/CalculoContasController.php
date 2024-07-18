@@ -85,7 +85,7 @@ class CalculoContasController extends Controller
                 $conta_imovel->referenciaConta = $request->input('referencia');
                 $conta_imovel->ano = $request->input('ano');
                 $conta_imovel->mes = $request->input('mes');
-                $tipo_conta = $request->input('tipo_conta');
+                $tipo_conta = $request->input('tipo-conta');
                 $conta_imovel->tipocodigo = $tipo_conta;
                 $conta_imovel->salacodigo = $request->input('sala');
 
@@ -100,6 +100,7 @@ class CalculoContasController extends Controller
 
                 $conta_imovel->save();
 
+                $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso!');
 
                 if(!empty($contas_inquilino_associadas)){
 
@@ -111,8 +112,8 @@ class CalculoContasController extends Controller
                 }
 
 
-                $mensagem_vo = new MensagemVO('sucesso', 'O registra da conta do imóvel foi atualizado com sucesso!');
                 $mensagem = $mensagem_vo->getJson();
+                $contas_inquilino_associadas = InquilinosService::getListaContasInquilinosByIdImovel($idConta);
             }
 
             return view('app.calculo-contas', compact('titulo', 'tipos_conta', 'salas', 'imoveis', 

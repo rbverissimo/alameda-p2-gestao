@@ -108,12 +108,11 @@ class CalculoContasService {
 
         $is_conta_fator_divisor = $conta_atualizada->getRelation('tipo_conta');
         
-        if(!is_null($is_conta_fator_divisor)){
+        if(isset($is_conta_fator_divisor)){
             $is_conta_fator_divisor = $is_conta_fator_divisor->isFatorDivisor === 'S';
+        } else {
+            $is_conta_fator_divisor = false;
         } 
-
-        $is_conta_fator_divisor = false;
-
 
         foreach ($contas as $conta) {
             $conta->valorinquilino = ($valor_atualizado_conta_imovel / $numero_inquilinos);
@@ -125,6 +124,7 @@ class CalculoContasService {
                 $conta->valorinquilino = $conta->valorinquilino * $inquilino_fator_divisor->fatorDivisor;
             }
 
+            
             $conta->calculo_json = ProjectUtils::mergeJson(json_encode($inquilino_fator_divisor), json_encode($conta_atualizada));
 
             $conta->save();
