@@ -15,10 +15,26 @@ class AlterPrestadoresServicosRemovePessoasColumnsAddPessoasId extends Migration
     {
         Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('nome');
+        });
+
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('telefone');
+  
+        });
+
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('cpf');
+        });
+
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('cnpj');
+        });
+
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('telefone_empresa');
+        });
+
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->dropColumn('endereco_codigo');
         });
 
