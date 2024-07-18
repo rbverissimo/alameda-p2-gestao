@@ -16,7 +16,7 @@ class CreateFormasPagamentosTable extends Migration
     {
         Schema::create('formas_pagamentos', function (Blueprint $table) {
             $table->timestamps();
-            $table->unsignedBigInteger('codigo');
+            $table->unsignedBigInteger('codigo')->primary();
             $table->string('descricao');
         });
 
