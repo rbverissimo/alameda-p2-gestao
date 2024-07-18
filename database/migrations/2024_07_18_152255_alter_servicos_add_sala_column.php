@@ -15,6 +15,7 @@ class AlterServicosAddSalaColumn extends Migration
     {
         Schema::table('servicos', function(Blueprint $table){
             $table->unsignedBigInteger('salacodigo')->nullable();
+            $table->unsignedBigInteger('tipo_servico')->nullable();
         });
     }
 
