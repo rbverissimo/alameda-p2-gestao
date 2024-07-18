@@ -19,6 +19,7 @@ class CalculoContasController extends Controller
 
         $conta_imovel = null;
         $imoveis = ImoveisService::getListaImoveisSelect();
+        $imovel_conta_codigo = null;
 
         $mensagem = null; 
         
@@ -57,7 +58,7 @@ class CalculoContasController extends Controller
         $tipos_conta = null;
         $salas = null;
 
-        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'imoveis', 'tipos_conta', 'salas', 'mensagem'));
+        return view('app.calculo-contas', compact('titulo', 'conta_imovel', 'imoveis', 'imovel_conta_codigo', 'tipos_conta', 'salas', 'mensagem'));
     }
 
     public function regravarConta(Request $request, $idConta){
