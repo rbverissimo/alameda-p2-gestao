@@ -28,6 +28,7 @@ class AlterServicosAddSalaColumn extends Migration
     {
         Schema::table('servicos', function(Blueprint $table){
             $table->dropColumn('salacodigo');
+            $table->dropColumn('tipo_servico');
         });
     }
 }

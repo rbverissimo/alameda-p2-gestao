@@ -38,6 +38,6 @@ class CreateNotasFiscaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notas_fiscas');
+        Schema::dropIfExists('notas_fiscais');
     }
 }
