@@ -10,8 +10,9 @@ class ServicoController extends Controller
 {
     public function index(){
         $titulo = 'Painel de serviços tomados';
+        $mensagem = null;
         try {
-            return view('app.painel-servicos', compact('titulo'));
+            return view('app.painel-servicos', compact('titulo', 'mensagem'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível encontrar os serviços tomados '.$th->getMessage());
         }

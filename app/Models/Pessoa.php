@@ -12,7 +12,13 @@ class Pessoa extends Model
     protected $fillable = ['nome', 'cpf', 'profissao',
         'telefone_celular', 'telefone_fixo', 'telefone_trabalho'];
     
-    public function inquilino(): HasOne {
+    public function inquilino(): HasOne 
+    {
         return $this->hasOne(Inquilino::class, 'pessoacodigo');
+    }
+
+    public function prestador_servico(): HasOne
+    {
+        return $this->hasOne(PrestadorServico::class, 'pessoa_id');
     }
 }

@@ -8,21 +8,16 @@
                 Voltar</button>
         </div>
         <div class="col-5">
-            <button onclick="redirecionarPara('{{ route('cadastrar-servico')}}')" class="button action-button" >
-                  Cadastrar serviço tomado
-            </button>
-        </div>
-        <div class="col-5">
-            <button onclick="redirecionarPara('{{ route('prestadores-servicos')}}')" class="button action-button" >
-                  Ver prestadores de serviço
+            <button onclick="redirecionarPara('{{ route('cadastrar-prestador')}}')" class="button action-button" >
+                  Cadastrar novo prestador
             </button>
         </div>
     </div>
 </div>
-    @if (isset($servicos[0]))
+    @if (isset($prestadores[0]))
         <div class="row">
             <div class="col-12">
-                @component('app.layouts._components.lista_servicos', compact('servicos'))
+                @component('app.layouts._components.lista_prestadores', compact('servicos'))
                     
                 @endcomponent
             </div>
@@ -32,8 +27,8 @@
             <div class="row">
                 <div class="col-12">
                         <span class="basic-card-wrapper">
-                            Não há nenhum serviço cadastrado no sistema. <br>
-                            Cadastre um serviço clicando no botão "Cadastrar serviço tomado" 
+                            Não há nenhum serviço prestador de serviço no sistema. <br>
+                            Cadastre um prestador clicando no botão "Cadastrar novo prestador" 
                             no menu logo acima desta mensagem. 
                         </span>
                 </div>
