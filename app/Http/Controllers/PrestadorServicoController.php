@@ -15,12 +15,31 @@ class PrestadorServicoController extends Controller
         $titulo = 'Painel das informações dos prestadores de serviço';
         $mensagem = null;
         try {
-            return view('app.painel-prestadores-servico', compact('titulo', 'mensagem')); 
+            return view('app.painel-prestadores-servicos', compact('titulo', 'mensagem')); 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('erros', 'Não foi possível acessar os prestadores de serviço', $th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi possível acessar os prestadores de serviço '.$th->getMessage());
         }
 
     }
+
+    public function cadastrarPrestador(Request $request){
+        try {
+            return view('app.cadastro-prestador-servico');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço '.$th->getMessage());
+        }
+    }
+
+    public function editarPrestador(Request $request, $idPrestador){
+        $titulo = 'Editando o prestador';
+        $mensagem = null;
+        try {
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('erros', 'Não foi possível encontrar o prestador de serviço selecionado '.$th->getMessage());
+        }
+    }
+
     public function buscarLista(){
        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
        try {

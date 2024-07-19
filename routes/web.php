@@ -143,6 +143,8 @@ Route::prefix('servicos')->middleware('autenticacao')->group(function(){
 Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function(){
     Route::get('/', [PrestadorServicoController::class, 'index'])->name('prestadores-servicos');
     Route::get('/l', [PrestadorServicoController::class, 'buscarLista'])->name('listar-prestadores');
+    Route::get('/cadastro/n', [PrestadorServicoController::class, 'cadastrar'])->name('cadastrar-prestador');
+    Route::get('/e/{id}', [PrestadorServicoController::class, 'editarPrestador'])->name('editar-prestador');
 });
 
 Route::middleware('autenticacao')->group(function(){
