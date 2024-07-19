@@ -10,7 +10,9 @@
     </div>
 </div>
 <div class="row">
-    @include('app.layouts._components.form_servico_tomado')
+    @component('app.layouts._components.form_servico_tomado', compact('tipos_servicos'))
+        
+    @endcomponent
 </div>
 <div class="row">
     <div class="whitespace-end-page"></div>

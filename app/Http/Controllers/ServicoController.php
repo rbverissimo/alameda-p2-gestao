@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TiposServicosService;
 use Illuminate\Http\Request;
 
 class ServicoController extends Controller
@@ -19,8 +20,9 @@ class ServicoController extends Controller
         try {
             $titulo = 'Cadastrando serviço';
             $mensagem = null;
+            $tipos_servicos = TiposServicosService::getListaTiposServicos();
 
-            return view('app.cadastro-servico', compact('titulo', 'mensagem'));
+            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
         }
@@ -29,8 +31,9 @@ class ServicoController extends Controller
         try {
             $titulo = 'Editando serviço '.$idServico;
             $mensagem = null;
+            $tipos_servicos = TiposServicosService::getListaTiposServicos();
 
-            return view('app.cadastro-servico', compact('titulo', 'mensagem'));
+            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
         }
