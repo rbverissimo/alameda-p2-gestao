@@ -7,7 +7,7 @@
             <button class="button common-button">
                 Voltar</button>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <button onclick="redirecionarPara('{{ route('cadastrar-servico')}}')" class="button action-button" >
                   Cadastrar serviço tomado
             </button>

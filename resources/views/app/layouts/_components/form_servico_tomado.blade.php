@@ -5,7 +5,7 @@
   @if (isset($servico->id))
       @method('PUT')
   @endif
-  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos'))
+  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos', 'imoveis'))
       
   @endcomponent
 

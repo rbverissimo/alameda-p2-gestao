@@ -7,6 +7,7 @@ use App\Services\ImoveisService;
 use Illuminate\Http\Request;
 use App\Utils\CollectionUtils;
 use App\Utils\SalasUtils;
+use App\ValueObjects\SelectOptionVO;
 use Illuminate\Support\Facades\DB;
 
 class SalasController extends Controller
@@ -81,11 +82,13 @@ class SalasController extends Controller
 
         $salas = Sala::where('imovelcodigo', $idImovel)->get();
 
+        $json = [];
         foreach ($salas as $sala) {
-            $sala->view = $sala->nomesala;
+            $option = new SelectOptionVO($sala->id, $sala->nomesala);
+            $json[] = $option->getJson();
         }
 
-        return $salas;
+        return $json;
     }
 
 }
