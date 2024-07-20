@@ -1,13 +1,7 @@
 export function getSelectOptions(select, label = null, paramValue, url){
 
-    const selectElement = select;
-    selectElement.innerHTML = '';
-    selectElement.style.display = 'none';
-
-    if(label !== null){
-        label.style.display = 'none';
-    }
-
+    resetStatusSelect();
+    
     if(paramValue === '' || paramValue === '0' || paramValue === null){
         return;
     }
@@ -21,7 +15,15 @@ export function getSelectOptions(select, label = null, paramValue, url){
             }
         })
         .then(data => {
-            createOptions(data, selectElement, label);
+            createOptions(data, select);
+
+            if(data.length > 0){
+                select.style.display = 'block';
+        
+                if(label !== null){
+                    label.style.display = 'block';
+                }
+            }
         })
         .catch(err => {
             showMensagem(err, 'falha', 5000);
@@ -30,28 +32,27 @@ export function getSelectOptions(select, label = null, paramValue, url){
 
 }
 
-function createOptions(data, selectElement, label){
+export function createOptions(data, selectElement){
     for(const object of data){
         const option = document.createElement('option');
         option.value = object.value;
         option.text = object.view;
-
         selectElement.appendChild(option);
     }
-    
-    if(data.length > 0){
-        selectElement.style.display = 'block';
-
-        if(label !== null){
-            label.style.display = 'block';
-        }
-    }
-    
 }
 
 export function checarOptionsVisiveis(label, select){
     if(select.childElementCount > 0){
           label.style.display = 'block'
           select.style.display = 'block';
+    }
+}
+
+export function resetStatusSelect(select, label = null){
+    select.innerHTML = '';
+    select.style.display = 'none';
+
+    if(label !== null){
+        label.style.display = 'none';
     }
 }

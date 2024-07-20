@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
       <head>
-            <title>{{$titulo}}</title>
+            <title>{{ 'Imobi - Gestão Imobiliária - '.$titulo}}</title>
             <meta charset="utf-8">
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
             <link href="{{asset('css/tables.css')}}" rel="stylesheet">
             <link href="{{asset('css/carousels.css')}}" rel="stylesheet">
             <link href="{{asset('css/misc.css')}}" rel="stylesheet">
+            <link href="{{asset('css/icons.css')}}" rel="stylesheet">
       </head>
       <body>
             @include('app.layouts._partials.topo-nav')
