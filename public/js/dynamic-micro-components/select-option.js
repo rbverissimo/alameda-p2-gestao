@@ -1,6 +1,6 @@
 export function getSelectOptions(select, label = null, paramValue, url){
 
-    resetStatusSelect();
+    resetStatusSelect(select, label);
     
     if(paramValue === '' || paramValue === '0' || paramValue === null){
         return;
