@@ -1,5 +1,5 @@
 const dominio = 'dados_prestador_servico';
-let tiposPrestadores = [];
+let tiposPrestador = [];
 
 const tipoWrapper = document.getElementById('tipo-wrapper');
 const adicionarTipoButton = document.getElementById('adicionar-tipo-button');
@@ -9,7 +9,10 @@ adicionarTipoButton.addEventListener('click', (event) => {
 });
 
 document.addEventListener('appData', (appData) => {
-    console.log(appData);
+    if(dominio === appData.dominio){
+        tiposPrestador = appData.detail['tipos_prestador'];
+        console.log(tiposPrestador);
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,6 +26,8 @@ export function criarTipoPrestadorSelect(){
     divRow.classList.add('row');
 
     const select = document.createElement('select');
+
+    
 
 
     return divRow;

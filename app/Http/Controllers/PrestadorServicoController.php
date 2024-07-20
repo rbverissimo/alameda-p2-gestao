@@ -6,6 +6,7 @@ use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
+use App\ValueObjects\SelectOptionVO;
 use Illuminate\Http\Request;
 
 class PrestadorServicoController extends Controller
@@ -27,12 +28,18 @@ class PrestadorServicoController extends Controller
         $titulo = 'Cadastrando um novo prestador de serviços';
         $mensagem = null;
         $prestador = null; 
-        $tipos_prestador = PrestadorServicoService::getListaTiposPrestadores();
+        $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
+
+        $tipos_prestador = [];
+        foreach ($tipos_prestador_lista as $tipo) {
+            $select = new SelectOptionVO($tipo->id, $tipo->tipo);
+            $tipos_prestador[] = $select->getJson();
+        }
 
         try {
 
             $appData_vo = new AppDataVO('dados_prestador_servico', [
-                'tipos_prestador' => $tipos_prestador
+                'tipos_prestador' => array_merge($tipos_prestador)
             ]);
 
             $appData = $appData_vo->getJson();
