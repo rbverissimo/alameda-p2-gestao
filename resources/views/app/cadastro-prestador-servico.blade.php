@@ -20,6 +20,7 @@
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{asset('js/views/dados-prestador-servico.js')}}"></script>
     @include('app.scripts.script-mensagem')
     @include('app.scripts.script-app-data')
 @endsection

@@ -8,11 +8,12 @@ adicionarTipoButton.addEventListener('click', (event) => {
     event.preventDefault();
 });
 
+document.addEventListener('appData', (appData) => {
+    console.log(appData);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.addEventListener('appData', (appData) => {
-        console.log(appData);
-    })
 
 });
 
