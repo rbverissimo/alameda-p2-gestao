@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row">
-    @component('app.layouts._components.form_prestador_servico')
+    @component('app.layouts._components.form_prestador_servico', compact('prestador'))
         
     @endcomponent()
 </div>
@@ -21,4 +21,5 @@
 
 @section('scripts')
     @include('app.scripts.script-mensagem')
+    @include('app.scripts.script-app-data')
 @endsection

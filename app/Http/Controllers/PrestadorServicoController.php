@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Services\ImoveisService;
+use App\Services\PrestadorServicoService;
+use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
-use Exception;
 use Illuminate\Http\Request;
 
 class PrestadorServicoController extends Controller
@@ -23,8 +24,20 @@ class PrestadorServicoController extends Controller
     }
 
     public function cadastrarPrestador(Request $request){
+        $titulo = 'Cadastrando um novo prestador de serviços';
+        $mensagem = null;
+        $prestador = null; 
+        $tipos_prestador = PrestadorServicoService::getListaTiposPrestadores();
+
         try {
-            return view('app.cadastro-prestador-servico');
+
+            $appData_vo = new AppDataVO('dados_prestador_servico', [
+                'tipos_prestador' => $tipos_prestador
+            ]);
+
+            $appData = $appData_vo->getJson();
+
+            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço '.$th->getMessage());
         }

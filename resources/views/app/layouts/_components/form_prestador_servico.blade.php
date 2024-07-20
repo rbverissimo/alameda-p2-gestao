@@ -7,7 +7,7 @@
   <div class="dashboard light-dashboard">
     <div class="row">
       <div class="col-12">
-        @component('app.layouts._components.dados_prestador_servico')    
+        @component('app.layouts._components.dados_prestador_servico', compact('prestador'))    
         @endcomponent
       </div>
     </div>
