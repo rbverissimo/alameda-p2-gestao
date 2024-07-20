@@ -1,6 +1,12 @@
 export function gerarDeleteIcon(){
-    const div = document.createElement('div');
-    div.classList.add('delete-icon');
+    const img = document.createElement('img');
+    img.classList.add('delete-icon');
+    img.alt = 'EXCLUIR';
 
-    return div; 
+    const span = document.createElement('span');
+    span.classList.add('bg-del-icon');
+    span.appendChild(img);
+
+    return span;
+
 }

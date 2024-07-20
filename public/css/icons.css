@@ -1,3 +1,7 @@
 .delete-icon {
     background-image: url('/public/icons/delete-icon.svg');
 }
+
+.bg-del-icon {
+    background-color: var(--erro-color);
+}
