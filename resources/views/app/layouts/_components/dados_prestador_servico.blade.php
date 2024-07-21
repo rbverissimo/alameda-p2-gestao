@@ -1,6 +1,6 @@
 <div class="dashboard light-dashboard">
     <div class="divisor-header secondary-divisor">
-
+        Informações básicas do prestador de serviço
     </div>
     <div class="row">
         <div class="col-8">
@@ -54,5 +54,12 @@
         <div id="tipo-wrapper">
 
         </div>
-    </div>    
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <button id="cadastrar-endereco-button" class="button action-button">Cadastrar endereço?</button>
+        </div>
+    </div>
+    <div style="display: none" id="endereco-container">  
+    </div>
 </div>

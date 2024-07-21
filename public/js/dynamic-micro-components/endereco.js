@@ -1,7 +1,8 @@
 import { mascaraCEP, writeMascaraCEP } from "../validators/view-masks.js";
 import { apenasNumeros, apenasLetras } from "../validators/view-validation.js";
+import { gerarDeletarButton } from "./icons.js";
 
-export function criarComponenteEnderecoSimplificado(enderecoData, headerText){
+export function criarComponenteEnderecoSimplificado(enderecoData, headerText, control = false){
 
     const endereco = {
         cep: enderecoData?.cep,
@@ -30,10 +31,10 @@ export function criarComponenteEnderecoSimplificado(enderecoData, headerText){
     divRow2.appendChild(inputCidade(endereco));
     divRow2.appendChild(inputUf(endereco));
 
-
-
-
-    wrapper.appendChild(divHeader(headerText, 'primary-divisor'));
+    wrapper.appendChild(divHeader(headerText, 'primary-divisor', control));
+    if(control){
+        wrapper.appendChild(divControl(wrapper));
+    }
     wrapper.appendChild(divRow1);
     wrapper.appendChild(divRow2);
 
@@ -45,7 +46,26 @@ function divHeader(headerText, divisor){
     divHeader.classList.add('divisor-header');
     divHeader.classList.add(divisor);
     divHeader.innerHTML = headerText;
+
     return divHeader;
+}
+
+function divControl(wrapper){
+    const div = document.createElement('div');
+    div.classList.add('row');
+
+    const divCol = document.createElement('div');
+    divCol.classList.add('col-4');
+    const button = gerarDeletarButton('Remover este endereço');
+
+    button.addEventListener('click', (event) => {
+        wrapper.remove();
+        event.preventDefault();
+    });
+
+    divCol.appendChild(button);
+    div.appendChild(divCol);
+    return div;
 }
 
 function inputCep(endereco){

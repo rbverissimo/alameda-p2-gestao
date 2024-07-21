@@ -59,7 +59,6 @@ async function buscarFornecedores(){
 }
 
 function renderizarFormulario(objToCreate){
-    console.log(objToCreate);
 
     // ACESSOS GLOBAIS
     const divRenderSpace = document.getElementById('render-space');

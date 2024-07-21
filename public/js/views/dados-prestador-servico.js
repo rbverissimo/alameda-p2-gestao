@@ -1,3 +1,4 @@
+import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { gerarDeletarButton } from "../dynamic-micro-components/icons.js";
 import { createOptions } from "../dynamic-micro-components/select-option.js";
 
@@ -5,11 +6,22 @@ const dominio = 'dados_prestador_servico';
 let tiposPrestador = [];
 export const prefixTipoPrestador = 'tipo-prestador';
 
+const enderecoContainer = document.getElementById('endereco-container');
 const tipoWrapper = document.getElementById('tipo-wrapper');
 const adicionarTipoButton = document.getElementById('adicionar-tipo-button');
 
+const cadastrarEnderecoButton = document.getElementById('cadastrar-endereco-button');
+
 adicionarTipoButton.addEventListener('click', (event) => {
-    tipoWrapper.appendChild(criarTipoPrestadorSelect(prefixTipoPrestador));
+    tipoWrapper.appendChild(criarTipoPrestadorSelect(prefixTipoPrestador, tiposPrestador));
+    event.preventDefault();
+});
+
+cadastrarEnderecoButton.addEventListener('click', (event) => {
+    enderecoContainer.style.display = 'block';
+    cadastrarEnderecoButton.disabled = true;
+    const enderecoForm = criarComponenteEnderecoSimplificado({},'Endereço da empresa ou prestador de serviço', true);
+    enderecoContainer.appendChild(enderecoForm);
     event.preventDefault();
 });
 
@@ -25,8 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-export function criarTipoPrestadorSelect(prefix){
+export function criarTipoPrestadorSelect(prefix, optionsData){
 
+    const tiposPrestador = optionsData;
     const counter = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
 
     const divRow = document.createElement('div');
