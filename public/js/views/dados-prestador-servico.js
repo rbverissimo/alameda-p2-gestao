@@ -1,7 +1,7 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { gerarDeletarButton } from "../dynamic-micro-components/icons.js";
-import { createOptions } from "../dynamic-micro-components/select-option.js";
-import { mascaraCnpj, mascaraTelefone, writeMascaraCnpj, writeMascaraTelefone } from "../validators/view-masks.js";
+import { createOptions, getSelectOptions } from "../dynamic-micro-components/select-option.js";
+import { cpfMascara, mascaraCnpj, mascaraTelefone, writeMascaraCnpj, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 
 const dominio = 'dados_prestador_servico';
 let tiposPrestador = [];
@@ -9,6 +9,7 @@ export const prefixTipoPrestador = 'tipo-prestador';
 
 const telefoneInput = document.getElementById('telefone-trabalho-input');
 const cnpjInput = document.getElementById('cnpj-prestador-input');
+const cpfInput = document.getElementById('cpf-prestador');
 
 const enderecoContainer = document.getElementById('endereco-container');
 const tipoWrapper = document.getElementById('tipo-wrapper');
@@ -42,11 +43,13 @@ document.addEventListener('appData', (appData) => {
 
 telefoneInput.addEventListener('input', mascaraTelefone);
 cnpjInput.addEventListener('input', mascaraCnpj);
+cpfInput.addEventListener('input', cpfMascara);
 
 document.addEventListener('DOMContentLoaded', () => {
 
     telefoneInput.value = writeMascaraTelefone(telefoneInput.value);
     cnpjInput.value = writeMascaraCnpj(cnpjInput.value);
+    cpfInput.value = writeMascaraCpf(cpfInput.value);
 
 });
 

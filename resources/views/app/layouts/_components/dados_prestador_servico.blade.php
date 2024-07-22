@@ -3,7 +3,7 @@
         Informações básicas do prestador de serviço
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-10">
             <label id="label-prestador-nome-input" for="prestador-nome-input">Nome ou razão social: </label>
             <input required type="text" 
                 name="prestador-nome"  
@@ -16,7 +16,9 @@
                 {{ $errors->has('prestador-nome') ? $errors->first('prestador-nome') : ' '}}
             </span>        
         </div>
-        <div class="col-4">
+    </div>
+    <div class="row">
+        <div class="col-5">
             <label id="label-cnpj-prestador-input" for="cnpj-prestador-input">CNPJ: </label>
             <input type="text" 
                 name="cnpj-prestador" 
@@ -27,9 +29,20 @@
                 {{ $errors->has('cnpj-prestador') ? $errors->first('cnpj-prestador') : ' '}}
             </span>
         </div>
+        <div class="col-5">
+            <label id="label-cpf-prestador-input" for="cpf-prestador-input">CPF: </label>
+            <input type="text" 
+                name="cpf-prestador" 
+                id="cpf-prestador-input"
+                value="{{ isset($prestador->cnpj) ? 
+                    old('cpf-prestador', $prestador->cnpj) : old('cpf-prestador')}}">
+            <span id="span-errors-cpf-prestador-input" class="errors-highlighted">
+                {{ $errors->has('cpf-prestador') ? $errors->first('cpf-prestador') : ''}}
+            </span>
+        </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-5">
             <label id="label-telefone-trabalho" for="telefone-trabalho-input">Telefone:</label>
             <input type="text" 
                 name="telefone-trabalho" 
@@ -40,6 +53,22 @@
                 <span id="span-errors-telefone-trabalho-input" class="errors-highlighted">
                     {{ $errors->has('telefone-trabalho') ? $errors->first('telefone-trabalho') : ' '}}
                 </span>
+        </div>
+        <div class="col-6">
+            <label for="select-imovel-input" id="label-select-imovel">Selecione um imóvel:</label>
+            <select name="select-imovel" id="select-imovel-input">
+                @foreach ($imoveis as $i)
+                    <option value="{{$i->id}}"
+                        @isset($imovel_cadastrado->id)
+                            @if ($imovel_cadastrado->id === $id->id)
+                                selected
+                            @endif
+                        @endisset
+                        >
+                        {{$i->nomefantasia}}
+                    </option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="dashboard light-dashboard">

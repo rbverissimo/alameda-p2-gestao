@@ -28,6 +28,7 @@ class PrestadorServicoController extends Controller
         $titulo = 'Cadastrando um novo prestador de serviços';
         $mensagem = null;
         $prestador = null; 
+        $imoveis = ImoveisService::getListaImoveisSelect();
         try {
             $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
 
@@ -48,7 +49,7 @@ class PrestadorServicoController extends Controller
                 dd($request->all());
             }
 
-            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData'));
+            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imoveis'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço '.$th->getMessage());
         }
