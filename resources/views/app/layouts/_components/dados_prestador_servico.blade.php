@@ -42,7 +42,7 @@
                 </span>
         </div>
     </div>
-    <div class="dashboard ligh-dashboard">
+    <div class="dashboard light-dashboard">
         <div class="divisor-header secondary-divisor">
             Tipos de serviços prestados pelo prestador
         </div>
@@ -55,7 +55,7 @@
 
         </div>
     </div>
-    <div class="row">
+    <div id="cadastrar-endereco-wrapper" class="row">
         <div class="col-4">
             <button id="cadastrar-endereco-button" class="button action-button">Cadastrar endereço?</button>
         </div>

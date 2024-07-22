@@ -39,5 +39,10 @@ class Imovel extends Model
         return $this->belongsToMany(TipoConta::class, 'imoveis_tipos_contas', 'imovel', 'tipoconta');
     }
 
+    public function prestadores(): BelongsToMany
+    {
+        return $this->belongsToMany(PrestadorServico::class, 'prestadores_imoveis', 'imovel_id', 'prestador_id');
+    }
+
 
 }
