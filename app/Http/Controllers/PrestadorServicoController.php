@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Dto\EnderecoDTO;
+use App\Http\Dto\EnderecoDTOBuilder;
+use App\Models\Endereco;
 use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
+use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
 use App\ValueObjects\SelectOptionVO;
@@ -46,7 +50,28 @@ class PrestadorServicoController extends Controller
             $appData = $appData_vo->getJson();
 
             if($request->isMethod('POST')){
-                dd($request->all());
+
+                $endereco_dto = null;
+                if($request->input('cadastrar-endereco-input') === 'on'){
+
+                    $cep = ProjectUtils::tirarMascara($request->input('cep'));
+                    $numero = $request->input('numero-endereco');
+                    $logradouro = $request->input('logradouro');
+                    $bairro = $request->input('bairro');
+                    $uf = $request->input('uf');
+                    $cidade = $request->input('cidade');
+
+                    $endereco_dto = (new EnderecoDTOBuilder)
+                        ->withCep($cep)
+                        ->withNumero($numero)
+                        ->withCidade($cidade)
+                        ->withUf($uf)
+                        ->withLogradouro($logradouro)
+                        ->withBairro($bairro)
+                        ->build();
+                }
+
+                
             }
 
             return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imoveis'));

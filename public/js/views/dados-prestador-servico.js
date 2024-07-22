@@ -1,6 +1,6 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { gerarDeletarButton } from "../dynamic-micro-components/icons.js";
-import { createOptions, getSelectOptions } from "../dynamic-micro-components/select-option.js";
+import { createOptions } from "../dynamic-micro-components/select-option.js";
 import { cpfMascara, mascaraCnpj, mascaraTelefone, writeMascaraCnpj, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 
 const dominio = 'dados_prestador_servico';
@@ -9,7 +9,7 @@ export const prefixTipoPrestador = 'tipo-prestador';
 
 const telefoneInput = document.getElementById('telefone-trabalho-input');
 const cnpjInput = document.getElementById('cnpj-prestador-input');
-const cpfInput = document.getElementById('cpf-prestador');
+const cpfInput = document.getElementById('cpf-prestador-input');
 
 const enderecoContainer = document.getElementById('endereco-container');
 const tipoWrapper = document.getElementById('tipo-wrapper');
