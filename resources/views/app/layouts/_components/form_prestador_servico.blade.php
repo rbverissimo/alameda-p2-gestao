@@ -1,4 +1,4 @@
-<form action="" 
+<form action="{{ isset($prestador->id) ? route('editar-prestador', ['id' => $prestador->id]) : route('cadastrar-prestador')}}" 
     method="POST">
   @csrf
   @if (isset($prestador->id))

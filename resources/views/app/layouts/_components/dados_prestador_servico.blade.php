@@ -56,8 +56,11 @@
         </div>
     </div>
     <div id="cadastrar-endereco-wrapper" class="row">
-        <div class="col-4">
-            <button id="cadastrar-endereco-button" class="button action-button">Cadastrar endereço?</button>
+        <div class="col-3">
+            <span class="basic-card-wrapper">Cadastrar endereço?</span>
+        </div>
+        <div class="col-2">
+            <x-toggle-switch id="cadastrar-endereco-toggle-checkbox" attName="cadastrar-endereco-toggle"></x-toggle-switch>
         </div>
     </div>
     <div style="display: none" id="endereco-container">  

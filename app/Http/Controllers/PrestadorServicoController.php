@@ -28,21 +28,25 @@ class PrestadorServicoController extends Controller
         $titulo = 'Cadastrando um novo prestador de serviços';
         $mensagem = null;
         $prestador = null; 
-        $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
-
-        $tipos_prestador = [];
-        foreach ($tipos_prestador_lista as $tipo) {
-            $select = new SelectOptionVO($tipo->id, $tipo->tipo);
-            $tipos_prestador[] = $select->getJson();
-        }
-
         try {
+            $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
+
+            $tipos_prestador = [];
+            foreach ($tipos_prestador_lista as $tipo) {
+                $select = new SelectOptionVO($tipo->id, $tipo->tipo);
+                $tipos_prestador[] = $select->getJson();
+            }
+
 
             $appData_vo = new AppDataVO('dados_prestador_servico', [
                 'tipos_prestador' => array_merge($tipos_prestador)
             ]);
 
             $appData = $appData_vo->getJson();
+
+            if($request->isMethod('POST')){
+                dd($request->all());
+            }
 
             return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData'));
         } catch (\Throwable $th) {

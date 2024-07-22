@@ -7,10 +7,16 @@ use Illuminate\View\Component;
 class ToggleSwitch extends Component
 {
     /**
-     * O nome do atributo do Input
+     * O nome do input dado pelo atributo
      * @var string
      */
     public $attName;
+
+    /**
+     * O ID do input
+     * @var string
+     */
+    public $id;
 
     /**
      * @var bool
@@ -25,9 +31,10 @@ class ToggleSwitch extends Component
      * @param bool $isChecked, o estado do switch
      * @return void
      */
-    public function __construct($attName, $checked = false)
+    public function __construct($attName, $id, $checked = false)
     {
         $this->attName = $attName;
+        $this->id = $id;
         $this->checked = $checked;
     }
 

@@ -14,19 +14,24 @@ const enderecoContainer = document.getElementById('endereco-container');
 const tipoWrapper = document.getElementById('tipo-wrapper');
 const adicionarTipoButton = document.getElementById('adicionar-tipo-button');
 
-const cadastrarEnderecoButton = document.getElementById('cadastrar-endereco-button');
+const cadastrarEnderecoToggle = document.getElementById('cadastrar-endereco-toggle-checkbox');
 
 adicionarTipoButton.addEventListener('click', (event) => {
     tipoWrapper.appendChild(criarTipoPrestadorSelect(prefixTipoPrestador, tiposPrestador));
     event.preventDefault();
 });
 
-cadastrarEnderecoButton.addEventListener('click', (event) => {
+cadastrarEnderecoToggle.addEventListener('change', function(){
+    if(!this.checked){
+        enderecoContainer.style.display = 'none';
+        while(enderecoContainer.firstChild){
+            enderecoContainer.removeChild(enderecoContainer.firstChild);
+        }
+        return;
+    }
     enderecoContainer.style.display = 'block';
-    cadastrarEnderecoButton.disabled = true;
     const enderecoForm = criarComponenteEnderecoSimplificado({},'Endereço da empresa ou prestador de serviço', true);
     enderecoContainer.appendChild(enderecoForm);
-    event.preventDefault();
 });
 
 document.addEventListener('appData', (appData) => {
@@ -73,7 +78,7 @@ export function criarTipoPrestadorSelect(prefix, optionsData){
     divCol8.appendChild(select);
     
     const labelDelButton = document.createElement('label');
-    labelDelButton.textContent = 'Clique para remover:';
+    labelDelButton.textContent = 'Clique para:';
     const deleteButton = gerarDeletarButton();
     deleteButton.addEventListener('click', (event) => {
         divRow.remove();

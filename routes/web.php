@@ -144,7 +144,9 @@ Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function
     Route::get('/', [PrestadorServicoController::class, 'index'])->name('prestadores-servicos');
     Route::get('/l', [PrestadorServicoController::class, 'buscarLista'])->name('listar-prestadores');
     Route::get('/cadastro/n', [PrestadorServicoController::class, 'cadastrarPrestador'])->name('cadastrar-prestador');
+    Route::post('/cadastro/n', [PrestadorServicoController::class, 'cadastrarPrestador'])->name('cadastrar-prestador');
     Route::get('/e/{id}', [PrestadorServicoController::class, 'editarPrestador'])->name('editar-prestador');
+    Route::post('/e/{id}', [PrestadorServicoController::class, 'editarPrestador'])->name('editar-prestador');
 });
 
 Route::middleware('autenticacao')->group(function(){

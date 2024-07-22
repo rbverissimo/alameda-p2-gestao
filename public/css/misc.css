@@ -128,8 +128,15 @@ ul#sugestoes li.cadastrar:hover {
     background-color: var(--dropdown-highlight-2);
 }
 
+@media only screen and (max-width: 769px) {
+    .comp-toggle-switch {
+        width: 50%;
+        left: 25%;
+    }
+}
 
-@media only screen and (max-width: 768px){
+/* SMARTPHONE SCREENS */
+@media only screen and (max-width: 431px){
 
     .comp-toggle-switch {
         width: 25%;
