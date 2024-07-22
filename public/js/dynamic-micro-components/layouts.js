@@ -57,14 +57,15 @@ export function spanErrors(id){
 
 /**
  * Esse é um atalho para construir um label, input e span em conjunto
- * para serem renderizados dinamicamente na tela. Esse método segue algumas convencoes
+ * para serem renderizados dinamicamente na tela. Esse método segue algumas conveções
  * para nomeacao de IDs e outros atributos dependentes do mesmo.
+ * A divCol passada no primeiro parâmetro é retornada com os elementos criados adicionados.
  * 
  * @param {HTMLElement} divRow 
  * @param {string} name 
  * @param {string} textLabel 
  * @param {boolean} required 
- * @returns uma div.col com os elementos 
+ * @returns uma div.col com os elementos adicionados
  */
 export function gerarInputLabelSpanErrors(divCol, name, textLabel, required = false){
     const label = label(`${name}-input`, textLabel, `label-${name}-input`);

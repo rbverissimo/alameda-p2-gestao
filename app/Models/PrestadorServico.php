@@ -24,4 +24,9 @@ class PrestadorServico extends Model
     {
         return $this->belongsToMany(Imovel::class, 'prestadores_imoveis', 'prestador_id', 'imovel_id');
     }
+
+    public function tipo(): BelongsToMany
+    {
+        return $this->belongsToMany(TipoPrestador::class, 'prestadores_tipos', 'prestador_id', 'tipo_id');
+    }
 }

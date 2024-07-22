@@ -14,8 +14,10 @@ class CreatePrestadoresTiposTable extends Migration
     public function up()
     {
         Schema::create('prestadores_tipos', function (Blueprint $table) {
-            $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('prestador_id');
+            $table->unsignedBigInteger('tipo_id');
+            $table->primary(['prestador_id', 'tipo_id']);
         });
     }
 
