@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         <div class="col-8">
-            <label id="label-prestador-nome-input" for="prestador-nome-input">Nome ou razão social</label>
+            <label id="label-prestador-nome-input" for="prestador-nome-input">Nome ou razão social: </label>
             <input required type="text" 
                 name="prestador-nome"  
                 id="prestador-nome-input"
