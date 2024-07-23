@@ -24,23 +24,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        User::create([
-            'name' => 'Renato',
-            'email' => 'renatobarbosaverissimo@gmail.com',
-            'password' => 'Guitarra12@'
-        ]);
-
-        User::create([
-            'name' => 'Marivalda',
-            'email' => 'm_bverissimo@yahoo.com.br',
-            'password' => 'marivalda$acesso@90'
-        ]);
-        
-        User::create([
-            'name' => 'testes',
-            'email' => 'hotstreetbrasil@gmail',
-            'password' => 'te$t3R@101'
-        ]);
     }
     
 

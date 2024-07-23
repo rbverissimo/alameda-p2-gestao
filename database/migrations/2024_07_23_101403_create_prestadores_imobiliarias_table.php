@@ -14,8 +14,10 @@ class CreatePrestadoresImobiliariasTable extends Migration
     public function up()
     {
         Schema::create('prestadores_imobiliarias', function (Blueprint $table) {
-            $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('prestador_id');
+            $table->unsignedBigInteger('imobiliaria_id');
+            $table->primary(['prestador_id', 'imobiliaria_id']);
         });
     }
 

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\TipoConta;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TipoContaSeeder extends Seeder
 {
@@ -14,15 +15,20 @@ class TipoContaSeeder extends Seeder
      */
     public function run()
     {
-        $t1 = new TipoConta();
-        $t1->codigo = 1000;
-        $t1->descricao = 'Água - Saneago';
 
-        $t2 = new TipoConta();
-        $t2->codigo = 1001;
-        $t2->descricao = 'Energia - Equatorial';
+        DB::transaction(function () {
+            TipoConta::create([
+                'codigo' => 1000,
+                'descricao' => 'Água - Saneago',
+                'isFatorDivisor' => 'S'
+            ]);
 
-        $t1->save();
-        $t2->save();
+            TipoConta::create([
+                'codigo' => 1001,
+                'descricao' => 'Energia - Equatorial',
+                'isFatorDivisor' => 'S'
+            ]);
+        });
+
     }
 }

@@ -14,18 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            EnderecoSeeder::class,
-            ImovelSeeder::class,
-            PessoaSeeder::class,
+            UsuariosSeeder::class,
+            ImobiliariaSeeder::class,
             TipoContaSeeder::class,
             TipoPrestadorSeeder::class,
             TipoComprovanteSeeder::class,
-            SalaSeeder::class,
-            InquilinoSeeder::class,
-            InquilinoFatorDivisorSeeder::class,
-            UsersImoveisSeeder::class,
-            InquilinosAlugueisSeeder::class,
-            ImoveisTiposContasSeeder::class
+            TiposServicosSeeder::class
         ]);
     }
 }
