@@ -11,13 +11,13 @@ class PessoaDTOBuilder {
         $this->pessoa_dto = new PessoaDTO();
     }
 
-    public function withCpf(string $cpf): PessoaDTOBuilder
+    public function withCpf(?string $cpf): PessoaDTOBuilder
     {
         $this->pessoa_dto->setCpf($cpf);
         return $this;
     }
 
-    public function withCnpj(string $cnpj): PessoaDTOBuilder
+    public function withCnpj(?string $cnpj): PessoaDTOBuilder
     {
         $this->pessoa_dto->setCnpj($cnpj);
         return $this;
@@ -44,6 +44,12 @@ class PessoaDTOBuilder {
     public function withTelfoneTrabalho(string $telefoneTrabalho): PessoaDTOBuilder
     {
         $this->pessoa_dto->setTelefoneTrabalho($telefoneTrabalho);
+        return $this;
+    }
+
+    public function withEndereco(?EnderecoDTO $endereco): PessoaDTOBuilder
+    {
+        $this->pessoa_dto->setEndereco($endereco);
         return $this;
     }
 

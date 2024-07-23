@@ -11,7 +11,6 @@ use App\Models\InquilinoConta;
 use App\Models\Sala;
 use App\Models\UsuarioImovel;
 use App\Services\CalculoContasService;
-use App\Services\EnderecosService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\TipoContasService;
@@ -43,7 +42,7 @@ class ImoveisController extends Controller
     public function cadastrar(Request $request){
 
         $titulo = 'Cadastrar novo imóvel';
-        $mensagem = '';
+        $mensagem = null;
 
         try {
             

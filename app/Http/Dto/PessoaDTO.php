@@ -4,19 +4,18 @@ namespace App\Http\Dto;
 
 class PessoaDTO {
 
-    private string $cnpj;
-    private string $cpf;
+    private ?string $cnpj;
+    private ?string $cpf;
     private string $nome;
-    private string $telefone_celular;
-    private string $telefone_fixo;
-    private string $telefone_trabalho; 
-    private EnderecoDTO $endereco; 
+    private ?string $telefone_celular;
+    private ?string $telefone_fixo;
+    private ?string $telefone_trabalho; 
+    private ?EnderecoDTO $endereco; 
 
     public function getCnpj(): string
     {
         return $this->cnpj;
     }
-  
 
     public function getCpf(): string
     {
@@ -48,12 +47,12 @@ class PessoaDTO {
         return $this->endereco;
     }
 
-    public function setCnpj(string $cnpj)
+    public function setCnpj(?string $cnpj)
     {
         $this->cnpj = $cnpj;
     }
 
-    public function setCpf(string $cpf)
+    public function setCpf(?string $cpf)
     {
         $this->cpf = $cpf;
     }
@@ -78,7 +77,7 @@ class PessoaDTO {
         $this->telefone_trabalho = $telefone_trabalho;
     }
 
-    public function setEndereco(EnderecoDTO $endereco)
+    public function setEndereco(?EnderecoDTO $endereco)
     {
         $this->endereco = $endereco;
     }

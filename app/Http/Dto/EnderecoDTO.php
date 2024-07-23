@@ -5,12 +5,12 @@ namespace App\Http\Dto;
 class EnderecoDTO {
 
     private string $cidade;
-    private string $logradouro;
+    private ?string $logradouro;
     private string $uf;
     private string $bairro;
     private int $numero;
-    private int $quadra;
-    private int $lote; 
+    private ?int $quadra;
+    private ?int $lote; 
     private string $cep;
 
 
@@ -54,53 +54,45 @@ class EnderecoDTO {
         return $this->cep;
     }
 
-    public function setCidade(string $cidade): self
+    public function setCidade(string $cidade)
     {
         $this->cidade = $cidade;
-        return $this;
     }
 
-    public function setLogradouro(string $logradouro): self
+    public function setLogradouro(?string $logradouro)
     {
         $this->logradouro = $logradouro;
-        return $this;
     }
 
 
-    public function setUf(string $uf): self
+    public function setUf(string $uf)
     {
         $this->uf = $uf;
-        return $this;
     }
 
-    public function setBairro(string $bairro): self
+    public function setBairro(string $bairro)
     {
         $this->bairro = $bairro;
-        return $this;
     }
 
-    public function setNumero(int $numero): self
+    public function setNumero(int $numero)
     {
         $this->numero = $numero;
-        return $this;
     }
 
 
-    public function setQuadra(int $quadra): self
+    public function setQuadra(?int $quadra)
     {
         $this->quadra = $quadra;
-        return $this;
     }
 
-    public function setLote(int $lote): self
+    public function setLote(?int $lote)
     {
         $this->lote = $lote;
-        return $this;
     }
 
-    public function setCep(string $cep): self
+    public function setCep(string $cep)
     {
         $this->cep = $cep;
-        return $this;
     }
 }

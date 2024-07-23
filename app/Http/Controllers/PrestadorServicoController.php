@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Dto\EnderecoDTO;
 use App\Http\Dto\EnderecoDTOBuilder;
+use App\Http\Dto\PessoaDTOBuilder;
 use App\Models\Endereco;
+use App\Models\Pessoa;
+use App\Models\PrestadorServico;
 use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
+use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
 use App\ValueObjects\SelectOptionVO;
+use Doctrine\Common\Cache\Psr6\InvalidArgument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PrestadorServicoController extends Controller
 {
@@ -71,12 +76,73 @@ class PrestadorServicoController extends Controller
                         ->build();
                 }
 
-                
+
+                $cnpj = ProjectUtils::tirarMascara($request->input('cnpj-prestador'));
+                $cpf = ProjectUtils::tirarMascara($request->input('cpf-prestador'));
+                $nome = $request->input('prestador-nome');
+                $telefone = ProjectUtils::tirarMascara($request->input('telefone-trabalho'));
+
+                $pessoa_dto = (new PessoaDTOBuilder)
+                    ->withNome($nome)
+                    ->withCpf($cpf)
+                    ->withCnpj($cnpj)
+                    ->withTelefoneCelular($telefone)
+                    ->withEndereco($endereco_dto)
+                    ->build();
+
+                $tipos = CollectionUtils::getPrimeiroValorParaQualquerChave(CollectionUtils::getAssociativeArray(
+                    $request->input(), '-', 2, 'tipo-prestador-'
+                ));
+
+                if(empty($tipos)){
+                    throw new InvalidArgument('Os tipos de serviços prestados pelo prestador não foram declarados');
+                }
+
+                DB::transaction(function($closure) use ($pessoa_dto, $tipos){
+
+                    if($pessoa_dto->getEndereco() !== null){
+                        $endereco = $pessoa_dto->getEndereco();
+
+                        Endereco::create([
+                            'cep' => $endereco->getCep(),
+                            'numero' => $endereco->getNumero(),
+                            'cidade' => $endereco->getCidade(),
+                            'uf' => $endereco->getUf(),
+                            'bairro' => $endereco->getBairro(),
+                            'logradouro' => $endereco->getLogradouro()
+                        ]);
+
+                    }
+
+                    Pessoa::create([
+                        'nome' => $pessoa_dto->getNome(),
+                        'cnpj' => $pessoa_dto->getCnpj(),
+                        'cpf' => $pessoa_dto->getCpf(),
+                        'telefone_celular' => $pessoa_dto->getTelefoneCelular(),
+                        'endereco_trabalho' => DB::getPdo()->lastInsertId()
+                    ]);
+
+                    PrestadorServico::create([
+                        'pessoa_id' => DB::getPdo()->lastInsertId()
+                    ]);
+
+                    $prestador_id = DB::getPdo()->lastInsertId();
+
+                    foreach ($tipos as $key => $value) {
+                        $sql = 'INSERT INTO PRESTADORES_TIPOS(PRESTADOR_ID, TIPO_ID) VALUES (?,?)';
+                        $bindings = [$prestador_id, $value];
+                        DB::insert($sql, $bindings);
+                    }
+
+                });
+
+                $mensagem_vo = new MensagemVO('sucesso', 'O prestador '.$pessoa_dto->getNome().' foi cadastrado com sucesso');
+                $mensagem = $mensagem_vo->getJson();
             }
 
             return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imoveis'));
         } catch (\Throwable $th) {
-            return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço '.$th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço. '.$th->getMessage());
         }
     }
 

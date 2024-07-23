@@ -120,6 +120,11 @@ class ProjectUtils {
       }
 
       public static function tirarMascara($stringComMascara){
+
+            if($stringComMascara === null || $stringComMascara === ''){
+                  return; 
+            }
+
             $caracteres = array('/', '-', '_', '.', '(', ')');
             $stringSemMascara = str_replace($caracteres, '', $stringComMascara);
             return $stringSemMascara;
@@ -142,7 +147,7 @@ class ProjectUtils {
             $resultado = "";
             $i = 0;
             for ($j = 0; $j < strlen($mascara); $j++) {
-              if (isset($mascara[$j]) && $mascara[$j] == "#") { // Check for equality with "#"
+              if (isset($mascara[$j]) && $mascara[$j] == "#") {
                 if (isset($cnpj[$i])) {
                   $resultado .= $cnpj[$i];
                   $i++;

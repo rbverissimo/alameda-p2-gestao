@@ -15,4 +15,23 @@ class CollectionUtils {
         ->toArray();
     }
 
+    public static function getPrimeiroValorParaQualquerChave($collection){
+
+        if(empty($collection)){
+            return $collection;
+        }
+
+        $primeiros_valores = [];
+        $valores_vistos = [];
+
+        foreach ($collection as $chave => $valor) {
+            if(!isset($valores_vistos[$valor])){
+                $valores_vistos[$valor] = true;
+                $primeiros_valores[$chave] = $valor;
+            }
+        }
+        
+        return $primeiros_valores;
+    }
+
 }
