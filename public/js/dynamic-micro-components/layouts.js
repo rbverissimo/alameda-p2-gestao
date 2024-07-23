@@ -13,20 +13,20 @@ export function divRow(){
 }
 
 export function divCol(columns){
-    const div = createElement('div');
+    const div = document.createElement('div');
     div.classList.add(`col-${columns}`);
     return div; 
 }
 
 export function lightDashboard(){
-    const div = createElement('div');
+    const div = document.createElement('div');
     div.classList.add('dashboard');
     div.classList.add('light-dashboard');
     return div;
 }
 
 export function headerDivisor(divisor, text){
-    const div = createElement('div');
+    const div = document.createElement('div');
     div.classList.add('divisor-header');
     div.classList.add(divisor);
     div.textContent = text; 

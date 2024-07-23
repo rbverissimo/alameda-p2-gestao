@@ -76,10 +76,10 @@ class CalculoContasService {
 
                 foreach($inquilinos_imovel as $inquilino){
 
-                    $inquilino_fator_divisor = InquilinosService::getInquilinoFatorDivisor($inquilino);
+                    $inquilino_fator_divisor = InquilinosService::getInquilinoFatorDivisor($inquilino->id);
                     $fatorDivisor = $inquilino_fator_divisor->fatorDivisor;
 
-                    foreach ($contas as $conta) {
+                    foreach ($contas as $conta){
                         
                         $isFatorDivisor = TipoContasService::isTipoContaFatorDivisor($conta->tipocodigo);
                         $valor_inquilino = ($conta->valor / count($inquilinos_imovel->toArray()));

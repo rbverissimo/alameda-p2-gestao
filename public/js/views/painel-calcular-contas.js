@@ -3,7 +3,7 @@ import { loadSimpleModal, toggleModal } from "../partials/simple-modal.js";
 import { toggleOverlay } from "../partials/spinner.js";
 import { isArrayEmpty } from "../validators/null-safe.js";
 import { colocaMascaraReferencia } from "../validators/view-masks.js";
-import { divCol, divRow, divRow } from "../dynamic-micro-components/layouts.js";
+import { divCol, divRow } from "../dynamic-micro-components/layouts.js";
 
 
 const dominio = 'painel-calcular-contas';
@@ -87,45 +87,40 @@ function confirmarCalcularContasHandler(){
 
 function renderizarResultado(data){
     if(data !== undefined){
+        resultadoCalculoContainer.innerHTML = '';
+        
         const numeroRegistros = data.length;
-        let divRow = divRow();
+        let newDivRow = divRow();
         let counter = 0;
         for (let i = 0; i < numeroRegistros; i++) {
             ++counter;
             if(counter === 5){
+                resultadoCalculoContainer.appendChild(divRow);
                 counter = 0;
-                divRow = divRow();
+                newDivRow = divRow();
             }
             const div = divCol(3);
 
             const divNome = document.createElement('div');
             divNome.textContent = `Nome: ${data[i].nome}`;
-            div.appendChild(divNome);
+            
             const divValorAluguel = document.createElement('div');
             divValorAluguel.textContent = `Aluguel: ${data[i].valorAluguel}`;
+            
+            div.appendChild(divNome);
             div.appendChild(divValorAluguel);
 
-            data[i].contas_inquilinos.forEach(conta => {
+            data[i].contas_inquilino.forEach(conta => {
                 const divConta = document.createElement('div');
                 divConta.textContent = `${conta.descricao}: ${conta.valorinquilino}`;
                 div.appendChild(divConta);
             });
+
+            newDivRow.appendChild(div);
             
         }
 
-        
-        let html = '<div class="col-12">';
-        data.forEach(function(inquilino) {
-            html += `<div class="col-3"><div>Nome: ${inquilino.nome}</div><div>Aluguel: ${inquilino.valorAluguel}</div>`;
-
-            inquilino.contas_inquilino.forEach(e => {
-                html += `<div> ${e.descricao}: ${e.valorinquilino}</div>`;
-            })
-            html += '</div>';
-        });
-        
-        html += '</div>';
-        resultadoCalculoContainer.innerHTML = html;
+        resultadoCalculoContainer.appendChild(newDivRow);
     }
 }
 

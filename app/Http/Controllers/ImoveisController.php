@@ -254,7 +254,7 @@ class ImoveisController extends Controller
 
             $mensagem = [
                 'status' => 'falha',
-                'mensagem' => $th->getMessage(),
+                'mensagem' => $th->getMessage().' Trace: '.$th->getTraceAsString()
             ];
 
             return response()->json(['mensagem' => $mensagem]);
