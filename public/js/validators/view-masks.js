@@ -56,7 +56,6 @@ export function writeMascaraValorDinheiro(str){
     if(!isStringValida(str)){
         return resultado;
     }
-
     const [parteInteira, parteDecimal] = str.split('.');
 
     if(!parteDecimal) return `R$${parteInteira},00`;
@@ -356,4 +355,17 @@ export function anoMesMascara(event) {
     }
 
     event.target.value = inputValue;
+}
+
+/**
+ * 
+ * @param {*} str 
+ * @returns 
+ */
+export function writeMascaraContadaQuitada(str){
+    const valid = ['S', 's', 'N', 'n'];
+    if(!valid.includes(str)){
+        return;
+    }
+    return str === 'S' ? 'Sim' : 'Não';
 }

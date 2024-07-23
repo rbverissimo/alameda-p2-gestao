@@ -44,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
             spanValores[i].textContent = writeMascaraValorDinheiro(spanValores[i].textContent);
       }
 
-
-
 });
 
 //TODO: refatorar para o template usando um onclick na div

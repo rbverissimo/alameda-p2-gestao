@@ -1,9 +1,12 @@
 import { getCarouselData, nextButton, prevButton } from "../partials/simple-carousel.js";
-import { colocaMascaraReferencia } from "../validators/view-masks.js";
+import { colocaMascaraReferencia, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 
 const dominio = 'painel_situacao_financeira';
 const listaComprovantes = document.getElementById('lista-comprovantes');
 const saldoDiv = document.getElementById('painel-financeiro-saldo');
+
+const spanValoresPainelDetalhado = document.getElementsByClassName('span-valores-painel-detalhado');
+
 let referencia = 0;
 let idInquilino = 0;
 
@@ -22,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
             idInquilino = +data.detail['inquilino_id'];
             referencia = +data.detail['referencia'];
       }
+    });
+
+    Array.from(spanValoresPainelDetalhado).forEach(valor => {
+        valor.textContent = writeMascaraValorDinheiro(valor.textContent);
     });
 
     const referencias = getCarouselData();

@@ -13,10 +13,10 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <span>Aluguel: {{ $situacao_financeira->aluguel }}</span>
+                <span>Aluguel: <span class="span-valores-painel-detalhado">{{ $situacao_financeira->aluguel }}</span></span>
             </div>
             <div class="col-3">
-                <span>Total: {{ $situacao_financeira->total_contas_mensais }}</span>
+                <span>Total: <span class="span-valores-painel-detalhado">{{ $situacao_financeira->total_contas_mensais }}</span></span>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
     @endif
     <div class="dashboard light-dashboard">
         <div id="painel-financeiro-saldo" class="divisor-header alert-divisor">
-            Saldo do mês: {{ $situacao_financeira->saldo_parcial }}
+            Saldo do mês: <span class="span-valores-painel-detalhado">{{ $situacao_financeira->saldo_parcial }}</span> 
         </div>
     </div>
     <div class="row">
@@ -68,6 +68,8 @@
 
 @section('scripts')
     <script src="{{ asset('js/views/painel-situacao-financeira.js') }}" type="module"></script>
+    <script src="{{ asset('js/components/lista-comprovantes.js') }}" type="module"></script>
+    <script src="{{ asset('js/components/lista-contas-inquilino.js') }}" type="module"></script>
     @include('app.scripts.script-carousel')
     @include('app.scripts.script-app-data')
 @endsection
