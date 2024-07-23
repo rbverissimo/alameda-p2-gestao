@@ -183,7 +183,6 @@ class ImoveisController extends Controller
         
         $salas = Sala::select('id', 'nomesala')->where('imovelcodigo', $idImovel)->get();
 
-        // Essa parte do código é feita para associar o nome de descrição da sala à conta
         foreach ($contas_imovel as $conta) {
             foreach ($salas as $sala) {    
                 if($sala->id == $conta->salacodigo){

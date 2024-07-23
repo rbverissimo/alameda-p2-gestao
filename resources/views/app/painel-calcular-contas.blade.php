@@ -22,7 +22,7 @@
             </div>
         </div>
         <div  class="dashboard light-dashboard">
-            <div id="resultado-calculo" class="row">          
+            <div id="resultado-calculo-container">          
             </div>
         </div>
         

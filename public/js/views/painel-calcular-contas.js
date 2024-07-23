@@ -3,11 +3,15 @@ import { loadSimpleModal, toggleModal } from "../partials/simple-modal.js";
 import { toggleOverlay } from "../partials/spinner.js";
 import { isArrayEmpty } from "../validators/null-safe.js";
 import { colocaMascaraReferencia } from "../validators/view-masks.js";
+import { divCol, divRow, divRow } from "../dynamic-micro-components/layouts.js";
 
 
 const dominio = 'painel-calcular-contas';
 const pathReferencia = '/imoveis/executar-calculo/{id}/{ref?}';
 const pathExecutar = '/imoveis/executar-calculo/c/{id}/{ref}';
+
+const resultadoCalculoContainer = document.getElementById('resultado-calculo-container');
+
 let referenciaCalculo = 0;
 let idImovel = 0;
 let nomeImovel = '';
@@ -83,7 +87,33 @@ function confirmarCalcularContasHandler(){
 
 function renderizarResultado(data){
     if(data !== undefined){
-        const divResultado = document.getElementById('resultado-calculo');
+        const numeroRegistros = data.length;
+        let divRow = divRow();
+        let counter = 0;
+        for (let i = 0; i < numeroRegistros; i++) {
+            ++counter;
+            if(counter === 5){
+                counter = 0;
+                divRow = divRow();
+            }
+            const div = divCol(3);
+
+            const divNome = document.createElement('div');
+            divNome.textContent = `Nome: ${data[i].nome}`;
+            div.appendChild(divNome);
+            const divValorAluguel = document.createElement('div');
+            divValorAluguel.textContent = `Aluguel: ${data[i].valorAluguel}`;
+            div.appendChild(divValorAluguel);
+
+            data[i].contas_inquilinos.forEach(conta => {
+                const divConta = document.createElement('div');
+                divConta.textContent = `${conta.descricao}: ${conta.valorinquilino}`;
+                div.appendChild(divConta);
+            });
+            
+        }
+
+        
         let html = '<div class="col-12">';
         data.forEach(function(inquilino) {
             html += `<div class="col-3"><div>Nome: ${inquilino.nome}</div><div>Aluguel: ${inquilino.valorAluguel}</div>`;
@@ -95,12 +125,11 @@ function renderizarResultado(data){
         });
         
         html += '</div>';
-        divResultado.innerHTML = html;
+        resultadoCalculoContainer.innerHTML = html;
     }
 }
 
 function escolherReferenciaAnterior(){
-    // referenciaCalculo-1
     redirecionarPara(pathReferencia.replace('{id}', idImovel).replace('{ref?}', referenciaCalculo - 1));
 }
 
