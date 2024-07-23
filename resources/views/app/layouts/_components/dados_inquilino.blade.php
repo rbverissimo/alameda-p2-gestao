@@ -12,7 +12,7 @@
                         <span>Valor Aluguel: R${{$inquilino->valorAluguel}}</span>
                   </div>
                   <div class="col-3">
-                        <span>Contato: {{$inquilino->telefone_celular}}</span>
+                        <span>Contato: </span><span id="span-telefone-celular-inquilino">{{$inquilino->telefone_celular}}</span>
                   </div>       
                   <div class="col-2">
                         <button id="mais-info-painel-inquilino"

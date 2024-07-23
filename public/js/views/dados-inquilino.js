@@ -1,16 +1,22 @@
 import { loadModalModoSimples, toggleModal } from "../partials/simple-modal.js";
-import { spinnerOverlay, toggleOverlay } from "../partials/spinner.js";
+import { toggleOverlay } from "../partials/spinner.js";
 import { isNotNullOrUndefined } from "../validators/null-safe.js";
+import { colocaMascaraReferencia, writeMascaraTelefone, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 
 
 let idInquilino = null;
 let appData = {};
 const dominio = 'dados_inquilino';
 const botaoConsolidarSaldo = document.getElementById('consolidar-saldo-button-painel-inquilino');
+
 const spanSaldo = document.getElementById('saldo');
 const spanValorSaldoAtual = document.getElementById('span-valor-saldo-atual');
 const spanDataUltimoSaldoAtual = document.getElementById('span-data-ultimo-saldo-atual');
 const spanSaldoDefasado = document.getElementById('span-saldo-defasado');
+const spanTelefoneCelularInquilino = document.getElementById('span-telefone-celular-inquilino');
+const spanReferenciaSituacaoFinanceira = document.getElementById('span-referencia-situacao-financeira');
+const spanValores = document.getElementsByClassName('span-valores-contas-aluguel');
+
 const routeConsolidarSaldo = '/inquilino/consolidar/s/';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,6 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       getCorSaldo(spanValorSaldoAtual);
       getCorSaldo(spanSaldo);
+
+      spanTelefoneCelularInquilino.textContent = writeMascaraTelefone(spanTelefoneCelularInquilino.textContent);
+      spanReferenciaSituacaoFinanceira.textContent = colocaMascaraReferencia(spanReferenciaSituacaoFinanceira.textContent);
+
+      for (let i = 0; i < spanValores.length; i++) {
+            spanValores[i].textContent = writeMascaraValorDinheiro(spanValores[i].textContent);
+      }
+
+
 
 });
 

@@ -6,7 +6,7 @@
             <div class="row">
                   <div class="col-5">
                         <span class="basic-card-wrapper">
-                              Referência: {{ $situacao_financeira->referencia }}
+                              Referência: <span id="span-referencia-situacao-financeira">{{ $situacao_financeira->referencia }}</span> 
                         </span>
                   </div>
                   <div class="col-3">
@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                   <div class="col-3">
-                        <span class="basic-card-wrapper">Aluguel: {{ $situacao_financeira->aluguel }}</span>
+                        <span class="basic-card-wrapper">Aluguel: <span class="span-valores-contas-aluguel">{{ $situacao_financeira->aluguel }}</span></span>
                   </div>
             </div>
 
@@ -33,7 +33,7 @@
                   <div class="row">
                         @foreach ($contas as $key => $value)
                               <div class="col-3">
-                                          <span class="basic-card-wrapper">{{ $key }}: {{ $value }}</span>
+                                          <span class="basic-card-wrapper">{{ $key }}: <span class="span-valores-contas-aluguel">{{ $value }}</span></span>
                                     </div>
                         @endforeach
                   </div>
@@ -48,7 +48,7 @@
                   
             <div class="row">
                   <div class="col-6">
-                        <span class="basic-card-wrapper">Total: {{ $situacao_financeira->total_contas_mensais }}
+                        <span class="basic-card-wrapper">Total: <span class="span-valores-contas-aluguel">{{ $situacao_financeira->total_contas_mensais }}</span>
                               <br>
                               <span class="crumble-text">Aluguel + Contas do mês</span>
                         </span>
@@ -61,7 +61,7 @@
             <div class="row">
                   <div class="col-6">
                         <p>Saldo parcial mensal: 
-                              <span id="saldo">{{$situacao_financeira->saldo_parcial}}</span>
+                              <span class="span-valores-contas-aluguel" id="saldo">{{$situacao_financeira->saldo_parcial}}</span>
                         </p>
                   </div>
             </div>
@@ -69,7 +69,7 @@
                   <div class="row">
                         <div id="saldo-atual-consolidado" class="col-5">
                               <p>Saldo atual:
-                                    <span id="span-valor-saldo-atual">{{ $situacao_financeira->saldo_atual }}</span><br>
+                                    <span class="span-valores-contas-aluguel" id="span-valor-saldo-atual">{{ $situacao_financeira->saldo_atual }}</span><br>
                                     <span class="crumble-text">Já consolidado</span>
                               </p>
                         </div>

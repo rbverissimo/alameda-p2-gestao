@@ -14,8 +14,8 @@
         <div class="col-3">
             <span>Débito quitado?</span>
         </div>
-        <div class="col-1">
-            <x-toggle-switch attName="quitada" :checked="$conta->quitada === 'S'" />
+        <div class="col-2">
+            <x-toggle-switch id="quitada-input" attName="quitada" :checked="$conta->quitada === 'S'" />
         </div>
     </div>
     <div class="row">

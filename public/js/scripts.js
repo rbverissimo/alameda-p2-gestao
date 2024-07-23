@@ -499,7 +499,7 @@ export function swapPontosVirgulas(valor){
 
 export function showDataFormatadaDMY(data){
       const[ano, mes, dia] = data.split('-');
-      return `${dia}-${mes}-${ano}`;
+      return `${dia}/${mes}/${ano}`;
 }
 
 export function criarSearchInputEvent(obj, dominio){

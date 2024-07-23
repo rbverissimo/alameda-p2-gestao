@@ -59,6 +59,8 @@ export function writeMascaraValorDinheiro(str){
 
     const [parteInteira, parteDecimal] = str.split('.');
 
+    if(!parteDecimal) return `R$${parteInteira},00`;
+
     resultado = `R$${parteInteira},${parteDecimal}`;
 
     if(parteDecimal.length == 1){
