@@ -145,6 +145,19 @@ class InquilinosService {
       }
 
       /**
+       * Esse método busca o ID e o nome de todos os inquilinos de um determinado
+       * imóvel passado no primeiro parâmetro do método
+       * 
+       */
+      public static function getIdNomeInquilinosAtivosByImovel($imovel){
+            return Inquilino::select('inquilinos.id', 'pessoas.nome')
+                  ->join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
+                  ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+                  ->where(['salas.imovelcodigo', $imovel], ['inquilinos.situacao', 'A'])
+                  ->get();
+      }
+
+      /**
        * Esse método retorno uma inquilino com todas as principais relações ligadas a ele
        * @param id do inquilino que será buscado no banco de dados
        * @return \App\Models\Inquilino 
@@ -279,6 +292,7 @@ class InquilinosService {
                   ->get();
       }
 
+
       public static function getListaContasInquilinosByIdImovel($idContaImovel){
             return InquilinoConta::select('id', 'dataVencimento', 'valorinquilino', 'quitada')->
                   where('contacodigo', $idContaImovel)
@@ -305,11 +319,15 @@ class InquilinosService {
        */
       public static function buscarIdInquilinoContaByReferencia($idInquilino, $ano_referencia, $mes_referencia)
       {
-            return InquilinoConta::select('inquilinos_contas.id')
+            return InquilinoConta::select('inquilinos_contas.id', 'inquilinos_contas.valorinquilino', 'contas_imoveis.tipocodigo', 
+                        'tipocontas.descricao')
                 ->join('contas_imoveis', 'contas_imoveis.id', 'inquilinos_contas.contacodigo')
-                ->where('inquilinos_contas.inquilinocodigo', $idInquilino)
-                ->where('contas_imoveis.ano', $ano_referencia)
-                ->where('contas_imoveis.mes', $mes_referencia)
+                ->join('tipocontas', 'tipocontas.id', 'contas_imoveis.tipocodigo')
+                ->where([
+                        ['inquilinos_contas.inquilinocodigo', $idInquilino],
+                        ['contas_imoveis.ano', $ano_referencia], 
+                        ['contas_imoveis.mes', $mes_referencia]
+                  ])
                 ->get();   
       }
 

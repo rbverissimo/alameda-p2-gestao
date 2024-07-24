@@ -4,6 +4,9 @@ namespace App\Models\BusinessObjects;
 
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
+use App\Utils\ProjectUtils;
+use App\ValueObjects\DescricaoValorContaVO;
+use App\ValueObjects\ResultadoCalculoContasVO;
 
 class InquilinoBO {
 
@@ -45,5 +48,49 @@ class InquilinoBO {
             ];
 
             return ['regras' => $regras, 'feedback' => $feedback];
+      }
+
+      public static function getDadosInquilinosContasCalculadosPor($imovel, $referencia){
+            $inquilinos = InquilinosService::getIdNomeInquilinosAtivosByImovel($imovel);
+
+            $ano_referencia = ProjectUtils::getAnoFromReferencia($referencia);
+            $mes_referencia = ProjectUtils::getMesFromReferencia($referencia);
+
+            foreach ($inquilinos as $inquilino) {
+                $contas_inquilino = InquilinosService::buscarIdInquilinoContaByReferencia($inquilino->id, $ano_referencia, $mes_referencia);
+                
+                $inquilino->contas_inquilino = $contas_inquilino;
+                $inquilino->valorAluguel = InquilinosService::getAluguelBy($inquilino->id, $referencia)->valorAluguel;
+
+            }
+
+            return $inquilinos;
+      }
+
+      public static function gerarCardInquilinosContasCalculados($inquilinos){
+            if(empty($inquilinos)){
+                  return;
+            }
+
+            $calculos = [];
+
+            foreach ($inquilinos as $inquilino) {
+
+                  $total = $inquilino->valorAluguel;
+                  $contas_array = [];
+                  foreach ($inquilino->contas_inquilino as $conta) {
+                        $descricao_valor = new DescricaoValorContaVO($conta->descricao, $conta->valorinquilino);
+                        
+                        $total += $conta->valorinquilino;
+
+                        $contas_array[] =$descricao_valor->getJson();
+                  }
+                  
+                 $resultado_calculo = new ResultadoCalculoContasVO($inquilino->nome, $inquilino->valorAluguel, $total, array_merge($contas_array));
+                 $calculos[] = $resultado_calculo->getJson();
+
+            }
+
+            return $calculos; 
       }
 }

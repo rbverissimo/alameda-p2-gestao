@@ -16,6 +16,14 @@ class ResultadoCalculoContasVO {
         $this->contas = $contas;
     }
 
-    
+    public function getJson()
+    {
+        return [
+            'nome' => $this->nome,
+            'valorAluguel' => $this->valorAluguel,
+            'total' => $this->total,
+            'contas' => $this->contas
+        ];
+    }
 
 }
