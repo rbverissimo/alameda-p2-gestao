@@ -62,7 +62,15 @@ class InquilinoBO {
                 $inquilino->contas_inquilino = $contas_inquilino;
                 $inquilino->valorAluguel = InquilinosService::getAluguelBy($inquilino->id, $referencia)->valorAluguel;
 
+                $total_contas = array_reduce($contas_inquilino->toArray(), function($carry, $conta){
+                        return $carry + (float) $conta['valorinquilino'];
+                }, 0);
+
+                $inquilino->total = $total_contas + $inquilino->valorAluguel;
+
+                
             }
+
 
             return $inquilinos;
       }
@@ -75,18 +83,14 @@ class InquilinoBO {
             $calculos = [];
 
             foreach ($inquilinos as $inquilino) {
-
-                  $total = $inquilino->valorAluguel;
                   $contas_array = [];
                   foreach ($inquilino->contas_inquilino as $conta) {
                         $descricao_valor = new DescricaoValorContaVO($conta->descricao, $conta->valorinquilino);
-                        
-                        $total += $conta->valorinquilino;
 
                         $contas_array[] =$descricao_valor->getJson();
                   }
                   
-                 $resultado_calculo = new ResultadoCalculoContasVO($inquilino->nome, $inquilino->valorAluguel, $total, array_merge($contas_array));
+                 $resultado_calculo = new ResultadoCalculoContasVO($inquilino->nome, $inquilino->valorAluguel, $inquilino->total, array_merge($contas_array));
                  $calculos[] = $resultado_calculo->getJson();
 
             }

@@ -2,7 +2,7 @@ import { mascaraReferenciaSlider } from "../partials/simple-carousel.js";
 import { loadSimpleModal, toggleModal } from "../partials/simple-modal.js";
 import { toggleOverlay } from "../partials/spinner.js";
 import { isArrayEmpty } from "../validators/null-safe.js";
-import { colocaMascaraReferencia } from "../validators/view-masks.js";
+import { colocaMascaraReferencia, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { divCol, divRow } from "../dynamic-micro-components/layouts.js";
 
 
@@ -105,16 +105,20 @@ function renderizarResultado(data){
             divNome.textContent = `Nome: ${data[i].nome}`;
             
             const divValorAluguel = document.createElement('div');
-            divValorAluguel.textContent = `Aluguel: ${data[i].valorAluguel}`;
+            divValorAluguel.textContent = `Aluguel: ${ writeMascaraValorDinheiro(data[i].valorAluguel)}`;
             
             div.appendChild(divNome);
             div.appendChild(divValorAluguel);
 
             data[i].contas_inquilino.forEach(conta => {
                 const divConta = document.createElement('div');
-                divConta.textContent = `${conta.descricao}: ${conta.valorinquilino}`;
+                divConta.textContent = `${conta.descricao}:  ${ writeMascaraValorDinheiro(conta.valorinquilino)}`;
                 div.appendChild(divConta);
             });
+
+            const divValorTotal = document.createElement('div');
+            divValorTotal.textContent = `Total: ${ writeMascaraValorDinheiro(data[i].total)}`;
+            div.appendChild(divValorTotal);
 
             newDivRow.appendChild(div);
             

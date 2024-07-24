@@ -53,6 +53,11 @@ export function mascaraValorDinheiro(event){
 export function writeMascaraValorDinheiro(str){
 
     let resultado = '';
+
+    if(typeof str === 'number'){
+        str = String(str);
+    }
+
     if(!isStringValida(str)){
         return resultado;
     }

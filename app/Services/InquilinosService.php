@@ -153,7 +153,7 @@ class InquilinosService {
             return Inquilino::select('inquilinos.id', 'pessoas.nome')
                   ->join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
-                  ->where(['salas.imovelcodigo', $imovel], ['inquilinos.situacao', 'A'])
+                  ->where([['salas.imovelcodigo', $imovel], ['inquilinos.situacao', 'A']])
                   ->get();
       }
 
