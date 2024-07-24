@@ -29,7 +29,9 @@
                     
                 @endphp
                 @for ($i = 0; $i < $numero_rows; $i++)
-                    
+                    @for ($j = 0; $j < $registros; $j++)
+                        <x-calculco-conta-card tamanhoColuna="4" :resultadoCalculo="$calculos_cards[j]"></x-calculo-conta-card>   
+                    @endfor
                 @endfor       
             </div>
         </div>
