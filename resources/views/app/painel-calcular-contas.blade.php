@@ -22,7 +22,15 @@
             </div>
         </div>
         <div  class="dashboard light-dashboard">
-            <div id="resultado-calculo-container">          
+            <div id="resultado-calculo-container">   
+                @php
+                    $registros = count($calculos_cards);
+                    $numero_rows = intval($registros / 3) + 1;
+                    
+                @endphp
+                @for ($i = 0; $i < $numero_rows; $i++)
+                    
+                @endfor       
             </div>
         </div>
         

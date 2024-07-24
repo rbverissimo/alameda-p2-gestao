@@ -205,7 +205,7 @@ class ImoveisController extends Controller
         $appData = $appData_vo->getJson();
         $itens_carrossel = [$referencia_calculo];
 
-        return view('app.painel-calcular-contas', compact('titulo', 'itens_carrossel', 'appData', 'contas_imovel'));
+        return view('app.painel-calcular-contas', compact('titulo', 'itens_carrossel', 'appData', 'contas_imovel', 'calculos_cards'));
 
     }
 
