@@ -12,12 +12,12 @@ class PessoaDTO {
     private ?string $telefone_trabalho; 
     private ?EnderecoDTO $endereco; 
 
-    public function getCnpj(): string
+    public function getCnpj(): ?string
     {
         return $this->cnpj;
     }
 
-    public function getCpf(): string
+    public function getCpf(): ?string
     {
         return $this->cpf;
     }
@@ -27,22 +27,22 @@ class PessoaDTO {
         return $this->nome;
     }
   
-    public function getTelefoneCelular(): string
+    public function getTelefoneCelular(): ?string
     {
         return $this->telefone_celular;
     }
   
-    public function getTelefoneFixo(): string
+    public function getTelefoneFixo(): ?string
     {
         return $this->telefone_fixo;
     }
   
-    public function getTelefoneTrabalho(): string
+    public function getTelefoneTrabalho(): ?string
     {
         return $this->telefone_trabalho;
     }
   
-    public function getEndereco(): EnderecoDTO
+    public function getEndereco(): ?EnderecoDTO
     {
         return $this->endereco;
     }

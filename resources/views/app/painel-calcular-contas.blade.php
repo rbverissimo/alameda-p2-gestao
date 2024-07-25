@@ -48,15 +48,15 @@
             </div>
         </div>
         
-    @else
-        <div class="dashboard light-dashboard">
-            <div class="row">
-                <div class="col-12">
-                    <span>Não foram encontrados registros de contas para o período de referência selecionado</span>
-                </div>
+@else
+    <div class="dashboard light-dashboard">
+        <div class="row">
+            <div class="col-12">
+                <span>Não foram encontrados registros de contas para o período de referência selecionado</span>
             </div>
         </div>
-    @endif
+    </div>
+@endif
 <div class="row">
     <div class="whitespace-end-page"></div>
 </div>

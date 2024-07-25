@@ -58,7 +58,7 @@ class PrestadorServicoController extends Controller
             if($request->isMethod('POST')){
 
                 $endereco_dto = null;
-                if($request->input('cadastrar-endereco-input') === 'on'){
+                if($request->input('cadastrar-endereco-toggle') === 'on'){
 
                     $cep = ProjectUtils::tirarMascara($request->input('cep'));
                     $numero = $request->input('numero-endereco');
@@ -96,11 +96,19 @@ class PrestadorServicoController extends Controller
                 ));
 
                 if(empty($tipos)){
-                    throw new InvalidArgument('Os tipos de serviços prestados pelo prestador não foram declarados');
+                    throw new InvalidArgument('Os tipos de serviços prestados pelo prestador não foram declarados.');
+
                 }
 
-                DB::transaction(function($closure) use ($pessoa_dto, $tipos){
+                $imobiliaria = $request->input('imobiliaria-select');
+                if($imobiliaria === '0' || $imobiliaria === null){
+                    throw new InvalidArgument('A imobiliária em que o prestador prestará serviço não foi definida. ');
+                }
 
+
+                DB::transaction(function($closure) use ($pessoa_dto, $tipos, $imobiliaria){
+
+                    $endereco_trabalho = null;
                     if($pessoa_dto->getEndereco() !== null){
                         $endereco = $pessoa_dto->getEndereco();
 
@@ -113,6 +121,8 @@ class PrestadorServicoController extends Controller
                             'logradouro' => $endereco->getLogradouro()
                         ]);
 
+                        $endereco_trabalho = DB::getPdo()->lastInsertId();
+
                     }
 
                     Pessoa::create([
@@ -120,7 +130,7 @@ class PrestadorServicoController extends Controller
                         'cnpj' => $pessoa_dto->getCnpj(),
                         'cpf' => $pessoa_dto->getCpf(),
                         'telefone_celular' => $pessoa_dto->getTelefoneCelular(),
-                        'endereco_trabalho' => DB::getPdo()->lastInsertId()
+                        'endereco_trabalho' => $endereco_trabalho
                     ]);
 
                     PrestadorServico::create([
@@ -134,6 +144,10 @@ class PrestadorServicoController extends Controller
                         $bindings = [$prestador_id, $value];
                         DB::insert($sql, $bindings);
                     }
+
+                    $sql = 'INSERT INTO PRESTADORES_IMOBILIARIAS(PRESTADOR_ID, IMOBILIARIA_ID) VALUES(?,?)';
+                    $bindings = [$prestador_id, $imobiliaria]; 
+                    DB::insert($sql, $bindings);
 
                 });
 
