@@ -11,10 +11,10 @@
                       </tr>
                       @foreach ($contas_imovel as $conta)
                           <tr class="table-row">
-                            <td><a class="table-link">{{ $conta->id}}</a></td>
-                            <td><a class="table-link">{{ $conta->valor}}</a></td>
-                            <td><a class="table-link">{{ $conta->tipoconta}}</a></td>
-                            <td><a class="table-link">{{ $conta->nomesala}}</a></td>
+                            <td><span>{{ $conta->id}}</span></td>
+                            <td><span class="span-resultado-calculo-valor">{{ $conta->valor}}</span></td>
+                            <td><span>{{ $conta->tipoconta}}</span></td>
+                            <td><span>{{ $conta->nomesala}}</span></td>
                             <td>
                                 <div class="col-3">
                                     <img class="crud-icon" src="{{asset("icons/edit-icon.svg")}}" alt="EDITAR">

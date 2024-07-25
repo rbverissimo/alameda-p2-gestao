@@ -2,13 +2,12 @@
 
 namespace App\View\Components\Forms;
 
-use App\ValueObjects\ResultadoCalculoContasVO;
 use Illuminate\View\Component;
 
 class CalculoContaCard extends Component
 {
 
-    public ResultadoCalculoContasVO $resultadoCalculo;
+    public array $resultadoCalculo;
     public int $tamanhoColuna;
 
     /**
@@ -16,7 +15,7 @@ class CalculoContaCard extends Component
      *
      * @return void
      */
-    public function __construct(ResultadoCalculoContasVO $resultadoCalculo, int $tamanhoColuna)
+    public function __construct(array $resultadoCalculo, int $tamanhoColuna)
     {
         $this->resultadoCalculo = $resultadoCalculo;
         $this->tamanhoColuna = $tamanhoColuna;

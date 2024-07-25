@@ -22,16 +22,28 @@
             </div>
         </div>
         <div  class="dashboard light-dashboard">
-            <div id="resultado-calculo-container">   
+            <div id="resultado-calculo-container"> 
                 @php
                     $registros = count($calculos_cards);
-                    $numero_rows = intval($registros / 3) + 1;
+                    $numero_rows = 0;
+                    if($registros !== 0){
+                        $numero_rows = intval($registros / 3) + 1;
+                    }
+                    $contador_rows = 0;
                     
                 @endphp
                 @for ($i = 0; $i < $numero_rows; $i++)
-                    @for ($j = 0; $j < $registros; $j++)
-                        <x-calculco-conta-card tamanhoColuna="4" :resultadoCalculo="$calculos_cards[j]"></x-calculo-conta-card>   
-                    @endfor
+                    <div class="row">
+                        @for ($contador_rows; $contador_rows < $registros; $contador_rows++)
+                            <x-forms.calculo-conta-card tamanhoColuna="4" :resultadoCalculo="$calculos_cards[$contador_rows]"></x-forms.calculo-conta-card> 
+                            @if ($contador_rows !== 0 && $contador_rows % 3 === 0)
+                                @php
+                                    ++$contador_rows;
+                                    break;
+                                @endphp
+                            @endif
+                        @endfor
+                    </div>
                 @endfor       
             </div>
         </div>

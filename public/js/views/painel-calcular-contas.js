@@ -12,6 +12,8 @@ const pathExecutar = '/imoveis/executar-calculo/c/{id}/{ref}';
 
 const resultadoCalculoContainer = document.getElementById('resultado-calculo-container');
 
+const spanValorResultadoCalculo = document.getElementsByClassName('span-resultado-calculo-valor');
+
 let referenciaCalculo = 0;
 let idImovel = 0;
 let nomeImovel = '';
@@ -54,6 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Sim', 'Cancelar', confirmarCalcularContasHandler);
                 });
             }
+        }
+
+        if(spanValorResultadoCalculo.length > 0){
+            Array.from(spanValorResultadoCalculo).forEach( valor => {
+                valor.textContent = writeMascaraValorDinheiro(valor.textContent);
+            });
         }
     });
 
@@ -129,9 +137,15 @@ function renderizarResultado(data){
 }
 
 function escolherReferenciaAnterior(){
+    if((referenciaCalculo - 1) % 100 === 0){
+        referenciaCalculo = referenciaCalculo - 88;
+    }
     redirecionarPara(pathReferencia.replace('{id}', idImovel).replace('{ref?}', referenciaCalculo - 1));
 }
 
 function escolherReferenciaPosterior(){
+    if((referenciaCalculo + 1) %100 === 13){
+        referenciaCalculo = referenciaCalculo + 88; 
+    }
     redirecionarPara(pathReferencia.replace('{id}', idImovel).replace('{ref?}', referenciaCalculo + 1));
 }
