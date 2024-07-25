@@ -119,7 +119,7 @@
             <span class="basic-card-wrapper">Garantia?</span>
         </div>
         <div class="col-2">
-            <x-toggle-switch attName="garantia"></x-toggle-switch>
+            <x-toggle-switch id="garantia-checkbox" attName="garantia"></x-toggle-switch>
         </div>
     </div>
     <div class="row">

@@ -5,6 +5,8 @@ import { mascaraCnpj,
     writeMascaraTelefone,
     mascaraTelefone,
     mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
+import { criarAvailableSearchInputEvent } from "../components/search-input.js"
+import { LISTAR_FORNECEDORES } from "../routes.js";
 
 const dominio = 'fornecedores';
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
@@ -43,14 +45,13 @@ document.addEventListener('onSearchInputSelected', (event) => {
 
 async function buscarFornecedores(){
     try {
-        const response = await fetch('/fornecedores/buscar');
+        const response = await fetch(LISTAR_FORNECEDORES);
         if(!response.ok){
             throw new Error(`Erro ao buscar as informações no servidor: ${response.status}`);
         }
         const data = await response.json();
         if(data !== null ){
-            const searchInputsAvailable = criarSearchInputEvent(data, dominio);
-            document.dispatchEvent(searchInputsAvailable);
+            const searchInputsAvailable = criarAvailableSearchInputEvent(data, dominio);
         }
     } catch (error) {
         showMensagem(error, 'falha', 5000);

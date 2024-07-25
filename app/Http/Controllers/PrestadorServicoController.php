@@ -171,7 +171,7 @@ class PrestadorServicoController extends Controller
         }
     }
 
-    public function buscarLista(){
+    public function buscarLista($param = null){
        $imoveis = ImoveisService::getImoveisByUsuarioLogado();
        try {
 

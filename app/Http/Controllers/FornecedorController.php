@@ -30,9 +30,16 @@ class FornecedorController extends Controller
 
     public function fornecedores(){
 
-        $fornecedores = FornecedoresService::getFornecedores()->keyBy('cnpj');
+        try {
+            $fornecedores = FornecedoresService::getFornecedores()->keyBy('cnpj');
+    
+            return response()->json(['search' => $fornecedores]);
+        } catch (\Throwable $th) {
+            $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar os fornecedores do banco de dados. Erro:'.$th->getMessage());
+            $mensagem = $mensagem_vo->getJson();
+            return response()->json($mensagem);
+        }
 
-        return response()->json(['search' => $fornecedores]);
 
     }
 

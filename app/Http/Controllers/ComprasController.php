@@ -44,7 +44,7 @@ class ComprasController extends Controller
         $titulo = 'Cadastrar nova compra';
         try {
 
-            $mensagem = [];
+            $mensagem = null;
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
             $imoveis = ImoveisService::getListaImoveisSelect();
             $fornecedores = [];
@@ -185,12 +185,8 @@ class ComprasController extends Controller
 
                 });
 
-                $mensagem = [
-                    'status' => 'sucesso',
-                    'mensagem' => 'A compra foi cadastrada com sucesso'
-                ];
-
-                
+                $mensagem_vo = new MensagemVO('sucesso', 'A compra foi cadastrada com sucesso! ');
+                $mensagem = $mensagem_vo->getJson();
 
             }
 
@@ -206,7 +202,7 @@ class ComprasController extends Controller
 
     public function editar(Request $request, $idCompra){
         $titulo = 'Editar compra ';
-        $mensagem = '';
+        $mensagem = null;
         try {
 
             $formas_pagamento = ComprasService::getSelectOptionsFormasPagamento();
