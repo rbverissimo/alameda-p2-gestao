@@ -14,6 +14,7 @@ use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
+use App\ValueObjects\SearchInputVO;
 use App\ValueObjects\SelectOptionVO;
 use Doctrine\Common\Cache\Psr6\InvalidArgument;
 use Illuminate\Http\Request;
@@ -174,7 +175,9 @@ class PrestadorServicoController extends Controller
     public function buscarLista($param = null){
        try {
 
-        return response()->json('chegou aqui parametros: '.$param);
+        $prestadores = PrestadorServicoService::getNomePrestadoresLike($param);
+        $search_input_vo = new SearchInputVO($prestadores);
+        return response()->json($search_input_vo->getJson());
 
        } catch (\Throwable $th) {
             $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar a lista de prestadores');

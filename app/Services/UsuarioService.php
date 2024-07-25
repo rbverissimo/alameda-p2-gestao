@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Imobiliaria;
 use App\Models\User;
 use App\Models\UsuarioImovel;
 
@@ -27,6 +28,12 @@ class UsuarioService {
                   ->groupBy('idImovel')
                   ->get();
             return $usuario_imoveis->pluck('idImovel')->toArray();
+      }
+
+      public static function getImobiliarias(){
+            $usuario = UsuarioService::getUsuarioLogado();
+            return Imobiliaria::where('usuario_id', $usuario)
+                  ->pluck('id');
       }
 
 }
