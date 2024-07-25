@@ -1,7 +1,7 @@
 var dataMap;
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
-const searchInput = document.getElementById('search');
-const sugestoes = document.getElementById('sugestoes');
+export const searchInput = document.getElementById('search');
+export const sugestoes = document.getElementById('sugestoes');
 
 
 export function criarAvailableSearchInputEvent(obj, dominio, dispatch = true){
@@ -54,7 +54,7 @@ document.addEventListener('onSearchInputsAvailable', (event) => {
     }    
 });
 
-searchInput.addEventListener('input', () => {
+/* searchInput.addEventListener('input', () => {
     const userInput = searchInput.value.trim();
     if(userInput.length){
         const sugestoesFiltradas = gerarSugestoes(userInput);
@@ -64,7 +64,7 @@ searchInput.addEventListener('input', () => {
     }
 
 });
-
+ */
 function gerarSugestoes(userInput){
     const sugestoesFiltradas = [];
     for(const key in dataMap){

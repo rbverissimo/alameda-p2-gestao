@@ -172,8 +172,9 @@ class PrestadorServicoController extends Controller
     }
 
     public function buscarLista($param = null){
-       $imoveis = ImoveisService::getImoveisByUsuarioLogado();
        try {
+
+        return response()->json('chegou aqui parametros: '.$param);
 
        } catch (\Throwable $th) {
             $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar a lista de prestadores');
