@@ -17,11 +17,12 @@ class ImobiliariasService {
     public static function getListaImobiliariasSelect(){
         $usuario = UsuarioService::getUsuarioLogado();
         $imobiliarias = Imobiliaria::where('usuario_id', $usuario)->get();
-        $options = [];
+        $options = [SelectOptionVO::getPrimeiroElementoVazio()];
         foreach ($imobiliarias as $imobiliaria) {
             $option = new SelectOptionVO($imobiliaria->id, $imobiliaria->nome);
             $options[] = $option->getJson();
         }
+
         return array_merge($options);
     }
 

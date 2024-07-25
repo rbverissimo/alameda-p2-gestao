@@ -19,4 +19,10 @@ class SelectOptionVO {
         ];
     }
 
+    public static function getPrimeiroElementoVazio()
+    {
+        $select_vazio = new SelectOptionVO('0', '');
+        return $select_vazio->getJson(); 
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Dto\PessoaDTOBuilder;
 use App\Models\Endereco;
 use App\Models\Pessoa;
 use App\Models\PrestadorServico;
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
 use App\Utils\CollectionUtils;
@@ -37,7 +38,7 @@ class PrestadorServicoController extends Controller
         $titulo = 'Cadastrando um novo prestador de serviços';
         $mensagem = null;
         $prestador = null; 
-        $imoveis = ImoveisService::getListaImoveisSelect();
+        $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
         try {
             $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
 
@@ -140,7 +141,7 @@ class PrestadorServicoController extends Controller
                 $mensagem = $mensagem_vo->getJson();
             }
 
-            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imoveis'));
+            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imobiliarias'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível cadastrar um prestador de serviço. '.$th->getMessage());
         }

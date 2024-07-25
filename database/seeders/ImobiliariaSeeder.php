@@ -28,6 +28,15 @@ class ImobiliariaSeeder extends Seeder
                 'usuario_id' => $usuario_id
             ]);
 
+            $usuario_id = User::where('name', 'Renato')
+                ->pluck('id')
+                ->first();
+            
+            Imobiliaria::create([
+                'nome' => 'Imobiliária do Renato',
+                'usuario_id' => $usuario_id
+            ]);
+
         });
     }
 }

@@ -55,20 +55,11 @@
                 </span>
         </div>
         <div class="col-6">
-            <label for="select-imovel-input" id="label-select-imovel">Selecione um imóvel:</label>
-            <select name="select-imovel" id="select-imovel-input">
-                @foreach ($imoveis as $i)
-                    <option value="{{$i->id}}"
-                        @isset($imovel_cadastrado->id)
-                            @if ($imovel_cadastrado->id === $id->id)
-                                selected
-                            @endif
-                        @endisset
-                        >
-                        {{$i->nomefantasia}}
-                    </option>
-                @endforeach
-            </select>
+            <x-forms.select 
+                pattern-name="imobiliaria-select" 
+                labelText="Selecione a imobiliária" 
+                :collection="$imobiliarias">
+            </x-forms.select>
         </div>
     </div>
     <div class="dashboard light-dashboard">
