@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFornecedoresImobiliariasTable extends Migration
+class CreateNotasFiscaisComprasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateFornecedoresImobiliariasTable extends Migration
      */
     public function up()
     {
-        Schema::create('fornecedores_imobiliarias', function (Blueprint $table) {
+        Schema::create('notas_fiscais_compras', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('fornecedor_id');
-            $table->unsignedBigInteger('imobiliaria_id');
-            $table->primary(['fornecedor_id', 'imobiliaria_id']);
+            $table->unsignedBigInteger('notas_fiscais_id');
+            $table->double('valorTotalProdutos');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateFornecedoresImobiliariasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fornecedores_imobiliarias');
+        Schema::dropIfExists('notas_fiscais_compras');
     }
 }
