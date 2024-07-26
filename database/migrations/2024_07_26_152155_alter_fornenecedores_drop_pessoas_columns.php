@@ -15,8 +15,18 @@ class AlterFornenecedoresDropPessoasColumns extends Migration
     {
         Schema::table('fornecedores', function(Blueprint $table){
             $table->dropColumn('nome_fornecedor');
+        });
+
+        Schema::table('fornecedores', function(Blueprint $table){
             $table->dropColumn('cnpj');
+        });
+
+        Schema::table('fornecedores', function(Blueprint $table){
             $table->dropColumn('telefone');
+        });
+
+
+        Schema::table('fornecedores', function(Blueprint $table){
             $table->dropColumn('endereco');
         });
     }
