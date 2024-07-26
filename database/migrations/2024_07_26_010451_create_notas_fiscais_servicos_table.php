@@ -16,12 +16,18 @@ class CreateNotasFiscaisServicosTable extends Migration
         Schema::create('notas_fiscais_servicos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('notas_fiscais_id');
-            $table->double('valorISS');
-            $table->double('baseINSS');
-            $table->double('valorRetido');
-            $table->double('aliquota');
-            $table->unsignedInteger('tipo_servico');
+            $table->unsignedBigInteger('servico_id');
+            $table->double('valorBruto', 8, 2);
+            $table->longText('arquivo_nota_servico');
+            $table->string('dataEmissao', 10);
+            $table->string('serie',5)->nullable();
+            $table->string('numeroDocumento',255);
+            $table->double('valorISS', 8, 2)->nullable();
+            $table->double('baseINSS', 8, 2)->nullable();
+            $table->double('valorRetido', 8, 2)->nullable();
+            $table->double('aliquota', 8, 2)->nullable();
+            $table->unsignedInteger('tipo_servico')->nullable();
+
         });
     }
 
