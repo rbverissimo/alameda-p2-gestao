@@ -175,7 +175,7 @@ class PrestadorServicoController extends Controller
     public function buscarLista($param = null){
        try {
 
-        $prestadores = PrestadorServicoService::getNomePrestadoresLike($param);
+        $prestadores = PrestadorServicoService::getNomePrestadoresLike($param)->keyBy('nome');
         $search_input_vo = new SearchInputVO($prestadores);
         return response()->json($search_input_vo->getJson());
 
