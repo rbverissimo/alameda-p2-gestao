@@ -27,7 +27,10 @@ class CreateContasImoveisTable extends Migration
             $table->unsignedBigInteger('salacodigo');
             $table->timestamps();
 
-            $table->foreign('salacodigo')->references('id')->on('salas');
+            $table->foreign('salacodigo')
+                ->references('id')
+                ->on('salas')
+                ->onUpdate('cascade');
 
         });
     }

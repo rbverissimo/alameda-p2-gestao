@@ -17,11 +17,11 @@ class CreateSalasTable extends Migration
             $table->id();
             $table->integer('imovelcodigo');
             $table->string('nomesala', 100);
-            $table->integer('qtdeFamilias')->nullable();
-            $table->integer('qtdeMoradores')->nullable();
             $table->timestamps();
 
-            $table->foreign('imovelcodigo')->references('id')->on('imoveis');
+            $table->foreign('imovelcodigo')->references('id')
+                ->on('imoveis')
+                ->onUpdate('cascade');
 
         });
     }

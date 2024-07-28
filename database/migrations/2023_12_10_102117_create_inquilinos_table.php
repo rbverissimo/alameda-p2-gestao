@@ -22,7 +22,10 @@ class CreateInquilinosTable extends Migration
             $table->timestamps();
 
             $table->foreign('pessoacodigo')->references('id')->on('pessoas');
-            $table->foreign('salacodigo')->references('id')->on('salas');
+            $table->foreign('salacodigo')
+                ->references('id')
+                ->on('salas')
+                ->onUpdate('cascade');
         });
     }
 

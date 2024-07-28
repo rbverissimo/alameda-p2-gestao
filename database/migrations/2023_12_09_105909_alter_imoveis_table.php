@@ -16,7 +16,11 @@ class AlterImoveisTable extends Migration
         Schema::table('imoveis', function(Blueprint $table){
             $table->integer('endereco')->nullable();
 
-            $table->foreign('endereco')->references('id')->on('enderecos');
+            $table->foreign('endereco')->references('id')
+                ->on('enderecos')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+                
             $table->unique('endereco');
         });
     }

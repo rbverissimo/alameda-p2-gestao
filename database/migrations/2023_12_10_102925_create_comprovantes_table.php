@@ -22,7 +22,10 @@ class CreateComprovantesTable extends Migration
             $table->integer('inquilino');
             $table->timestamps();
 
-            $table->foreign('inquilino')->references('id')->on('inquilinos');
+            $table->foreign('inquilino')
+                ->references('id')
+                ->on('inquilinos')
+                ->onUpdate('cascade');
         });
     }
 

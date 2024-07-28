@@ -25,8 +25,15 @@ class CreateInquilinosContasTable extends Migration
             $table->string('quitada', 1)->default('N');
             $table->timestamps();
 
-            $table->foreign('inquilinocodigo')->references('id')->on('inquilinos');
-            $table->foreign('contacodigo')->references('id')->on('contas_imoveis');
+            $table->foreign('inquilinocodigo')
+                ->references('id')
+                ->on('inquilinos')
+                ->onUpdate('cascade');
+
+            $table->foreign('contacodigo')
+                ->references('id')
+                ->on('contas_imoveis')
+                ->onUpdate('cascade');
 
         });
     }
