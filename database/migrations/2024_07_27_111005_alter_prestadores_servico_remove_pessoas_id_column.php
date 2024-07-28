@@ -13,7 +13,7 @@ class AlterPrestadoresServicoRemovePessoasIdColumn extends Migration
      */
     public function up()
     {
-        Schema::table('prestores_servicos', function(Blueprint $table){
+        Schema::table('prestadores_servicos', function(Blueprint $table){
             $table->string('nome', 60)->nullable();
             $table->string('cpf', 11)->nullable();
             $table->string('cnpj', 14)->nullable();
@@ -54,7 +54,7 @@ class AlterPrestadoresServicoRemovePessoasIdColumn extends Migration
         });
 
         Schema::table('prestadores_servicos', function(Blueprint $table){
-            $table->unsignedBigInteger('pessoa_id');
+            $table->unsignedBigInteger('pessoa_id')->nullable();
         });
     }
 }

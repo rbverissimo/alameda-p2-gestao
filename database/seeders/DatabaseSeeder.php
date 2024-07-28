@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             TipoContaSeeder::class,
             TipoPrestadorSeeder::class,
             TipoComprovanteSeeder::class,
-            TiposServicosSeeder::class
+            TiposServicosSeeder::class,
+            TiposTelefonesSeeder::class,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Models\Pessoa;
 use App\Models\Telefone;
+use App\Utils\ProjectUtils;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -24,41 +25,38 @@ class AlterPessoasTableDropTelefonesColumn extends Migration
             $telefones_para_migrar = [];
             foreach($pessoas as $pessoa){
 
-                if($pessoa->telefone_celular !== null){
-                    $ddd_celular = array_slice($pessoa->telefone_celular, 0, 2);
-                    $telefone_sem_ddd = array_slice($pessoa->telefone_celular, 2);
+                if(!$this->isNullOrBlank($pessoa->telefone_celular)){
+                    $telefoneArr = $this->converterTelefones($pessoa->telefone_celular);
                     $tipo = 1010;
 
                     $telefones_para_migrar[] = [
                         'pessoa_id' => $pessoa->id,
-                        'ddd' => $ddd_celular,
-                        'telefone' => $telefone_sem_ddd,
+                        'ddd' => $telefoneArr['ddd'],
+                        'telefone' => $telefoneArr['telefone'],
                         'tipo_telefone' => $tipo
                     ];
                 }
 
-                if($pessoa->telefone_fixo !== null){
-                    $ddd_fixo = array_slice($pessoa->telefone_fixo, 0, 2);
-                    $telefone_sem_ddd = array_slice($pessoa->telefone_fixo, 2);
+                if(!$this->isNullOrBlank($pessoa->telefone_fixo)){
+                    $telefoneArr = $this->converterTelefones($pessoa->telefone_fixo);
                     $tipo = 1000;
 
                     $telefones_para_migrar[] = [
                         'pessoa_id' => $pessoa->id,
-                        'ddd' => $ddd_fixo,
-                        'telefone' => $telefone_sem_ddd,
+                        'ddd' => $telefoneArr['ddd'],
+                        'telefone' => $telefoneArr['telefone'],
                         'tipo_telefone' => $tipo
                     ];
                 }
 
-                if($pessoa->telefone_trabalho !== null){
-                    $ddd_trabalho = array_slice($pessoa->telefone_fixo, 0, 2);
-                    $telefone_sem_ddd = array_slice($pessoa->telefone_fixo, 2);
+                if(!$this->isNullOrBlank($pessoa->telefone_trabalho)){
+                    $telefoneArr = $this->converterTelefones($pessoa->telefone_trabalho);
                     $tipo = 1020;
 
                     $telefones_para_migrar[] = [
                         'pessoa_id' => $pessoa->id,
-                        'ddd' => $ddd_trabalho,
-                        'telefone' => $telefone_sem_ddd,
+                        'ddd' => $telefoneArr['ddd'],
+                        'telefone' => $telefoneArr['telefone'],
                         'tipo_telefone' => $tipo
                     ];
                 }
@@ -70,7 +68,7 @@ class AlterPessoasTableDropTelefonesColumn extends Migration
                         'pessoa_id' => $telefone['pessoa_id'],
                         'ddd' => $telefone['ddd'],
                         'telefone' => $telefone['telefone'],
-                        'tipo_telefone' => $telefone['tipo']
+                        'tipo_telefone' => $telefone['tipo_telefone']
                     ]
                 );
             }
@@ -96,6 +94,51 @@ class AlterPessoasTableDropTelefonesColumn extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('pessoas', function(Blueprint $table){
+            $table->string('telefone_fixo', 10)->nullable();
+            $table->string('telefone_celular', 11)->nullable();
+            $table->string('telefone_trabalho')->nullable();
+        });
+
+        $telefones = Telefone::all();
+
+        foreach ($telefones as $telefone) {
+            $pessoaId = $telefone->pessoa_id;
+            $telefonePessoa = $telefone->ddd.$telefone->telefone;
+            $tipoTelefone = $telefone->tipo_telefone;
+
+            $pessoa = Pessoa::find($pessoaId);
+
+            switch ($tipoTelefone) {
+                case 1000:
+                    $pessoa->telefone_fixo = $telefonePessoa;
+                    break;
+                case 1020:
+                    $pessoa->telefone_trabalho = $telefonePessoa;
+                    break;
+                case 1010:
+                    $pessoa->telefone_celular = $telefonePessoa;
+                    break;
+                default:
+                    break;
+            }
+
+            $pessoa->save();
+
+        }
+
+        $telefones = Telefone::destroy($telefones);
+
+    }
+
+    private function converterTelefones($telefoneComDDD){
+        $ddd = substr(ProjectUtils::tirarMascara($telefoneComDDD), 0, 2);
+        $telefone = substr(ProjectUtils::tirarMascara($telefoneComDDD), 2);
+
+        return [ 'ddd' => $ddd, 'telefone' => $telefone];
+    }
+
+    private function isNullOrBlank($str){
+        return $str === null || $str === '';
     }
 }

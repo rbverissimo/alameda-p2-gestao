@@ -16,7 +16,7 @@ class CreateItensNotaFiscalTable extends Migration
         Schema::create('itens_nota_fiscal', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('nota_fiscal_id');
+            $table->unsignedBigInteger('nota_fiscal_compra_id');
             $table->string('produto', 60);
             $table->integer('quantidade');
             $table->double('valor', 2);
