@@ -22,6 +22,7 @@ class AlterInquilinosTableAddColumns extends Migration
             $table->string('nome', 60)->index()->nullable();
             $table->string('cpf', 11)->index()->nullable();
             $table->unsignedBigInteger('endereco_trabalho')->nullable();
+            $table->string('profissao',60)->nullable();
 
             $table->foreign('endereco_trabalho')
                 ->references('id')

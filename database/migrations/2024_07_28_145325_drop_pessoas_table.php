@@ -13,7 +13,12 @@ class DropPessoasTable extends Migration
      */
     public function up()
     {
-        //
+
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->dropColumn('pessoacodigo');
+        });
+
+        Schema::dropIfExists('pessoas');
     }
 
     /**
@@ -23,6 +28,16 @@ class DropPessoasTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::create('pessoas', function(Blueprint $table){
+            $table->id();
+            $table->string('nome', 60);
+            $table->string('cpf', 11);
+            $table->string('profissao', 60)->nullable();
+            $table->unsignedBigInteger('endereco_trabalho')->nullable();
+        });
+
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->unsignedBigInteger('pessoacodigo')->nullable();
+        });
     }
 }
