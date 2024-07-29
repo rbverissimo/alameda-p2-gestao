@@ -26,7 +26,7 @@ class AlterImoveisAddImobiliariaColumn extends Migration
     public function down()
     {
         Schema::table('imoveis', function(Blueprint $table){
-            $table->dropIfExists('imobiliaria_id');
+            $table->dropColumn('imobiliaria_id');
         });
     }
 }

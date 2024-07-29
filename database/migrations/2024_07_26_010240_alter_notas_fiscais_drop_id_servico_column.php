@@ -13,9 +13,7 @@ class AlterNotasFiscaisDropIdServicoColumn extends Migration
      */
     public function up()
     {
-        Schema::table('notas_fiscais', function(Blueprint $table){
-            $table->dropIfExists('notas_fiscais');
-        });
+        Schema::dropIfExists('notas_fiscais');
 
     }
 
