@@ -28,7 +28,7 @@ class AlterInquilinosTableAddColumns extends Migration
                 ->references('id')
                 ->on('enderecos')
                 ->onUpdate('cascade')
-                ->onDelete('set null');
+                ->nullOnDelete();
         });
 
         Schema::create('inquilinos_telefones', function(Blueprint $table){
@@ -118,7 +118,7 @@ class AlterInquilinosTableAddColumns extends Migration
         });
 
         Schema::table('inquilinos', function(Blueprint $table){
-            $table->dropForeign('inquilinos_endereco_trabalho_foreign');
+            $table->dropColumn('profissao');
         });
 
         Schema::table('inquilinos', function(Blueprint $table){

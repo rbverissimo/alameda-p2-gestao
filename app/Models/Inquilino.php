@@ -12,7 +12,13 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Inquilino extends Model
 {
     use HasFactory;
-    protected $fillable = ['pessoacodigo', 'situacao', 'salacodigo'];
+    protected $fillable = ['situacao', 
+        'salacodigo', 
+        'qtdePessoasFamilia', 
+        'nome', 
+        'cpf', 
+        'endereco_trabalho', 
+        'profissao'];
 
     public function sala(): BelongsTo
     {
