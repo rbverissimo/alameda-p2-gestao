@@ -30,23 +30,20 @@ class AlterInquilinosTableAddColumnsPessoa extends Migration
     public function down()
     {
         DB::statement('PRAGMA foreign_keys = OFF;');
-        DB::transaction(function(){
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->dropColumn('nome');
+        });
 
-            Schema::table('inquilinos', function(Blueprint $table){
-                $table->dropColumn('nome');
-            });
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->dropColumn('profissao');
+        });
 
-            Schema::table('inquilinos', function(Blueprint $table){
-                $table->dropColumn('profissao');
-            });
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->dropColumn('cpf');
+        });
 
-            Schema::table('inquilinos', function(Blueprint $table){
-                $table->dropColumn('cpf');
-            });
-
-            Schema::table('inquilinos', function(Blueprint $table){
-                $table->dropColumn('endereco_trabalho');
-            });
+        Schema::table('inquilinos', function(Blueprint $table){
+            $table->dropColumn('endereco_trabalho');
         });
     }
 }

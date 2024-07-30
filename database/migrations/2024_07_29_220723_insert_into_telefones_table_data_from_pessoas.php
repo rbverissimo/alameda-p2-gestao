@@ -65,9 +65,9 @@ class InsertIntoTelefonesTableDataFromPessoas extends Migration
     public function down()
     {
         DB::transaction(function($closure){
-            $pessoas = Pessoa::pluck('id');
+            $pessoas = Pessoa::select('id')->get();
             foreach ($pessoas as $pessoa) {
-                DB::delete('DELETE FROM TELEFONES WHERE PESSOA_ID = ?', [$pessoa]);
+                DB::delete('DELETE FROM TELEFONES WHERE PESSOA_ID = ?', [$pessoa->id]);
             }
         });
     }

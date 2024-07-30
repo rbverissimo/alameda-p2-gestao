@@ -50,4 +50,5 @@ class Inquilino extends Model
     {
         return $this->hasMany(InquilinoAluguel::class, 'inquilino');
     }
+
 }
