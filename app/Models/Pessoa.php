@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pessoa extends Model
@@ -17,8 +18,8 @@ class Pessoa extends Model
         return $this->hasOne(Inquilino::class, 'pessoacodigo');
     }
 
-    public function prestador_servico(): HasOne
+    public function telefones(): HasMany
     {
-        return $this->hasOne(PrestadorServico::class, 'pessoa_id');
+        return $this->hasMany(Telefone::class, 'pessoa_id');
     }
 }

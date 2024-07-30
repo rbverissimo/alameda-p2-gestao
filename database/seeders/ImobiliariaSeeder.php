@@ -24,7 +24,7 @@ class ImobiliariaSeeder extends Seeder
                 ->first();
     
             Imobiliaria::create([
-               'nome' => 'Imobi Imóveis - Imobiliária Teste',
+                'nome' => 'Imobi Imóveis - Imobiliária Teste',
                 'usuario_id' => $usuario_id
             ]);
 

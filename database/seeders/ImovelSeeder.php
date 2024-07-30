@@ -16,8 +16,8 @@ class ImovelSeeder extends Seeder
     {
         $imovel = new Imovel();
         $imovel->nomeFantasia = 'Alameda P2';
-        $imovel->qtdeCasas = 3;
         $imovel->endereco = 1;
+        $imovel->imobiliaria_id = 2;
 
         $imovel->save();
 

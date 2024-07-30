@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Inquilino;
+use App\Models\Sala;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class InquilinoSeeder extends Seeder
 {
@@ -14,44 +16,47 @@ class InquilinoSeeder extends Seeder
      */
     public function run()
     {
-        $i = new Inquilino();
-        //$i->valorAluguel = 330.0;
-        $i->pessoacodigo = 1;
-        $i->situacao = 'A';
-        $i->salacodigo = 1;
-        $i->qtdePessoasFamilia = 1;
-        $i->save();
+        DB::transaction(function($closure){
 
-        $i2 = new Inquilino();
-        //$i2->valorAluguel = 550.0;
-        $i2->pessoacodigo = 2;
-        $i2->situacao = 'A';
-        $i2->salacodigo = 2;
-        $i2->qtdePessoasFamilia = 2;
-        $i2->save();
 
-        $i3 = new Inquilino();
-        //$i3->valorAluguel = 440.0;
-        $i3->pessoacodigo = 3;
-        $i3->situacao = 'A';
-        $i3->salacodigo = 1;
-        $i3->qtdePessoasFamilia = 1;
-        $i3->save();
+            $sala1 = Sala::select('id')->where('nomesala', 'Sala 1')->first();
+            $casa2 = Sala::select('id')->where('nomesala', 'Casa 2')->first();
 
-        $i4 = new Inquilino();
-        //$i4->valorAluguel = 600.0;
-        $i4->pessoacodigo = 4;
-        $i4->situacao = 'A';
-        $i4->salacodigo = 2;
-        $i4->qtdePessoasFamilia = 3;
-        $i4->save();
-
-        $i5 = new Inquilino();
-        //$i5->valorAluguel = 550.0;
-        $i5->pessoacodigo = 5;
-        $i5->situacao = 'A';
-        $i5->salacodigo = 1;
-        $i5->qtdePessoasFamilia = 2;
-        $i5->save();
+            $i = new Inquilino();
+            $i->pessoacodigo = 1;
+            $i->situacao = 'A';
+            $i->salacodigo = $sala1->id;
+            $i->qtdePessoasFamilia = 1;
+            $i->save();
+    
+            $i2 = new Inquilino();
+            $i2->pessoacodigo = 2;
+            $i2->situacao = 'A';
+            $i2->salacodigo = $casa2->id;
+            $i2->qtdePessoasFamilia = 2;
+            $i2->save();
+    
+            $i3 = new Inquilino();
+            $i3->pessoacodigo = 3;
+            $i3->situacao = 'A';
+            $i3->salacodigo = $sala1->id;
+            $i3->qtdePessoasFamilia = 1;
+            $i3->save();
+    
+            $i4 = new Inquilino();
+            $i4->pessoacodigo = 4;
+            $i4->situacao = 'A';
+            $i4->salacodigo = $casa2->id;
+            $i4->qtdePessoasFamilia = 3;
+            $i4->save();
+    
+            $i5 = new Inquilino();
+            $i5->pessoacodigo = 5;
+            $i5->situacao = 'A';
+            $i5->salacodigo = $sala1->id;
+            $i5->qtdePessoasFamilia = 2;
+            $i5->save();
+            
+        });
     }
 }
