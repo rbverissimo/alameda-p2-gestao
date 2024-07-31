@@ -35,7 +35,7 @@
         @endif
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-6">
             <label for="input-profissao">Profissão: </label>
             <input type="text" 
                 name="profissao" 
@@ -61,22 +61,12 @@
             Informações do imóvel:
         </div>
         <div class="row">
-            @isset($imoveis)
-            <div class="col-4">
-                  <select id="imoveis-conta-select" required name="imovelcodigo">
-                        @foreach ($imoveis as $imovel)
-                              <option value="{{$imovel->id}}"
-                                    @isset($inquilino->imovel)
-                                          @if($inquilino->imovel == $imovel->id)
-                                          selected
-                                          @endif
-                                    @endisset
-                              >
-                                    {{$imovel->nomefantasia}}
-                              </option>
-                        @endforeach
-                  </select> 
-            </div>
+            @isset($imobiliarias)
+                <div class="col-4">
+                    <x-forms.select pattern-name="imobiliarias-select" 
+                        label-text="Selecione uma imobiliária: " 
+                        :collection="$imobiliarias"></x-forms> 
+                </div>
             @endisset 
             <div class="col-4">
                 <select style="display: none" required id="sala-select" name="sala">

@@ -360,9 +360,12 @@ class InquilinosService {
             /* A subquery contida no DB::raw faz a busca do valorAluguel de acordo com o maior ID disponível 
                para aquele inquilino identificado pelo ID
             */
-            $inquilinos_ativos = Inquilino::select('inquilinos.id', 'inquilinos.nome', 'pessoas.telefone_celular',
+            $inquilinos_ativos = Inquilino::select('inquilinos.id', 'inquilinos.nome',
                   DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
-                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
+                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'),
+                  DB::raw('(SELECT (t.ddd || t.telefone) as telefone_celular from TELEFONES t 
+                        JOIN INQUILINOS_TELEFONES it on it.telefone_id = t.id
+                        WHERE it.inquilino_id = inquilinos.id AND t.tipo_telefone = 1010 limit 1) as telefone_celular'))
               ->join('salas', 'salas.id', 'inquilinos.salacodigo')
               ->whereIn('salas.imovelcodigo', $imoveis)
               ->where('inquilinos.situacao', '=', 'A')

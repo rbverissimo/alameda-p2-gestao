@@ -32,7 +32,7 @@
             @if (isset($contrato))
                 <x-toggle-switch attName="renovacao-automatica" :checked="$contrato->renovacaoAutomatica === 'S'" />
             @else
-                <x-toggle-switch attName="renovacao-automatica"/>
+                <x-toggle-switch id="renovacao-automatica-input-switch" attName="renovacao-automatica"/>
             @endif
         </div>
     </div>

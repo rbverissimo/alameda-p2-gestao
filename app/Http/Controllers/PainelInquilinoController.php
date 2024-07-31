@@ -12,6 +12,7 @@ use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
 use App\Models\Pessoa;
 use App\Services\ComprovantesService;
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\SituacaoFinanceiraService;
@@ -104,7 +105,7 @@ class PainelInquilinoController extends Controller
 
             $titulo = 'Cadastro de Inquilinos';
             $mensagem = null;
-            $imoveis = ImoveisService::getImoveis();
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
             $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
             $contrato = null;
 
@@ -165,7 +166,7 @@ class PainelInquilinoController extends Controller
 
             }
 
-            return view('app.cadastro-inquilino', compact('titulo', 'imoveis', 'salas', 'mensagem', 'contrato'));
+            return view('app.cadastro-inquilino', compact('titulo', 'imobiliarias', 'salas', 'mensagem', 'contrato'));
         } catch (\Throwable $th) {
             if($th instanceof ValidationException){
                 return back()->withErrors($th->validator->errors())->withInput($request->all());
