@@ -27,7 +27,7 @@ class ComprasService {
         $imoveis = UsuarioService::getImoveisBy($user);
 
         return DB::table('compras')->select('compras.id', 'compras.dataCompra', 'compras.valor', 'fornecedores.nome_fornecedor')
-            ->join('fornecedores', 'compras.fornecedor', '=', 'fornecedores.id')
+            ->join('fornecedores', 'compras.fornecedor', 'fornecedores.id')
             ->whereIn('compras.imovel', $imoveis)
             ->orderByDesc('compras.id')
             ->get();

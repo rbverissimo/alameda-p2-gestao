@@ -36,36 +36,6 @@
     </div>
     <div class="row">
         <div class="col-4">
-            <label id="label-input-telefone-celular" for="form-inquilino-telefone-celular">Telefone celular:</label>
-            <input required type="text" 
-                name="telefone-celular" 
-                placeholder="Celular com DDD:"
-                id="form-inquilino-telefone-celular"
-                value="{{ isset($inquilino->telefone_celular) ? 
-                    old('telefone-celular', $inquilino->telefone_celular) : old('telefone-celular')}}">
-                <span id="span-errors-telefone-celular" class="errors-highlighted">{{ $errors->has('telefone-celular') ? $errors->first('telefone-celular') : ' '}}</span>        
-        </div>
-        <div class="col-4">
-            <label for="form-inquilino-telefone-fixo">Telefone fixo:</label>
-            <input type="text" 
-                name="telefone-fixo" 
-                placeholder="Fone fixo com DDD: "
-                id="form-inquilino-telefone-fixo"
-                value="{{ isset($inquilino->telefone_fixo) ?
-                    old('telefone-fixo', $inquilino->telefone_fixo) : old('telefone-fixo')}}">
-        </div>
-        <div class="col-4">
-            <label for="form-inquilino-telefone-trabalho">Contato de trabalho:</label>
-            <input type="text" 
-                name="telefone-trabalho" 
-                placeholder="Fone trabalho com DDD: "
-                id="form-inquilino-telefone-trabalho"
-                value="{{ isset($inquilino->telefone_trabalho) ? 
-                    old('telefone-trabalho', $inquilino->telefone_trabalho) : old('telefone-trabalho')}}">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
             <label for="input-profissao">Profissão: </label>
             <input type="text" 
                 name="profissao" 
