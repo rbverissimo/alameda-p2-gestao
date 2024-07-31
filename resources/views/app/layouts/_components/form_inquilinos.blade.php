@@ -69,6 +69,9 @@
                 </div>
             @endisset 
             <div class="col-4">
+                <x-forms.select></x-forms.select>
+            </div>
+            <div class="col-4">
                 <select style="display: none" required id="sala-select" name="sala">
                     @isset($salas)
                         @foreach ($salas as $sala)

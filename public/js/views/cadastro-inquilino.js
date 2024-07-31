@@ -1,31 +1,19 @@
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { loadMessages } from "../partials/simple-modal.js";
 import { LISTAR_SALAS } from "../routes.js";
-import { cpfMascara, mascaraFatorDivisor, mascaraTelefone, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
+import { cpfMascara, mascaraFatorDivisor, writeMascaraCpf } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
 
 let appData = {};
 const dominio = 'detalhes_inquilino';
 
-const inputTelefoneCelular = document.getElementById('form-inquilino-telefone-celular');
-const inputTelefoneTrabalho = document.getElementById('form-inquilino-telefone-trabalho');
-const inputTelefoneFixo = document.getElementById('form-inquilino-telefone-fixo');
 const inputCpf = document.getElementById('form-inquilino-cpf');
 const inputFatorDivisor = document.getElementById('input-fator-divisor');
 
-const imoveisSelect = document.getElementById('imoveis-conta-select');
 const salasSelect = document.getElementById('sala-select');
 
 
-inputTelefoneCelular.addEventListener('input', mascaraTelefone);
-inputTelefoneCelular.addEventListener('keydown', apenasNumeros);
-
-inputTelefoneTrabalho.addEventListener('input', mascaraTelefone);
-inputTelefoneTrabalho.addEventListener('keydown', apenasNumeros);
-
-inputTelefoneFixo.addEventListener('input', mascaraTelefone);
-inputTelefoneFixo.addEventListener('keydown', apenasNumeros);
 
 inputCpf.addEventListener('input', cpfMascara);
 inputCpf.addEventListener('keydown', apenasNumeros);
@@ -53,11 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(salasSelect.childElementCount > 0){
         salasSelect.style.display = 'block';
     }
-
-    inputTelefoneCelular.value = writeMascaraTelefone(inputTelefoneCelular.value);
-    inputTelefoneFixo.value = writeMascaraTelefone(inputTelefoneFixo.value);
-    inputTelefoneTrabalho.value = writeMascaraTelefone(inputTelefoneTrabalho.value);
-
 })
 
 
