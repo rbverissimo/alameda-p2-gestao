@@ -56,13 +56,10 @@ class InquilinosService {
       }
 
       public static function getInquilinoNome($id) {
-            
-            $query = Inquilino::select('pessoas.nome')
-                  ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+            $inquilino = Inquilino::select('nome')
                   ->where('inquilinos.id', $id)
-                  ->first();
-                  
-            return $query->nome;
+                  ->first();    
+            return $inquilino->nome;
       }
 
       public static function getInquilinoIdFromComprovante($id_comprovante){
@@ -79,30 +76,31 @@ class InquilinosService {
 
       /**
        * Busca no banco de dados informações relevantes para a composição do painel
-       * do inquilino. Essas informações são as tais: id da tabela de inquilinos, nome relacionado
-       * à tabela de pessoas, nome da sala do imóvel que o inquilino está alocado, o id dessa sala,
-       * a quantidade de pessoas na família, valor do Aluguel e o telefone celular dessa pessoa. 
+       * do inquilino. Essas informações são as tais: id e nome da tabela de inquilinos,
+       * nome da sala do imóvel que o inquilino está alocado, o id dessa sala,
+       * a quantidade de pessoas na família, valor do Aluguel e o telefone celular. 
        * 
        * @return Inquilino
        */
       public static function getInfoPainelInquilino($id){
-            return Inquilino::select('pessoas.nome', 'inquilinos.id', 'salas.nomesala',
-                  'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia', 'pessoas.telefone_celular',
+            return Inquilino::select('inquilinos.nome', 'inquilinos.id', 'salas.nomesala',
+                  'inquilinos.salacodigo', 'inquilinos.qtdePessoasFamilia',
                   DB::raw('(SELECT valorAluguel from INQUILINOS_ALUGUEIS 
-                              WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE inquilino = inquilinos.id)) as valorAluguel'))
-                  ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+                              WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE inquilino = inquilinos.id)) as valorAluguel'),
+                  DB::raw('(SELECT (t.ddd || t.telefone) as telefone_celular from TELEFONES t 
+                              JOIN INQUILINOS_TELEFONES it on it.telefone_id = t.id
+                              WHERE it.inquilino_id = inquilinos.id AND t.tipo_telefone = 1010 limit 1) as telefone_celular'))
                   ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
                   ->where('inquilinos.id', $id)
                   ->first();
       }
 
       /**
-       * Busca no banco de dados a pessoa associada ao inquilino e o fator divisor do mesmo
+       * Busca no banco de dados os dados do inquilino junto de seu fator divisor
        * 
        */
       public static function getDetalhesInquilino($id){
-            return Inquilino::join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
-                  ->join('inquilinos_fator_divisor', 'inquilinos_fator_divisor.id', 'inquilinos.id')
+            return Inquilino::join('inquilinos_fator_divisor', 'inquilinos_fator_divisor.id', 'inquilinos.id')
                   ->where('inquilinos.id', $id)
                   ->first();
       }
@@ -150,8 +148,7 @@ class InquilinosService {
        * 
        */
       public static function getIdNomeInquilinosAtivosByImovel($imovel){
-            return Inquilino::select('inquilinos.id', 'pessoas.nome')
-                  ->join('pessoas', 'pessoas.id', 'inquilinos.pessoacodigo')
+            return Inquilino::select('inquilinos.id', 'inquilinos.nome')
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where([['salas.imovelcodigo', $imovel], ['inquilinos.situacao', 'A']])
                   ->get();
@@ -164,7 +161,6 @@ class InquilinosService {
        */
       public static function getInquilinoCompletoBy($id){
             return Inquilino::with([
-                  'pessoa',
                   'sala',
                   'fator_divisor',
                   'aluguel' => function($query){
@@ -364,10 +360,9 @@ class InquilinosService {
             /* A subquery contida no DB::raw faz a busca do valorAluguel de acordo com o maior ID disponível 
                para aquele inquilino identificado pelo ID
             */
-            $inquilinos_ativos = Inquilino::select('inquilinos.id', 'pessoas.nome', 'pessoas.telefone_celular',
+            $inquilinos_ativos = Inquilino::select('inquilinos.id', 'inquilinos.nome', 'pessoas.telefone_celular',
                   DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
                         WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
-              ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
               ->join('salas', 'salas.id', 'inquilinos.salacodigo')
               ->whereIn('salas.imovelcodigo', $imoveis)
               ->where('inquilinos.situacao', '=', 'A')
@@ -399,8 +394,7 @@ class InquilinosService {
 
       public static function getListaInputInquilinos($idImovel = null){
             $imoveis = $idImovel === null ? ImoveisService::getImoveisByUsuarioLogado() : [$idImovel];
-            return  Inquilino::select('inquilinos.id', 'pessoas.nome')
-            ->join('pessoas', 'pessoas.id', '=', 'inquilinos.pessoacodigo')
+            return  Inquilino::select('inquilinos.id', 'inquilinos.nome')
             ->join('salas', 'salas.id', '=', 'inquilinos.salacodigo')
             ->where('inquilinos.situacao', '=', 'A')
             ->whereIn('salas.imovelcodigo', $imoveis)
@@ -412,8 +406,7 @@ class InquilinosService {
        * em uma sala passada pelo parâmetro da função
        */
       public static function getInquilinosImovelUseSala($idSala){
-            $inquilinos = Inquilino::select('inquilinos.id', 'p.nome')
-                  ->join('pessoas as p', 'p.id', '=', 'inquilinos.pessoacodigo')
+            $inquilinos = Inquilino::select('inquilinos.id', 'inquilinos.nome')
                   ->join('salas as s', 's.id', '=', 'inquilinos.salacodigo')
                   ->join('imoveis as im', 'im.id', '=', 's.imovelcodigo')
                   ->where('inquilinos.situacao', 'A')
@@ -429,8 +422,7 @@ class InquilinosService {
        * único inquilino fornecido através do parâmetro
        */
       public static function getInquilinosImovelUseInquilino($inquilino){
-            $inquilinos = Inquilino::select('inquilinos.id', 'p.nome')
-                  ->join('pessoas as p', 'p.id', '=', 'inquilinos.pessoacodigo')
+            $inquilinos = Inquilino::select('inquilinos.id', 'inquilinos.nome')
                   ->join('salas as s', 's.id', '=', 'inquilinos.salacodigo')
                   ->join('imoveis as im', 'im.id', '=', 's.imovelcodigo')
                   ->where('inquilinos.situacao', 'A')

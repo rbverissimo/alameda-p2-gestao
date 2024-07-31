@@ -25,12 +25,6 @@ class Inquilino extends Model
         return $this->belongsTo(Sala::class, 'salacodigo');
     }
 
-    
-    public function pessoa(): BelongsTo
-    {
-        return $this->belongsTo(Pessoa::class, 'pessoacodigo');
-    }
-
     public function contas(): HasMany
     {
         return $this->hasMany(InquilinoConta::class, 'inquilinocodigo');

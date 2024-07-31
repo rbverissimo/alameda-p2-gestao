@@ -115,18 +115,11 @@ class PainelInquilinoController extends Controller
                 $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
                 
                 DB::transaction(function($closure) use ($request){
-                    $pessoa = Pessoa::create([
+
+                    $inquilino = Inquilino::create([
                         "nome" => $request->input('nome'),
                         "cpf" => ProjectUtils::tirarMascara($request->input('cpf')),
                         "profissao" => $request->input('profissao'),
-                        "telefone_celular" => ProjectUtils::tirarMascara($request->input('telefone-celular')),
-                        "telefone_fixo" => ProjectUtils::tirarMascara($request->input('telefone-fixo')),
-                        "telefone_trabalho" => ProjectUtils::tirarMascara($request->input('telefone-trabalho'))
-                    ]);
-
-                    
-                    $inquilino = Inquilino::create([
-                        'pessoacodigo' => DB::getPdo()->lastInsertId(),
                         'salacodigo' => $request->input('sala')
                     ]);
                     
@@ -236,16 +229,10 @@ class PainelInquilinoController extends Controller
 
                 $aluguel->save();
 
-                $pessoa = $inquilino->getRelation('pessoa');
-                $pessoa->nome = $request->input('nome');
-                $pessoa->cpf = ProjectUtils::tirarMascara($request->input('cpf'));
-                $pessoa->profissao = $request->input('profissao');
-                $pessoa->telefone_celular = ProjectUtils::tirarMascara($request->input('telefone-celular'));
-                $pessoa->telefone_fixo = ProjectUtils::tirarMascara($request->input('telefone-fixo'));
-                $pessoa->telefone_trabalho = ProjectUtils::tirarMascara($request->input('telefone-trabalho'));
 
-                $pessoa->save();
-
+                $inquilino->nome = $request->input('nome');
+                $inquilino->cpf = ProjectUtils::tirarMascara($request->input('cpf'));
+                $inquilino->profissao = $request->input('profissao');
                 $inquilino->salacodigo = $request->input('sala');
 
                 $inquilino->save();

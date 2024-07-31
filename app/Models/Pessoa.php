@@ -4,22 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pessoa extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'cpf', 'cnpj', 'profissao',
-        'telefone_celular', 'telefone_fixo', 'telefone_trabalho', 'endereco_trabalho'];
     
-    public function inquilino(): HasOne 
-    {
-        return $this->hasOne(Inquilino::class, 'pessoacodigo');
-    }
-
-    public function telefones(): HasMany
-    {
-        return $this->hasMany(Telefone::class, 'pessoa_id');
-    }
 }
