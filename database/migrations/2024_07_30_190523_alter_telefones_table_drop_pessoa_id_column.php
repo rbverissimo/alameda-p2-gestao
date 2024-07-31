@@ -60,7 +60,7 @@ class AlterTelefonesTableDropPessoaIdColumn extends Migration
 
             foreach ($telefones_null_pessoa as $tnp) {
                 $telefone = $tnp->ddd.$tnp->telefone; 
-                if($tnp->tipo_telefone === 1000){
+                if($tnp->tipo_telefone === '1000'){
 
                     foreach ($pessoas as $pessoa) {
                         $telefone_pessoa_normalizado = ProjectUtils::tirarMascara($pessoa->telefone_fixo);
@@ -72,7 +72,7 @@ class AlterTelefonesTableDropPessoaIdColumn extends Migration
                     }
                 }
 
-                if($tnp->tipo_telefone === 1010){
+                if($tnp->tipo_telefone === '1010'){
                     foreach ($pessoas as $pessoa) {
                         $telefone_pessoa_normalizado = ProjectUtils::tirarMascara($pessoa->telefone_celular);
 
@@ -83,7 +83,7 @@ class AlterTelefonesTableDropPessoaIdColumn extends Migration
                     }
                 }
 
-                if($tnp->tipo_telefone === 1020){
+                if($tnp->tipo_telefone === '1020'){
                     foreach ($pessoas as $pessoa) {
                         $telefone_pessoa_normalizado = ProjectUtils::tirarMascara($pessoa->telefone_trabalho);
 
