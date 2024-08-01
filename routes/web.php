@@ -103,6 +103,7 @@ Route::prefix('imoveis')->middleware('autenticacao')->group(function(){
     Route::get('/executar-calculo/c/{id}/{ref}', [ImoveisController::class, 'calculo'])->name('realizar-calculo');
     Route::get('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
     Route::post('/cadastrar-imovel/cadastro', [ImoveisController::class, 'cadastrar'])->name('cadastrar-imovel');
+    Route::get('/listar/l/{idImobiliaria}', [ImoveisController::class, 'listarImoveisPorImobiliaria'])->name('lista-imoveis-imobiliaria');
 });
 
 Route::prefix('salas')->middleware('autenticacao')->group(function(){

@@ -7,13 +7,14 @@ class EnderecoVO {
       private string $cep;
       private string $logradouro;
       private string $bairro;
-      private string $numero;
+      private int $numero;
       private string $cidade;
       private string $uf;
       private ?int $quadra;
       private ?int $lote;
 
-      public function __construct(string $cep, string $logradouro, string $bairro, string $numero, string $cidade, string $uf, ?int $quadra = null, ?int $lote = null) {
+      public function __construct(string $cep, string $logradouro, string $bairro, int $numero, 
+                                  string $cidade, string $uf, ?int $quadra = null, ?int $lote = null) {
             $this->cep = $cep;
             $this->logradouro = $logradouro;
             $this->bairro = $bairro;
@@ -39,7 +40,7 @@ class EnderecoVO {
             return $this->bairro;
       }
 
-      public function getNumero(): string 
+      public function getNumero(): int 
       {
             return $this->numero;
       }
@@ -79,7 +80,7 @@ class EnderecoVO {
             $this->bairro = $bairro;
       }
 
-      public function setNumero(string $numero): void 
+      public function setNumero(int $numero): void 
       {
             $this->numero = $numero;
       }
@@ -102,6 +103,19 @@ class EnderecoVO {
       public function setLote(?int $lote): void 
       {
             $this->lote = $lote;
+      }
+
+      public function getJson(){
+            return [
+                  'cep' => $this->cep,
+                  'logradouro' => $this->logradouro,
+                  'numero' => $this->numero,
+                  'bairro' => $this->bairro,
+                  'cidade' => $this->cidade,
+                  'uf' => $this->uf,
+                  'quadra' => $this->quadra,
+                  'lote' => $this->lote
+            ];
       }
 
 }

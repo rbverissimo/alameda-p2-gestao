@@ -64,29 +64,21 @@
             @isset($imobiliarias)
                 <div class="col-4">
                     <x-forms.select pattern-name="imobiliarias-select" 
-                        label-text="Selecione uma imobiliária: " 
+                        label-text="Selecione a imobiliária: " 
                         :collection="$imobiliarias"></x-forms> 
                 </div>
             @endisset 
             <div class="col-4">
-                <x-forms.select></x-forms.select>
+                <x-forms.select display="none"
+                    pattern-name="imoveis-select"
+                    label-text="Selecione um imóvel:"
+                    :collection="$imoveis"></x-forms.select>
             </div>
             <div class="col-4">
-                <select style="display: none" required id="sala-select" name="sala">
-                    @isset($salas)
-                        @foreach ($salas as $sala)
-                            <option value="{{$sala->id}}"
-                                @isset($inquilino->salacodigo)
-                                    @if ($inquilino->salacodigo == $sala->id)
-                                        selected
-                                    @endif
-                                @endisset
-                                >
-                                {{$sala->nomesala}}
-                            </option>
-                        @endforeach
-                    @endisset
-                </select>
+                <x-forms.select display="none"
+                    pattern-name="sala-select"
+                    label-text="Selecione uma sala: "
+                    :collection="$salas"></x-forms.select>
             </div>
         </div>
     </div>

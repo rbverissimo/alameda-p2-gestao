@@ -106,6 +106,7 @@ class PainelInquilinoController extends Controller
             $titulo = 'Cadastro de Inquilinos';
             $mensagem = null;
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+            $imoveis = [];
             $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
             $contrato = null;
 
@@ -166,7 +167,7 @@ class PainelInquilinoController extends Controller
 
             }
 
-            return view('app.cadastro-inquilino', compact('titulo', 'imobiliarias', 'salas', 'mensagem', 'contrato'));
+            return view('app.cadastro-inquilino', compact('titulo', 'imobiliarias', 'imoveis', 'salas', 'mensagem', 'contrato'));
         } catch (\Throwable $th) {
             if($th instanceof ValidationException){
                 return back()->withErrors($th->validator->errors())->withInput($request->all());

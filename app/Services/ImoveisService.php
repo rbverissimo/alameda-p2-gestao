@@ -8,6 +8,7 @@ use App\Models\InquilinoConta;
 use App\Models\Sala;
 use App\Models\TipoSala;
 use App\Models\UsuarioImovel;
+use App\ValueObjects\SelectOptionVO;
 
 class ImoveisService {
     
@@ -92,6 +93,16 @@ class ImoveisService {
 
         return $imoveis->prepend($imovel_vazio);
 
+    }
+
+    public static function getListaSelectImoveisBy($imobiliaria){
+        $imoveis = ImobiliariasService::getImoveisBy($imobiliaria);
+        $options = [SelectOptionVO::getPrimeiroElementoVazio()];
+        foreach ($imoveis as $imovel) {
+            $option = new SelectOptionVO($imovel->id, $imovel->nomefantasia);
+            $options[] = $option->getJson();
+        }
+        return array_merge($options);
     }
 
     /**

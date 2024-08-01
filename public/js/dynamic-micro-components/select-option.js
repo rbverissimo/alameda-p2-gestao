@@ -8,6 +8,7 @@ export function getSelectOptions(select, label = null, paramValue, url){
 
     fetch(`${url}${paramValue}`)
         .then(response => {
+            console.log(response);
             if(response.status === 200){
                 return response.json();
             } else {
@@ -15,6 +16,9 @@ export function getSelectOptions(select, label = null, paramValue, url){
             }
         })
         .then(data => {
+            if(data['erro']){
+                throw new Error(data['erro']['mensagem']);
+            }
             createOptions(data, select);
 
             if(data.length > 0){

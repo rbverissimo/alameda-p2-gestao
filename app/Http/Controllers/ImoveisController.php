@@ -10,11 +10,14 @@ use App\Models\Imovel;
 use App\Models\Sala;
 use App\Models\UsuarioImovel;
 use App\Services\CalculoContasService;
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
+use App\ValueObjects\MensagemVO;
+use App\ValueObjects\SelectOptionVO;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -235,8 +238,19 @@ class ImoveisController extends Controller
             return response()->json(['mensagem' => $mensagem]);
         }
 
-        
-        
+    }
+
+    public function listarImoveisPorImobiliaria(int $idImobiliaria){
+        try {
+            $imoveis_select = ImoveisService::getListaSelectImoveisBy($idImobiliaria);
+            return response()->json($imoveis_select);
+
+        } catch (\Throwable $th) {
+            $nome_imobiliaria = ImobiliariasService::getNomeImobiliaria($idImobiliaria);
+            $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar a lista de imóveis da imobiliária '.$nome_imobiliaria.' no sistema. '.$th->getMessage());
+            $mensagem = $mensagem_vo->getJson();
+            return response()->json(['erro' => $mensagem]);
+        }
 
     }
 }

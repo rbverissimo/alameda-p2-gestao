@@ -16,7 +16,8 @@ class Imovel extends Model
 
     protected $fillable = [
         'nomefantasia',
-        'endereco'
+        'endereco',
+        'imobiliaria_id'
     ];
 
     public function endereco(): BelongsTo 
@@ -42,6 +43,11 @@ class Imovel extends Model
     public function prestadores(): BelongsToMany
     {
         return $this->belongsToMany(PrestadorServico::class, 'prestadores_imoveis', 'imovel_id', 'prestador_id');
+    }
+
+    public function imobiliaria(): BelongsTo
+    {
+        return $this->belongsTo(Imobiliaria::class, 'imobiliaria_id');
     }
 
 

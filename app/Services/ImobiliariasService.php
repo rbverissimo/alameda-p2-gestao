@@ -26,4 +26,16 @@ class ImobiliariasService {
         return array_merge($options);
     }
 
+    public static function getNomeImobiliaria($imobiliaria){
+        $imobiliaria = Imobiliaria::select('nome')
+            ->where('id', $imobiliaria)
+            ->first();
+        return $imobiliaria->nome;
+    }
+
+    public static function getImoveisBy($imobiliaria){
+        $imobiliaria = Imobiliaria::with('imoveis')->where('id', $imobiliaria)->first();
+        return  count($imobiliaria->getRelation('imoveis')) > 0 ? $imobiliaria->getRelation('imoveis') : [];
+    }
+
 }
