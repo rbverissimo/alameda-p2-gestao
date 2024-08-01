@@ -1,7 +1,23 @@
 import { createOptions } from "./select-option.js";
 
+export let dataMap = {};
 
+export function getAdicionarButtons(){
+      return document.querySelectorAll('[id^="adicionar-button-"]');
+}
 
+export function addStateAdicionarButtons(adicionarButtons, optionsData){
+      adicionarButtons.forEach(button => {
+            const buttonId = button.id;
+            const patternName = buttonId.substring('adicionar-button-'.length);
+            const wrapper = document.getElementById(`dynamic-wrapper-${patternName}`);
+
+            button.addEventListener('click', (event) => {
+                  const newDivRow = criarSelect(patternName, optionsData);
+                  event.preventDefault();
+            });
+      });
+}
 
 export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
 

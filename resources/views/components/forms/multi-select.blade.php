@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         <div class="col-4">
-            <button id="adicionar-tipo-button" class="button special-action-button">{{ $buttonText }}</button>
+            <button id="adicionar-button-{{$patternName}}" class="button special-action-button">{{ $buttonText }}</button>
         </div>
     </div>
     <div id="dynamic-wrapper-{{$patternName}}">
