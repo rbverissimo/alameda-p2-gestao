@@ -1,5 +1,8 @@
 import { createOptions } from "./select-option.js";
 
+
+
+
 export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
 
       const counter = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;

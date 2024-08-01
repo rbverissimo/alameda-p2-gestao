@@ -56,6 +56,15 @@
                 <span class="errors-highlighted">{{ $errors->has('fator-divisor') ? $errors->first('fator-divisor') : ' '}}</span> 
         </div>
     </div>
+    <div class="row">
+        <x-forms.multi-select
+            header-text="Telefones do inquilino: "
+            button-text="Adicionar telefone"
+            pattern-name="telefone-select"
+        >
+    
+        </x-forms.multi-select>
+    </div>
     <div class="dashboard light-dashboard">
         <div class="divisor-header secondary-divisor">
             Informações do imóvel:

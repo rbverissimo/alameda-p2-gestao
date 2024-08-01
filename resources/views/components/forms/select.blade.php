@@ -1,5 +1,5 @@
 <label style="display: {{$display}}" for="{{$patternName}}-input" id="label-{{$patternName}}">{{$labelText}}</label>
-<select style="display: {{$display}}" name="{{$patternName}}" id="{{$patternName}}-input">
+<select style="display: {{$display}}" name="{{$patternName}}" id="{{$patternName}}-input{{$verificador}}">
     @isset($collection)    
         @foreach ($collection as $c)
             <option value="{{$c['value']}}"
