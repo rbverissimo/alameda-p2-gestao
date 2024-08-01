@@ -1,6 +1,5 @@
 import { createOptions } from "./select-option.js";
 
-export let dataMap = {};
 
 export function getAdicionarButtons(){
       return document.querySelectorAll('[id^="adicionar-button-"]');
