@@ -48,3 +48,22 @@ export function debounce(func, wait){
         timeout = setTimeout(later, wait);
     };
 }
+
+/**
+ * 
+ * @param {*} func a função que será limitada
+ * @param {*} limit o tempo de limitação em ms
+ * @returns 
+ */
+export function throttle(func, limit){
+    let inThrottle = false;
+    return function () {
+        const args = arguments;
+        const context = this;
+        if(!inThrottle){
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}

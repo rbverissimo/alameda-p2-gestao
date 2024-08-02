@@ -2,7 +2,7 @@ import { getRoute } from "../constants/pattern-names.js";
 import { stringToArray } from "../validators/utils.js";
 import { gerarDeletarButton } from "./icons.js";
 import { divCol, divRow, input, label, spanErrors } from "./layouts.js";
-import { call } from "./reactive.js";
+import { call, throttle } from "./reactive.js";
 import { createOptions } from "./select-option.js";
 
 let dataMap = {};
@@ -36,8 +36,8 @@ function addStateAdicionarButtons(adicionarButtons){
                   event.preventDefault();
             })
             
-            button.addEventListener('click', async (event) => {
-
+            button.addEventListener('click', throttle(async (event) => {
+                  console.log('clicked');
                   if(!dataMap[patternName]){
                         await getOptionsData(patternName).then(
                               options => {
@@ -64,7 +64,7 @@ function addStateAdicionarButtons(adicionarButtons){
                         }
                   });
                   document.dispatchEvent(newMultiSelectEvent);
-            });
+            }, 1500));
       });
 }
 
@@ -137,7 +137,7 @@ function criarSelect(patternName, selectWidth, serial, labelText = 'Selecione: '
       const label = document.createElement('label');
       const select = document.createElement('select');
 
-      select.id = label.for = `${patternName}-select-${serial}`;
+      select.id = label.htmlFor = `${patternName}-select-${serial}`;
       select.name = `${patternName}-${serial}`;
 
       label.id = `label-${select.id}`;

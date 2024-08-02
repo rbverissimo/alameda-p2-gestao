@@ -51,7 +51,7 @@ export function input(name, id, required = false){
 export function label(forElement, text, id = null){
     const label = document.createElement('label');
     label.id = id;
-    label.for = forElement;
+    label.htmlFor = forElement;
     label.innerHTML = text;
     return label; 
 }
