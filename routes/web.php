@@ -15,6 +15,7 @@ use App\Http\Controllers\RaizController;
 use App\Http\Controllers\SalasController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TelefonesController;
 use App\Http\Controllers\TiposContasController;
 use App\Models\Fornecedor;
 use Illuminate\Support\Facades\Route;
@@ -79,7 +80,6 @@ Route::prefix('inquilino')->middleware('autenticacao')->group(function(){
 });
 
 
-
 Route::middleware('autenticacao')->controller(ComprovantesTransferenciaController::class)->group(function(){
     Route::get('/comprovantes-transferencia',  'index')
     ->name('comprovantes-transferencia');
@@ -116,6 +116,10 @@ Route::prefix('salas')->middleware('autenticacao')->group(function(){
 Route::prefix('tipos-contas')->middleware('autenticacao')->group(function(){
     Route::post('/cadastrar-tipos/{idImovel}', [TiposContasController::class, 'cadastrar'])->name('cadastrar-tipos-contas');
     Route::get('/ls/{id}', [TiposContasController::class, 'listarPorSala'])->name('listar-tipos-contas-sala');
+});
+
+Route::prefix('telefones')->middleware('autenticacao')->group(function(){
+    Route::get('/ls', [TelefonesController::class, 'listarTipos'])->name('listar-tipos-telefones');
 });
 
 Route::prefix('compras')->middleware('autenticacao')->group(function(){

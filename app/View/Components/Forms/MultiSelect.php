@@ -14,8 +14,8 @@ class MultiSelect extends Component
     public ?array $collection;
     public ?string $deletarText;
     public ?array $columns_division;
-    public string $mode;  // INPUT, INPUT-SELECT, SELECT
-    public string $inputAttrName;
+    public string $mode;  // INPUT, INPUT-SELECT, SELECTION
+    public ?string $inputAttrName;
     public ?string $inputLabelText;
 
     /**
@@ -24,7 +24,7 @@ class MultiSelect extends Component
      * @return void
      */
     public function __construct(string $headerText, ?string $buttonText = 'Adicionar', ?string $labelText = null, 
-        string $patternName, ?array $collection = null, ?string $deletarText = 'Deletar', string $inputAttrName, ?string $inputLabelText = null,  
+        string $patternName, ?array $collection = null, ?string $deletarText = 'Deletar', ?string $inputAttrName, ?string $inputLabelText = null,  
         ?array $columns_division = [5, 5, 2], string $mode = 'INPUT-SELECT')
     {
         $this->headerText = $headerText;

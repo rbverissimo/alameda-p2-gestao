@@ -8,7 +8,13 @@
  * @returns 
  */
 export async function call(url, ...params){
-    let pathUrl = `${url}/${params.join('/')}`;
+
+    let pathUrl = url;
+
+    if(params.length > 0){
+        pathUrl = `${url}/${params.join('/')}`;
+    } 
+
     try {
         const response = await fetch(`${pathUrl}`);
         if(!response.ok){

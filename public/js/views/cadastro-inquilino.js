@@ -1,3 +1,4 @@
+import { createState } from "../dynamic-micro-components/multi-select.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { loadMessages } from "../partials/simple-modal.js";
 import { LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_SALAS } from "../routes.js";
@@ -48,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loadMessages(`Você tem certeza que deseja alterar a situação do inquilino ${appData.nome_inquilino} ?`);
         }
     });
+
+    createState();
 
     if(salasSelect.childElementCount > 0){
         salasSelect.style.display = 'block';
