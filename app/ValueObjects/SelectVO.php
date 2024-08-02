@@ -8,7 +8,7 @@ class SelectVO {
     private array $options;
 
     public function __construct(string $selectedValue, string $options) {
-        $this->selectedValue = $options;
+        $this->selectedValue = $selectedValue;
         $this->options = $options;
     }
 
