@@ -1,5 +1,7 @@
+import { call } from "./reactive.js";
 import { createOptions } from "./select-option.js";
 
+let dataMap = {};
 
 export function getAdicionarButtons(){
       return document.querySelectorAll('[id^="adicionar-button-"]');
@@ -12,13 +14,17 @@ export function addStateAdicionarButtons(adicionarButtons, optionsData){
             const wrapper = document.getElementById(`dynamic-wrapper-${patternName}`);
 
             button.addEventListener('click', (event) => {
-                  const newDivRow = criarSelect(patternName, optionsData);
+                  const newDivRow = criarSelect(patternName);
                   event.preventDefault();
             });
       });
 }
 
-export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
+export function criarSelect(patternName, labelText = 'Selecione: ', optionsData = []){
+
+      if(optionsData.length === 0){
+
+      }
 
       const counter = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
 
@@ -35,8 +41,8 @@ export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
       const label = document.createElement('label');
       const select = document.createElement('select');
 
-      select.id = label.for = `${prefix}-input-${counter}`;
-      select.name = `${prefix}-${counter}`;
+      select.id = label.for = `${patternName}-input-${counter}`;
+      select.name = `${patternName}-${counter}`;
       label.id = `label-${select.id}`;
       label.textContent = labelText;
       createOptions(optionsData, select);
@@ -51,7 +57,7 @@ export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
             event.preventDefault();
       });
 
-      deleteButton.id = labelDelButton.for = `delete-button-${prefix}-${counter}`;
+      deleteButton.id = labelDelButton.for = `delete-button-${patternName}-${counter}`;
       divCol3.appendChild(labelDelButton);
       divCol3.appendChild(deleteButton);
 
@@ -59,4 +65,9 @@ export function criarSelect(prefix, labelText = 'Selecione: ', optionsData){
       divRow.appendChild(divCol3);
 
       return divRow;
+}
+
+function getOptionsData(patternName){
+      const url = '';
+      const options = call(url);
 }
