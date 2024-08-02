@@ -1,5 +1,7 @@
 import { getRoute } from "../constants/pattern-names.js";
 import { stringToArray } from "../validators/utils.js";
+import { gerarDeletarButton } from "./icons.js";
+import { divCol, divRow, input, label, spanErrors } from "./layouts.js";
 import { call } from "./reactive.js";
 import { createOptions } from "./select-option.js";
 
@@ -22,103 +24,136 @@ function addStateAdicionarButtons(adicionarButtons){
             const wrapper = document.getElementById(`dynamic-wrapper-${patternName}`);
             const mode = wrapper.getAttribute('mode');
             const columnsDivision = stringToArray(wrapper.getAttribute('columns-division'));
+            const inputAttrName = wrapper.getAttribute('input-attr-name');
 
-            const inputWidth = columnsDivision[0];
-            const selectWidth = columnsDivision[1];
-            const deleteWidth = columnsDivision[2];
 
-            button.addEventListener('click', (event) => {
+            button.addEventListener('click', (event) => { 
                   event.preventDefault();
-            });
-
+            })
+            
             button.addEventListener('click', async (event) => {
-                  await criarElementos(mode, patternName, columnsDivision);
+
+                  if(!dataMap[patternName]){
+                        await getOptionsData(patternName).then(
+                              options => {
+                                    dataMap[patternName] = options;
+                              }).then(
+                              render => {
+                                    const elementosAgregados = criarElementos(mode, patternName, columnsDivision, inputAttrName);
+                                    wrapper.appendChild(elementosAgregados);
+                              }).catch(error => {
+                                    const msgError = error.response;
+                                    showMensagem(msgError.mensagem, msgError.status);
+                              })
+                  } else {
+                        const elementosAgregados = criarElementos(mode, patternName, columnsDivision, inputAttrName);
+                        wrapper.appendChild(elementosAgregados); 
+                  }
             });
       });
 }
 
-async function criarElementos(mode, patternName){
+function criarElementos(mode, patternName, columnsDivision, inputAttrName){
+
       const elements = stringToArray(mode, '-');
+      const serial = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
       let elementosParaAgregar = [];
-      await elements.forEach(elemento =>  {
-            elementosParaAgregar.push(criar(elemento, patternName));
-      })
+            elements.forEach(elemento =>  {
+            elementosParaAgregar.push(criar(elemento, patternName, columnsDivision, serial, inputAttrName));
+      });
+
+      const containerRow =  criarContainerRow();
+      const deleteWidth = columnsDivision[2];
+      const delBtn = criarDeletarButton(containerRow, patternName, serial, deleteWidth);
+
+      elementosParaAgregar.push(containerRow, delBtn);
+
+      return agregarElementos(elementosParaAgregar);
 }
 
-async function agregarElementos(elementos){
-      
+function agregarElementos(elementos){
+      const container = Array.from(elementos).find(el => el.getAttribute('context') === 'container');
+      const input = Array.from(elementos).find(el => el.getAttribute('context') === 'input');
+      const select = Array.from(elementos).find(el => el.getAttribute('context') === 'select');
+      const button = Array.from(elementos).find(el => el.getAttribute('context') === 'button');
+      container.appendChild(input);
+      container.appendChild(select);
+      container.appendChild(button);
+      return container;
 }
 
-async function criar(elementoString, patternName){
+function criar(elementoString, patternName, columnsDivision, serial, inputAttrName){
       if(elementoString.toLowerCase().startsWith('select')){
-            return await criarSelect(patternName);
+            const selectWidth = columnsDivision[1];
+            return criarSelect(patternName, selectWidth, serial);
       } else if(elementoString.toLowerCase().startsWith('input')) {
-            return criarInput(patternName);
+            const inputWidth = columnsDivision[0];
+            return criarInput(patternName, inputWidth, serial, inputAttrName);
       }
 }
 
-function criarInput(patternName){
+function criarInput(patternName, inputWidth, serial, inputAttrName, labelText = 'Digite:'){
+      const newDiv = divCol(inputWidth); 
+      const newInput = input(inputAttrName, `${patternName}-input-${serial}`, true);
+      const newLabel = label(`${patternName}-input-${serial}`, labelText, `label-${inputAttrName}-${serial}`);
+      const newSpanErrors = spanErrors(`span-errors-${patternName}-${serial}`);
+      newDiv.appendChild(newLabel);
+      newDiv.appendChild(newInput);
+      newDiv.appendChild(newSpanErrors);
+
+      newDiv.setAttribute('context', 'input');
+      return newDiv;
 
 }
 
-async function criarContainerRow(){
-      const divRow = document.createElement('div');
-      divRow.classList.add('row');
-      divRow.classList.add('outline');
-      return divRow;
+function criarContainerRow(){
+      const containerRow = divRow('outline');
+      containerRow.setAttribute('context', 'container');
+      return containerRow;
 }
 
-async function criarSelect(patternName, labelText = 'Selecione: '){
-      let optionsData = [];
-      if(!data[patternName]){
-            const options = await getOptionsData(patternName);
-            dataMap[patternName] = options;
-      }
-      optionsData = dataMap[patternName];
+function criarSelect(patternName, selectWidth, serial, labelText = 'Selecione: '){
+      let optionsData = dataMap[patternName].options;
 
-      const counter = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
-
-      const divCol8 = document.createElement('div');
-      divCol8.classList.add('col-8');
+      const divCol = document.createElement('div');
+      divCol.classList.add(`col-${selectWidth}`);
 
       const label = document.createElement('label');
       const select = document.createElement('select');
 
-      select.id = label.for = `${patternName}-input-${counter}`;
-      select.name = `${patternName}-${counter}`;
+      select.id = label.for = `${patternName}-select-${serial}`;
+      select.name = `${patternName}-${serial}`;
+
       label.id = `label-${select.id}`;
       label.textContent = labelText;
+
       createOptions(optionsData, select);
-      divCol8.appendChild(label);
-      divCol8.appendChild(select);
 
-      return divCol8;
+      divCol.appendChild(label);
+      divCol.appendChild(select);
+      divCol.setAttribute('context', 'select');
 
-
+      return divCol;
 }
 
-function criarDeletarButton(){
-
-      
-      const divCol3 = document.createElement('div');
-      divCol3.classList.add('col-3');
-
+function criarDeletarButton(divContainerRow, patternName, serial, deleteWidth, labelText = 'Clique para:'){
+      const divDelBtn = divCol(deleteWidth);
       const labelDelButton = document.createElement('label');
-      labelDelButton.textContent = 'Clique para:';
+      labelDelButton.textContent = labelText;
       const deleteButton = gerarDeletarButton();
       deleteButton.addEventListener('click', (event) => {
-            divRow.remove();
+            divContainerRow.remove();
             event.preventDefault();
       });
-
-      deleteButton.id = labelDelButton.for = `delete-button-${patternName}-${counter}`;
-      divCol3.appendChild(labelDelButton);
-      divCol3.appendChild(deleteButton);
-
+      deleteButton.id = labelDelButton.for = `delete-button-${patternName}-${serial}`;
+      divDelBtn.appendChild(labelDelButton);
+      divDelBtn.appendChild(deleteButton);
+      divDelBtn.setAttribute('context', 'button');
+      return divDelBtn;
 }
 
-async function getOptionsData(patternName){
+function getOptionsData(patternName){
       const url = getRoute(patternName);
-      const options = await call(url);
+      const options = call(url);
       return options;
 }

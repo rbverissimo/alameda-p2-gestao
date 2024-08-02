@@ -17,15 +17,16 @@ export async function call(url, ...params){
 
     try {
         const response = await fetch(`${pathUrl}`);
+        const data = await response.json();
+        
         if(!response.ok){
             const error = new Error(`Ocorreram erros de conexão com o servidor. Status: ${response.statusText}`);
-            error.response = response;
+            error.response = data.mensagem;
             throw error;
         }
-        const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Erros encontrados: ', error);
+        console.error('Erros encontrados: ', error.response);
         throw error;
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\TelefonesService;
 use App\ValueObjects\MensagemVO;
 use App\ValueObjects\SelectOptionVO;
+use Error;
 use Illuminate\Http\Request;
 
 class TelefonesController extends Controller

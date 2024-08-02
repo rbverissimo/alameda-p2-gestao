@@ -5,10 +5,17 @@ export const divisorTypes = {
     ALERT: 'alert-divisor'
 };
 
-
-export function divRow(){
+/**
+ * Esse método recebe qualquer número de strings que definem classes de CSS
+ * para serem adicionadas à div
+ * 
+ * @param  {...string} cssClasses 
+ * @returns um elmento div.row com as classes passadas no parâmetro adicionadas
+ */
+export function divRow(...cssClasses){
     const div = document.createElement('div');
     div.classList.add('row');
+    cssClasses.forEach(css => div.classList.add(css));
     return div;
 }
 
@@ -38,6 +45,7 @@ export function input(name, id, required = false){
     input.name = name;
     input.id = id;
     input.required = required;
+    return input;
 }
 
 export function label(forElement, text, id = null){

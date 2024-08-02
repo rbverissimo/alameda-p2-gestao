@@ -63,6 +63,7 @@
             pattern-name="telefone-select"
             input-attr-name="telefone"
             input-label-text="Digite o telefone:"
+            :columns-division="[5, 4, 3]"
         >
     
         </x-forms.multi-select>
