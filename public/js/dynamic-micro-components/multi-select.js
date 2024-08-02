@@ -7,8 +7,13 @@ import { createOptions } from "./select-option.js";
 
 let dataMap = {};
 
-
-export function createState(){
+/**
+ * Esse método inicia uma série de operações para gerar e gerir o estado da aplicação 
+ * para o componente multi-select.blade.php. As principais funções são: criar e deletar componentes
+ * dinamicamente, gerir eventos e fazer o acesso ao backend quando necessário
+ * 
+ */
+export function multiSelectCreateState(){
       const buttonsMapeados = getAdicionarButtons();
       addStateAdicionarButtons(buttonsMapeados);
 }
@@ -49,6 +54,16 @@ function addStateAdicionarButtons(adicionarButtons){
                         const elementosAgregados = criarElementos(mode, patternName, columnsDivision, inputAttrName);
                         wrapper.appendChild(elementosAgregados); 
                   }
+
+                  const containerRow = wrapper.lastChild;
+                  const serial = containerRow.getAttribute('data-serial');
+                  const newMultiSelectEvent = new CustomEvent("multiSelectedCreated", {
+                        detail: {
+                              pattern: patternName,
+                              number: serial,
+                        }
+                  });
+                  document.dispatchEvent(newMultiSelectEvent);
             });
       });
 }
@@ -62,7 +77,7 @@ function criarElementos(mode, patternName, columnsDivision, inputAttrName){
             elementosParaAgregar.push(criar(elemento, patternName, columnsDivision, serial, inputAttrName));
       });
 
-      const containerRow =  criarContainerRow();
+      const containerRow =  criarContainerRow(serial);
       const deleteWidth = columnsDivision[2];
       const delBtn = criarDeletarButton(containerRow, patternName, serial, deleteWidth);
 
@@ -106,9 +121,10 @@ function criarInput(patternName, inputWidth, serial, inputAttrName, labelText = 
 
 }
 
-function criarContainerRow(){
+function criarContainerRow(serial){
       const containerRow = divRow('outline');
       containerRow.setAttribute('context', 'container');
+      containerRow.setAttribute('data-serial', serial);
       return containerRow;
 }
 

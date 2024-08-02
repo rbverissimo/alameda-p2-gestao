@@ -111,6 +111,10 @@ export function isReferenciaValida(referencia){
       return month > 0 && month < 13;
 }
 
+export function isRequired(value){
+      return !(value === undefined || value.trim() === '' || value === null)
+}
+
 
 export function inputStateValidation(label, input, span, value, isValid, spanMessage){
       if(!isValid(value)){
