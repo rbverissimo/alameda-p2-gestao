@@ -14,7 +14,11 @@ class PrestadorServico extends Model
     protected $table = 'prestadores_servicos';
 
     protected $fillable = [
-        'pessoa_id'
+        'nome', 
+        'cpf',
+        'cnpj',
+        'telefone',
+        'endereco'
     ];
 
     public function pessoa(): BelongsTo

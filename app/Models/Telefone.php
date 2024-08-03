@@ -12,7 +12,6 @@ class Telefone extends Model
     protected $table = 'telefones';
 
     protected $fillable = [
-        'pessoa_id',
         'ddd',
         'telefone',
         'tipo_telefone'

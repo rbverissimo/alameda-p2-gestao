@@ -40,12 +40,13 @@ export async function call(url, ...params){
  */
 export function debounce(func, wait){
     let timeout;
-    clearTimeout(timeout);
-    return function execute(...args){
-        const later = () => {
-            func(...args);
-        };
-        timeout = setTimeout(later, wait);
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(context, args);
+        }, wait);
     };
 }
 

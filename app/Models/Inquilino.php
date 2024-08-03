@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ValueObjects\PessoaVO;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,11 @@ class Inquilino extends Model
     public function aluguel(): hasMany 
     {
         return $this->hasMany(InquilinoAluguel::class, 'inquilino');
+    }
+
+    public function pessoa(): BelongsTo
+    {
+        return $this->belongsTo(Pessoa::class, 'pessoacodigo');
     }
 
 }

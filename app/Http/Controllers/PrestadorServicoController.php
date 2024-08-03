@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\TiposTelefone;
 use App\Http\Dto\EnderecoDTOBuilder;
 use App\Http\Dto\PessoaDTOBuilder;
+use App\Http\Dto\PrestadorServicoDTOBuilder;
+use App\Http\Dto\TelefoneDTOBuilder;
 use App\Models\Endereco;
 use App\Models\Pessoa;
 use App\Models\PrestadorServico;
+use App\Models\Telefone;
 use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
+use App\Utils\TelefonesUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
 use App\ValueObjects\SearchInputVO;
@@ -82,20 +87,19 @@ class PrestadorServicoController extends Controller
                 $cnpj = ProjectUtils::tirarMascara($request->input('cnpj-prestador'));
                 $cpf = ProjectUtils::tirarMascara($request->input('cpf-prestador'));
                 $nome = $request->input('prestador-nome');
-                $telefone = ProjectUtils::tirarMascara($request->input('telefone-trabalho'));
+                $telefone_input = ProjectUtils::tirarMascara($request->input('telefone-trabalho'));
+                $telefone = TelefonesUtils::getDddTelefone($telefone_input);
 
-                $pessoa_dto = (new PessoaDTOBuilder)
-                    ->withNome($nome)
-                    ->withCpf($cpf)
-                    ->withCnpj($cnpj)
-                    ->withTelefoneCelular($telefone)
-                    ->withEndereco($endereco_dto)
+                $telefone_dto = (new TelefoneDTOBuilder)
+                    ->withDdd($telefone['ddd'])
+                    ->withTelefone($telefone['telefone'])
+                    ->withTipo(TiposTelefone::CELULAR)
                     ->build();
 
                 $tipos = CollectionUtils::getPrimeiroValorParaQualquerChave(CollectionUtils::getAssociativeArray(
                     $request->input(), '-', 2, 'tipo-prestador-'
                 ));
-
+                
                 if(empty($tipos)){
                     throw new InvalidArgument('Os tipos de serviços prestados pelo prestador não foram declarados.');
 
@@ -106,12 +110,20 @@ class PrestadorServicoController extends Controller
                     throw new InvalidArgument('A imobiliária em que o prestador prestará serviço não foi definida. ');
                 }
 
+                $prestador_dto = (new PrestadorServicoDTOBuilder)
+                    ->withNome($nome)
+                    ->withCnpj($cnpj)
+                    ->withCpf($cpf)
+                    ->withTelefone($telefone_dto)
+                    ->withEndereco($endereco_dto)
+                    ->withTipos($tipos)
+                    ->withImobiliaria($imobiliaria)
+                    ->build();
 
-                DB::transaction(function($closure) use ($pessoa_dto, $tipos, $imobiliaria){
-
+                DB::transaction(function($closure) use ($prestador_dto){
                     $endereco_trabalho = null;
-                    if($pessoa_dto->getEndereco() !== null){
-                        $endereco = $pessoa_dto->getEndereco();
+                    if($prestador_dto->getEndereco() !== null){
+                        $endereco = $prestador_dto->getEndereco();
 
                         Endereco::create([
                             'cep' => $endereco->getCep(),
@@ -126,33 +138,38 @@ class PrestadorServicoController extends Controller
 
                     }
 
-                    Pessoa::create([
-                        'nome' => $pessoa_dto->getNome(),
-                        'cnpj' => $pessoa_dto->getCnpj(),
-                        'cpf' => $pessoa_dto->getCpf(),
-                        'telefone_celular' => $pessoa_dto->getTelefoneCelular(),
-                        'endereco_trabalho' => $endereco_trabalho
+                    Telefone::create([
+                        'ddd' => $prestador_dto->getTelefone()->getDdd(),
+                        'telefone' => $prestador_dto->getTelefone()->getTelefone(),
+                        'tipo_telefone' => $prestador_dto->getTelefone()->getTipo() 
                     ]);
+                    $telefone = DB::getPdo()->lastInsertId();
+
 
                     PrestadorServico::create([
-                        'pessoa_id' => DB::getPdo()->lastInsertId()
+                        'nome' => $prestador_dto->getNome(),
+                        'cpf' => $prestador_dto->getCpf(),
+                        'cnpj' => $prestador_dto->getCnpj(),
+                        'endereco' => $endereco_trabalho,
+                        'telefone' => $telefone
                     ]);
+
 
                     $prestador_id = DB::getPdo()->lastInsertId();
 
-                    foreach ($tipos as $key => $value) {
+                    foreach ($prestador_dto->getTipos() as $key => $value) {
                         $sql = 'INSERT INTO PRESTADORES_TIPOS(PRESTADOR_ID, TIPO_ID) VALUES (?,?)';
                         $bindings = [$prestador_id, $value];
                         DB::insert($sql, $bindings);
                     }
 
                     $sql = 'INSERT INTO PRESTADORES_IMOBILIARIAS(PRESTADOR_ID, IMOBILIARIA_ID) VALUES(?,?)';
-                    $bindings = [$prestador_id, $imobiliaria]; 
+                    $bindings = [$prestador_id, $prestador_dto->getImobiliaria()]; 
                     DB::insert($sql, $bindings);
 
                 });
 
-                $mensagem_vo = new MensagemVO('sucesso', 'O prestador '.$pessoa_dto->getNome().' foi cadastrado com sucesso');
+                $mensagem_vo = new MensagemVO('sucesso', 'O prestador '.$prestador_dto->getNome().' foi cadastrado com sucesso');
                 $mensagem = $mensagem_vo->getJson();
             }
 
