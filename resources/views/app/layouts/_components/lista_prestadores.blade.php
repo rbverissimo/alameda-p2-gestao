@@ -2,19 +2,15 @@
     <tr>
           <th>CNPJ</th>
           <th>Nome</th>
-          <th>Tipo</th>
           <th>Ações</th>
     </tr>
     @foreach ($prestadores as $prestador)
           <tr class="table-row">
                 <td>
-                    <a class="table-link">{{$prestador->getRelation('pessoa')->cnpj}}</a>
+                    <a class="table-link">{{$prestador->cnpj}}</a>
                 </td>
                 <td>
-                    <a class="table-link">{{$servico->getRelation('pessoa')->nome}}</a>
-                </td>
-                <td>
-                    <a class="table-link">{{$servico->getRelation('tipo_prestador')->tipo}}</a>
+                    <a class="table-link">{{$prestador->nome}}</a>
                 </td>
                 <td>
                     <img class="crud-icon" 

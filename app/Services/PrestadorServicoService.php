@@ -10,6 +10,11 @@ class PrestadorServicoService {
 
 
 
+    public static function getListaPainelPrestadores(){
+       $imobiliarias = UsuarioService::getImobiliarias();
+
+    }
+
     public static function getListaTiposPrestadores()
     {
         return TipoPrestador::all();

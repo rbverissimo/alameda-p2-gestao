@@ -33,6 +33,9 @@ class PrestadorServicoController extends Controller
         $titulo = 'Painel das informações dos prestadores de serviço';
         $mensagem = null;
         try {
+
+            $prestadores = []; 
+
             return view('app.painel-prestadores-servicos', compact('titulo', 'mensagem')); 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível acessar os prestadores de serviço '.$th->getMessage());
