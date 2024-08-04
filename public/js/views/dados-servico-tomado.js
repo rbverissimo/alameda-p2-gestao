@@ -1,4 +1,5 @@
 import { searchInput } from "../components/search-input.js";
+import { call, debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
@@ -15,8 +16,6 @@ const dataInput = document.getElementsByClassName('data-input');
 const labelValorServicoInput = document.getElementById('label-valor-servico-input');
 const valorServicoInput = document.getElementById('valor-servico-input');
 const spanErrorsValorServicoInput = document.getElementById('span-errors-valor-servico-input');
-
-let timeoutID;
 
 valorServicoInput.addEventListener('input', mascaraValorDinheiro);
 valorServicoInput.addEventListener('blur', (event) => {
@@ -46,23 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-searchInput.addEventListener('keyup', (event) => {
-    clearTimeout(timeoutID);
-    timeoutID = setTimeout(() => {
-        const param = event.target.value;
-        fetch(`${LISTAR_PRESTADORES}/${param}`)
-            .then(
-                response => {
-                    if(response.ok){
-                        return response.json();
-                    }
-                }
-            )
-            .then(
-                data => {
-                    console.log(data);
-                }
-            )
-
-    }, 200);
-});
+searchInput.addEventListener('keyup', debounce( async (event) => {
+    const param = event.target.value;
+    const data = await call(LISTAR_PRESTADORES, param);
+}, 400));

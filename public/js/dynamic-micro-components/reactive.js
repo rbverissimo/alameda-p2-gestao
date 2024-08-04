@@ -5,7 +5,7 @@
  * 
  * @param {string} url 
  * @param  {...any} params 
- * @returns 
+ * @returns um json do backend
  */
 export async function call(url, ...params){
 
