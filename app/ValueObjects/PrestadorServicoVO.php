@@ -2,10 +2,15 @@
 
 namespace App\ValueObjects;
 
+use App\Models\PrestadorServico;
+
 class PrestadorServicoVO {
 
 
-      private PessoaVO $pessoa;
+      private string $nome;
+      private string $telefone;
+      private ?string $cnpj;
+      private ?string $cpf;
       private EnderecoVO $endereco;
 
       /**
@@ -14,18 +19,36 @@ class PrestadorServicoVO {
        */
       private array $tipos; 
 
-      public function __construct(PessoaVO $pessoa, EnderecoVO $endereco, array $tipos) {
-            $this->pessoa = $pessoa;
+      public function __construct(string $nome, string $telefone, ?string $cnpj = null, ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
+            $this->nome = $nome;
+            $this->telefone = $telefone;
+            $this->cnpj = $cnpj;
+            $this->cpf = $cpf;
             $this->endereco = $endereco;
             $this->tipos = $tipos;
       }
 
-      public function getPessoa(): PessoaVO
+      public function getNome(): string
       {
-            return $this->pessoa;
+            return $this->nome;
       }
 
-      public function getEndereco(): EnderecoVO
+      public function getTelefone(): string
+      {
+            return $this->nome;
+      }
+
+      public function getCnpj(): string
+      {
+            return $this->cnpj;
+      }
+
+      public function getCpf(): string
+      {
+            return $this->cpf;
+      }
+
+      public function getEndereco(): ?EnderecoVO
       {
             return $this->endereco;
       }
@@ -35,12 +58,27 @@ class PrestadorServicoVO {
             return $this->tipos;
       }
 
-      public function setPessoa(PessoaVO $pessoa): void 
+      public function setNome(string $nome): void
       {
-            $this->pessoa = $pessoa;
+            $this->nome = $nome;
       }
 
-      public function setEndereco(EnderecoVO $endereco): void 
+      public function setTelefone(string $telefone): void
+      {
+            $this->telefone = $telefone;
+      }
+
+      public function setCnpj(?string $cnpj): void
+      {
+            $this->cnpj = $cnpj;
+      }
+
+      public function setCpf(?string $cpf): void
+      {
+            $this->cpf = $cpf;
+      }
+
+      public function setEndereco(?EnderecoVO $endereco): void 
       {
             $this->endereco = $endereco;
       }
@@ -50,5 +88,20 @@ class PrestadorServicoVO {
             $this->tipos = $tipos; 
       }
 
+      public function getJson()
+      {
+            return [
+                  'nome' => $this->nome,
+                  'telefone' => $this->telefone,
+                  'cnpj' => $this->cnpj,
+                  'cpf' => $this->cpf,
+                  'tipos' => $this->tipos,
+                  'endereco' => $this->endereco->getJson()
+            ];
+      }
+
+      public function buildVO(PrestadorServico $model){
+            
+      }
 
 }
