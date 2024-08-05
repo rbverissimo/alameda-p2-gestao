@@ -22,11 +22,12 @@ class PrestadorServicoService {
 
     public static function getNomePrestadoresLike($nome, $registros = 10){
         $imobiliarias = UsuarioService::getImobiliarias();
-        return PrestadorServico::select('nome')
+        return PrestadorServico::select('id','nome')
             ->join('prestadores_imobiliarias', 'prestador_id', 'prestadores_servicos.id')
             ->whereRaw('LOWER(nome) LIKE ?', [strtolower($nome).'%'])
-            ->whereIn('prestadores_imobiliarias.prestador_id', $imobiliarias)
-            ->paginate($registros);
+            ->whereIn('prestadores_imobiliarias.imobiliaria_id', $imobiliarias)
+            ->limit($registros)
+            ->get();
     }
 
 }

@@ -195,14 +195,15 @@ class PrestadorServicoController extends Controller
     public function buscarLista($param = null){
        try {
 
-        $prestadores = PrestadorServicoService::getNomePrestadoresLike($param)->keyBy('nome');
-        $search_input_vo = new SearchInputVO($prestadores);
+        $prestadores = PrestadorServicoService::getNomePrestadoresLike($param);
+
+        $search_input_vo = new SearchInputVO($prestadores->toArray());
         return response()->json($search_input_vo->getJson());
 
        } catch (\Throwable $th) {
-            $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar a lista de prestadores');
+            $mensagem_vo = new MensagemVO('falha', 'Não foi possível buscar a lista de prestadores. Erro: '.$th->getMessage());
             $mensagem = $mensagem_vo->getJson();
-            return redirect()->back()->with('erros', $th->getMessage())->with($mensagem);
+            return response()->json(['mensagem' => $mensagem]);
        }
     }
 }
