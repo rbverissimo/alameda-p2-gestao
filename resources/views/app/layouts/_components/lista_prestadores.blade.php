@@ -27,6 +27,7 @@
                 <td>
                     <img class="crud-icon"   
                         src="{{asset('icons/edit-icon.svg')}}" 
+                        onclick="redirecionarPara('{{route('editar-prestador', $prestador->getId())}}')"
                         alt="edit">
                     <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
                 </td>

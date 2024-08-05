@@ -42,15 +42,15 @@ class PrestadorServicoVO {
 
       public function getTelefone(): string
       {
-            return $this->nome;
+            return $this->telefone;
       }
 
-      public function getCnpj(): string
+      public function getCnpj(): ?string
       {
             return $this->cnpj;
       }
 
-      public function getCpf(): string
+      public function getCpf(): ?string
       {
             return $this->cpf;
       }

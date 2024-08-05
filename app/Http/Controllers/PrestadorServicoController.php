@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Constants\TiposTelefone;
 use App\Http\Dto\EnderecoDTOBuilder;
-use App\Http\Dto\PessoaDTOBuilder;
 use App\Http\Dto\PrestadorServicoDTOBuilder;
 use App\Http\Dto\TelefoneDTOBuilder;
 use App\Models\Endereco;
-use App\Models\Pessoa;
 use App\Models\PrestadorServico;
 use App\Models\Telefone;
 use App\Services\ImobiliariasService;
-use App\Services\ImoveisService;
 use App\Services\PrestadorServicoService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
@@ -191,6 +188,13 @@ class PrestadorServicoController extends Controller
         $titulo = 'Editando o prestador';
         $mensagem = null;
         try {
+
+            $prestador_model = PrestadorServicoService::getPrestadorBy($idPrestador);
+            $prestador = PrestadorServicoVO::buildVO($prestador_model);
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+            $appData = [];
+
+            return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imobiliarias'));
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível encontrar o prestador de serviço selecionado '.$th->getMessage());

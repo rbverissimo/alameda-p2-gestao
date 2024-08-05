@@ -10,8 +10,8 @@
                 id="prestador-nome-input"
                 required
                 minlength="3"
-                value="{{ isset($prestador->nome) ? 
-                    old('prestador-nome', $prestador->nome) : old('prestador-nome')}}">
+                value="{{ $prestador->getNome() !== null ? 
+                    old('prestador-nome', $prestador->getNome()) : old('prestador-nome')}}">
             <span id="span-errors-prestador-nome-input" class="errors-highlighted">
                 {{ $errors->has('prestador-nome') ? $errors->first('prestador-nome') : ' '}}
             </span>        
@@ -23,8 +23,8 @@
             <input type="text" 
                 name="cnpj-prestador" 
                 id="cnpj-prestador-input"
-                value="{{ isset($prestador->cnpj) ? 
-                    old('cnpj-prestador', $prestador->cnpj) : old('cnpj-prestador')}}">
+                value="{{ $prestador->getCnpj() !== null ? 
+                    old('cnpj-prestador', $prestador->getCnpj()) : old('cnpj-prestador')}}">
             <span id="span-errors-cnpj-prestador-input" class="errors-highlighted">
                 {{ $errors->has('cnpj-prestador') ? $errors->first('cnpj-prestador') : ' '}}
             </span>
@@ -34,8 +34,8 @@
             <input type="text" 
                 name="cpf-prestador" 
                 id="cpf-prestador-input"
-                value="{{ isset($prestador->cnpj) ? 
-                    old('cpf-prestador', $prestador->cnpj) : old('cpf-prestador')}}">
+                value="{{ $prestador->getCpf() !== null ? 
+                    old('cpf-prestador', $prestador->getCpf()) : old('cpf-prestador')}}">
             <span id="span-errors-cpf-prestador-input" class="errors-highlighted">
                 {{ $errors->has('cpf-prestador') ? $errors->first('cpf-prestador') : ''}}
             </span>
@@ -48,8 +48,8 @@
                 name="telefone-trabalho" 
                 required
                 id="telefone-trabalho-input"
-                value="{{ isset($prestador->telefone_trabalho) ? 
-                    old('telefone-trabalho', $prestador->telefone_trabalho) : old('telefone-trabalho')}}">
+                value="{{ $prestador->getTelefone() !== null ? 
+                    old('telefone-trabalho', $prestador->getTelefone()) : old('telefone-trabalho')}}">
                 <span id="span-errors-telefone-trabalho-input" class="errors-highlighted">
                     {{ $errors->has('telefone-trabalho') ? $errors->first('telefone-trabalho') : ' '}}
                 </span>
@@ -75,14 +75,22 @@
 
         </div>
     </div>
-    <div id="cadastrar-endereco-wrapper" class="row">
-        <div class="col-3">
-            <span class="basic-card-wrapper">Cadastrar endereço?</span>
+    
+    @if ($prestador->getEndereco() !== null)
+        <x-forms.dados-endereco
+            :model="$prestador->getEndereco()"
+            titulo-header="Dados do endereço do prestador: "
+        ></x-forms.dados-endereco>
+    @else
+        <div id="cadastrar-endereco-wrapper" class="row">
+            <div class="col-3">
+                <span class="basic-card-wrapper">Cadastrar endereço?</span>
+            </div>
+            <div class="col-2">
+                <x-toggle-switch id="cadastrar-endereco-toggle-checkbox" attName="cadastrar-endereco-toggle"></x-toggle-switch>
+            </div>
         </div>
-        <div class="col-2">
-            <x-toggle-switch id="cadastrar-endereco-toggle-checkbox" attName="cadastrar-endereco-toggle"></x-toggle-switch>
+        <div style="display: none" id="endereco-container">  
         </div>
-    </div>
-    <div style="display: none" id="endereco-container">  
-    </div>
+    @endif
 </div>

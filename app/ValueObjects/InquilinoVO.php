@@ -11,7 +11,7 @@ class InquilinoVO {
      * @var array de App\Models\Telefone
      */
     private array $telefones;
-    private EnderecoVO $endereco_trabalho;
+    private ?EnderecoVO $endereco_trabalho;
 
     /**
      * @var int id do App\Models\Imovel
@@ -34,7 +34,7 @@ class InquilinoVO {
         return $this->telefones;
     }
 
-    public function getEnderecoTrabalho(): EnderecoVO
+    public function getEnderecoTrabalho(): ?EnderecoVO
     {
         return $this->endereco_trabalho;
     }
@@ -64,7 +64,7 @@ class InquilinoVO {
         $this->telefones = $telefones;
     }
 
-    public function setEnderecoTrabalho(EnderecoVO $enderecoTrabalho): void
+    public function setEnderecoTrabalho(?EnderecoVO $enderecoTrabalho): void
     {
         $this->endereco_trabalho = $enderecoTrabalho;
     }

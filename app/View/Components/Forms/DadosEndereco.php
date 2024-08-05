@@ -2,23 +2,25 @@
 
 namespace App\View\Components\Forms;
 
+use App\ValueObjects\EnderecoVO;
 use Illuminate\View\Component;
 
 class DadosEndereco extends Component
 {
 
 
-    public $titulo_header;
-    public $model; 
+    public string $tituloHeader;
+    public EnderecoVO $model; 
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $tituloHeader = 'Dados do endereço: ', EnderecoVO $model)
     {
-        //
+        $this->tituloHeader = $tituloHeader;
+        $this->model = $model;
     }
 
     /**
