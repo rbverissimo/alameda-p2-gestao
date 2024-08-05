@@ -26,13 +26,18 @@ class PrestadorServico extends Model
         return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 
-    public function imovel(): BelongsToMany
+    public function imobiliaria(): BelongsToMany
     {
-        return $this->belongsToMany(Imovel::class, 'prestadores_imoveis', 'prestador_id', 'imovel_id');
+        return $this->belongsToMany(Imobiliaria::class, 'prestadores_imobiliarias', 'prestador_id', 'imobiliaria_id');
     }
 
     public function tipo(): BelongsToMany
     {
         return $this->belongsToMany(TipoPrestador::class, 'prestadores_tipos', 'prestador_id', 'tipo_id');
+    }
+
+    public function endereco(): BelongsTo
+    {
+        return $this->belongsTo(Endereco::class, 'endereco');
     }
 }

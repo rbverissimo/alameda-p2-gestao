@@ -2,6 +2,8 @@
 
 namespace App\ValueObjects;
 
+use App\Models\Endereco;
+
 class EnderecoVO {
 
       private string $cep;
@@ -116,6 +118,20 @@ class EnderecoVO {
                   'quadra' => $this->quadra,
                   'lote' => $this->lote
             ];
+      }
+
+      public static function buildVO(Endereco $model): EnderecoVO
+      {
+            return new EnderecoVO(
+                  $model->cep,
+                  $model->logradouro,
+                  $model->bairro,
+                  $model->numero,
+                  $model->cidade,
+                  $model->uf,
+                  $model->quadra,
+                  $model->lote
+            );
       }
 
 }

@@ -19,6 +19,7 @@ use App\Utils\ProjectUtils;
 use App\Utils\TelefonesUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
+use App\ValueObjects\PrestadorServicoVO;
 use App\ValueObjects\SearchInputVO;
 use App\ValueObjects\SelectOptionVO;
 use Doctrine\Common\Cache\Psr6\InvalidArgument;
@@ -34,9 +35,13 @@ class PrestadorServicoController extends Controller
         $mensagem = null;
         try {
 
-            $prestadores = []; 
-
-            return view('app.painel-prestadores-servicos', compact('titulo', 'mensagem')); 
+            $prestadores_models = PrestadorServicoService::getListaPainelPrestadores(); 
+            $prestadores = [];
+            foreach ($prestadores_models as $prestador_model) {
+                $vo = PrestadorServicoVO::buildVO($prestador_model);
+                $prestadores[] = $vo;
+            }
+            return view('app.painel-prestadores-servicos', compact('titulo', 'mensagem', 'prestadores')); 
         } catch (\Throwable $th) {
             return redirect()->back()->with('erros', 'Não foi possível acessar os prestadores de serviço '.$th->getMessage());
         }

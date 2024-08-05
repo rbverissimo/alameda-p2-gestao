@@ -17,7 +17,7 @@
     @if (isset($prestadores[0]))
         <div class="row">
             <div class="col-12">
-                @component('app.layouts._components.lista_prestadores', compact('servicos'))
+                @component('app.layouts._components.lista_prestadores', compact('prestadores'))
                     
                 @endcomponent
             </div>

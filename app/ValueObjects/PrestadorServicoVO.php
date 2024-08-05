@@ -7,11 +7,12 @@ use App\Models\PrestadorServico;
 class PrestadorServicoVO {
 
 
+      private int $id;
       private string $nome;
       private string $telefone;
       private ?string $cnpj;
       private ?string $cpf;
-      private EnderecoVO $endereco;
+      private ?EnderecoVO $endereco;
 
       /**
        * 
@@ -19,13 +20,19 @@ class PrestadorServicoVO {
        */
       private array $tipos; 
 
-      public function __construct(string $nome, string $telefone, ?string $cnpj = null, ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
+      public function __construct(int $id, string $nome, string $telefone, ?string $cnpj = null, ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
+            $this->id = $id;
             $this->nome = $nome;
             $this->telefone = $telefone;
             $this->cnpj = $cnpj;
             $this->cpf = $cpf;
             $this->endereco = $endereco;
             $this->tipos = $tipos;
+      }
+
+      public function getId(): int
+      {
+            return $this->id;
       }
 
       public function getNome(): string
@@ -56,6 +63,11 @@ class PrestadorServicoVO {
       public function getTipos(): array
       {
             return $this->tipos;
+      }
+
+      public function setId(int $id): void
+      {
+            $this->id = $id;
       }
 
       public function setNome(string $nome): void
@@ -100,8 +112,25 @@ class PrestadorServicoVO {
             ];
       }
 
-      public function buildVO(PrestadorServico $model){
-            
+      public static function buildVO(PrestadorServico $model){
+
+            $tipos_servicos = $model->getRelation('tipo');
+            $tipos = [];
+            foreach ($tipos_servicos as $tipo) {
+                  $tipo_vo = new PrestadorTipoVO($tipo->codigoSistema, $tipo->tipo);
+                  $tipos[] = $tipo_vo->getJson();
+            }
+
+            $endereco_vo = $model->getRelation('endereco') !== null ? $endereco_vo = EnderecoVO::buildVO($model->getRelation('endereco')) : null;
+
+            return new PrestadorServicoVO(
+                  $model->id,
+                  $model->nome, 
+                  $model->telefone, 
+                  $model->cnpj, 
+                  $model->cpf, 
+                  $endereco_vo, 
+                  $tipos);
       }
 
 }
