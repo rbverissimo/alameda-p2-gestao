@@ -1,4 +1,3 @@
-var dataMap;
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 export const searchInput = document.getElementById('search');
 export const sugestoes = document.getElementById('sugestoes');
@@ -42,6 +41,32 @@ export function criarSelectedSearchInputEvent(obj, dominio, dispatch = true){
     return selectedEvent;
 }
 
+export function criarMapaDeObjetos(keyAttribute, objs){
+    return Object.entries(objs.reduce((acc, obj) => {
+        acc[obj[keyAttribute]] = obj;
+        return acc; 
+    }, {})).map(([key, value]) => ({[key]: value}));
+}
+
+export function mergirMapas(...maps){
+    const merged = [];
+    const mapped = new Map();
+
+    maps.forEach(array => {
+        array.forEach(obj => {
+            const key = `${obj.id}-${obj.nome}`;
+            if(!mapped.has(key)){
+                merged.push(obj);
+                mapped.set(key, true);
+            }
+        });
+    });
+
+    console.log(...maps);
+
+    return merged;
+}
+
 
 /**
  * O evento onSearchInputsAvailable recebe os inputs e os guarda no dataMap
@@ -55,30 +80,18 @@ document.addEventListener('onSearchInputsAvailable', (event) => {
 });
 
 
-export function addEventListenerSearchInputSugestoes(){
-    searchInput.addEventListener('input', () => {
-    const userInput = searchInput.value.trim();
-    if(userInput.length){
-        const sugestoesFiltradas = gerarSugestoes(userInput);
-        renderSugestoes(sugestoesFiltradas);
-    } else {
-        sugestoes.innerHTML = '';
-    }
-});
-}
-
-function gerarSugestoes(userInput){
+export function gerarSugestoes(userInput, dataMap){
     const sugestoesFiltradas = [];
-    for(const key in dataMap){
-        if(key.toLowerCase().startsWith(userInput.toLowerCase())){
-            sugestoesFiltradas.push({ key, value: dataMap[key] });
+    dataMap.forEach(registro => {
+        const chave = Object.keys(registro)[0];
+        if(chave.toLowerCase().startsWith(userInput.toLowerCase())){
+            sugestoesFiltradas.push(registro);
         }
-    }
-
+    });
     return sugestoesFiltradas;
 }
 
-function renderSugestoes(sugestoesFiltradas){
+export function renderSugestoes(sugestoesFiltradas){
     sugestoes.innerHTML = '';
     if(!sugestoesFiltradas.length){
         sugestoes.innerHTML = '<li> Não foi encontrado nenhum item buscado </li> ';
@@ -88,19 +101,18 @@ function renderSugestoes(sugestoesFiltradas){
 
     sugestoesFiltradas.forEach(sugestao => {
         const listItem = document.createElement('li');
-        listItem.textContent = sugestao.key;
+        const chave = Object.keys(sugestao)[0];
+        listItem.textContent = chave;
 
         listItem.addEventListener('click', () => {
-            searchInput.value = sugestao.key
-            const selectedEvent = criarSelectedSearchInputEvent(sugestao, dominio);
+            searchInput.value = chave;
+            const selectedEvent = criarSelectedSearchInputEvent(sugestao[chave], dominio);
             sugestoes.innerHTML = '';
         })
 
         sugestoes.appendChild(listItem);
     });
     
-
-
 }
 
 function setCadastrarLi(){

@@ -1,4 +1,4 @@
-import { addEventListenerSearchInputSugestoes, searchInput } from "../components/search-input.js";
+import { criarMapaDeObjetos, gerarSugestoes, mergirMapas, renderSugestoes, searchInput } from "../components/search-input.js";
 import { call, debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
@@ -44,19 +44,30 @@ document.addEventListener('DOMContentLoaded', () => {
         getSelectOptions(salaSelect, labelSalaSelect, option.target.value, LISTAR_SALAS);
     });
 
+    document.addEventListener('onSearchInputSelected', (event) => {
+        if('prestadores_servicos' === event.dominio){
+            const prestadorSelecionado = event.detail;
+        }
+    });
+
 });
 
 
 searchInput.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
-    const data = await call(LISTAR_PRESTADORES, param);
+    const sugestoesEncontradas = gerarSugestoes(param, prestadores);
+    if(!sugestoesEncontradas.length){
+        const data = await call(LISTAR_PRESTADORES, param);
+        const prestadoresMapeados = criarMapaDeObjetos('nome', data.search);
+        const prestadoresMerged = mergirMapas(prestadoresMapeados, prestadores);
+    } 
+    renderSugestoes(sugestoesEncontradas);
 }, 400));
 
 searchInput.addEventListener('focus', async (event) => {
         if(prestadores.length === 0){
             const data = await call(LISTAR_PRESTADORES);
-            prestadores = data.search;
-        } 
-
-
+            prestadores = criarMapaDeObjetos('nome', data.search);
+        }
+        renderSugestoes(prestadores);
 })
