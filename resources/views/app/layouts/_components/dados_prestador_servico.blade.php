@@ -10,8 +10,10 @@
                 id="prestador-nome-input"
                 required
                 minlength="3"
-                value="{{ $prestador->getNome() !== null ? 
-                    old('prestador-nome', $prestador->getNome()) : old('prestador-nome')}}">
+                @if ($prestador !== null)
+                    value="{{ $prestador->getNome() !== null ? 
+                        old('prestador-nome', $prestador->getNome()) : old('prestador-nome')}}"
+                @endif>
             <span id="span-errors-prestador-nome-input" class="errors-highlighted">
                 {{ $errors->has('prestador-nome') ? $errors->first('prestador-nome') : ' '}}
             </span>        
@@ -23,8 +25,11 @@
             <input type="text" 
                 name="cnpj-prestador" 
                 id="cnpj-prestador-input"
-                value="{{ $prestador->getCnpj() !== null ? 
-                    old('cnpj-prestador', $prestador->getCnpj()) : old('cnpj-prestador')}}">
+                @if ($prestador !== null)
+                    value="{{ $prestador->getCnpj() !== null ? 
+                    old('cnpj-prestador', $prestador->getCnpj()) : old('cnpj-prestador')}}"    
+                @endif
+                >
             <span id="span-errors-cnpj-prestador-input" class="errors-highlighted">
                 {{ $errors->has('cnpj-prestador') ? $errors->first('cnpj-prestador') : ' '}}
             </span>
@@ -34,8 +39,11 @@
             <input type="text" 
                 name="cpf-prestador" 
                 id="cpf-prestador-input"
-                value="{{ $prestador->getCpf() !== null ? 
-                    old('cpf-prestador', $prestador->getCpf()) : old('cpf-prestador')}}">
+                @if ($prestador !== null)
+                    value="{{ $prestador->getCpf() !== null ? 
+                    old('cpf-prestador', $prestador->getCpf()) : old('cpf-prestador')}}"    
+                @endif
+                >
             <span id="span-errors-cpf-prestador-input" class="errors-highlighted">
                 {{ $errors->has('cpf-prestador') ? $errors->first('cpf-prestador') : ''}}
             </span>
@@ -48,8 +56,10 @@
                 name="telefone-trabalho" 
                 required
                 id="telefone-trabalho-input"
-                value="{{ $prestador->getTelefone() !== null ? 
-                    old('telefone-trabalho', $prestador->getTelefone()) : old('telefone-trabalho')}}">
+                @if ($prestador !== null)
+                    value="{{ $prestador->getTelefone() !== null ? 
+                    old('telefone-trabalho', $prestador->getTelefone()) : old('telefone-trabalho')}}"
+                @endif>
                 <span id="span-errors-telefone-trabalho-input" class="errors-highlighted">
                     {{ $errors->has('telefone-trabalho') ? $errors->first('telefone-trabalho') : ' '}}
                 </span>
@@ -76,11 +86,13 @@
         </div>
     </div>
     
-    @if ($prestador->getEndereco() !== null)
-        <x-forms.dados-endereco
-            :model="$prestador->getEndereco()"
-            titulo-header="Dados do endereço do prestador: "
-        ></x-forms.dados-endereco>
+    @if ($prestador !== null)
+        @if ($prestador->getEndereco() !== null)    
+            <x-forms.dados-endereco
+                :model="$prestador->getEndereco()"
+                titulo-header="Dados do endereço do prestador: "
+            ></x-forms.dados-endereco>
+        @endif
     @else
         <div id="cadastrar-endereco-wrapper" class="row">
             <div class="col-3">

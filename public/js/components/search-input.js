@@ -54,7 +54,9 @@ document.addEventListener('onSearchInputsAvailable', (event) => {
     }    
 });
 
-/* searchInput.addEventListener('input', () => {
+
+export function addEventListenerSearchInputSugestoes(){
+    searchInput.addEventListener('input', () => {
     const userInput = searchInput.value.trim();
     if(userInput.length){
         const sugestoesFiltradas = gerarSugestoes(userInput);
@@ -62,9 +64,9 @@ document.addEventListener('onSearchInputsAvailable', (event) => {
     } else {
         sugestoes.innerHTML = '';
     }
-
 });
- */
+}
+
 function gerarSugestoes(userInput){
     const sugestoesFiltradas = [];
     for(const key in dataMap){

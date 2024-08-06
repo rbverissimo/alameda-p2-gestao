@@ -1,9 +1,11 @@
-import { searchInput } from "../components/search-input.js";
+import { addEventListenerSearchInputSugestoes, searchInput } from "../components/search-input.js";
 import { call, debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
 import { inputStateValidation, isDataValida, isValorDinheiroValido } from "../validators/view-validation.js";
+
+let prestadores = []; 
 
 const labelImoveisSelect = document.getElementById('label-imoveis-servico-select');
 const imoveisSelect = document.getElementById('imoveis-servico-select');
@@ -49,3 +51,12 @@ searchInput.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
     const data = await call(LISTAR_PRESTADORES, param);
 }, 400));
+
+searchInput.addEventListener('focus', async (event) => {
+        if(prestadores.length === 0){
+            const data = await call(LISTAR_PRESTADORES);
+            prestadores = data.search;
+        } 
+
+
+})

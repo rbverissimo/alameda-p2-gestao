@@ -22,18 +22,8 @@ adicionarTipoButton.addEventListener('click', (event) => {
     event.preventDefault();
 });
 
-cadastrarEnderecoToggle.addEventListener('change', function(){
-    if(!this.checked){
-        enderecoContainer.style.display = 'none';
-        while(enderecoContainer.firstChild){
-            enderecoContainer.removeChild(enderecoContainer.firstChild);
-        }
-        return;
-    }
-    enderecoContainer.style.display = 'block';
-    const enderecoForm = criarComponenteEnderecoSimplificado({},'Endereço da empresa ou prestador de serviço', true);
-    enderecoContainer.appendChild(enderecoForm);
-});
+
+
 
 document.addEventListener('appData', (appData) => {
     if(dominio === appData.dominio){
@@ -50,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     telefoneInput.value = writeMascaraTelefone(telefoneInput.value);
     cnpjInput.value = writeMascaraCnpj(cnpjInput.value);
     cpfInput.value = writeMascaraCpf(cpfInput.value);
+
+    if(cadastrarEnderecoToggle !== null){
+        setCadastrarEnderecoState();
+    }
 
 });
 
@@ -97,4 +91,19 @@ export function criarTipoPrestadorSelect(prefix, optionsData){
     divRow.appendChild(divCol3);
     
     return divRow;
+}
+
+function setCadastrarEnderecoState() {
+    cadastrarEnderecoToggle.addEventListener('change', function(){
+        if(!this.checked){
+        enderecoContainer.style.display = 'none';
+        while(enderecoContainer.firstChild){
+            enderecoContainer.removeChild(enderecoContainer.firstChild);
+        }
+        return;
+        }
+        enderecoContainer.style.display = 'block';
+        const enderecoForm = criarComponenteEnderecoSimplificado({},'Endereço da empresa ou prestador de serviço', true);
+        enderecoContainer.appendChild(enderecoForm);
+    });
 }
