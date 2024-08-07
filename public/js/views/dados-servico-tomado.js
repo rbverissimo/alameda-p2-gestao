@@ -55,11 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 searchInput.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
-    const sugestoesEncontradas = gerarSugestoes(param, prestadores);
+    let sugestoesEncontradas = gerarSugestoes(param, prestadores);
     if(!sugestoesEncontradas.length){
         const data = await call(LISTAR_PRESTADORES, param);
         const prestadoresMapeados = criarMapaDeObjetos('nome', data.search);
         const prestadoresMerged = mergirMapas(prestadoresMapeados, prestadores);
+        sugestoesEncontradas = prestadoresMerged;
     } 
     renderSugestoes(sugestoesEncontradas);
 }, 400));
