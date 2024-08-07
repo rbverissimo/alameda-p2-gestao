@@ -2,6 +2,7 @@ import { call } from "../dynamic-micro-components/reactive.js";
 
 export const searchInput = document.getElementById('search');
 export const sugestoes = document.getElementById('sugestoes');
+export const numeroSugestoesMostradas = 5;
 
 
 document.addEventListener('click', (event) => {
@@ -16,21 +17,32 @@ export function criarAvailableSearchInputEvent(obj, dominio, dispatch = true){
           detail: obj
     });
     event.dominio = dominio;
-
     if(dispatch){
         document.dispatchEvent(event);
     }
-
     return event;
 }
 
 
-export async function gerarFocusState(URL, dataMap, chave) {
+export async function gerarFocusState(URL, dataMap, chave, dominio) {
     if(dataMap.length === 0){
         const data = await call(URL);
         dataMap = criarMapaDeObjetos(chave, data.search);
+        criarAvailableSearchInputEvent(dataMap, dominio);
     }
     renderSugestoes(dataMap);
+}
+
+export async function gerarKeyUp(param, URL, dataMap, chave, dominio){
+    let sugestoesEncontradas = gerarSugestoes(param, dataMap);
+    if(!sugestoesEncontradas.length){
+        const data = await call(URL, param);
+        const newMapping = criarMapaDeObjetos(chave, data.search);
+        const mergedMapping = mergirMapas(newMapping, dataMap);
+        criarAvailableSearchInputEvent(mergedMapping, dominio);
+        sugestoesEncontradas = gerarSugestoes(param, mergedMapping);
+    } 
+    renderSugestoes(sugestoesEncontradas);
 }
 
 /**
@@ -100,7 +112,12 @@ export function renderSugestoes(sugestoesFiltradas){
         return;
     }
 
+    let contagem = 0;
     sugestoesFiltradas.forEach(sugestao => {
+        contagem++;
+        if(contagem > numeroSugestoesMostradas){
+            return;
+        }
         const listItem = document.createElement('li');
         const chave = Object.keys(sugestao)[0];
         listItem.textContent = chave;

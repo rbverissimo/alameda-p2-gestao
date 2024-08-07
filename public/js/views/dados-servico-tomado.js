@@ -1,5 +1,5 @@
-import { criarMapaDeObjetos, gerarFocusState, gerarSugestoes, mergirMapas, renderSugestoes, searchInput } from "../components/search-input.js";
-import { call, debounce } from "../dynamic-micro-components/reactive.js";
+import {  gerarFocusState, gerarKeyUp, searchInput } from "../components/search-input.js";
+import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
@@ -7,6 +7,7 @@ import { inputStateValidation, isDataValida, isValorDinheiroValido } from "../va
 
 let prestadores = []; 
 const searchEl = document.getElementById('search');
+const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 
 const labelImoveisSelect = document.getElementById('label-imoveis-servico-select');
 const imoveisSelect = document.getElementById('imoveis-servico-select');
@@ -51,23 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.addEventListener('onSearchInputsAvailable', (event) => {
+        if(dominio === event.dominio){
+            prestadores = event.detail;
+        }
+    });
     
 
 });
 
 searchEl.addEventListener('focus', async (event) => {
-    gerarFocusState(LISTAR_PRESTADORES, prestadores, 'nome');
+    gerarFocusState(LISTAR_PRESTADORES, prestadores, 'nome', dominio);
 });
 
 searchInput.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
-    let sugestoesEncontradas = gerarSugestoes(param, prestadores);
-    if(!sugestoesEncontradas.length){
-        const data = await call(LISTAR_PRESTADORES, param);
-        const prestadoresMapeados = criarMapaDeObjetos('nome', data.search);
-        const prestadoresMerged = mergirMapas(prestadoresMapeados, prestadores);
-        prestadores = prestadoresMerged;
-        sugestoesEncontradas = gerarSugestoes(param, prestadores);
-    } 
-    renderSugestoes(sugestoesEncontradas);
+    gerarKeyUp(param, LISTAR_PRESTADORES, prestadores, 'nome', dominio);
 }, 400));
