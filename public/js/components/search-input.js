@@ -1,6 +1,14 @@
-const dominio = document.getElementById('dominio').getAttribute('data-dominio');
+import { call } from "../dynamic-micro-components/reactive.js";
+
 export const searchInput = document.getElementById('search');
 export const sugestoes = document.getElementById('sugestoes');
+
+
+document.addEventListener('click', (event) => {
+    if (!event.target.matches('#search') && !event.target.closest('#sugestoes')) {
+        sugestoes.innerHTML = '';
+    }
+});
 
 
 export function criarAvailableSearchInputEvent(obj, dominio, dispatch = true){
@@ -14,6 +22,15 @@ export function criarAvailableSearchInputEvent(obj, dominio, dispatch = true){
     }
 
     return event;
+}
+
+
+export async function gerarFocusState(URL, dataMap, chave) {
+    if(dataMap.length === 0){
+        const data = await call(URL);
+        dataMap = criarMapaDeObjetos(chave, data.search);
+    }
+    renderSugestoes(dataMap);
 }
 
 /**
@@ -51,34 +68,18 @@ export function criarMapaDeObjetos(keyAttribute, objs){
 export function mergirMapas(...maps){
     const merged = [];
     const mapped = new Map();
-
     maps.forEach(array => {
-        array.forEach(obj => {
+        array.forEach(keyValue => {
+            const obj = keyValue[Object.keys(keyValue)[0]];
             const key = `${obj.id}-${obj.nome}`;
             if(!mapped.has(key)){
-                merged.push(obj);
+                merged.push(keyValue);
                 mapped.set(key, true);
             }
         });
     });
-
-    console.log(...maps);
-
     return merged;
 }
-
-
-/**
- * O evento onSearchInputsAvailable recebe os inputs e os guarda no dataMap
- * que será manipulado pelo search-input
- */
-document.addEventListener('onSearchInputsAvailable', (event) => {
-    const eventDominio = event['dominio'];
-    if(eventDominio === dominio){
-        dataMap = event['detail']['search'];
-    }    
-});
-
 
 export function gerarSugestoes(userInput, dataMap){
     const sugestoesFiltradas = [];
@@ -128,8 +129,3 @@ function setCadastrarLi(){
     });
 }
 
-document.addEventListener('click', (event) => {
-    if (!event.target.matches('#search') && !event.target.closest('#sugestoes')) {
-        sugestoes.innerHTML = '';
-    }
-});
