@@ -48,6 +48,10 @@
       background-color: var(--delete-button);
 }
 
+.info-button {
+      background-color: var(--info-button);
+}
+
 .light-button a {
       font-size: 0.9rem;
       color: var(--text-white);

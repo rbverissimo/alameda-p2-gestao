@@ -30,7 +30,7 @@ export async function gerarFocusState(URL, dataMap, chave, dominio) {
         dataMap = criarMapaDeObjetos(chave, data.search);
         criarAvailableSearchInputEvent(dataMap, dominio);
     }
-    renderSugestoes(dataMap);
+    renderSugestoes(dataMap, dominio);
 }
 
 export async function gerarKeyUp(param, URL, dataMap, chave, dominio){
@@ -42,7 +42,7 @@ export async function gerarKeyUp(param, URL, dataMap, chave, dominio){
         criarAvailableSearchInputEvent(mergedMapping, dominio);
         sugestoesEncontradas = gerarSugestoes(param, mergedMapping);
     } 
-    renderSugestoes(sugestoesEncontradas);
+    renderSugestoes(sugestoesEncontradas, dominio);
 }
 
 /**
@@ -104,7 +104,7 @@ export function gerarSugestoes(userInput, dataMap){
     return sugestoesFiltradas;
 }
 
-export function renderSugestoes(sugestoesFiltradas){
+export function renderSugestoes(sugestoesFiltradas, dominio){
     sugestoes.innerHTML = '';
     if(!sugestoesFiltradas.length){
         sugestoes.innerHTML = '<li> Não foi encontrado nenhum item buscado </li> ';

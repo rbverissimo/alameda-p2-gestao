@@ -1,3 +1,5 @@
+import { gerarDeletarButton, gerarInfoButton } from "./icons.js";
+
 export const divisorTypes = {
     PRIMARY: 'primary-divisor',
     SECONDARY: 'secondary-divisor',
@@ -40,11 +42,12 @@ export function headerDivisor(divisor, text){
     return div;
 }
 
-export function input(name, id, required = false){
+export function input(name, id, required = false, readonly = false){
     const input = document.createElement('input');
     input.name = name;
     input.id = id;
     input.required = required;
+    input.readOnly = readonly;
     return input;
 }
 
@@ -83,4 +86,26 @@ export function gerarInputLabelSpanErrors(divCol, name, textLabel, required = fa
     divCol.appendChild(input);
     divCol.appendChild(span);
     return divCol;
+}
+
+export function gerarInputAcoes(inputName, verificador, required, readonly){
+
+    const newRow = divRow('outline');
+    const divCol6 = divCol(6);
+    const divDelIcon = divCol(3);
+    const divInfoIcon = divCol(3);
+
+    const newInput = input(`${inputName}-${verificador}`, `${inputName}-input-${verificador}`, required, readonly);
+    const delIcon = gerarDeletarButton();
+    const infoIcon = gerarInfoButton();
+
+    divCol6.appendChild(newInput);
+    divDelIcon.appendChild(delIcon);
+    divInfoIcon.appendChild(infoIcon);
+
+    newRow.appendChild(divCol6);
+    newRow.appendChild(divInfoIcon);
+    newRow.appendChild(divDelIcon);
+
+    return newRow;
 }

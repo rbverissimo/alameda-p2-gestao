@@ -1,4 +1,5 @@
 import {  gerarFocusState, gerarKeyUp, searchInput } from "../components/search-input.js";
+import { gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
 import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
@@ -8,6 +9,8 @@ import { inputStateValidation, isDataValida, isValorDinheiroValido } from "../va
 let prestadores = []; 
 const searchEl = document.getElementById('search');
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
+const prestadorContainer = document.getElementById('prestador-container');
+let counter = 101;
 
 const labelImoveisSelect = document.getElementById('label-imoveis-servico-select');
 const imoveisSelect = document.getElementById('imoveis-servico-select');
@@ -49,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('onSearchInputSelected', (event) => {
         if('prestadores_servicos' === event.dominio){
             const prestadorSelecionado = event.detail;
+            renderPrestadorSelecionado(prestadorSelecionado);
+            searchEl.value = '';
         }
     });
 
@@ -60,6 +65,28 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
 });
+
+function renderPrestadorSelecionado(prestador){
+    const verificador = ++counter;
+    const newDiv = gerarInputAcoes('prestador', verificador, false, true);
+
+    const nestedDiv = newDiv.children[0];
+    const inputPrestador = nestedDiv.children[0];
+    inputPrestador.value = prestador.nome; 
+
+    const delButton = newDiv.children[2];
+    delButton.addEventListener('click', (event) => {
+        prestadorContainer.removeChild(newDiv);
+        event.preventDefault();
+    });
+
+    const data = document.createElement('data');
+    data.setAttribute('prestador-id', prestador.id);
+    data.hidden = true;
+    newDiv.appendChild(data);
+
+    prestadorContainer.appendChild(newDiv);
+}
 
 searchEl.addEventListener('focus', async (event) => {
     gerarFocusState(LISTAR_PRESTADORES, prestadores, 'nome', dominio);
