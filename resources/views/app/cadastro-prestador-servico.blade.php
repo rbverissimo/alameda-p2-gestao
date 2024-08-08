@@ -9,8 +9,8 @@
         </div>
         @if ($prestador !== null)
             <div class="col-4">
-                    <button class="button action-button">
-                        Cadastrar nota</button>
+                    <button onclick="redirecionarPara( '{{ route('listar-notas-servico-prestador', ['idPrestador' => $prestador->getId()]) }}')" class="button action-button">
+                        Ver notas fiscais</button>
             </div>
         @endif
     </div>

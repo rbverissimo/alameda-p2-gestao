@@ -40,4 +40,8 @@ class PrestadorServicoService {
             ->get();
     }
 
+    public static function getNomePrestadorBy($idPrestador){
+        return PrestadorServico::where('id', $idPrestador)->pluck('nome')->first();
+    }
+
 }

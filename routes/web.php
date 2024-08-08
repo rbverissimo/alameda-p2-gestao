@@ -8,6 +8,8 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ImoveisController;
 use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotaFiscalServicoController;
+use App\Http\Controllers\NotasFiscaisServicoController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
 use App\Http\Controllers\PrestadorServicoController;
@@ -155,8 +157,8 @@ Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function
 });
 
 Route::prefix('nfse')->middleware('autenticacao')->group(function(){
-    Route::get('/l/{idPrestador}')->name('listar-notas-servico-prestador');
-    Route::get('/cadastrar')->name('cadastrar-nota-servico');
+    Route::get('/l/{idPrestador}', [NotasFiscaisServicoController::class, 'listarNotas'])->name('listar-notas-servico-prestador');
+    Route::get('/c/cadastro/{idPrestador}', [NotasFiscaisServicoController::class, 'cadastrarNota'])->name('cadastrar-nota-servico');
 });
 
 Route::middleware('autenticacao')->group(function(){
