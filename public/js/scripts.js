@@ -3,7 +3,6 @@ import { toggleOverlay } from "./partials/spinner.js";
 
 export function setLiveRoute(rota){
       localStorage.setItem('liveRoute', rota);
-
 }
 
 export function setOldRoute(rota){
@@ -26,13 +25,10 @@ window.addEventListener("DOMContentLoaded", function(){
       if(isNullOrUndefined(getLiveRoute()) || isBlank(getLiveRoute())){
             setLiveRoute(window.location.href);
       } else {
-
             if(getLiveRoute() === window.location.href) return; 
-            
             setOldRoute(getLiveRoute());
             setLiveRoute(window.location.href);
       }
-      
 });
 
 document.addEventListener("DOMContentLoaded", () => {
