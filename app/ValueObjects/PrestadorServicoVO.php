@@ -121,12 +121,15 @@ class PrestadorServicoVO {
                   $tipos[] = $tipo_vo->getJson();
             }
 
+            $telefone_relation = $model->getRelation('telefone');
+            $telefone = TelefoneVO::getTelefoneFormatadoFrom($telefone_relation);
+
             $endereco_vo = $model->getRelation('endereco') !== null ? $endereco_vo = EnderecoVO::buildVO($model->getRelation('endereco')) : null;
 
             return new PrestadorServicoVO(
                   $model->id,
                   $model->nome, 
-                  $model->telefone, 
+                  $telefone, 
                   $model->cnpj, 
                   $model->cpf, 
                   $endereco_vo, 

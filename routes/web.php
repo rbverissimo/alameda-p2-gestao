@@ -154,6 +154,11 @@ Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function
     Route::post('/e/{id}', [PrestadorServicoController::class, 'editarPrestador'])->name('editar-prestador');
 });
 
+Route::prefix('nfse')->middleware('autenticacao')->group(function(){
+    Route::get('/l/{idPrestador}')->name('listar-notas-servico-prestador');
+    Route::get('/cadastrar')->name('cadastrar-nota-servico');
+});
+
 Route::middleware('autenticacao')->group(function(){
     Route::get('/download/{idArquivo}', [DownloadController::class, 'baixarArquivoContaBy'])->name('baixarArquivoContaImovel');
 });

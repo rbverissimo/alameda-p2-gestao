@@ -40,4 +40,9 @@ class PrestadorServico extends Model
     {
         return $this->belongsTo(Endereco::class, 'endereco');
     }
+
+    public function telefone(): BelongsTo
+    {
+        return $this->belongsTo(Telefone::class, 'telefone');
+    }
 }

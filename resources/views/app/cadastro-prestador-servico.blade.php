@@ -7,6 +7,12 @@
             <button class="button common-button">
                 Voltar</button>
         </div>
+        @if ($prestador !== null)
+            <div class="col-4">
+                    <button class="button action-button">
+                        Cadastrar nota</button>
+            </div>
+        @endif
     </div>
 </div>
 <div class="row">

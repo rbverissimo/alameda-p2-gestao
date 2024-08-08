@@ -8,16 +8,16 @@
                 Voltar</button>
         </div>
         <div class="col-5">
-            <button onclick="redirecionarPara('{{ route('cadastrar-prestador')}}')" class="button action-button" >
-                  Cadastrar novo prestador
+            <button onclick="redirecionarPara('{{ route('cadastrar-nota-servico')}}')" class="button action-button" >
+                  Cadastrar nova nota fiscal
             </button>
         </div>
     </div>
 </div>
-    @if (isset($prestadores[0]))
+    @if (isset($notas_servicos[0]))
         <div class="row">
             <div class="col-12">
-                @component('app.layouts._components.lista_prestadores', compact('prestadores'))
+                @component('app.layouts._components.lista_notas_servicos', compact('notas_servicos'))
                     
                 @endcomponent
             </div>
@@ -27,8 +27,8 @@
             <div class="row">
                 <div class="col-12">
                         <span class="basic-card-wrapper">
-                            Não há nenhum prestador de serviço no sistema. <br>
-                            Cadastre um prestador clicando no botão "Cadastrar novo prestador" 
+                            Não há nenhuma nota fiscal de serviço cadastrada para o prestador {{ $nomePrestador }}. <br>
+                            Cadastre uma nota clicando no botão "Cadastrar nova nota" 
                             no menu logo acima desta mensagem. 
                         </span>
                 </div>

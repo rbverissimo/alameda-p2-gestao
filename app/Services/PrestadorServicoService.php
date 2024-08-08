@@ -12,7 +12,7 @@ class PrestadorServicoService {
 
     public static function getListaPainelPrestadores(){
        $imobiliarias = UsuarioService::getImobiliarias();
-       return PrestadorServico::with('endereco', 'tipo')
+       return PrestadorServico::with('endereco', 'tipo', 'telefone')
             ->join('prestadores_imobiliarias', 'prestadores_imobiliarias.prestador_id', 'prestadores_servicos.id')
             ->whereIn('prestadores_imobiliarias.imobiliaria_id', $imobiliarias)
             ->get();
@@ -20,7 +20,7 @@ class PrestadorServicoService {
     }
 
     public static function getPrestadorBy($idPrestador){
-        return PrestadorServico::with('endereco', 'tipo')
+        return PrestadorServico::with('endereco', 'tipo', 'telefone')
             ->where('id', $idPrestador)
             ->first();
     }
