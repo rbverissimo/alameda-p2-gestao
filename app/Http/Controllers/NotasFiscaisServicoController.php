@@ -20,7 +20,15 @@ class NotasFiscaisServicoController extends Controller
     }
 
     public function cadastrarNota($idPrestador){
-
+        $titulo = 'Cadastro de NFS-e';
+        $mensagem = null;
+        
+        try {
+            $nota = null;
+            return view('app.cadastro-nota-servico', compact('titulo', 'mensagem', 'idPrestador', 'nota'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         
     }
 

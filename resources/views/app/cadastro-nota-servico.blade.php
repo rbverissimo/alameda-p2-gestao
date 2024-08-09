@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row">
-    @include('app.layouts._components.form_notas_servicos')
+    @include('app.layouts._components.form_nota_fiscal_servico', compact('nota', 'idPrestador'))
 </div>
 <div class="row">
     <div class="whitespace-end-page"></div>

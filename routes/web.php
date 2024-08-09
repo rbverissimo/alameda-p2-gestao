@@ -159,6 +159,8 @@ Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function
 Route::prefix('nfse')->middleware('autenticacao')->group(function(){
     Route::get('/l/{idPrestador}', [NotasFiscaisServicoController::class, 'listarNotas'])->name('listar-notas-servico-prestador');
     Route::get('/c/cadastro/{idPrestador}', [NotasFiscaisServicoController::class, 'cadastrarNota'])->name('cadastrar-nota-servico');
+    Route::post('/c/cadastro/{idPrestador}', [NotasFiscaisServicoController::class, 'cadastrarNota'])->name('cadastrar-nota-servico');
+    Route::get('/e/editar/{idPrestador}', [NotasFiscaisServicoController::class, 'editarNota'])->name('editar-nota-servico');
 });
 
 Route::middleware('autenticacao')->group(function(){

@@ -8,7 +8,7 @@
                 Voltar</button>
         </div>
         <div class="col-5">
-            <button onclick="redirecionarPara('{{ route('listar-notas-servico-prestador', ['idPrestador' => $idPrestador ])}}')" class="button action-button" >
+            <button onclick="redirecionarPara('{{ route('cadastrar-nota-servico', ['idPrestador' => $idPrestador ])}}')" class="button action-button" >
                   Cadastrar nova nota fiscal
             </button>
         </div>
