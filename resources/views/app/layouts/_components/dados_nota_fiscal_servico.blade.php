@@ -64,55 +64,57 @@
             ></x-forms.select>
         </div>
     </div>
-    <div class="dashboard light-dashboard">
-        <div class="divisor-header secondary-divisor">Informações à cerca das retenções</div>
+    <div class="row">
+        <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">Informações à cerca das retenções</div>
+            <div class="row">
+                <div class="col-2">
+                    @php
+                        $aliquota = isset($nota) ? $nota->getAliquota() : null;
+                    @endphp
+                    <x-forms.input
+                        label-text="Alíquota: "
+                        attr-name="aliquota"
+                        pattern-name="aliquota"
+                        :data-input="$aliquota"
+                    ></x-forms.input>
+                </div>
+                <div class="col-4">
+                    @php
+                        $valorISS = isset($nota) ? $nota->getValorISS() : null;
+                    @endphp
+                    <x-forms.input
+                        label-text="Valor ISS: "
+                        attr-name="valor-iss"
+                        pattern-name="valor-iss"
+                        :data-input="$valorISS"
+                    ></x-forms.input>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-4">
                 @php
-                    $aliquota = isset($nota) ? $nota->getAliquota() : null;
+                    $baseINSS = isset($nota) ? $nota->getBaseINSS() : null;
                 @endphp
                 <x-forms.input
-                    label-text="Alíquota: "
-                    attr-name="aliquota"
-                    pattern-name="aliquota"
-                    :data-input="$aliquota"
+                    label-text="Base INSS: "                
+                    attr-name="base-inss"
+                    pattern-name="base-inss"
+                    :data-input="$baseINSS"
                 ></x-forms.input>
             </div>
             <div class="col-4">
                 @php
-                    $valorISS = isset($nota) ? $nota->getValorISS() : null;
+                    $valorRetido = isset($nota) ? $nota->getValorRetido() : null;
                 @endphp
                 <x-forms.input
-                    label-text="Valor ISS: "
-                    attr-name="valor-iss"
-                    pattern-name="valor-iss"
-                    :data-input="$valorISS"
+                    label-text="Valor retido: "                
+                    attr-name="valor-retido"
+                    pattern-name="valor-retido"
+                    :data-input="$valorRetido"
                 ></x-forms.input>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            @php
-                $baseINSS = isset($nota) ? $nota->getBaseINSS() : null;
-            @endphp
-            <x-forms.input
-                label-text="Base INSS: "                
-                attr-name="base-inss"
-                pattern-name="base-inss"
-                :data-input="$baseINSS"
-            ></x-forms.input>
-        </div>
-        <div class="col-4">
-            @php
-                $valorRetido = isset($nota) ? $nota->getValorRetido() : null;
-            @endphp
-            <x-forms.input
-                label-text="Valor retido: "                
-                attr-name="valor-retido"
-                pattern-name="valor-retido"
-                :data-input="$valorRetido"
-            ></x-forms.input>
         </div>
     </div>
 </div>
