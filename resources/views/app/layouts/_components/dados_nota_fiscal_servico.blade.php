@@ -117,4 +117,20 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="dashboard light-dashboard">
+            <div class="divisor-header primary-divisor">Arquivo da NFS</div>
+        </div>
+        <div class="row">
+            @php
+                $arquivo_nota_servico = isset($nota) ? $nota->getArquivoNotaServico() : null;
+            @endphp
+            <x-forms.file-input
+                label-text="Envie o arquivo da nota: "
+                attr-name="arquivo-nota-servico"
+                download-route="{{route('baixarNotaServico', ['idNotaServico' => $arquivo_nota_servico ])}}"
+                :file="$arquivo_nota_servico"
+            ></x-forms.file-input>
+        </div>
+    </div>
 </div>

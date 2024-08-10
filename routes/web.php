@@ -165,6 +165,7 @@ Route::prefix('nfse')->middleware('autenticacao')->group(function(){
 
 Route::middleware('autenticacao')->group(function(){
     Route::get('/download/{idArquivo}', [DownloadController::class, 'baixarArquivoContaBy'])->name('baixarArquivoContaImovel');
+    Route::get('/download/nfse/{idNotaServico?}', [DownloadController::class, 'baixarNotaServicoBy'])->name('baixarNotaServico');
 });
 
 Route::fallback(function () {
