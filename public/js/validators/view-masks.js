@@ -325,6 +325,16 @@ function removerMascara(strValue, charsToRemove = ['.', '-', '(', ')', '/']){
   return cleanString;
 }
 
+export function removerMascaraValorDinheiro(strValue){
+    const input = strValue.trim();
+    const semCaracterizacaoMoeda = input.replace(/^R\$/, "");
+    return semCaracterizacaoMoeda.replace(',', ''); 
+}
+
+export function limparMascara(strValue, mascaraParaRemover = './()-'){
+    return strValue.replace(new RegExp(`[${mascaraParaRemover}]`, 'g'), '');
+}
+
 
 /**
  * Esse método torna uma referência com 6 digitos formatada para AAAAmm

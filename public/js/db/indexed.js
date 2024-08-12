@@ -1,12 +1,17 @@
 import { logarErro } from "../validators/log-erros.js";
 
-export async function salvarIDBInput(dbName, storeName, inputName, inputValue){
+export async function iniciarObjectStores(dbName, ...stores){
     const request = indexedDB.open(dbName, 1);
-
     request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        const objectStore = db.createObjectStore(storeName, { autoIncrement: true });
+        stores.forEach(store => {
+            db.createObjectStore(store, {autoIncrement: true});
+        });
     }
+}
+
+export async function salvarIDBInput(dbName, storeName, inputName, inputValue){
+    const request = indexedDB.open(dbName, 1);
 
     request.onsuccess = (event) => {
         const db = event.target.result;
@@ -26,5 +31,8 @@ export async function salvarIDBInput(dbName, storeName, inputName, inputValue){
         }
 
     }
+}
 
+export async function getIDBInput(dbName, storeName){
+    
 }

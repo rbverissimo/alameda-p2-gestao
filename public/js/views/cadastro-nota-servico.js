@@ -1,5 +1,5 @@
-import { salvarIDBInput } from "../db/indexed.js";
-import { dataMascara, mascaraValorDinheiro, writeDataMascara } from "../validators/view-masks.js";
+import { iniciarObjectStores, salvarIDBInput } from "../db/indexed.js";
+import { dataMascara, limparMascara, mascaraValorDinheiro, removerMascaraValorDinheiro, writeDataMascara } from "../validators/view-masks.js";
 import { apenasNumeros } from "../validators/view-validation.js";
 
 const userDb = 'my-favorite-user';
@@ -11,14 +11,18 @@ const numeroDocumentoInput = document.getElementById('form-numero-documento');
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    iniciarObjectStores(userDb, 'cadastro-nfs-data-emissao', 'cadastro-nfs-valor-bruto', 'cadastro-nfs-nota-serie', 'cadastro-nfs-numero-documento');
+
     dataEmissaoInput.addEventListener('change', (event) => {
-        salvarIDBInput(userDb, 'cadastro-nfs-data-emissao', 'form-data-emissao', event.target.value);
+        const saveValue = limparMascara(event.target.value);
+        salvarIDBInput(userDb, 'cadastro-nfs-data-emissao', 'form-data-emissao', saveValue);
     });
 
     dataEmissaoInput.value = writeDataMascara(dataEmissaoInput.value);
 
     valorBrutoInput.addEventListener('change', (event) => {
-        salvarIDBInput(userDb, 'cadastro-nfs-valor-bruto', 'form-valor-bruto', event.target.value);
+        const saveValue = removerMascaraValorDinheiro(event.target.value);
+        salvarIDBInput(userDb, 'cadastro-nfs-valor-bruto', 'form-valor-bruto', saveValue);
     });
 
     notaSerieInput.addEventListener('change', (event) => {
