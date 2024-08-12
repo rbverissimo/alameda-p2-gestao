@@ -1,5 +1,6 @@
 import { salvarIDBInput } from "../db/indexed.js";
-import { dataMascara } from "../validators/view-masks.js";
+import { dataMascara, mascaraValorDinheiro, writeDataMascara } from "../validators/view-masks.js";
+import { apenasNumeros } from "../validators/view-validation.js";
 
 const userDb = 'my-favorite-user';
 
@@ -14,18 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
         salvarIDBInput(userDb, 'cadastro-nfs-data-emissao', 'form-data-emissao', event.target.value);
     });
 
-    valorBrutoInput.addEventListener('change', (event) => {
+    dataEmissaoInput.value = writeDataMascara(dataEmissaoInput.value);
 
+    valorBrutoInput.addEventListener('change', (event) => {
+        salvarIDBInput(userDb, 'cadastro-nfs-valor-bruto', 'form-valor-bruto', event.target.value);
     });
 
     notaSerieInput.addEventListener('change', (event) => {
-
+        salvarIDBInput(userDb, 'cadastro-nfs-nota-serie', 'form-nota-serie', event.target.value)
     });
 
     numeroDocumentoInput.addEventListener('change', (event) => {
-
+        salvarIDBInput(userDb, 'cadastro-nfs-numero-documento', 'form-numero-documento', event.target.value);
     });
 
 });
 
 dataEmissaoInput.addEventListener('input', dataMascara);
+valorBrutoInput.addEventListener('input', mascaraValorDinheiro);
+notaSerieInput.addEventListener('input', apenasNumeros);
+numeroDocumentoInput.addEventListener('input', apenasNumeros);

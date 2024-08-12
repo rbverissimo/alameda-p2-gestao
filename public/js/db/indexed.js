@@ -5,7 +5,6 @@ export async function salvarIDBInput(dbName, storeName, inputName, inputValue){
 
     request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        console.log(db);
         const objectStore = db.createObjectStore(storeName, { autoIncrement: true });
     }
 
