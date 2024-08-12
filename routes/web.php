@@ -7,6 +7,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ImoveisController;
 use App\Http\Controllers\ListaInquilinosController;
+use App\Http\Controllers\LogErroController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NotaFiscalServicoController;
 use App\Http\Controllers\NotasFiscaisServicoController;
@@ -166,6 +167,10 @@ Route::prefix('nfse')->middleware('autenticacao')->group(function(){
 Route::middleware('autenticacao')->group(function(){
     Route::get('/download/{idArquivo}', [DownloadController::class, 'baixarArquivoContaBy'])->name('baixarArquivoContaImovel');
     Route::get('/download/nfse/{idNotaServico?}', [DownloadController::class, 'baixarNotaServicoBy'])->name('baixarNotaServico');
+});
+
+Route::prefix('erros')->middleware('autenticacao')->group(function(){
+    Route::post('/log', [LogErroController::class, 'gravarErro'])->name('log-erros');
 });
 
 Route::fallback(function () {

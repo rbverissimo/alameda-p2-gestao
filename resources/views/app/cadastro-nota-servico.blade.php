@@ -18,5 +18,6 @@
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{asset('js/views/cadastro-nota-servico.js')}}"></script>
     @include('app.scripts.script-mensagem')
 @endsection

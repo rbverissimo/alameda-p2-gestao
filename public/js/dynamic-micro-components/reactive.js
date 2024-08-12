@@ -32,6 +32,21 @@ export async function call(url, ...params){
 
 }
 
+export async function deliver(url, payload){
+    try {
+        const response = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        return response.json();
+    } catch (error) {
+        console.error('Erros encontrados : ', error);
+    }
+}
+
 /**
  * 
  * @param {*} func um handler com argumentos
