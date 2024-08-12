@@ -31,3 +31,7 @@ export function isArrayEmpty(array){
 export function isStringValida(str){
     return isNotNullOrUndefined(str) && !isBlank(str);
 }
+
+export function isStrValueNuloOuVazio(str){
+    return isNullOrUndefined(str) || isBlank(str);
+}

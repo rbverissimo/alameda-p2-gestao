@@ -335,6 +335,12 @@ export function limparMascara(strValue, mascaraParaRemover = './()-'){
     return strValue.replace(new RegExp(`[${mascaraParaRemover}]`, 'g'), '');
 }
 
+export function formatarDataParaSalvar(data){
+    const formatted = data.replace(new RegExp('/', 'g'), '-');
+    const valueArr = formatted.split('-');
+    return `${valueArr[2]}-${valueArr[1]}-${valueArr[0]}`;
+}
+
 
 /**
  * Esse método torna uma referência com 6 digitos formatada para AAAAmm
