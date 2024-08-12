@@ -1,10 +1,10 @@
-import {  gerarFocusState, gerarKeyUp, searchInput } from "../components/search-input.js";
+import {  gerarFocusState, gerarKeyUp } from "../components/search-input.js";
 import { gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
 import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
-import { inputStateValidation, isDataValida, isValorDinheiroValido } from "../validators/view-validation.js";
+import { apenasNumeros, inputStateValidation, isDataValida, isRequired, isValorDinheiroValido } from "../validators/view-validation.js";
 
 let prestadores = []; 
 const searchEl = document.getElementById('search');
@@ -24,11 +24,32 @@ const labelValorServicoInput = document.getElementById('label-valor-servico-inpu
 const valorServicoInput = document.getElementById('valor-servico-input');
 const spanErrorsValorServicoInput = document.getElementById('span-errors-valor-servico-input');
 
+const codigoServicoInputLabel = document.getElementById('label-input-codigo-servico');
+const codigoServicoInputSpanErrors = document.getElementById('span-errors-codigo-servico');
+const codigoServicoInput = document.getElementById('form-codigo-servico');
+
+const nomeServicoInputLabel = document.getElementById('label-input-nome-servico');
+const nomeServicoInputSpanErrors = document.getElementById('span-errors-nome-servico');
+const nomeServicoInput = document.getElementById('form-nome-servico');
+
 valorServicoInput.addEventListener('input', mascaraValorDinheiro);
 valorServicoInput.addEventListener('blur', (event) => {
     inputStateValidation(labelValorServicoInput, valorServicoInput, spanErrorsValorServicoInput, 
-        event.target.value, isValorDinheiroValido, 'O valor declarado não é válido');
-})
+        event.target.value, isValorDinheiroValido, 'O valor declarado não é válido. ');
+});
+
+nomeServicoInput.addEventListener('blur', (event) => {
+    inputStateValidation(nomeServicoInputLabel, nomeServicoInput, nomeServicoInputSpanErrors,
+        event.target.value, isRequired, 'O nome do serviço é obrigatório.'
+    )
+});
+
+codigoServicoInput.addEventListener('keydown', apenasNumeros);
+codigoServicoInput.addEventListener('blur', (event) => {
+    inputStateValidation(codigoServicoInputLabel, codigoServicoInput, codigoServicoInputSpanErrors,
+        event.target.value, isRequired, 'O código do serviço é obrigatório. '
+    )
+});
 
 
 for(const dataEl of dataInput){
@@ -92,7 +113,7 @@ searchEl.addEventListener('focus', async (event) => {
     gerarFocusState(LISTAR_PRESTADORES, prestadores, 'nome', dominio);
 });
 
-searchInput.addEventListener('keyup', debounce( async (event) => {
+searchEl.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
     gerarKeyUp(param, LISTAR_PRESTADORES, prestadores, 'nome', dominio);
 }, 400));

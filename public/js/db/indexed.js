@@ -81,11 +81,8 @@ export async function getInputValueFromIDB(dbName, storeName, concreteInput, mas
                 concreteInput.value = maskHandler(concreteInput.value);
             }
         }
-    }
-    
+    } 
 }
-
-
 
 export async function existeDb(dbName){
     return new Promise((resolve, reject) => {
