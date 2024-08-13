@@ -29,7 +29,6 @@ class FornecedorController extends Controller
     }
 
     public function fornecedores(){
-
         try {
             $fornecedores = FornecedoresService::getFornecedores()->keyBy('cnpj');
     
@@ -39,8 +38,6 @@ class FornecedorController extends Controller
             $mensagem = $mensagem_vo->getJson();
             return response()->json($mensagem);
         }
-
-
     }
 
     public function editar(Request $request, $idFornecedor){

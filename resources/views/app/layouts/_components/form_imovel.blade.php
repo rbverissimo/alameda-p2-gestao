@@ -1,6 +1,30 @@
 <form action="{{(route('cadastrar-imovel'))}}" method="POST">
       @csrf
       <div class="dashboard light-dashboard">
+            <div class="divisor-header secondary-divisor">Identificação do Imóvel</div>
+            <div class="row">
+                  <div class="col-6">
+                        <label>Nome identificador do imóvel: </label>
+                        <input name="nomefantasia"
+                              required
+                              placeholder="Ex. Casa 10 do Centro, Edifício Sta. Cecília, etc: "
+                              value="{{ isset($imovel->nomefantasia) ?
+                              old('nomefantasia', $imovel->nomefantasia) : old('nomefantasia') }}">
+                        <span class="errors-highlighted">{{ $errors->has('numero') ? $errors->first('numero') : ' '}}</span>      
+                  </div>
+                  <div class="col-6">
+                        @php
+                            $cnpj = isset($imovel) ? $imovel->cnpj : null;
+                        @endphp
+                        <x-forms.input 
+                              label-text="Digite o CNPJ: "
+                              pattern-name="cnpj-imovel"
+                              attr-name="cnpj-imovel"
+                              :required="false"
+                              :data-input="$cnpj"
+                        />
+                  </div>
+            </div>
             <div class="divisor-header secondary-divisor">
                   Dados do Imóvel
             </div>
@@ -97,17 +121,6 @@
                               placeholder="Ex. Edifício Santana, Loteamento das Flores, etc: "
                               value="{{ isset($imovel->complemento) ?
                               old('complemento', $imovel->complemento) : old('complemento') }}">
-                  </div>
-            </div>
-            <div class="row">
-                  <div class="col-6">
-                        <label>Nome identificador do imóvel: </label>
-                        <input name="nomefantasia"
-                              required
-                              placeholder="Ex. Vila do Chaves: "
-                              value="{{ isset($imovel->nomefantasia) ?
-                              old('nomefantasia', $imovel->nomefantasia) : old('nomefantasia') }}">
-                        <span class="errors-highlighted">{{ $errors->has('numero') ? $errors->first('numero') : ' '}}</span>      
                   </div>
             </div>
       </div>

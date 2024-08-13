@@ -14,6 +14,7 @@ class ImovelDTO {
     private int $lote;
     private string $complemento;
     private string $nomefantasia; 
+    private ?string $cnpj;
     private int $usuario;
 
     // Getters
@@ -65,6 +66,11 @@ class ImovelDTO {
     public function getNomeFantasia(): string
     {
         return $this->nomefantasia;
+    }
+
+    public function getCnpj(): ?string
+    {
+        return $this->cnpj;
     }
 
     public function getUsuario(): int 
@@ -121,6 +127,11 @@ class ImovelDTO {
     public function setNomeFantasia(string $nomefantasia): void
     {
         $this->nomefantasia = $nomefantasia;
+    }
+
+    public function setCnpj(?string $cnpj): void 
+    {
+        $this->cnpj = $cnpj;
     }
 
     public function setUsuario(int $usuario): void 

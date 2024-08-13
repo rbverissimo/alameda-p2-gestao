@@ -39,7 +39,7 @@ class ImoveisService {
      * @return App\Models\Imovel
      */
     public static function getImovelBy($idImovel){
-        return Imovel::with('endereco')->where('id',$idImovel)->get();
+        return Imovel::with('endereco')->where('id',$idImovel)->first();
     }
 
 

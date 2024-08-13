@@ -108,7 +108,7 @@ export function renderSugestoes(sugestoesFiltradas, dominio){
     sugestoes.innerHTML = '';
     if(!sugestoesFiltradas.length){
         sugestoes.innerHTML = '<li> Não foi encontrado nenhum item buscado </li> ';
-        setCadastrarLi();
+        setCadastrarLi(dominio);
         return;
     }
 
@@ -133,7 +133,7 @@ export function renderSugestoes(sugestoesFiltradas, dominio){
     
 }
 
-function setCadastrarLi(){
+function setCadastrarLi(dominio){
     const cadastrarLi = document.createElement('li');
     cadastrarLi.className = 'cadastrar';
     cadastrarLi.textContent = 'Cadastrar novo item';

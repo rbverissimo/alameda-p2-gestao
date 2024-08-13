@@ -10,43 +10,57 @@ class ImovelDTOBuilder {
         $this->imovel_dto = new ImovelDTO();
     }
 
-    public function withCep(string $cep): ImovelDTOBuilder {
+    public function withCep(string $cep): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setCep($cep);
         return $this;
     }
 
-    public function withLogradouro(string $logradouro): ImovelDTOBuilder {
+    public function withLogradouro(string $logradouro): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setLogradouro($logradouro);
         return $this;
     }
 
-    public function withBairro(string $bairro): ImovelDTOBuilder {
+    public function withBairro(string $bairro): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setBairro($bairro);
         return $this;
     }
 
-    public function withNumero(int $numero): ImovelDTOBuilder {
+    public function withNumero(int $numero): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setNumero($numero);
         return $this;
     }
 
-    public function withQuadra(int $quadra): ImovelDTOBuilder {
+    public function withQuadra(int $quadra): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setQuadra($quadra);
         return $this;
     }
 
-    public function withLote(int $lote): ImovelDTOBuilder {
+    public function withLote(int $lote): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setLote($lote);
         return $this;
     }
 
-    public function withComplemento(string $complemento = null): ImovelDTOBuilder {
+    public function withComplemento(string $complemento = null): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setComplemento($complemento);
         return $this;
     }
 
-    public function withNomeFantasia(string $nomefantasia): ImovelDTOBuilder {
+    public function withNomeFantasia(string $nomefantasia): ImovelDTOBuilder 
+    {
         $this->imovel_dto->setNomeFantasia($nomefantasia);
+        return $this;
+    }
+
+    public function withCnpj(?string $cnpj): ImovelDTOBuilder
+    {
+        $this->imovel_dto->setCnpj($cnpj);
         return $this;
     }
 

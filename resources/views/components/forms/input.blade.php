@@ -1,5 +1,9 @@
 <label id="label-input-{{$patternName}}" for="form-{{$patternName}}">{{$labelText}}</label>
-    <input required type="text" 
+    <input  
+            @if ($required)
+                required
+            @endif
+            type="text" 
             name="{{$attrName}}" 
             placeholder="{{$placeholder}}" 
             id="form-{{$patternName}}"

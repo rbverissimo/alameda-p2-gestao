@@ -28,14 +28,15 @@ class ImoveisController extends Controller
     public function index($mensagem = null){
 
         $titulo = 'Lista de Imóveis';
-        $idUsuario = UsuarioService::getUsuarioLogado();
+        $imobiliarias = UsuarioService::getImobiliarias();
 
         $imoveis = Imovel::select('imoveis.id', 'imoveis.nomefantasia', 
             'enderecos.logradouro', 'enderecos.bairro', 'enderecos.numero', 'enderecos.cep', 'enderecos.cidade')
             ->join('enderecos', 'enderecos.id', 'imoveis.endereco')
-            ->join('users_imoveis', 'users_imoveis.idImovel', 'imoveis.id')
-            ->where('users_imoveis.idUsuario', $idUsuario)
+            ->whereIn('imoveis.imobiliaria_id', $imobiliarias)
             ->get();
+
+        
 
         return view('app.imoveis', compact('titulo', 'imoveis', 'mensagem'));
     }
@@ -65,6 +66,7 @@ class ImoveisController extends Controller
 
                 $request->validate($regras, $feedback);
 
+                
                 $cep = $request->input('cep');
                 $logradouro = $request->input('logradouro');
                 $bairro = $request->input('bairro');
@@ -73,6 +75,7 @@ class ImoveisController extends Controller
                 $lote = $request->input('lote');
                 $complemento = $request->input('complemento');
                 $nomefantasia = $request->input('nomefantasia');
+                $cnpj = ProjectUtils::tirarMascara($request->input('cnpj-imovel'));
                 $cidade = $request->input('cidade');
                 $uf = $request->input('uf');
                 $idUsuario = UsuarioService::getUsuarioLogado();
@@ -86,6 +89,7 @@ class ImoveisController extends Controller
                     ->withLote($lote)
                     ->withComplemento($complemento ?? '')
                     ->withNomeFantasia($nomefantasia)
+                    ->withCnpj($cnpj)
                     ->withUsuario($idUsuario)
                     ->withCidade($cidade)
                     ->withUf($uf)
@@ -101,13 +105,13 @@ class ImoveisController extends Controller
                         'quadra' => $imovel_dto->getQuadra(),
                         'lote' => $imovel_dto->getLote(),
                         'complemento' => $imovel_dto->getComplemento(),
-                        'nomefantasia' => $imovel_dto->getNomeFantasia(),
                         'uf' => $imovel_dto->getUf(),
                         'cidade' => $imovel_dto->getCidade()
                     ]);
 
                     Imovel::create([
                         'nomefantasia' => $imovel_dto->getNomeFantasia(),
+                        'cnpj' => $imovel_dto->getCnpj(),
                         'endereco' => DB::getPdo()->lastInsertId(),
                     ]);
 

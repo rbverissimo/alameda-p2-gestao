@@ -14,11 +14,15 @@ class FornecedoresService {
      * nos imóvies de um determinado usuário
      */
     public static function getFornecedores(){
-        $usuario = UsuarioService::getUsuarioLogado();
-        $imoveis = UsuarioService::getImoveisBy($usuario);
-        $fornecedores = Fornecedor::with('endereco')->whereHas('compra', function($query) use ($imoveis){
-            $query->whereIn('imovel', $imoveis);
-        })->get();
+        $imobiliarias = UsuarioService::getImobiliarias();
+
+        DB::table('fornecedores_imobiliarias')
+            ->select('fornecedor_id')
+            ->whereIn('imobiliaria_id', $imobiliarias)
+            ->get();
+
+        $ids = [];
+        $fornecedores = Fornecedor::with('endereco')->whereIn('id', $ids)->get();
         return $fornecedores;
     }
 
