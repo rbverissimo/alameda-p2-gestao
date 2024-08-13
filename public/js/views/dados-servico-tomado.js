@@ -2,7 +2,7 @@ import {  gerarFocusState, gerarKeyUp } from "../components/search-input.js";
 import { gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
 import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
-import { LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
+import { LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasNumeros, inputStateValidation, isDataValida, isRequired, isValorDinheiroValido } from "../validators/view-validation.js";
 
@@ -12,11 +12,15 @@ const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 const prestadorContainer = document.getElementById('prestador-container');
 let counter = 101;
 
-const labelImoveisSelect = document.getElementById('label-imoveis-servico-select');
-const imoveisSelect = document.getElementById('imoveis-servico-select');
+
+const labelImobiliariaSelect = document.getElementById('label-imobiliaria-select');
+const imobiliariaSelect = document.getElementById('imobiliaria-select-input');
+
+const labelImovelSelect = document.getElementById('label-imovel-select');
+const imovelSelect = document.getElementById('imovel-select-input');
 
 const labelSalaSelect = document.getElementById('label-sala-select');
-const salaSelect = document.getElementById('sala-select');
+const salaSelect = document.getElementById('sala-select-input');
 
 const dataInput = document.getElementsByClassName('data-input');
 
@@ -66,8 +70,12 @@ for(const dataEl of dataInput){
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    imoveisSelect.addEventListener('change', (option) => {
-        getSelectOptions(salaSelect, labelSalaSelect, option.target.value, LISTAR_SALAS);
+    imobiliariaSelect.addEventListener('change', (event) => {
+        getSelectOptions(imovelSelect, labelImovelSelect, event.target.value, LISTAR_IMOVEIS_IMOBILIARIA);
+    });
+
+    imovelSelect.addEventListener('change', (event) => {
+        getSelectOptions(salaSelect, labelSalaSelect, event.target.value, LISTAR_SALAS);
     });
 
     document.addEventListener('onSearchInputSelected', (event) => {

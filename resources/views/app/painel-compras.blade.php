@@ -9,12 +9,12 @@
             <button class="button common-button">
                 Voltar</button>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <button onclick="redirecionarPara('{{ route('cadastrar-compra')}}')" class="button action-button" >
-                  Cadastrar nova compra
+                  Cadastrar compra
             </button>
         </div>
-        <div class="col-3">
+        <div class="col-4">
             <button onclick="redirecionarPara('{{ route('listar-fornecedores')}}')" class="button action-button" >
                   Ver fornecedores
             </button>

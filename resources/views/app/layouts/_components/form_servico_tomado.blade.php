@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos', 'imoveis'))
+  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos', 'imobiliarias'))
       
   @endcomponent
     <div class="dashboard light-dashboard">

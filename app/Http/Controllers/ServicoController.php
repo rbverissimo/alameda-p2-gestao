@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\TiposServicosService;
 use Illuminate\Http\Request;
@@ -23,9 +24,9 @@ class ServicoController extends Controller
             $titulo = 'Cadastrando serviço';
             $mensagem = null;
             $tipos_servicos = TiposServicosService::getListaTiposServicos();
-            $imoveis = ImoveisService::getListaImoveisSelect();
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
 
-            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imoveis'));
+            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
         }

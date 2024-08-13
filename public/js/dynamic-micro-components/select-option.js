@@ -19,7 +19,6 @@ export function getSelectOptions(select, label = null, paramValue, url){
                 throw new Error(data['erro']['mensagem']);
             }
             createOptions(data, select);
-
             if(data.length > 0){
                 select.style.display = 'block';
         

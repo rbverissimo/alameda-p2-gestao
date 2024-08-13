@@ -1,41 +1,30 @@
 <div class="dashboard light-dashboard">
     <div class="divisor-header secondary-divisor">Informações sobre serviços tomados por um imóvel</div>
     <div class="row">
-        @isset($imoveis)
-        <div class="col-5">
-            <label for="imoveis-servico-select" id="label-imoveis-servico-select">Escolha um imóvel:</label>
-            <select id="imoveis-servico-select" required name="imovelcodigo">
-                @foreach ($imoveis as $imovel)
-                    <option value="{{$imovel->id}}"
-                        @isset($imovel_selecionado)
-                            @if($imovel_selecionado == $imovel->id)
-                                selected
-                            @endif
-                        @endisset
-                    >
-                    {{$imovel->nomefantasia}}
-                    </option>
-                @endforeach
-            </select> 
+        @isset($imobiliarias)
+        <div class="col-4">
+            <x-forms.select 
+                label-text="Selecione a imobiliária: "
+                pattern-name="imobiliaria-select"
+                :collection="$imobiliarias"
+            />
         </div>
         @endisset 
-        <div class="col-5">
-            <label for="sala-select" id="label-sala-select" style="display: none">Indique a sala:</label>
-            <select style="display: none" required id="sala-select" name="sala">
-                @isset($salas)
-                    @foreach ($salas as $sala)
-                        <option value="{{$sala->id}}"
-                            @isset($servico->salacodigo)
-                                @if ($servico->salacodigo == $sala->id)
-                                    selected
-                                @endif
-                            @endisset
-                            >
-                            {{$sala->nomesala}}
-                        </option>
-                    @endforeach
-                @endisset
-            </select>
+        <div class="col-4">
+            <x-forms.select 
+                display="none"
+                label-text="Indique um imóvel: "
+                pattern-name="imovel-select"
+                :collection="[]"
+            />
+        </div>
+        <div class="col-4">
+            <x-forms.select
+                display="none"
+                label-text="Indique a sala: "
+                pattern-name="sala-select"
+                :collection="[]"
+            />
         </div>
     </div>
     <div class="row">

@@ -5,10 +5,12 @@ import { mascaraCnpj,
     writeMascaraTelefone,
     mascaraTelefone,
     mascaraValorDinheiro, dataMascara } from "../validators/view-masks.js";
-import { criarAvailableSearchInputEvent } from "../components/search-input.js"
+import { gerarFocusState } from "../components/search-input.js"
 import { LISTAR_FORNECEDORES } from "../routes.js";
 
 const dominio = 'fornecedores';
+let fornecedores = [];
+
 const formaPagamentoSelect = document.getElementById('forma-pagamento-compra-select');
 const inputQtdeDiasGarantia = document.getElementById('qtde-dias-garantia-input');
 const inputQtdeParcelas = document.getElementById('qtde-parcelas-compra');
@@ -17,8 +19,9 @@ const valorCompraInput = document.getElementById('valor-compra-input');
 
 const dataCompraInput = document.getElementById('data-compra-input');
 
+const searchEl = document.getElementById('search');
+
 document.addEventListener('DOMContentLoaded', () => {
-    buscarFornecedores();
     formaPagamentoSelect.addEventListener('change', habilitarQtdeParcelas);
     inputQtdeParcelas.addEventListener('keydown', apenasNumeros);
     inputQtdeDiasGarantia.addEventListener('keydown', apenasNumeros);
@@ -35,6 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
         inputStateValidation(labelDataCompra, dataCompraInput, spanDataCompra, event.target.value, isDataValida, spanMessage);
 
     });
+
+    document.addEventListener('onSearchInputsAvailable', (event) => {
+        if(dominio === event.dominio){
+            fornecedores = event.detail;
+        }
+    });
+
+});
+
+searchEl.addEventListener('focus', (event) => {
+    gerarFocusState(LISTAR_FORNECEDORES, fornecedores, 'cnpj', dominio);
 });
 
 document.addEventListener('onSearchInputSelected', (event) => {
@@ -42,22 +56,6 @@ document.addEventListener('onSearchInputSelected', (event) => {
         renderizarFormulario(event['detail']);
     }
 });
-
-async function buscarFornecedores(){
-    try {
-        const response = await fetch(LISTAR_FORNECEDORES);
-        if(!response.ok){
-            throw new Error(`Erro ao buscar as informações no servidor: ${response.status}`);
-        }
-        const data = await response.json();
-        if(data !== null ){
-            const searchInputsAvailable = criarAvailableSearchInputEvent(data, dominio);
-        }
-    } catch (error) {
-        showMensagem(error, 'falha', 5000);
-        console.log(error);
-    }
-}
 
 function renderizarFormulario(objToCreate){
 
