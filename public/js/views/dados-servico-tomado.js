@@ -10,7 +10,7 @@ let prestadores = [];
 const searchEl = document.getElementById('search');
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 const prestadorContainer = document.getElementById('prestador-container');
-let counter = 101;
+let counter = Math.floor(Math.random() * (10000 - 100 + 1)) + 100;
 
 
 const labelImobiliariaSelect = document.getElementById('label-imobiliaria-select');

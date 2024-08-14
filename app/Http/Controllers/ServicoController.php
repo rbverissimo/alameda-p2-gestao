@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Operacao;
 use App\Http\Dto\RequestParamsDTO;
 use App\Models\BusinessObjects\LogErrosBO;
 use App\Services\ImobiliariasService;
 use App\Services\TiposServicosService;
+use App\Utils\CollectionUtils;
+use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
 
 class ServicoController extends Controller
@@ -30,6 +33,14 @@ class ServicoController extends Controller
             if($request->isMethod('POST')){
 
                 
+                $codigoServico = $request->input('codigo-servico');
+                $nomeServico = $request->input('nome-servico');
+                $sala = $request->input('sala-select');
+                $dataInicio = ProjectUtils::normalizarData($request->input('data-inicio'), Operacao::SALVAR);
+                $dataFim = ProjectUtils::normalizarData($request->input('data-fim'), Operacao::SALVAR);
+                $valorServico = ProjectUtils::retirarMascaraMoeda($request->input('valor-servico'));
+                $tipoServico = $request->input('tipo-servico');
+                $descricaoServico = $request->input('descricao-servico');
 
             }
 
