@@ -145,6 +145,7 @@ Route::prefix('fornecedores')->middleware('autenticacao')->group(function(){
 Route::prefix('servicos')->middleware('autenticacao')->group(function(){
     Route::get('/', [ServicoController::class, 'index'])->name('servicos');
     Route::get('/c', [ServicoController::class, 'cadastrar'])->name('cadastrar-servico');
+    Route::post('/c', [ServicoController::class, 'cadastrar'])->name('cadastrar-servico');
     Route::get('/e/{id}', [ServicoController::class, 'editar'])->name('editar-servico');
 });
 

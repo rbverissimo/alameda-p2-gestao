@@ -2,19 +2,28 @@
 
 namespace App\Models\BusinessObjects;
 
+use App\Constants\OperacaoCRUD;
 use App\Http\Dto\LogErroDTO;
+use App\Http\Dto\RequestParamsDTO;
+use App\Services\LogErrosService;
+use App\Services\UsuarioService;
 
 class LogErrosBO {
 
-    public static function validar(LogErroDTO $dto): LogErroDTO
-    {
-        $json = $dto->getJson();
-        $dto->setJson(json_encode($json));
+    private LogErroDTO $dto;
 
-        $request_headers = $dto->getRequest();
-        $dto->setRequest(json_encode($request_headers));
+    public function __construct(RequestParamsDTO $request_params , $mensagem) {
 
-        return $dto;
+        $this->dto = new LogErroDTO(UsuarioService::getUsuarioLogado(), 
+            $request_params->getUrl(), 
+            json_encode($request_params->getInputs()), 
+            $mensagem, 
+            $request_params->getMetodo(),
+             json_encode($request_params->getHeaders()));
+    }
+
+    public function salvar(){
+        LogErrosService::salvarErro($this->dto);
     }
 
 }

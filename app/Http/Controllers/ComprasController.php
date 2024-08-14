@@ -6,6 +6,8 @@ use App\Constants\FormasPagamento;
 use App\Constants\Operacao;
 use App\Http\Dto\CompraDTOBuilder;
 use App\Http\Dto\FornecedorDTOBuilder;
+use App\Http\Dto\RequestParamsDTO;
+use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\Compra;
 use App\Models\Endereco;
 use App\Models\Fornecedor;
@@ -192,6 +194,11 @@ class ComprasController extends Controller
 
             return view('app.cadastro-compra', compact('titulo', 'formas_pagamento', 'imoveis', 'compra', 'fornecedores', 'mensagem'));
         } catch (\Throwable | ValidationException $th) {
+            
+            $request_params = new RequestParamsDTO($request);
+            $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
+            $log_erros_bo->salvar();
+
             if(!($th instanceof ValidationException)){
                 redirect()->back()->with('erros', 'Não foi possível cadastrar a compra. Erro: '.$th->getMessage());
             } else {

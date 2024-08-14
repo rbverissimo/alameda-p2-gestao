@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Operacao;
+use App\Constants\OperacaoCRUD;
 use App\Http\Dto\ImovelDTOBuilder;
 use App\Http\Dto\LogErroDTO;
+use App\Http\Dto\RequestParamsDTO;
 use App\Models\BusinessObjects\InquilinoBO;
+use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\ContaImovel;
 use App\Models\Endereco;
 use App\Models\Imovel;
@@ -139,14 +143,9 @@ class ImoveisController extends Controller
             return view('app.cadastro-imovel', compact('titulo', 'imobiliarias'));
         } catch (\Throwable | ValidationException $e) {
 
-            $usuario = UsuarioService::getUsuarioLogado();
-            $json = json_encode($request->all());
-            $log = $e->getMessage();
-            $rota = $request->url();
-            $verbo_http = $request->method();
-            $request_headers = json_encode($request->headers->all());
-            $log_erros_dto = new LogErroDTO($usuario, $rota, $json, $log, $verbo_http, $request_headers);
-            LogErrosService::salvarErro($log_erros_dto);
+            $request_params = new RequestParamsDTO($request);
+            $log_erros_bo = new LogErrosBO($request_params, $e->getMessage());
+            $log_erros_bo->salvar();
 
             if($e instanceof ValidationException){
                 return back()->withErrors($e->validator->errors());
