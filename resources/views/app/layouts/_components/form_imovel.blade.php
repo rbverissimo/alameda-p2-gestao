@@ -25,6 +25,19 @@
                         />
                   </div>
             </div>
+            <div class="row">
+                  <div class="col-8">
+                        @php
+                            $selectedImobiliaria = isset($imovel) ? $imovel->imobiliaria : null;
+                        @endphp
+                        <x-forms.select 
+                              pattern-name="imobiliaria"
+                              label-text="Selecione a imobiliária: "
+                              :collection="$imobiliarias"
+                              :selected-value="$selectedImobiliaria"
+                        />
+                  </div>
+            </div>
             <div class="divisor-header secondary-divisor">
                   Dados do Imóvel
             </div>

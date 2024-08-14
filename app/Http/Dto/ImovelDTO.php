@@ -4,63 +4,16 @@ namespace App\Http\Dto;
 
 class ImovelDTO {
 
-    private string $cidade;
-    private string $uf;
-    private string $cep;
-    private string $logradouro;
-    private string $bairro;
-    private int $numero;
-    private int $quadra;
-    private int $lote;
-    private string $complemento;
+    private int $imobiliaria;
     private string $nomefantasia; 
     private ?string $cnpj;
-    private int $usuario;
+    private EnderecoDTO $endereco;
 
-    // Getters
-    public function getCidade(): string
-    {
-        return $this->cidade;
-    }
+    //Getters
 
-    public function getUf(): string
+    public function getImobiliaria(): int 
     {
-        return $this->uf;
-    }
-
-    public function getCep(): string
-    {
-        return $this->cep;
-    }
-
-    public function getLogradouro(): string
-    {
-        return $this->logradouro;
-    }
-
-    public function getBairro(): string
-    {
-        return $this->bairro;
-    }
-
-    public function getNumero(): int
-    {
-        return $this->numero;
-    }
-
-    public function getQuadra(): int
-    {
-        return $this->quadra;
-    }
-
-    public function getLote(): int
-    {
-        return $this->lote;
-    }
-
-    public function getComplemento(): string
-    {
-        return $this->complemento;
+        return $this->imobiliaria;
     }
 
     public function getNomeFantasia(): string
@@ -73,55 +26,15 @@ class ImovelDTO {
         return $this->cnpj;
     }
 
-    public function getUsuario(): int 
+    public function getEndereco(): EnderecoDTO
     {
-        return $this->usuario;
+        return $this->endereco;
     }
 
     // Setters
-    public function setCidade(string $cidade): void
+    public function setImobiliaria(int $imobiliaria): void 
     {
-        $this->cidade = $cidade;
-    }
-
-    public function setUf(string $uf): void
-    {
-        $this->uf = $uf;
-    }
-
-    public function setCep(string $cep): void
-    {
-        $this->cep = $cep;
-    }
-
-    public function setLogradouro(string $logradouro): void
-    {
-        $this->logradouro = $logradouro;
-    }
-
-    public function setBairro(string $bairro): void
-    {
-        $this->bairro = $bairro;
-    }
-
-    public function setNumero(int $numero): void
-    {
-        $this->numero = $numero;
-    }
-
-    public function setQuadra(int $quadra): void
-    {
-        $this->quadra = $quadra;
-    }
-
-    public function setLote(int $lote): void
-    {
-        $this->lote = $lote;
-    }
-
-    public function setComplemento(string $complemento): void
-    {
-        $this->complemento = $complemento;
+        $this->imobiliaria = $imobiliaria;
     }
 
     public function setNomeFantasia(string $nomefantasia): void
@@ -134,9 +47,9 @@ class ImovelDTO {
         $this->cnpj = $cnpj;
     }
 
-    public function setUsuario(int $usuario): void 
+    public function setEndereco(EnderecoDTO $endereco): void 
     {
-        $this->usuario = $usuario; 
+        $this->endereco = $endereco;
     }
 
 }

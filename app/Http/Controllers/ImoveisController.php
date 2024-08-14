@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Dto\ImovelDTOBuilder;
+use App\Http\Dto\LogErroDTO;
 use App\Models\BusinessObjects\InquilinoBO;
 use App\Models\ContaImovel;
 use App\Models\Endereco;
@@ -12,12 +13,12 @@ use App\Models\UsuarioImovel;
 use App\Services\CalculoContasService;
 use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
+use App\Services\LogErrosService;
 use App\Services\TipoContasService;
 use App\Services\UsuarioService;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
-use App\ValueObjects\SelectOptionVO;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +46,10 @@ class ImoveisController extends Controller
 
         $titulo = 'Cadastrar novo imóvel';
         $mensagem = null;
-
+        
         try {
+            
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
             
             if($request->isMethod('POST')){
 
@@ -66,7 +69,7 @@ class ImoveisController extends Controller
 
                 $request->validate($regras, $feedback);
 
-                
+                $imobiliaria = $request->input('imobiliaria');
                 $cep = $request->input('cep');
                 $logradouro = $request->input('logradouro');
                 $bairro = $request->input('bairro');
@@ -78,7 +81,6 @@ class ImoveisController extends Controller
                 $cnpj = ProjectUtils::tirarMascara($request->input('cnpj-imovel'));
                 $cidade = $request->input('cidade');
                 $uf = $request->input('uf');
-                $idUsuario = UsuarioService::getUsuarioLogado();
 
                 $imovel_dto = (new ImovelDTOBuilder)
                     ->withCep($cep)
@@ -90,40 +92,39 @@ class ImoveisController extends Controller
                     ->withComplemento($complemento ?? '')
                     ->withNomeFantasia($nomefantasia)
                     ->withCnpj($cnpj)
-                    ->withUsuario($idUsuario)
                     ->withCidade($cidade)
                     ->withUf($uf)
+                    ->withImobiliaria($imobiliaria)
                     ->build();
 
                 DB::transaction(function($closure_dto) use ($imovel_dto){
 
+                    $endereco_dto = $imovel_dto->getEndereco();
+
                     Endereco::create([
-                        'cep' => $imovel_dto->getCep(),
-                        'logradouro' => $imovel_dto->getLogradouro(),
-                        'bairro' => $imovel_dto->getBairro(),
-                        'numero' => $imovel_dto->getNumero(),
-                        'quadra' => $imovel_dto->getQuadra(),
-                        'lote' => $imovel_dto->getLote(),
-                        'complemento' => $imovel_dto->getComplemento(),
-                        'uf' => $imovel_dto->getUf(),
-                        'cidade' => $imovel_dto->getCidade()
+                        'cep' => $endereco_dto->getCep(),
+                        'logradouro' => $endereco_dto->getLogradouro(),
+                        'bairro' => $endereco_dto->getBairro(),
+                        'numero' => $endereco_dto->getNumero(),
+                        'quadra' => $endereco_dto->getQuadra(),
+                        'lote' => $endereco_dto->getLote(),
+                        'complemento' => $endereco_dto->getComplemento(),
+                        'uf' => $endereco_dto->getUf(),
+                        'cidade' => $endereco_dto->getCidade()
                     ]);
+
+                    $endereco = DB::getPdo()->lastInsertId();
 
                     Imovel::create([
                         'nomefantasia' => $imovel_dto->getNomeFantasia(),
                         'cnpj' => $imovel_dto->getCnpj(),
-                        'endereco' => DB::getPdo()->lastInsertId(),
+                        'endereco' => $endereco,
+                        'imobiliaria_id' => $imovel_dto->getImobiliaria()
                     ]);
-
-                    UsuarioImovel::create([
-                        'idUsuario' => $imovel_dto->getUsuario(),
-                        'idImovel' => DB::getPdo()->lastInsertId()
-                    ]);
-
                 });
 
 
-                $imovel = ImoveisService::getIDMaximo();
+                $imovel = DB::getPdo()->lastInsertId();
 
                 $mensagem = [
                     'status' => 'sucesso',
@@ -135,8 +136,17 @@ class ImoveisController extends Controller
                 return $salas_controller->cadastrarPrimeiraSala(new Request(), $imovel, $mensagem) ;
             }
 
-            return view('app.cadastro-imovel', compact('titulo'));
+            return view('app.cadastro-imovel', compact('titulo', 'imobiliarias'));
         } catch (\Throwable | ValidationException $e) {
+
+            $usuario = UsuarioService::getUsuarioLogado();
+            $json = json_encode($request->all());
+            $log = $e->getMessage();
+            $rota = $request->url();
+            $verbo_http = $request->method();
+            $request_headers = json_encode($request->headers->all());
+            $log_erros_dto = new LogErroDTO($usuario, $rota, $json, $log, $verbo_http, $request_headers);
+            LogErrosService::salvarErro($log_erros_dto);
 
             if($e instanceof ValidationException){
                 return back()->withErrors($e->validator->errors());

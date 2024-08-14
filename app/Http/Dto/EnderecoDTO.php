@@ -12,6 +12,7 @@ class EnderecoDTO {
     private ?int $quadra;
     private ?int $lote; 
     private string $cep;
+    private ?string $complemento;
 
 
     public function getCidade(): string
@@ -39,12 +40,12 @@ class EnderecoDTO {
         return $this->numero;
     }
 
-    public function getQuadra(): int
+    public function getQuadra(): ?int
     {
         return $this->quadra;
     }
 
-    public function getLote(): int
+    public function getLote(): ?int
     {
         return $this->lote;
     }
@@ -53,6 +54,12 @@ class EnderecoDTO {
     {
         return $this->cep;
     }
+
+    public function getComplemento(): ?string
+    {
+        return $this->complemento;
+    }
+
 
     public function setCidade(string $cidade)
     {
@@ -63,7 +70,6 @@ class EnderecoDTO {
     {
         $this->logradouro = $logradouro;
     }
-
 
     public function setUf(string $uf)
     {
@@ -95,4 +101,10 @@ class EnderecoDTO {
     {
         $this->cep = $cep;
     }
+
+    public function setComplemento(?string $complemento): void 
+    {
+        $this->complemento = $complemento;
+    }
+
 }

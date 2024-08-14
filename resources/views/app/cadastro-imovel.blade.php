@@ -2,7 +2,7 @@
 
 @section('conteudo')
     @include('app.layouts._partials.topo-imoveis')
-    @component('app.layouts._components.form_imovel')
+    @component('app.layouts._components.form_imovel', compact('imobiliarias'))
     @endcomponent
     @include('app.layouts._partials.end-page')
 @endsection

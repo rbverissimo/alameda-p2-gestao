@@ -8,47 +8,48 @@ class ImovelDTOBuilder {
 
     public function __construct() {
         $this->imovel_dto = new ImovelDTO();
+        $this->imovel_dto->setEndereco(new EnderecoDTO);
     }
 
     public function withCep(string $cep): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setCep($cep);
+        $this->imovel_dto->getEndereco()->setCep($cep);
         return $this;
     }
 
-    public function withLogradouro(string $logradouro): ImovelDTOBuilder 
+    public function withLogradouro(?string $logradouro): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setLogradouro($logradouro);
+        $this->imovel_dto->getEndereco()->setLogradouro($logradouro);
         return $this;
     }
 
     public function withBairro(string $bairro): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setBairro($bairro);
+        $this->imovel_dto->getEndereco()->setBairro($bairro);
         return $this;
     }
 
-    public function withNumero(int $numero): ImovelDTOBuilder 
+    public function withNumero(?int $numero): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setNumero($numero);
+        $this->imovel_dto->getEndereco()->setNumero($numero);
         return $this;
     }
 
-    public function withQuadra(int $quadra): ImovelDTOBuilder 
+    public function withQuadra(?int $quadra): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setQuadra($quadra);
+        $this->imovel_dto->getEndereco()->setQuadra($quadra);
         return $this;
     }
 
-    public function withLote(int $lote): ImovelDTOBuilder 
+    public function withLote(?int $lote): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setLote($lote);
+        $this->imovel_dto->getEndereco()->setLote($lote);
         return $this;
     }
 
     public function withComplemento(string $complemento = null): ImovelDTOBuilder 
     {
-        $this->imovel_dto->setComplemento($complemento);
+        $this->imovel_dto->getEndereco()->setComplemento($complemento);
         return $this;
     }
 
@@ -64,18 +65,19 @@ class ImovelDTOBuilder {
         return $this;
     }
 
-    public function withUsuario(int $usuario): ImovelDTOBuilder{
-        $this->imovel_dto->setUsuario($usuario);
-        return $this;
-    }
-
     public function withCidade(string $cidade): ImovelDTOBuilder {
-        $this->imovel_dto->setCidade($cidade);
+        $this->imovel_dto->getEndereco()->setCidade($cidade);
         return $this;
     }
 
     public function withUf(string $uf): ImovelDTOBuilder {
-        $this->imovel_dto->setUf($uf);
+        $this->imovel_dto->getEndereco()->setUf($uf);
+        return $this;
+    }
+
+    public function withImobiliaria(?int $imobiliaria): ImovelDTOBuilder
+    {
+        $this->imovel_dto->setImobiliaria($imobiliaria);
         return $this;
     }
 
