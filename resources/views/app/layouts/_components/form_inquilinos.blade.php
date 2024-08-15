@@ -6,7 +6,7 @@
     @endif
     <div class="row">
         <div class="col-5">
-            <label id="label-input-inquilino-nome" for="form-inquilino-nome"></label>
+            <label id="label-input-inquilino-nome" for="form-inquilino-nome">Nome completo: </label>
             <input required type="text" 
                 name="nome" 
                 placeholder="Nome completo: " 
@@ -17,7 +17,7 @@
             <span id="span-errors-inquilino-nome" class="errors-highlighted">{{ $errors->has('nome') ? $errors->first('nome') : ' '}}</span>        
         </div>
         <div class="col-4">
-            <label id="label-input-inquilino-cpf" for="form-inquilino-cpf"></label>
+            <label id="label-input-inquilino-cpf" for="form-inquilino-cpf">CPF: </label>
             <input type="text" 
                 name="cpf" 
                 placeholder="CPF: "
@@ -81,16 +81,22 @@
                 </div>
             @endisset 
             <div class="col-4">
+                @php
+                    $imoveis_collection = isset($imoveis) ? $imoveis : [];
+                @endphp
                 <x-forms.select display="none"
                     pattern-name="imoveis-select"
                     label-text="Selecione um imóvel:"
-                    :collection="$imoveis"></x-forms.select>
+                    :collection="$imoveis_collection"></x-forms.select>
             </div>
             <div class="col-4">
+                @php
+                    $salas_collection = isset($salas) ? $salas : [];
+                @endphp
                 <x-forms.select display="none"
                     pattern-name="sala-select"
                     label-text="Selecione uma sala: "
-                    :collection="$salas"></x-forms.select>
+                    :collection="$salas_collection"></x-forms.select>
             </div>
         </div>
     </div>

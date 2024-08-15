@@ -7,6 +7,7 @@ use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\DescricaoValorContaVO;
 use App\ValueObjects\ResultadoCalculoContasVO;
+use App\ValueObjects\SelectOptionVO;
 
 class InquilinoBO {
 
@@ -24,6 +25,14 @@ class InquilinoBO {
     
             $imoveis = ImoveisService::getListaImoveisSelect();
             $salas = ImoveisService::getSalaBy($inquilino->imovel);
+
+            $options = [SelectOptionVO::getPrimeiroElementoVazio()];
+            foreach ($salas as $sala) {
+                  $option = new SelectOptionVO($sala->id, $sala->nomesala);
+                  $options[] = $option->getJson();
+            }
+            $salas = array_merge($options);
+
             $contrato = InquilinosService::getContratoVigente($idInquilino);
 
             return ['inquilino' => $inquilino, 'imoveis' => $imoveis, 'salas' => $salas, 'contrato' => $contrato];

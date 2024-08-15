@@ -71,7 +71,6 @@ class PainelInquilinoController extends Controller
             'id_inquilino' => $inquilino->id
         ]);
         $appData = $appData_vo->getJson();
-
         return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'appData'));
 
     }

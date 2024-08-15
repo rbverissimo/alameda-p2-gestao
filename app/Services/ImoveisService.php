@@ -86,12 +86,12 @@ class ImoveisService {
         $imoveis = Imovel::select('imoveis.id', 'imoveis.nomefantasia')
             ->whereIn('imoveis.id', ImoveisService::getImoveisByUsuarioLogado())
             ->get();
-
-        $imovel_vazio = new Imovel();
-        $imovel_vazio->id = 0;
-        $imovel_vazio->nomefantasia = '';
-
-        return $imoveis->prepend($imovel_vazio);
+        $options = [SelectOptionVO::getPrimeiroElementoVazio()];
+        foreach ($imoveis as $imovel) {
+            $option = new SelectOptionVO($imovel->id, $imovel->nomefantasia);
+            $options[] = $option->getJson();
+        }
+        return array_merge($options);
 
     }
 

@@ -1,3 +1,5 @@
+import { writeMascaraCpf } from "../validators/view-masks";
+
 let appData = {};
 let idInquilino = 0;
 let nomeInquilino = '';
@@ -49,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function(){
             nomeInquilino = appData.nome_inquilino;
         }
     });
+
 });
 
     function decodificarSituacaoInquilino(){
