@@ -10,7 +10,7 @@ class TipoSala extends Model
 {
     use HasFactory;
     protected $table = 'tipos_sala';
-    protected $fillable = [ 'id', 'descricao'];
+    protected $fillable = [ 'id', 'descricao', 'sistema'];
 
 
     public function sala(): HasOne

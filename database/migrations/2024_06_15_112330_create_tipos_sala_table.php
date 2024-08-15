@@ -20,20 +20,6 @@ class CreateTiposSalaTable extends Migration
             $table->string('descricao');
         });
 
-        TipoSala::create([
-            'id' => '1',
-            'descricao' => 'Residencial'
-        ]);
-
-        TipoSala::create([
-            'id' => '2',
-            'descricao' => 'Comercial'
-        ]);
-
-        TipoSala::create([
-            'id' => '3',
-            'descricao' => 'Uso misto'
-        ]);
     }
 
     /**

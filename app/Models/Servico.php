@@ -11,16 +11,19 @@ class Servico extends Model
     use HasFactory;
     protected $table = 'servicos';
     protected $fillable = [
+        'ud_codigo',
+        'ud_nome',
         'descricao',
         'dataFim',
         'dataInicio',
         'valor',
-        'imovel'
+        'salacodigo',
+        'tipo_servico'
     ];
 
 
-    public function imovel(): BelongsTo
+    public function sala(): BelongsTo
     {
-        return $this->belongsTo(Imovel::class, 'imovel');
+        return $this->belongsTo(Sala::class, 'salacodigo');
     }
 }

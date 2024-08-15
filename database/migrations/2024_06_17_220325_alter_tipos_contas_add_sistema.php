@@ -18,8 +18,6 @@ class AlterTiposContasAddSistema extends Migration
             $table->char('sistema', 1)->default('N');
         });
 
-
-        DB::update("UPDATE tipocontas SET sistema = 'S'");
     }
     
 

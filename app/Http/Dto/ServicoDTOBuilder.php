@@ -54,7 +54,7 @@ class ServicoDTOBuilder {
 
     public function withTipo(int $tipo): self
     {
-        $this->dto->setSala($tipo);
+        $this->dto->setTipo($tipo);
         return $this;
     }
 

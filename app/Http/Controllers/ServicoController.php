@@ -7,10 +7,14 @@ use App\Http\Dto\RequestParamsDTO;
 use App\Http\Dto\ServicoDTO;
 use App\Http\Dto\ServicoDTOBuilder;
 use App\Models\BusinessObjects\LogErrosBO;
+use App\Models\Servico;
 use App\Services\ImobiliariasService;
+use App\Services\PrestadorServicoService;
 use App\Services\TiposServicosService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\MensagemVO;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -62,9 +66,33 @@ class ServicoController extends Controller
                     ->build();
 
                 DB::transaction(function () use ($servico_dto){
-                    
-                });    
 
+
+                    Servico::create([
+                        'ud_codigo' => $servico_dto->getCodigo(),
+                        'ud_nome' => $servico_dto->getNome(),
+                        'salacodigo' => $servico_dto->getSala(),
+                        'dataInicio' => $servico_dto->getDataInicio(),
+                        'dataFim' => $servico_dto->getDataFim(),
+                        'valor' => $servico_dto->getValor(),
+                        'tipo_servico' => $servico_dto->getTipo(),
+                        'descricao' => $servico_dto->getDescricao()
+                    ]);
+
+                    $servico_id = DB::getPdo()->lastInsertId();
+                    $sql = 'INSERT INTO PRESTADORES_SERVICOS_PRESTADOS (idPrestador, idServico, created_at, updated_at) VALUES(?, ?, ?, ?)';
+
+                    foreach ($servico_dto->getPrestadores() as $identificador => $nomePrestador) {
+                        $idPrestador = PrestadorServicoService::getIdPrestadorBy($nomePrestador);
+                        $timestamp = Carbon::now()->toDateTimeString();
+                        $bindings = [$idPrestador, $servico_id, $timestamp, $timestamp];
+                        DB::insert($sql, $bindings);
+                    }
+
+                });    
+                
+                $mensagem_vo = new MensagemVO('sucesso', 'Serviço cadastrado com sucesso!');
+                $mensagem = $mensagem_vo->getJson();   
 
             }
 
@@ -75,7 +103,7 @@ class ServicoController extends Controller
             $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
             $log_erros_bo->salvar();
 
-            redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
         }
     }
     public function editar(Request $request, $idServico){
