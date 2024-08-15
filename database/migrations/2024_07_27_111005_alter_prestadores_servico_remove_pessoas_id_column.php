@@ -14,7 +14,7 @@ class AlterPrestadoresServicoRemovePessoasIdColumn extends Migration
     public function up()
     {
         Schema::table('prestadores_servicos', function(Blueprint $table){
-            $table->string('nome', 60)->nullable();
+            $table->string('nome', 60)->nullable()->index();
             $table->string('cpf', 11)->nullable();
             $table->string('cnpj', 14)->nullable();
             $table->unsignedBigInteger('endereco')->nullable();

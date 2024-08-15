@@ -15,8 +15,8 @@ class AlterServicosTableAddCodigoNomeColumns extends Migration
     public function up()
     {
         Schema::table('servicos', function(Blueprint $table){
-            $table->string('ud_codigo', 10)->nullable();
-            $table->string('ud_nome', 50)->nullable();
+            $table->string('ud_codigo', 10)->nullable()->index();
+            $table->string('ud_nome', 50)->nullable()->index();
         });
     }
 

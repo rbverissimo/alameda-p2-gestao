@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Constants\Operacao;
 use App\Http\Dto\RequestParamsDTO;
+use App\Http\Dto\ServicoDTO;
+use App\Http\Dto\ServicoDTOBuilder;
 use App\Models\BusinessObjects\LogErrosBO;
 use App\Services\ImobiliariasService;
 use App\Services\TiposServicosService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServicoController extends Controller
 {
@@ -41,6 +44,27 @@ class ServicoController extends Controller
                 $valorServico = ProjectUtils::retirarMascaraMoeda($request->input('valor-servico'));
                 $tipoServico = $request->input('tipo-servico');
                 $descricaoServico = $request->input('descricao-servico');
+
+                // idetificador => nome_prestador
+                $prestadores = CollectionUtils::getAssociativeArray($request->input(), '-', 1, 'prestador');
+
+
+                $servico_dto = (new ServicoDTOBuilder)
+                    ->withCodigo($codigoServico)
+                    ->withNome($nomeServico)
+                    ->withSala($sala)
+                    ->withDataInicio($dataInicio)
+                    ->withDataFim($dataFim)
+                    ->withValor($valorServico)
+                    ->withTipo($tipoServico)
+                    ->withDescricao($descricaoServico)
+                    ->withPrestadores($prestadores)
+                    ->build();
+
+                DB::transaction(function () use ($servico_dto){
+                    
+                });    
+
 
             }
 

@@ -44,4 +44,8 @@ class PrestadorServicoService {
         return PrestadorServico::where('id', $idPrestador)->pluck('nome')->first();
     }
 
+    public static function getIdPrestadorBy($nomePrestador){
+        return PrestadorServico::where('nome','=', $nomePrestador)->pluck('id')->first();
+    }
+
 }
