@@ -291,6 +291,24 @@ class ProjectUtils {
                   return !empty($data);
             });
             return json_encode(array_merge($jsonsValidos));
-      } 
+      }
+      
+      /**
+       * Esse método checa se uma string contém números. 
+       * Se a regex encontrar ao menos um número na string, independente de whitespaces 
+       * ou caractéres especiais, ela retornará true
+       */
+      public static function isStringComNumeros($str){
+            return preg_match('/\d/', $str) === 1;
+      }
+
+      /**
+       * Esse método checa se uma string contém apenas números.
+       * Se todos os caractéres da string, incluindo whitespaces, forem números
+       * a string retornará true. 
+       */
+      public static function isStringNumerica($str){
+            return preg_match('/^\d+$/', $str);
+      }
 
 }

@@ -9,7 +9,9 @@ use App\Http\Dto\ServicoDTOBuilder;
 use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\Servico;
 use App\Services\ImobiliariasService;
+use App\Services\LogErrosService;
 use App\Services\PrestadorServicoService;
+use App\Services\ServicosTomadosService;
 use App\Services\TiposServicosService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
@@ -115,6 +117,30 @@ class ServicoController extends Controller
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+        }
+    }
+
+    public function checarCodigoNome($param){
+
+        try {
+            $isCodigo = ProjectUtils::isStringNumerica($param);
+            $encontrado = $isCodigo ? ServicosTomadosService::existsBy('ud_codigo', $param) : ServicosTomadosService::existsBy('ud_nome', $param);
+            return response('Sucesso na requisição', 200)->json(['parametroPermitido' => !$encontrado]);
+
+        } catch (\Throwable $th) {
+
+            $json_array = [
+                'isCodigo' => $isCodigo,
+                'param' => $param,
+            ];
+            LogErrosService::salvarErrosPassandoParametrosManuais(
+                './servicos/c/cn/'.$param,
+                $th->getMessage(),
+                json_encode($json_array),
+                'GET'
+            );
+
+            return response('Falha na requisição', 500);
         }
     }
 }
