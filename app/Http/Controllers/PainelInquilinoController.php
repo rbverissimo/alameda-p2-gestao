@@ -15,6 +15,7 @@ use App\Services\ComprovantesService;
 use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
+use App\Services\LogErrosService;
 use App\Services\SituacaoFinanceiraService;
 use App\Utils\InquilinosUtils;
 use App\Utils\ProjectUtils;
@@ -336,8 +337,17 @@ class PainelInquilinoController extends Controller
             return response()->json(['saldo_atual' => $saldo_atual, 'data_atualizacao' => $data_atualizacao,  'mensagem' => $mensagem]);
         } catch (\Throwable $th) {
 
-            $mensagem_vo = new MensagemVO('falha', $th->getMessage());
+            $mensagem_estado = 'Um erro aconteceu na consolidação do saldo. Entre em contato com o suporte. ';
+            $mensagem_vo = new MensagemVO('falha', $mensagem_estado);
             $mensagem = $mensagem_vo->getJson();
+
+            $json = ProjectUtils::mergeJson($creditos_json, $debitos_json);
+            LogErrosService::salvarErrosPassandoParametrosManuais(
+                './consolidar/s/'.$idInquilino,
+                $th->getMessage(),
+                $json,
+                'GET'
+            );
 
             return response()->json(['mensagem' => $mensagem]);
         }
