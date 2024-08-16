@@ -7,6 +7,7 @@ use App\Http\Dto\RequestParamsDTO;
 use App\Http\Dto\ServicoDTO;
 use App\Http\Dto\ServicoDTOBuilder;
 use App\Models\BusinessObjects\LogErrosBO;
+use App\Models\BusinessObjects\ServicosTomadosBO;
 use App\Models\Servico;
 use App\Services\ImobiliariasService;
 use App\Services\LogErrosService;
@@ -41,7 +42,11 @@ class ServicoController extends Controller
 
             if($request->isMethod('POST')){
 
-                
+                $bo = new ServicosTomadosBO();
+                $regras = $bo->getRegrasValidacao();
+
+                $request->validate($regras);
+
                 $codigoServico = $request->input('codigo-servico');
                 $nomeServico = $request->input('nome-servico');
                 $sala = $request->input('sala-select');
@@ -51,6 +56,7 @@ class ServicoController extends Controller
                 $tipoServico = $request->input('tipo-servico');
                 $descricaoServico = $request->input('descricao-servico');
 
+                
                 // idetificador => nome_prestador
                 $prestadores = CollectionUtils::getAssociativeArray($request->input(), '-', 1, 'prestador');
 
