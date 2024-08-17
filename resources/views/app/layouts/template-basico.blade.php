@@ -12,6 +12,7 @@
             <link href="{{asset('css/carousels.css')}}" rel="stylesheet">
             <link href="{{asset('css/misc.css')}}" rel="stylesheet">
             <link href="{{asset('css/icons.css')}}" rel="stylesheet">
+            @stack('styles')
       </head>
       <body>
             @include('app.layouts._partials.topo-nav')

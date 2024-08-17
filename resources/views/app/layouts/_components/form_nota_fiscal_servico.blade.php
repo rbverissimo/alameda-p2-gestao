@@ -19,4 +19,19 @@
             </div>
         </div>
     </div>
+    <div class="col-12">
+        @php
+            $mockCollection = [
+                [ 'identifier' => 101, 'secondParam' => 'Serviço 1'],
+                [ 'identifier'=> 102, 'secondParam' => 'Serviço 2']
+            ];
+        @endphp
+        <x-forms.modal-picker 
+            pattern-name="pick-servicos"
+            header-text="Serviços prestados: "
+            :columns-names="['', 'Código', 'Serviço']"
+            :collection="$mockCollection"
+        />
+
+    </div>
 </form>

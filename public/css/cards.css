@@ -79,6 +79,15 @@
       max-height: 700px;
 }
 
+.wide-form-modal 
+{
+      min-width: 400px;
+      width: 65%;
+      height: auto;
+      max-height: 800px;
+      overflow-y: auto;
+}
+
 .basic-card-wrapper {
       display: inline-block;
       text-align: start;

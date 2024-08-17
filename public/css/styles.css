@@ -289,6 +289,11 @@ select:focus {
       font-size: 0.75rem;
 }
 
+.flex-container {
+      display: flex;
+      justify-content: space-between;
+}
+
 
 @media only screen and (min-width: 769px){
       .col-1 { width: 8.33%;}

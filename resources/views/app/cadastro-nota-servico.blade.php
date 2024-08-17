@@ -1,5 +1,9 @@
 @extends('app.layouts.template-basico')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/inputs.css')}}">
+@endpush
+
 @section('conteudo')
 <div class="dashboard light-dashboard">
     <div class="row">
