@@ -1,4 +1,5 @@
 import { getInputValueFromIDB, iniciarObjectStores, salvarIDBInput } from "../db/indexed.js";
+import { toggleModalPicker } from "../dynamic-micro-components/modal-picker.js";
 import { dataMascara, 
     formatarDataParaSalvar, 
     mascaraValorDinheiro, 
@@ -13,6 +14,8 @@ const dataEmissaoInput = document.getElementById('form-data-emissao');
 const valorBrutoInput = document.getElementById('form-valor-bruto');
 const notaSerieInput = document.getElementById('form-nota-serie');
 const numeroDocumentoInput = document.getElementById('form-numero-documento');
+const selecionarServicoButton = document.getElementById('selecionar-servico-button');
+const fecharModalButton = document.getElementById('fechar-modal-pick-servicos');
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -35,6 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     numeroDocumentoInput.addEventListener('change', (event) => {
         salvarIDBInput(userDb, 'cadastro-nfs-numero-documento', 'form-numero-documento', event.target.value);
     });
+
+    selecionarServicoButton.addEventListener('click', (event) => {
+        toggleModalPicker('pick-servicos');
+        event.preventDefault();
+    });
     
     dataEmissaoInput.value = writeDataMascara(dataEmissaoInput.value);
 
@@ -54,3 +62,10 @@ dataEmissaoInput.addEventListener('input', dataMascara);
 valorBrutoInput.addEventListener('input', mascaraValorDinheiro);
 notaSerieInput.addEventListener('input', apenasNumeros);
 numeroDocumentoInput.addEventListener('input', apenasNumeros);
+
+
+
+fecharModalButton.addEventListener('click', (event) => { 
+    toggleModalPicker('pick-servicos');
+    event.preventDefault();
+});

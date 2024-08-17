@@ -11,6 +11,9 @@
             <button class="button common-button">
                 Voltar</button>
         </div>
+        <div class="col-6">
+            <button id="selecionar-servico-button" class="button action-button">Selecionar serviço prestado</button>
+        </div>
     </div>
 </div>
 <div class="row">

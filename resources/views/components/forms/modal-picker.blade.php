@@ -1,6 +1,6 @@
 <div id="modal-{{$patternName}}">
-    <div class="overlay"></div>
-    <div class="dashboard-modal light-dashboard wide-form-modal">
+    <div id="modal-overlay-{{$patternName}}" class="overlay"></div>
+    <div id="modal-dashboard-{{$patternName}}" class="dashboard-modal light-dashboard wide-form-modal">
         <header>
             <div class="flex-container">
                 <div>
