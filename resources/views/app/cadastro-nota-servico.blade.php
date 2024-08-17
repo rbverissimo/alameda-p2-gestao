@@ -1,7 +1,7 @@
 @extends('app.layouts.template-basico')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/inputs.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/checkboxes.css')}}">
 @endpush
 
 @section('conteudo')
