@@ -2,6 +2,9 @@
 
 namespace App\Models\BusinessObjects;
 
+use App\Services\ServicosTomadosService;
+use App\Services\UsuarioService;
+
 class ServicosTomadosBO {
 
 
@@ -14,5 +17,10 @@ class ServicosTomadosBO {
     
     public function getRegrasValidacao(){
         return $this->REGRAS_VALIDACAO;
+    }
+
+    public function getPainelServicosLista(){
+        $imobiliarias = UsuarioService::getImobiliarias();
+        return ServicosTomadosService::getPainelListaServicos($imobiliarias);
     }
 }

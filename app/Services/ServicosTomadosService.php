@@ -13,4 +13,19 @@ class ServicosTomadosService {
         $select = DB::select($sql, $bindings);
         return count($select) > 0;
     }
+
+    public static function getPainelListaServicos($imobiliarias){
+
+        $sql = 'SELECT S.UD_NOME, S.VALOR FROM SERVICOS S 
+            JOIN SALAS SA ON SA.ID = S.SALACODIGO 
+            JOIN IMOVEIS IM ON IM.ID = SA.IMOVELCODIGO
+            WHERE IM.IMOBILIARIA_ID IN (?)';
+        
+        try {
+            $painel_lista_servicos = DB::select($sql, $imobiliarias);
+            return $painel_lista_servicos;
+        } catch (\Throwable $th) {
+            
+        }
+    }
 }

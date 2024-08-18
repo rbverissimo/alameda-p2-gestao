@@ -1,13 +1,13 @@
 <table>
     <tr>
-          <th>Data</th>
+          <th>Nome</th>
           <th>Valor</th>
           <th>Ações</th>
     </tr>
     @foreach ($servicos as $servico)
           <tr class="table-row">
                 <td>
-                    <a class="table-link">{{$servico->dataInicio}}</a>
+                    <a class="table-link">{{$servico->nome}}</a>
                 </td>
                 <td>
                     <a class="table-link">{{$servico->valor}}</a>

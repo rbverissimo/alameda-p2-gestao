@@ -27,7 +27,11 @@ class ServicoController extends Controller
         $titulo = 'Painel de serviços tomados';
         $mensagem = null;
         try {
-            return view('app.painel-servicos', compact('titulo', 'mensagem'));
+            
+            $bo = new ServicosTomadosBO();
+            $servicos = $bo->getPainelServicosLista();
+
+            return view('app.painel-servicos', compact('titulo', 'mensagem', 'servicos'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi possível encontrar os serviços tomados '.$th->getMessage());
         }
