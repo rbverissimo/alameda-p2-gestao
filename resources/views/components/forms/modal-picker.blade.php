@@ -27,7 +27,7 @@
                 @isset($collection)
                       @foreach ($collection as $c)
 
-                            <tr class="table-row">
+                            <tr class="table-row" id="tr-{{$c['identifier']}}">
                             <td> 
                                 <label for="check-{{$patternName}}-{{$c['identifier']}}">
                                     <input type="checkbox" name="check-{{$patternName}}-{{$c['identifier']}}">

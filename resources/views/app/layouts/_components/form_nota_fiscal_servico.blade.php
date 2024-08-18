@@ -13,6 +13,7 @@
                 @endcomponent
             </div>
         </div>
+        <div id="selection-container"></div>
         <div class="row center-itens">
             <div class="col-3">
                 <button class="button confirmacao-button">Salvar</button>

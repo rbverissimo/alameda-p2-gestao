@@ -78,9 +78,9 @@ export function spanErrors(id){
  * @param {boolean} required 
  * @returns uma div.col com os elementos adicionados
  */
-export function gerarInputLabelSpanErrors(divCol, name, textLabel, required = false){
+export function gerarInputLabelSpanErrors(divCol, name, textLabel, required = false, readonly = false){
     const label = label(`${name}-input`, textLabel, `label-${name}-input`);
-    const input = input(name, `${name}-input`, required);
+    const input = input(name, `${name}-input`, required, readonly);
     const span = spanErrors(`span-errors-${name}`);
     divCol.appendChild(label);
     divCol.appendChild(input);
