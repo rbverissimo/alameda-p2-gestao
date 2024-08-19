@@ -1,6 +1,6 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { gerarDeletarButton } from "../dynamic-micro-components/icons.js";
-import { divCol, divRow, label, label } from "../dynamic-micro-components/layouts.js";
+import { divCol, divRow, label } from "../dynamic-micro-components/layouts.js";
 import { createOptions } from "../dynamic-micro-components/select-option.js";
 import { cpfMascara, mascaraCnpj, mascaraTelefone, writeMascaraCnpj, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 
