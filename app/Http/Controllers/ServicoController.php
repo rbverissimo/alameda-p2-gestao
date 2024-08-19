@@ -16,6 +16,7 @@ use App\Services\ServicosTomadosService;
 use App\Services\TiposServicosService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\ListaServicoTomadoItemVO;
 use App\ValueObjects\MensagemVO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,9 +28,13 @@ class ServicoController extends Controller
         $titulo = 'Painel de serviços tomados';
         $mensagem = null;
         try {
-            
+
             $bo = new ServicosTomadosBO();
-            $servicos = $bo->getPainelServicosLista();
+            $dados = $bo->getPainelServicosLista();
+
+            $servicos = array_map(function($dado) {
+                return new ListaServicoTomadoItemVO($dado->id, $dado->ud_nome, $dado->valor);
+            }, $dados);
 
             return view('app.painel-servicos', compact('titulo', 'mensagem', 'servicos'));
         } catch (\Throwable $th) {
