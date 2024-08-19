@@ -35,7 +35,7 @@ class PrestadorServicoController extends Controller
             $prestadores_models = PrestadorServicoService::getListaPainelPrestadores(); 
             $prestadores = [];
             foreach ($prestadores_models as $prestador_model) {
-                $vo = PrestadorServicoVO::buildVO($prestador_model);
+                $vo = PrestadorServicoVO::buildVO($prestador_model, []);
                 $prestadores[] = $vo;
             }
             return view('app.painel-prestadores-servicos', compact('titulo', 'mensagem', 'prestadores')); 
@@ -178,12 +178,15 @@ class PrestadorServicoController extends Controller
         $mensagem = null;
         try {
 
-            $prestador_model = PrestadorServicoService::getPrestadorBy($idPrestador);
-            $prestador = PrestadorServicoVO::buildVO($prestador_model);
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+            $prestador_model = PrestadorServicoService::getPrestadorBy($idPrestador);
+            $prestador = PrestadorServicoVO::buildVO($prestador_model, []);
             
             $bo = new PrestadorServicoBO();
             $appData = $bo->getAppData();
+            
+            $prestador->setSelectTipos($appData['appData']['tipos_prestador']);
+            
 
             return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imobiliarias'));
 
@@ -201,7 +204,7 @@ class PrestadorServicoController extends Controller
                 $request->getMethod(),
             );
 
-            return redirect()->back()->with('erros', 'Não foi possível encontrar o prestador de serviço selecionado '.$th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi possível encontrar o prestador de serviço selecionado');
         }
     }
 

@@ -1,5 +1,6 @@
 import { criarComponenteEnderecoSimplificado } from "../dynamic-micro-components/endereco.js";
 import { gerarDeletarButton } from "../dynamic-micro-components/icons.js";
+import { divCol, divRow, label, label } from "../dynamic-micro-components/layouts.js";
 import { createOptions } from "../dynamic-micro-components/select-option.js";
 import { cpfMascara, mascaraCnpj, mascaraTelefone, writeMascaraCnpj, writeMascaraCpf, writeMascaraTelefone } from "../validators/view-masks.js";
 
@@ -51,35 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
 export function criarTipoPrestadorSelect(prefix, optionsData){
 
     const tiposPrestador = optionsData;
-    const counter = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+    const counter = Math.floor(Math.random() * (99999 - 10000) + 10000);
 
-    const divRow = document.createElement('div');
-    divRow.classList.add('row');
-    divRow.classList.add('outline');
+    const newRow = divRow('outline');
 
-    const divCol8 = document.createElement('div');
-    divCol8.classList.add('col-8');
+    const divCol8 = divCol(8);
+    const divCol3 = divCol(3);
 
-    const divCol3 = document.createElement('div');
-    divCol3.classList.add('col-3');
+    const newLabel = label(`${prefix}-input-${counter}`, 'Indique o tipo de serviço prestado: ', `label-${prefix}-input-${counter}`);
+    
+    const newSelect = document.createElement('select');
+    newSelect.id = `${prefix}-input-${counter}`;
+    newSelect.name = `${prefix}-${counter}`;
 
-    const label = document.createElement('label');
-    const select = document.createElement('select');
-
-    select.id = label.for = `${prefix}-input-${counter}`;
-    select.name = `${prefix}-${counter}`;
-    label.id = `label-${select.id}`;
-    label.textContent = 'Indique o tipo de serviço prestado: ';
-    createOptions(tiposPrestador, select);
-    divCol8.appendChild(label);
-    divCol8.appendChild(select);
+    createOptions(tiposPrestador, newSelect);
+    divCol8.appendChild(newLabel);
+    divCol8.appendChild(newSelect);
     
     const labelDelButton = document.createElement('label');
     labelDelButton.textContent = 'Clique para:';
     const deleteButton = gerarDeletarButton();
-    deleteButton.addEventListener('click', (event) => {
-        divRow.remove();
-        event.preventDefault();
+    deleteButton.type = 'button';
+    deleteButton.addEventListener('click', () => {
+        newRow.remove();
     });
     
     
@@ -87,10 +82,10 @@ export function criarTipoPrestadorSelect(prefix, optionsData){
     divCol3.appendChild(labelDelButton);
     divCol3.appendChild(deleteButton);
 
-    divRow.appendChild(divCol8);
-    divRow.appendChild(divCol3);
+    newRow.appendChild(divCol8);
+    newRow.appendChild(divCol3);
     
-    return divRow;
+    return newRow;
 }
 
 function setCadastrarEnderecoState() {

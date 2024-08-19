@@ -13,15 +13,11 @@ class PrestadorServicoVO {
       private ?string $cnpj;
       private ?string $cpf;
       private ?EnderecoVO $endereco;
-
-      /**
-       * 
-       * @var array App\ValueObjects\TiposPrestadores
-       */
-      private array $tipos; 
+      private array $tipos;
+      private array $selectTipos; 
 
       public function __construct(int $id, string $nome, string $telefone, ?string $cnpj = null, 
-            ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
+            ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos, array $selectTipos) {
             $this->id = $id;
             $this->nome = $nome;
             $this->telefone = $telefone;
@@ -29,6 +25,7 @@ class PrestadorServicoVO {
             $this->cpf = $cpf;
             $this->endereco = $endereco;
             $this->tipos = $tipos;
+            $this->selectTipos = $selectTipos;
       }
 
       public function getId(): int
@@ -66,6 +63,11 @@ class PrestadorServicoVO {
             return $this->tipos;
       }
 
+      public function getSelectTipos(): array
+      {
+            return $this->selectTipos;
+      }
+
       public function setId(int $id): void
       {
             $this->id = $id;
@@ -101,6 +103,11 @@ class PrestadorServicoVO {
             $this->tipos = $tipos; 
       }
 
+      public function setSelectTipos(array $selectTipos): void
+      {
+            $this->selectTipos = $selectTipos;
+      }
+
       public function getJson()
       {
             return [
@@ -113,12 +120,12 @@ class PrestadorServicoVO {
             ];
       }
 
-      public static function buildVO(PrestadorServico $model){
+      public static function buildVO(PrestadorServico $model, array $tipos_prestadores){
 
             $tipos_servicos = $model->getRelation('tipo');
             $tipos = [];
             foreach ($tipos_servicos as $tipo) {
-                  $tipo_vo = new PrestadorTipoVO($tipo->codigoSistema, $tipo->tipo);
+                  $tipo_vo = new SelectOptionVO($tipo->codigoSistema, $tipo->tipo);
                   $tipos[] = $tipo_vo->getJson();
             }
 
@@ -134,7 +141,8 @@ class PrestadorServicoVO {
                   $model->cnpj, 
                   $model->cpf, 
                   $endereco_vo, 
-                  $tipos);
+                  $tipos,
+                  $tipos_prestadores);
       }
 
 }

@@ -15,7 +15,7 @@
                             @php
                                 $servicos = [];
                                 foreach ($prestador->getTipos() as $tipo) {
-                                    $servicos[] = $tipo['tipo'];
+                                    $servicos[] = $tipo['view'];
                                 }
                                 $primeiros_dois_servicos = array_slice($servicos, 0, 2);
                                 $servicos_display = join(', ', $primeiros_dois_servicos);

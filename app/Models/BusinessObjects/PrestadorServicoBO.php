@@ -25,6 +25,7 @@ class PrestadorServicoBO {
 
         return $appData_vo->getJson();
         } catch (\Throwable $th) {
+            
             throw $th;
         }
         

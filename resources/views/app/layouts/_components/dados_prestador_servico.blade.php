@@ -82,7 +82,23 @@
             </div>
         </div>
         <div id="tipo-wrapper">
-
+            @if (isset($prestador))
+                @foreach ($prestador->getTipos() as $tipo)
+                    @php
+                        $verificador = rand(10000, 99999);
+                        $collection = $prestador->getSelectTipos();
+                    @endphp
+                    <x-forms.dynamic-select 
+                        :verificador="$verificador"
+                        pattern-name="tipos-prestador"
+                        :selected-value="$tipo['value']"
+                        label-select-text="Indique o tipo de serviço prestado:"
+                        label-button-text="Clique para:"
+                        :collection="$collection"
+                    />
+                @endforeach
+                
+            @endif
         </div>
     </div>
     
