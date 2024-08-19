@@ -6,19 +6,19 @@ use App\Constants\TiposTelefone;
 use App\Http\Dto\EnderecoDTOBuilder;
 use App\Http\Dto\PrestadorServicoDTOBuilder;
 use App\Http\Dto\TelefoneDTOBuilder;
+use App\Models\BusinessObjects\PrestadorServicoBO;
 use App\Models\Endereco;
 use App\Models\PrestadorServico;
 use App\Models\Telefone;
 use App\Services\ImobiliariasService;
+use App\Services\LogErrosService;
 use App\Services\PrestadorServicoService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use App\Utils\TelefonesUtils;
-use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
 use App\ValueObjects\PrestadorServicoVO;
 use App\ValueObjects\SearchInputVO;
-use App\ValueObjects\SelectOptionVO;
 use Doctrine\Common\Cache\Psr6\InvalidArgument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,20 +51,9 @@ class PrestadorServicoController extends Controller
         $prestador = null; 
         $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
         try {
-            $tipos_prestador_lista = PrestadorServicoService::getListaTiposPrestadores();
 
-            $tipos_prestador = [];
-            foreach ($tipos_prestador_lista as $tipo) {
-                $select = new SelectOptionVO($tipo->id, $tipo->tipo);
-                $tipos_prestador[] = $select->getJson();
-            }
-
-
-            $appData_vo = new AppDataVO('dados_prestador_servico', [
-                'tipos_prestador' => array_merge($tipos_prestador)
-            ]);
-
-            $appData = $appData_vo->getJson();
+            $bo = new PrestadorServicoBO();
+            $appData = $bo->getAppData();
 
             if($request->isMethod('POST')){
 
@@ -192,11 +181,26 @@ class PrestadorServicoController extends Controller
             $prestador_model = PrestadorServicoService::getPrestadorBy($idPrestador);
             $prestador = PrestadorServicoVO::buildVO($prestador_model);
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
-            $appData = [];
+            
+            $bo = new PrestadorServicoBO();
+            $appData = $bo->getAppData();
 
             return view('app.cadastro-prestador-servico', compact('titulo', 'mensagem', 'prestador', 'appData', 'imobiliarias'));
 
         } catch (\Throwable $th) {
+
+            LogErrosService::salvarErrosPassandoParametrosManuais(
+                $request->getBaseUrl(),
+                $th->getMessage(),
+                json_encode(
+                    [
+                        'prestador' => $prestador->getJson(),
+                        'imobiliarias' => $imobiliarias,
+                    ]
+                ),
+                $request->getMethod(),
+            );
+
             return redirect()->back()->with('erros', 'Não foi possível encontrar o prestador de serviço selecionado '.$th->getMessage());
         }
     }

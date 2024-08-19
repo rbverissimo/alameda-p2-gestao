@@ -20,7 +20,8 @@ class PrestadorServicoVO {
        */
       private array $tipos; 
 
-      public function __construct(int $id, string $nome, string $telefone, ?string $cnpj = null, ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
+      public function __construct(int $id, string $nome, string $telefone, ?string $cnpj = null, 
+            ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos) {
             $this->id = $id;
             $this->nome = $nome;
             $this->telefone = $telefone;
@@ -108,7 +109,7 @@ class PrestadorServicoVO {
                   'cnpj' => $this->cnpj,
                   'cpf' => $this->cpf,
                   'tipos' => $this->tipos,
-                  'endereco' => $this->endereco->getJson()
+                  'endereco' => $this->endereco !== null ? $this->endereco->getJson() : null
             ];
       }
 

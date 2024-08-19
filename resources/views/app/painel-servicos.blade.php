@@ -46,5 +46,6 @@
 @endsection
 
 @section('scripts')
+    <script type="module" src="{{ asset('js/views/painel-servicos.js')}}"></script>
     @include('app.scripts.script-mensagem')
 @endsection

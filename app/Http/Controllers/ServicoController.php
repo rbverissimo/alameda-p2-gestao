@@ -38,7 +38,7 @@ class ServicoController extends Controller
 
             return view('app.painel-servicos', compact('titulo', 'mensagem', 'servicos'));
         } catch (\Throwable $th) {
-            redirect()->back()->with('erros', 'Não foi possível encontrar os serviços tomados '.$th->getMessage());
+            redirect()->back()->with('erros', 'Não foi possível encontrar os serviços tomados ');
         }
     }
 

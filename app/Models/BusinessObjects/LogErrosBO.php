@@ -2,7 +2,6 @@
 
 namespace App\Models\BusinessObjects;
 
-use App\Constants\OperacaoCRUD;
 use App\Http\Dto\LogErroDTO;
 use App\Http\Dto\RequestParamsDTO;
 use App\Services\LogErrosService;

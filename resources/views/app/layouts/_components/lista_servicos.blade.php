@@ -7,10 +7,10 @@
     @foreach ($servicos as $servico)
           <tr class="table-row">
                 <td>
-                    <a class="table-link">{{$servico->getNome()}}</a>
+                    <span>{{$servico->getNome()}}</span>
                 </td>
                 <td>
-                    <a class="table-link">{{$servico->getValor()}}</a>
+                    <span class="lista-servicos-valor">{{$servico->getValor()}}</span>
                 </td>
                 <td>
                     <img class="crud-icon" 
