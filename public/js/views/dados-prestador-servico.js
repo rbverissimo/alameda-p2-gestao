@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setCadastrarEnderecoState();
     }
 
+    setHydrateDelButtons();
+
 });
 
 
@@ -100,5 +102,19 @@ function setCadastrarEnderecoState() {
         enderecoContainer.style.display = 'block';
         const enderecoForm = criarComponenteEnderecoSimplificado({},'Endereço da empresa ou prestador de serviço', true);
         enderecoContainer.appendChild(enderecoForm);
+    });
+}
+
+function setHydrateDelButtons(){
+    const buttons = document.getElementsByClassName('dynamic-delete-button');
+    Array.from(buttons).forEach(button => {
+        const buttonId = button.id.split('-');
+        const patternName = buttonId.slice(1, buttonId.length - 1).join('-');
+        const verificador = buttonId[buttonId.length - 1];
+
+        const container = document.getElementById(`dynamic-select-${patternName}-${verificador}`);
+        button.addEventListener('click', (event) => {
+            container.remove();
+        });
     });
 }

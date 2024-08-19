@@ -12,7 +12,7 @@
         <label for="button-{{$patternName}}-{{$verificador}}">{{$labelButtonText}}</label>
         <button type="button" 
             id="button-{{$patternName}}-{{$verificador}}" 
-            class="button deletar-button">{{$deletarButtonText}}
+            class="button deletar-button dynamic-delete-button">{{$deletarButtonText}}
         </button>
     </div>
 </div>

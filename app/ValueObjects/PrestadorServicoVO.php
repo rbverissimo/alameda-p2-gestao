@@ -125,7 +125,7 @@ class PrestadorServicoVO {
             $tipos_servicos = $model->getRelation('tipo');
             $tipos = [];
             foreach ($tipos_servicos as $tipo) {
-                  $tipo_vo = new SelectOptionVO($tipo->codigoSistema, $tipo->tipo);
+                  $tipo_vo = new SelectOptionVO($tipo->id, $tipo->tipo);
                   $tipos[] = $tipo_vo->getJson();
             }
 
