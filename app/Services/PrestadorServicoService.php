@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\PrestadorServico;
 use App\Models\TipoPrestador;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class PrestadorServicoService {
 
@@ -20,7 +21,7 @@ class PrestadorServicoService {
     }
 
     public static function getPrestadorBy($idPrestador){
-        return PrestadorServico::with('endereco', 'tipo', 'telefone')
+        return PrestadorServico::with('endereco', 'tipo', 'telefone', 'imobiliaria')
             ->where('id', $idPrestador)
             ->first();
     }
@@ -46,6 +47,13 @@ class PrestadorServicoService {
 
     public static function getIdPrestadorBy($nomePrestador){
         return PrestadorServico::where('nome','=', $nomePrestador)->pluck('id')->first();
+    }
+
+    public static function getImobiliarias($idPrestador){
+        return DB::table('prestadores_imobiliarias as psi')
+            ->select('psi.imobiliaria_id')
+            ->where('prestador_id', $idPrestador)
+            ->get();
     }
 
 }

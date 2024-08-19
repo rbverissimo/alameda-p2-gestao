@@ -3,6 +3,7 @@
 namespace App\ValueObjects;
 
 use App\Models\PrestadorServico;
+use App\Services\PrestadorServicoService;
 
 class PrestadorServicoVO {
 
@@ -15,9 +16,10 @@ class PrestadorServicoVO {
       private ?EnderecoVO $endereco;
       private array $tipos;
       private array $selectTipos; 
+      private array $imobiliarias;
 
       public function __construct(int $id, string $nome, string $telefone, ?string $cnpj = null, 
-            ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos, array $selectTipos) {
+            ?string $cpf = null, ?EnderecoVO $endereco = null, array $tipos, array $selectTipos, array $imobiliarias) {
             $this->id = $id;
             $this->nome = $nome;
             $this->telefone = $telefone;
@@ -26,6 +28,7 @@ class PrestadorServicoVO {
             $this->endereco = $endereco;
             $this->tipos = $tipos;
             $this->selectTipos = $selectTipos;
+            $this->imobiliarias = $imobiliarias;
       }
 
       public function getId(): int
@@ -68,6 +71,11 @@ class PrestadorServicoVO {
             return $this->selectTipos;
       }
 
+      public function getImobiliarias(): array
+      {
+            return $this->imobiliarias;
+      }
+
       public function setId(int $id): void
       {
             $this->id = $id;
@@ -108,6 +116,11 @@ class PrestadorServicoVO {
             $this->selectTipos = $selectTipos;
       }
 
+      public function setImobiliarias(array $imobiliarias): void
+      {
+            $this->imobiliarias = $imobiliarias;
+      }
+
       public function getJson()
       {
             return [
@@ -131,8 +144,14 @@ class PrestadorServicoVO {
 
             $telefone_relation = $model->getRelation('telefone');
             $telefone = TelefoneVO::getTelefoneFormatadoFrom($telefone_relation);
+            
 
             $endereco_vo = $model->getRelation('endereco') !== null ? $endereco_vo = EnderecoVO::buildVO($model->getRelation('endereco')) : null;
+
+            $imobiliarias = [];
+            foreach ($model->getRelation('imobiliaria') as $imobiliaria) {
+                  $imobiliaria[] = $imobiliaria->id;
+            }
 
             return new PrestadorServicoVO(
                   $model->id,
@@ -142,7 +161,7 @@ class PrestadorServicoVO {
                   $model->cpf, 
                   $endereco_vo, 
                   $tipos,
-                  $tipos_prestadores);
+                  $tipos_prestadores, $imobiliarias);
       }
 
 }

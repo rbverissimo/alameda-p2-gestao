@@ -65,6 +65,8 @@
                 </span>
         </div>
         <div class="col-6">
+            @php
+            @endphp
             <x-forms.select 
                 pattern-name="imobiliaria-select" 
                 labelText="Selecione a imobiliária" 
