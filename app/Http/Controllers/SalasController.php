@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sala;
 use App\Services\ImoveisService;
+use App\Services\LogErrosService;
 use Illuminate\Http\Request;
 use App\Utils\CollectionUtils;
 use App\Utils\SalasUtils;
@@ -79,16 +80,19 @@ class SalasController extends Controller
     }
 
     public function listarSalas($idImovel){
-
-        $salas = Sala::where('imovelcodigo', $idImovel)->get();
-
-        $json = [];
-        foreach ($salas as $sala) {
-            $option = new SelectOptionVO($sala->id, $sala->nomesala);
-            $json[] = $option->getJson();
+        try {
+            return ImoveisService::getListaSalaSelectBy($idImovel);
+        } catch (\Throwable $th) {
+            LogErrosService::salvarErrosPassandoParametrosManuais(
+                '/salas/listar-salas/'.$idImovel, 
+                $th->getMessage(),
+                json_encode([
+                    'localErro' => 'SalasController, método listarSalas'
+                ]),
+                'GET'
+            );
+            return response('Não foi possível encontrar as salas requisitadas para o imóvel. ', 500);
         }
-
-        return $json;
     }
 
 }

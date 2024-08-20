@@ -9,6 +9,7 @@ use App\Models\Sala;
 use App\Models\TipoSala;
 use App\Models\UsuarioImovel;
 use App\ValueObjects\SelectOptionVO;
+use App\ValueObjects\SelectVO;
 
 class ImoveisService {
     
@@ -112,6 +113,16 @@ class ImoveisService {
      */
     public static function getSalaBy($imovel){
         return Sala::where('imovelcodigo', $imovel)->get();
+    }
+
+    public static function getListaSalaSelectBy($imovel){
+        $salas = ImoveisService::getSalaBy($imovel);
+        $salas_vo = [SelectOptionVO::getPrimeiroElementoVazio()];
+        foreach($salas as $sala){
+            $option = new SelectOptionVO($sala->id, $sala->nomesala);
+            $salas_vo[] = $option->getJson();
+        }
+        return $salas_vo;
     }
 
     /**

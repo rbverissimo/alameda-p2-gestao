@@ -1,8 +1,8 @@
-<form action="{{ isset($servico->id) ? route('editar-servico', ['id' => $servico->id]) : route('cadastrar-servico')}}" 
+<form action="{{ isset($servico) ? route('editar-servico', ['id' => $servico->getId()]) : route('cadastrar-servico')}}" 
     method="POST" 
     enctype="multipart/form-data">
   @csrf
-  @if (isset($servico->id))
+  @if (isset($servico))
       @method('PUT')
   @endif
   <div class="dashboard light-dashboard">
@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-4">
         @php
-            $codigoServico = null;
+            $codigoServico = isset($servico) ? $servico->getCodigo() : null;
         @endphp
         <x-forms.input
           label-text="Defina um código: "
@@ -25,7 +25,7 @@
       </div>
       <div class="col-8">
         @php
-            $nomeServico = null;
+            $nomeServico = isset($servico) ? $servico->getNome() : null;
         @endphp
         <x-forms.input
           label-text="Indique um nome para o serviço: "
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos', 'imobiliarias'))
+  @component('app.layouts._components.dados_servico_tomado', compact('tipos_servicos', 'imobiliarias', 'servico'))
       
   @endcomponent
     <div class="dashboard light-dashboard">

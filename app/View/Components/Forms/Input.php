@@ -11,7 +11,7 @@ class Input extends Component
     public ?string $placeholder;
     public string $patternName;
     public string $attrName;
-    public ?mixed $dataInput;
+    public ?string $dataInput;
     public bool $required; 
 
     /**
@@ -20,7 +20,7 @@ class Input extends Component
      * @return void
      */
     public function __construct(?string $labelText = null, ?string $placeholder = null,
-         string $patternName, string $attrName, ?mixed $dataInput = null, bool $required = true)
+         string $patternName, string $attrName, ?string $dataInput = null, bool $required = true)
     {
         $this->labelText = $labelText;
         $this->placeholder = $placeholder;

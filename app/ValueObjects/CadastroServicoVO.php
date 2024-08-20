@@ -8,24 +8,29 @@ use App\Services\ImoveisService;
 
 class CadastroServicoVO { 
 
+    private int $id;
     private string $codigo;
     private string $nome;
-    private int $imobiliaria;
+    private string $imobiliaria;
     private array $imobiliarias_select; 
-    private int $imovel;
+    private string $imovel;
     private array $imoveis_select;
-    private int $sala;
+    private string $sala;
     private array $salas_select;
     private string $dataInicio;
     private ?string $dataFim;
     private float $valor;
-    private int $tipo;
+    private string $tipo;
     private ?string $descricao; 
     private array $prestadores;
 
-    public function __construct(string $codigo, string $nome, int $imobiliaria, array $imobiliarias_select, int $imovel, array $imoveis_select, int $sala, 
-        array $salas_select, string $dataInicio, float $valor, int $tipo, array $prestadores, ?string $dataFim = null, ?string $descricao = null) {
+    public function __construct(int $id, string $codigo, string $nome, string $imobiliaria, array $imobiliarias_select, string $imovel, array $imoveis_select, string $sala, 
+        array $salas_select, string $dataInicio, float $valor, string $tipo, array $prestadores, ?string $dataFim = null, ?string $descricao = null) {
         
+        $this->id = $id;
+        $this->codigo = $codigo;
+        $this->nome = $nome;
+        $this->imobiliaria = $imobiliaria;    
         $this->imobiliarias_select = $imobiliarias_select;
         $this->imovel = $imovel;
         $this->imoveis_select = $imoveis_select;
@@ -40,6 +45,12 @@ class CadastroServicoVO {
     }
 
     // Getters
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function getCodigo(): string
     {
         return $this->codigo;
@@ -50,7 +61,7 @@ class CadastroServicoVO {
         return $this->nome;
     }
 
-    public function getImobiliaria(): int
+    public function getImobiliaria(): string
     {
         return $this->imobiliaria;
     }
@@ -60,7 +71,7 @@ class CadastroServicoVO {
         return $this->imobiliarias_select;
     }
 
-    public function getImovel(): int
+    public function getImovel(): string
     {
         return $this->imovel;
     }
@@ -70,7 +81,7 @@ class CadastroServicoVO {
         return $this->imoveis_select;
     }
 
-    public function getSala(): int
+    public function getSala(): string
     {
         return $this->sala;
     }
@@ -95,7 +106,7 @@ class CadastroServicoVO {
         return $this->valor;
     }
 
-    public function getTipo(): int
+    public function getTipo(): string
     {
         return $this->tipo;
     }
@@ -111,6 +122,11 @@ class CadastroServicoVO {
     }
 
     // Setters
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    } 
+    
     public function setCodigo(string $codigo): void
     {
         $this->codigo = $codigo;
@@ -121,7 +137,7 @@ class CadastroServicoVO {
         $this->nome = $nome;
     }
 
-    public function setImobiliaria(int $imobiliaria): void
+    public function setImobiliaria(string $imobiliaria): void
     {
         $this->imobiliaria = $imobiliaria;
     }
@@ -131,7 +147,7 @@ class CadastroServicoVO {
         $this->imobiliarias_select = $imobiliarias_select;
     }
 
-    public function setImovel(int $imovel): void
+    public function setImovel(string $imovel): void
     {
         $this->imovel = $imovel;
     }
@@ -141,7 +157,7 @@ class CadastroServicoVO {
         $this->imoveis_select = $imoveis_select;
     }
 
-    public function setSala(int $sala): void
+    public function setSala(string $sala): void
     {
         $this->sala = $sala;
     }
@@ -166,7 +182,7 @@ class CadastroServicoVO {
         $this->valor = $valor;
     }
 
-    public function setTipo(int $tipo): void
+    public function setTipo(string $tipo): void
     {
         $this->tipo = $tipo;
     }
@@ -181,7 +197,7 @@ class CadastroServicoVO {
         $this->prestadores = $prestadores;
     }
     
-    public static function buildVO(Servico $model, array $imobiliarias,  array $imoveis,  array $salas){
+    public static function buildVO(Servico $model){
         $prestadoresModels = $model->getRelation('prestadores');
         $prestadores = [];
         foreach ($prestadoresModels as $prestador) {
@@ -189,10 +205,13 @@ class CadastroServicoVO {
                 'nome' => $prestador->nome
             ];
         }
-        $sala = ImoveisService::getImovelModelBy($model->salacodigo);
-        $imovel = $sala->getRelation('imovel');
+        $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+        $imovel = ImoveisService::getImovelModelBy($model->salacodigo);
+        $imoveis = ImoveisService::getListaSelectImoveisBy($imovel->imobiliaria_id);
+        $salas = ImoveisService::getListaSalaSelectBy($imovel->id);
 
         return new CadastroServicoVO(
+            $model->id,
             $model->ud_codigo,
             $model->ud_nome,
             $imovel->imobiliaria_id,
