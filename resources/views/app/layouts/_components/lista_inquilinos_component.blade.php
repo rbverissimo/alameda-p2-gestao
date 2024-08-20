@@ -14,9 +14,7 @@
                   <a class="table-link" href="{{route('painel-inquilino', $inquilino->id)}}">{{$inquilino->nome}}</a>
                   </td>
                   <td>
-                  <a 
-                        class="table-link valor-aluguel-lista-inquilinos" 
-                        href="{{route('painel-inquilino', $inquilino->id)}}">{{'R$'.$inquilino->valorAluguel}}</a>
+                  <span class="table-link valor-aluguel-lista-inquilinos" >{{$inquilino->valorAluguel}}</span>
                   </td>
                   <td>
                         <img class="crud-icon" onclick="redirecionarPara('{{route('painel-inquilino', $inquilino->id)}}')"
