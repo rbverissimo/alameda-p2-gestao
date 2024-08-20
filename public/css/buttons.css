@@ -57,6 +57,31 @@
       color: var(--text-white);
 }
 
+.stepper {
+      display: inline-block;
+      padding: 10px 20px;
+      width: 100%;
+      border-right:  1px solid var(--medium-outlineer);
+      border-bottom: 1px solid var(--medium-outlineer);
+      cursor: pointer;
+      text-align: center;
+      font-size: 1rem;
+      transition: box-shadow 0.3s ease;
+}
+
+.stepper:hover{
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stepper-button {
+      background-color: var(--basic-card);
+}
+
+.active-tab {
+      background-color: var(--active-tab);
+      color: var(--text-white);
+}
+
 .inline-button {
       padding: 3%;
       width: 100%;

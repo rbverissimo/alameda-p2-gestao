@@ -124,6 +124,8 @@
             document.getElementById('topo-table-state').style.display = "flex";
             document.getElementById('script-page').style.visibility = "visible";
             document.getElementById('situacao-financeira-wrapper').style.display = "none";
+            document.getElementById('step-comprovantes').classList.add('active-tab');
+            document.getElementById('step-situacao-financeira').classList.remove('active-tab');
       }
 
       function requestDeletarRow(id) {
@@ -198,6 +200,8 @@
       function showSituacaoFinanceira(){
             document.getElementById('situacao-financeira-wrapper').style.display = "block"
             document.getElementById('table-wrapper').style.display = "none";
+            document.getElementById('step-comprovantes').classList.remove('active-tab');
+            document.getElementById('step-situacao-financeira').classList.add('active-tab');
       }
       
       /* 

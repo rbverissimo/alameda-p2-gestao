@@ -50,6 +50,9 @@
       --slider-on: #C6EB33;
       --slider-bullet: #fff;
       --slider-border: #F6F6F4;
+
+      --medium-outlineer: #77311b;
+      --active-tab: #a61a15;
       
 }
 
@@ -71,6 +74,10 @@
 
 .row .outline {
       border: 1px solid var(--slider-border);
+}
+
+.medium-outline {
+      border-bottom: 1px solid var(--medium-outlineer);
 }
 
 body {
