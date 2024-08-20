@@ -150,8 +150,9 @@ class PrestadorServicoVO {
 
             $imobiliarias = [];
             foreach ($model->getRelation('imobiliaria') as $imobiliaria) {
-                  $imobiliaria[] = $imobiliaria->id;
+                  $imobiliarias[] = $imobiliaria->id;
             }
+
 
             return new PrestadorServicoVO(
                   $model->id,
@@ -161,7 +162,8 @@ class PrestadorServicoVO {
                   $model->cpf, 
                   $endereco_vo, 
                   $tipos,
-                  $tipos_prestadores, $imobiliarias);
+                  $tipos_prestadores, 
+                  $imobiliarias);
       }
 
 }

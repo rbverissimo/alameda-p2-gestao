@@ -66,11 +66,13 @@
         </div>
         <div class="col-6">
             @php
+                $selectedValue = isset($prestador) ? $prestador->getImobiliarias()[0] : null;
             @endphp
             <x-forms.select 
                 pattern-name="imobiliaria-select" 
                 labelText="Selecione a imobiliária" 
-                :collection="$imobiliarias">
+                :collection="$imobiliarias"
+                :selected-value="$selectedValue">
             </x-forms.select>
         </div>
     </div>
