@@ -3,27 +3,39 @@
     <div class="row">
         @isset($imobiliarias)
         <div class="col-4">
+            @php
+                $selectedImobiliaria = isset($servico) ? $servico->getImobiliaria() : null;
+            @endphp
             <x-forms.select 
                 label-text="Selecione a imobiliária: "
                 pattern-name="imobiliaria-select"
                 :collection="$imobiliarias"
+                :selected-value="$selectedImobiliaria"
             />
         </div>
         @endisset 
         <div class="col-4">
+            @php
+                $selectedImovel = isset($servico) ? $servico->getImovel() : null;
+                $collectionImovel = isset($servico) ? $servico->getListaImoveis() : [];
+            @endphp
             <x-forms.select 
                 display="none"
                 label-text="Indique um imóvel: "
                 pattern-name="imovel-select"
-                :collection="[]"
+                :collection="$collectionImovel"
             />
         </div>
         <div class="col-4">
+            @php
+                $selectedSala = isset($servico) ? $servico->getSala() : null;
+                $collectionSalas = isset($servico) ? $servico->getListaSalas() : [];
+            @endphp
             <x-forms.select
                 display="none"
                 label-text="Indique a sala: "
                 pattern-name="sala-select"
-                :collection="[]"
+                :collection="$collectionSalas"
             />
         </div>
     </div>
@@ -35,7 +47,7 @@
                 name="data-inicio"
                 class="data-input"
                 required
-                value="{{ isset($servico->dataInicio) ? old('data-inicio', $dataInicio) : old('data-inicio')}}">
+                value="{{ isset($servico->getDataInicio()) ? old('data-inicio', $servico->getDataInicio()) : old('data-inicio')}}">
             <span id="span-errors-data-inicio-input" class="errors-highlighted">{{ $errors->has('data-inicio') ? $errors->first('data-inicio') : '' }}</span>
         </div>
         <div class="col-5">
@@ -45,7 +57,7 @@
                 name="data-fim"
                 class="data-input"
                 required
-                value="{{ isset($servico->dataFim) ? old('data-fim', $dataFim) : old('data-fim')}}">
+                value="{{ isset($servico->getDataFim()) ? old('data-fim', $servico->getDataFim()) : old('data-fim')}}">
             <span id="span-errors-data-fim-input" class="errors-highlighted">{{ $errors->has('data-fim') ? $errors->first('data-fim') : '' }}</span>
         </div>
     </div>
@@ -56,7 +68,7 @@
                 id="valor-servico-input" 
                 name="valor-servico"
                 placeholder="R$0,00"
-                value="{{ isset($servico->valor) ? old('valor-servico', $servico->valor) : old('valor-servico') }}">
+                value="{{ isset($servico->getValor()) ? old('valor-servico', $servico->getValor()) : old('valor-servico') }}">
                 <span id="span-errors-valor-servico-input" class="errors-highlighted">{{ $errors->has('valor-servico') ? $errors->first('valor-servico') : '' }}</span>    
         </div>
         <div class="col-8">
@@ -84,8 +96,8 @@
             <textarea name="descricao-servico" 
                 id="descricao-servico-input" 
                 placeholder="Escreva aqui comentários relevantes sobre o serviço realizado"
-                rows="3">{{isset($servico->descricao) ? 
-            old('descricao-servico',$servico->descricao)
+                rows="3">{{isset($servico->getDescricao()) ? 
+            old('descricao-servico',$servico->getDescricao())
             : old('descricao-servico')}}</textarea>
         </div>
     </div>

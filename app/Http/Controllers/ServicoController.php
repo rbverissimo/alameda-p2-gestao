@@ -128,8 +128,9 @@ class ServicoController extends Controller
             $titulo = 'Editando serviço '.$idServico;
             $mensagem = null;
             $tipos_servicos = TiposServicosService::getListaTiposServicos();
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
 
-            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos'));
+            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
         }

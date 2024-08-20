@@ -14,9 +14,7 @@
         
     @endcomponent
 </div>
-<div class="row">
-    <div class="whitespace-end-page"></div>
-</div>
+@include('app.layouts._partials.end-page')
 @endsection
 
 @section('scripts')

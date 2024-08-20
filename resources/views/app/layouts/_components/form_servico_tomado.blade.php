@@ -56,7 +56,9 @@
       </div>
     </div>
     <div id="prestador-container">
-      
+      @php
+          $prestadores = isset($servico) ? $servico->getPrestadores() : null; 
+      @endphp
     </div>
 
     <div class="row center-itens">
