@@ -11,7 +11,7 @@ import { LISTAR_INQUILINOS_IMOVEL } from "../routes.js";
 const anoMesInput = document.getElementById('ano-mes-input');
 const valorInput = document.getElementById('input-valor-comprovante');
 const dataInput = document.getElementById('data-input');
-const imoveisSelect = document.getElementById('select-imovel');
+const imoveisSelect = document.getElementById('imovel-input');
 const inquilinosSelect = document.getElementById('select-inquilino');
 const labelInquilinosSelect = document.getElementById('label-select-inquilino');
 

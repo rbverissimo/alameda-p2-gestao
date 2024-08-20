@@ -10,20 +10,15 @@
       @endisset
       <div class="row">
             <div class="col-6">
-                  <label for="select-imovel">Escolha o imóvel: </label>
-                  <select name="imovel" id="select-imovel">
-                        @foreach ($imoveis as $imovel)
-                            <option value="{{$imovel->id}}"
-                              @isset($comprovante->imovel)
-                                    @if ($comprovante->imovel == $imovel->id)
-                                          selected
-                                    @endif
-                              @endisset 
-                              >
-                              {{ $imovel->nomefantasia}}
-                            </option>
-                        @endforeach
-                  </select>
+                  @php
+                      $imovelSelected = isset($comprovante->imovel) ? $comprovante->imovel : null
+                  @endphp
+                  <x-forms.select 
+                        pattern-name="imovel"
+                        label-text="Escolha o imóvel:"
+                        :collection="$imoveis"
+                        :selected-value="$imovelSelected"
+                  />
             </div>
             @isset($inquilinos)
                   <div class="col-6">
