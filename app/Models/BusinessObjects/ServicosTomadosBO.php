@@ -12,8 +12,6 @@ class ServicosTomadosBO {
         'ud_codigo' => 'unique:servicos',
         'ud_nome' => 'unique:servicos'
     ];
-
-    
     
     public function getRegrasValidacao(){
         return $this->REGRAS_VALIDACAO;
@@ -22,5 +20,9 @@ class ServicosTomadosBO {
     public function getPainelServicosLista(){
         $imobiliarias = UsuarioService::getImobiliarias();
         return ServicosTomadosService::getPainelListaServicos($imobiliarias);
+    }
+
+    public function getServicoBy($idServico){
+        return ServicosTomadosService::getServicosBy($idServico);
     }
 }

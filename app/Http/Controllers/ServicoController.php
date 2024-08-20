@@ -10,12 +10,14 @@ use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\BusinessObjects\ServicosTomadosBO;
 use App\Models\Servico;
 use App\Services\ImobiliariasService;
+use App\Services\ImoveisService;
 use App\Services\LogErrosService;
 use App\Services\PrestadorServicoService;
 use App\Services\ServicosTomadosService;
 use App\Services\TiposServicosService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
+use App\ValueObjects\CadastroServicoVO;
 use App\ValueObjects\ListaServicoTomadoItemVO;
 use App\ValueObjects\MensagemVO;
 use Carbon\Carbon;
@@ -129,6 +131,16 @@ class ServicoController extends Controller
             $mensagem = null;
             $tipos_servicos = TiposServicosService::getListaTiposServicos();
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+            $imoveis = ImoveisService::getListaImoveisSelect();
+
+            $servico = CadastroServicoVO::buildVO(
+                ServicosTomadosService::getServicosBy($idServico),
+                $imobiliarias, 
+                $imoveis, 
+                []
+            );
+            
+            dd($servico);    
 
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias'));
         } catch (\Throwable $th) {

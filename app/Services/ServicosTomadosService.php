@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Servico;
 use Illuminate\Support\Facades\DB;
 
 class ServicosTomadosService {
@@ -39,5 +40,9 @@ class ServicosTomadosService {
 
             throw $th;
         }
+    }
+
+    public static function getServicosBy($idServico){
+        return Servico::with('prestadores')->find($idServico);
     }
 }

@@ -164,6 +164,17 @@ class ImoveisService {
     }
 
     /**
+     * Busca um model Sala junto de seu imóvel através da relation imovel.
+     * Esse método é bastante útil na hora de fazer o caminho inverso para 
+     * descobrir a imobiliária através da sala usando atributo imobiliaria_id
+     * da tabela de imoveis
+     */
+    public static function getImovelModelBy($sala){
+        $sala = Sala::with('imovel')->find($sala);
+        return $sala->getRelation('imovel');
+    }
+
+    /**
      * Dado um inquilino, fornecido no parâmetro, esse método retorna
      * o ID do imóvel em que esse inquilino está
      */
