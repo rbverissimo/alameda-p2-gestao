@@ -47,7 +47,10 @@
                 name="data-inicio"
                 class="data-input"
                 required
-                value="{{ isset($servico->getDataInicio()) ? old('data-inicio', $servico->getDataInicio()) : old('data-inicio')}}">
+                @if (isset($servico))
+                    value="{{ $servico->getDataInicio() !== null ? old('data-inicio', $servico->getDataInicio()) : old('data-inicio')}}"
+                @endif
+                >
             <span id="span-errors-data-inicio-input" class="errors-highlighted">{{ $errors->has('data-inicio') ? $errors->first('data-inicio') : '' }}</span>
         </div>
         <div class="col-5">
@@ -57,7 +60,10 @@
                 name="data-fim"
                 class="data-input"
                 required
-                value="{{ isset($servico->getDataFim()) ? old('data-fim', $servico->getDataFim()) : old('data-fim')}}">
+                @if (isset($servico))
+                    value="{{$servico->getDataFim() !== null ? old('data-fim', $servico->getDataFim()) : old('data-fim')}}"
+                @endif
+                >
             <span id="span-errors-data-fim-input" class="errors-highlighted">{{ $errors->has('data-fim') ? $errors->first('data-fim') : '' }}</span>
         </div>
     </div>
@@ -68,7 +74,10 @@
                 id="valor-servico-input" 
                 name="valor-servico"
                 placeholder="R$0,00"
-                value="{{ isset($servico->getValor()) ? old('valor-servico', $servico->getValor()) : old('valor-servico') }}">
+                @if (isset($servico))    
+                    value="{{ $servico->getValor() !== null ? old('valor-servico', $servico->getValor()) : old('valor-servico') }}"
+                @endif
+                >
                 <span id="span-errors-valor-servico-input" class="errors-highlighted">{{ $errors->has('valor-servico') ? $errors->first('valor-servico') : '' }}</span>    
         </div>
         <div class="col-8">
@@ -96,9 +105,11 @@
             <textarea name="descricao-servico" 
                 id="descricao-servico-input" 
                 placeholder="Escreva aqui comentários relevantes sobre o serviço realizado"
-                rows="3">{{isset($servico->getDescricao()) ? 
-            old('descricao-servico',$servico->getDescricao())
-            : old('descricao-servico')}}</textarea>
+                rows="3">@if(isset($servico))
+                {{ $servico->getDescricao() !== null ? 
+                    old('descricao-servico',$servico->getDescricao())
+                    : old('descricao-servico')}}
+                @endif</textarea>
         </div>
     </div>
 </div>
