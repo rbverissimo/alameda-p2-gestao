@@ -1,4 +1,4 @@
-import { writeMascaraCpf } from "../validators/view-masks";
+import { writeMascaraCpf } from "../validators/view-masks.js";
 
 let appData = {};
 let idInquilino = 0;

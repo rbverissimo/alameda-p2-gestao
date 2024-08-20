@@ -7,6 +7,7 @@ use App\Models\ContaImovel;
 use App\Models\Sala;
 use App\Models\TipoConta;
 use App\Services\CalculoContasService;
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
@@ -18,6 +19,7 @@ class CalculoContasController extends Controller
     public function calculoContas(Request $request) {
 
         $conta_imovel = null;
+        $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
         $imoveis = ImoveisService::getListaImoveisSelect();
         $imovel_conta_codigo = null;
 

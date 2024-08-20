@@ -89,6 +89,4 @@ class InquilinoVO {
             'endereco_trabalho' => $this->endereco_trabalho->getJson()
         ];
     }
-
-
 }

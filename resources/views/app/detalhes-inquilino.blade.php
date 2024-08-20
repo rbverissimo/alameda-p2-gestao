@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="row">
-        @component('app.layouts._components.form_inquilinos', compact('contrato', 'inquilino', 'imoveis', 'salas'))
+        @component('app.layouts._components.form_inquilinos', compact('contrato', 'inquilino', 'imobiliarias', 'imoveis', 'salas'))
             
         @endcomponent
     </div>

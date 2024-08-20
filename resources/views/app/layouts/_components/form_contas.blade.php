@@ -6,22 +6,15 @@
       <div class="row">
             @isset($imoveis)
                   <div class="col-4">
-                        <label id="label-imoveis-conta-select" for="imoveis-conta-select">Selecione o imóvel:</label>
-                        <select id="imoveis-conta-select" 
-                              required      
-                              name="imovelcodigo">
-                              @foreach ($imoveis as $imovel)
-                                    <option value="{{$imovel->id}}"
-                                          @isset($imovel_conta_codigo)
-                                                @if($imovel_conta_codigo == $imovel->id)
-                                                selected
-                                                @endif
-                                          @endisset
-                                    >
-                                          {{$imovel->nomefantasia}}
-                                    </option>
-                              @endforeach
-                        </select>
+                        @php
+                            $imovelSelected = null;
+                        @endphp
+                        <x-forms.select 
+                              label-text="Selecione o imóvel:"
+                              pattern-name="imovelcodigo"
+                              :collection="$imoveis"
+                              :selected-value="$imovelSelected"
+                        />
                   </div>
             @endisset
             <div class="col-4">

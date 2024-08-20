@@ -75,28 +75,37 @@
         <div class="row">
             @isset($imobiliarias)
                 <div class="col-4">
+                    @php
+                        $imobiliariaSelected = null;
+                    @endphp
                     <x-forms.select pattern-name="imobiliarias-select" 
                         label-text="Selecione a imobiliária: " 
-                        :collection="$imobiliarias"></x-forms> 
+                        :collection="$imobiliarias"
+                        :selected-value="$imobiliariaSelected" />
                 </div>
             @endisset 
             <div class="col-4">
                 @php
                     $imoveis_collection = isset($imoveis) ? $imoveis : [];
+                    $imovelSelected = null;
                 @endphp
                 <x-forms.select display="none"
                     pattern-name="imoveis-select"
                     label-text="Selecione um imóvel:"
-                    :collection="$imoveis_collection"></x-forms.select>
+                    :collection="$imoveis_collection"
+                    :selected-value="$imovelSelected" />
             </div>
             <div class="col-4">
                 @php
                     $salas_collection = isset($salas) ? $salas : [];
+                    $salaSelected = null;
                 @endphp
                 <x-forms.select display="none"
                     pattern-name="sala-select"
                     label-text="Selecione uma sala: "
-                    :collection="$salas_collection"></x-forms.select>
+                    :collection="$salas_collection"
+                    :selected-value="$salaSelected"
+                    />
             </div>
         </div>
     </div>

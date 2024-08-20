@@ -12,7 +12,7 @@ const elementosTabelaValoresEmReal = document.getElementsByClassName('table-valo
 const elementosTabelaTipoData = document.getElementsByClassName('table-data-view');
 const elementosTabelaTipoQuitada = document.getElementsByClassName('table-quitacao-view');
 
-const imoveisSelect = document.getElementById('imoveis-conta-select');
+const imoveisSelect = document.getElementById('imovelcodigo-input');
 const salasSelect = document.getElementById('sala-select');
 const tiposContaSelect = document.getElementById('tipos-conta-select');
 

@@ -7,17 +7,14 @@ use App\Models\BusinessObjects\InquilinoBO;
 use App\Models\Contrato;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
-use App\Models\InquilinoConta;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
-use App\Models\Pessoa;
 use App\Services\ComprovantesService;
 use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\LogErrosService;
 use App\Services\SituacaoFinanceiraService;
-use App\Utils\InquilinosUtils;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
@@ -65,6 +62,7 @@ class PainelInquilinoController extends Controller
         $imoveis = $detalhes['imoveis'];
         $salas = $detalhes['salas'];
         $contrato = $detalhes['contrato'];
+        $imobiliarias = $detalhes['imobiliarias'];
 
         $titulo = 'Detalhes do Inquilino: '.$inquilino->nome; 
         $appData_vo = new AppDataVO('detalhes_inquilino', [
@@ -72,7 +70,7 @@ class PainelInquilinoController extends Controller
             'id_inquilino' => $inquilino->id
         ]);
         $appData = $appData_vo->getJson();
-        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imoveis', 'salas', 'contrato', 'mensagem', 'appData'));
+        return view('app.detalhes-inquilino', compact('titulo', 'inquilino', 'imobiliarias', 'imoveis', 'salas', 'contrato', 'mensagem', 'appData'));
 
     }
 

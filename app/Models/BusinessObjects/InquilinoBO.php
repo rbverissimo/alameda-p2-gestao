@@ -2,6 +2,7 @@
 
 namespace App\Models\BusinessObjects;
 
+use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
@@ -23,19 +24,13 @@ class InquilinoBO {
             $inquilino = InquilinosService::getDetalhesInquilino($idInquilino);
             $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
     
+            $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
             $imoveis = ImoveisService::getListaImoveisSelect();
-            $salas = ImoveisService::getSalaBy($inquilino->imovel);
-
-            $options = [SelectOptionVO::getPrimeiroElementoVazio()];
-            foreach ($salas as $sala) {
-                  $option = new SelectOptionVO($sala->id, $sala->nomesala);
-                  $options[] = $option->getJson();
-            }
-            $salas = array_merge($options);
+            $salas = ImoveisService::getListaSalaSelectBy($inquilino->imovel);
 
             $contrato = InquilinosService::getContratoVigente($idInquilino);
 
-            return ['inquilino' => $inquilino, 'imoveis' => $imoveis, 'salas' => $salas, 'contrato' => $contrato];
+            return ['inquilino' => $inquilino, 'imoveis' => $imoveis, 'salas' => $salas, 'contrato' => $contrato, 'imobiliarias' => $imobiliarias];
       }
 
       public static function getRegrasValidacao(){
