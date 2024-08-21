@@ -38,14 +38,13 @@ class InquilinoBO {
                   'data-assinatura' => 'required',
                   'valor-aluguel' => 'required',
                   'arquivo-contrato' => 'file',
-                  'sala' => 'required|exists:salas,id',
+                  'sala-select' => 'required|exists:salas,id',
                   'nome' => 'required',
                   'cpf' => 'required',
-                  'telefone-celular' => 'required'
             ];
             
             $feedback = [
-                  'sala.exists' => 'A sala informada é inválida. ',
+                  'sala-select.exists' => 'A sala informada é inválida. ',
                   'arquivo-contrato.file' => 'O contrato fornecido é inválido. ',
             
                   'required' => 'O :attribute é obrigatório.'

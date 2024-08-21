@@ -112,7 +112,7 @@ class PainelInquilinoController extends Controller
             if($request->isMethod('POST')){
 
                 $regras_feedback = InquilinoBO::getRegrasValidacao();
-                $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
+               $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
                 
                 DB::transaction(function($closure) use ($request){
 

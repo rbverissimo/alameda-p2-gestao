@@ -28,7 +28,7 @@
         <div class="col-4">
             <span class="basic-card-wrapper">Renovação automática de contrato?</span>
         </div>
-        <div class="col-1">
+        <div class="col-2">
             @if (isset($contrato))
                 <x-toggle-switch 
                 id="renovacao-automatica-input-switch"

@@ -27,11 +27,19 @@
     100% { transform: rotate(360deg); }
 }
 
+.toggle-switch-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .comp-toggle-switch {
     position: relative;
     display: inline-block;
     width: 100%;
     height: 1.5rem;
+    min-width: 75px;
+    max-width: 100px;
   }
   
 .comp-toggle-switch-checkbox {
@@ -127,21 +135,3 @@ ul#sugestoes li.cadastrar {
 ul#sugestoes li.cadastrar:hover {
     background-color: var(--dropdown-highlight-2);
 }
-
-@media only screen and (max-width: 769px) {
-    .comp-toggle-switch {
-        width: 50%;
-        left: 25%;
-    }
-}
-
-/* SMARTPHONE SCREENS */
-@media only screen and (max-width: 431px){
-
-    .comp-toggle-switch {
-        width: 25%;
-        left: 33.3%;
-    }
-    
-}
-  
