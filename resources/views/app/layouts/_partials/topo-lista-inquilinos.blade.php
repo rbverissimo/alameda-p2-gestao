@@ -1,13 +1,26 @@
 <div class="row">
     <div class="col-3">
-        <input  placeholder="Digite um nome para buscar:  " id="search-inquilino-nome">
+        <input  placeholder="Digite um nome para buscar:" name="nome" id="search-inquilino-nome">
     </div>
     <div class="col-4">
-        <select name="" id="ativos-inativos-select">
+        <select name="situacao" id="ativos-inativos-select">
             <option value="" selected disabled>Pesquise pela situação:</option>
             <option value="A">Ativos</option>
             <option value="I">Inativos</option>
             <option value="T">Ambos</option>
         </select>
+    </div>
+    <div class="col-4">
+        @php
+            $imoveis = [
+                ['value' => '1',
+                'view' => 'Apenas teste']
+            ];
+        @endphp
+        <x-forms.select
+            label-text=""
+            pattern-name="imovel"
+            :collection="$imoveis"
+        />
     </div>
 </div>
