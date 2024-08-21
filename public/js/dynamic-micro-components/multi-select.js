@@ -31,13 +31,12 @@ function addStateAdicionarButtons(adicionarButtons){
             const columnsDivision = stringToArray(wrapper.getAttribute('columns-division'));
             const inputAttrName = wrapper.getAttribute('input-attr-name');
 
-
             button.addEventListener('click', (event) => { 
                   event.preventDefault();
             })
             
             button.addEventListener('click', throttle(async (event) => {
-                  console.log('clicked');
+                  console.log(inputAttrName);
                   if(!dataMap[patternName]){
                         await getOptionsData(patternName).then(
                               options => {
@@ -49,7 +48,7 @@ function addStateAdicionarButtons(adicionarButtons){
                               }).catch(error => {
                                     const msgError = error.response;
                                     showMensagem(msgError.mensagem, msgError.status);
-                              })
+                              });
                   } else {
                         const elementosAgregados = criarElementos(mode, patternName, columnsDivision, inputAttrName);
                         wrapper.appendChild(elementosAgregados); 
@@ -109,7 +108,7 @@ function criar(elementoString, patternName, columnsDivision, serial, inputAttrNa
 
 function criarInput(patternName, inputWidth, serial, inputAttrName, labelText = 'Digite:'){
       const newDiv = divCol(inputWidth); 
-      const newInput = input(inputAttrName, `${patternName}-input-${serial}`, true);
+      const newInput = input(`${inputAttrName}-${serial}`, `${patternName}-input-${serial}`, true);
       const newLabel = label(`${patternName}-input-${serial}`, labelText, `label-${inputAttrName}-${serial}`);
       const newSpanErrors = spanErrors(`span-errors-${patternName}-${serial}`);
       newDiv.appendChild(newLabel);

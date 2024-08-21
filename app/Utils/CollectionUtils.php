@@ -15,6 +15,13 @@ class CollectionUtils {
         ->toArray();
     }
 
+    public static function mergirArraysByChaves($arr1, $arr2, $arr1_key, $arr2_key)
+    {
+        return array_map(function($valueArr1, $valueArr2) use ($arr1_key, $arr2_key){
+            return [$arr1_key => $valueArr1, $arr2_key => $valueArr2];
+        }, $arr1, $arr2);
+    }
+
     public static function getPrimeiroValorParaQualquerChave($collection){
 
         if(empty($collection)){

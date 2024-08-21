@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Operacao;
+use App\Http\Dto\LogErroDTO;
+use App\Http\Dto\RequestParamsDTO;
+use App\Http\Dto\TelefoneDTOBuilder;
 use App\Models\BusinessObjects\InquilinoBO;
+use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\Contrato;
 use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
@@ -15,6 +19,7 @@ use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\LogErrosService;
 use App\Services\SituacaoFinanceiraService;
+use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\AppDataVO;
 use App\ValueObjects\MensagemVO;
@@ -107,14 +112,18 @@ class PainelInquilinoController extends Controller
             $imoveis = [];
             $salas = !empty($imoveis) ? ImoveisService::getSalaBy($imoveis[0]->id) : [];
             $contrato = null;
-
             
             if($request->isMethod('POST')){
 
+                $telefones = CollectionUtils::getAssociativeArray($request->all(), '-', 3, 'd-i-telefone-'); //d-i- dynamic-input
+                $tipos_telefones = CollectionUtils::getAssociativeArray($request->all(), '-', 2, 'telefone-select-');
+                $telefones_data = CollectionUtils::mergirArraysByChaves($telefones, $tipos_telefones, 'telefone', 'tipo');
+                $telefone_dto = (new TelefoneDTOBuilder())->getDto($telefones_data);
+
                 $regras_feedback = InquilinoBO::getRegrasValidacao();
-               $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
+                $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
                 
-                DB::transaction(function($closure) use ($request){
+                DB::transaction(function($closure) use ($request, $telefone_dto){
 
                     $inquilino = Inquilino::create([
                         "nome" => $request->input('nome'),
@@ -167,6 +176,11 @@ class PainelInquilinoController extends Controller
 
             return view('app.cadastro-inquilino', compact('titulo', 'imobiliarias', 'imoveis', 'salas', 'mensagem', 'contrato'));
         } catch (\Throwable $th) {
+
+            $request_params = new RequestParamsDTO($request);
+            $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
+            $log_erros_bo->salvar();
+
             if($th instanceof ValidationException){
                 return back()->withErrors($th->validator->errors())->withInput($request->all());
             }

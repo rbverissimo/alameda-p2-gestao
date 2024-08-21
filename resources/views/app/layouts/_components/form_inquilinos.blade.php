@@ -61,7 +61,7 @@
             header-text="Telefones do inquilino: "
             button-text="Adicionar telefone"
             pattern-name="telefone-select"
-            input-attr-name="telefone"
+            input-attr-name="d-i-telefone"
             input-label-text="Digite o telefone:"
             :columns-division="[5, 4, 3]"
         >
