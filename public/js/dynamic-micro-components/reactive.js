@@ -19,6 +19,8 @@ export async function call(url, ...params){
         const response = await fetch(`${pathUrl}`);
         const data = await response.json();
         
+        console.log(response);
+
         if(!response.ok){
             const error = new Error(`Ocorreram erros de conexão com o servidor. Status: ${response.statusText}`);
             error.response = data.mensagem;
@@ -30,6 +32,10 @@ export async function call(url, ...params){
         throw error;
     }
 
+}
+
+export async function query(url, queryString){
+    call(`${url}?${queryString}`);
 }
 
 export async function deliver(url, payload){

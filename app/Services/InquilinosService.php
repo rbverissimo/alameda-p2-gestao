@@ -375,6 +375,15 @@ class InquilinosService {
             return $inquilinos_ativos;
       }
 
+      public static function getListaInquilinosFiltros($whereClause){
+            return Inquilino::select('inquilinos.id', 'inquilinos.nome',
+            DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
+                  WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
+                  ->join('salas', 'salas.id', 'inquilinos.salacodigo')
+                  ->where($whereClause)
+            ->get();
+      }
+
       public static function getSalaImovelBy($inquilino){
             $inquilino = Inquilino::with('sala')->where('id', $inquilino)->first(); 
             $salaImovel = $inquilino->has('sala') ? ImoveisService::getSalaImovelBy($inquilino->sala->id) : null; 

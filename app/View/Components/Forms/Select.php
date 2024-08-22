@@ -18,7 +18,7 @@ class Select extends Component
      *
      * @return void
      */
-    public function __construct(string $display = 'block', string $patternName, string $labelText, 
+    public function __construct(string $display = 'block', string $patternName, string $labelText = '', 
         array $collection, ?string $selectedValue = null, ?string $verificador = null)
     {
         $this->display = $display;

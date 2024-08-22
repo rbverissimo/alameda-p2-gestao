@@ -19,7 +19,7 @@
                         Inquilinos cadastrados:
                   </div>
                   <div class="row">
-                        @component('app.layouts._partials.topo-lista-inquilinos', 'imoveis')
+                        @component('app.layouts._partials.topo-lista-inquilinos', compact('imoveis'))
                         @endcomponent
                   </div>
                   <div class="row">

@@ -12,8 +12,7 @@
     </div>
     <div class="col-4">
         <x-forms.select
-            label-text=""
-            pattern-name="imovel"
+            pattern-name="imovel-search"
             :collection="$imoveis"
         />
     </div>

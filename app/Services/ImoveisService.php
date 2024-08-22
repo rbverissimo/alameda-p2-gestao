@@ -84,7 +84,8 @@ class ImoveisService {
     public static function getImoveisTodasImobiliarias()
     {
         $imobiliarias = ImobiliariasService::getImobiliarias();
-        return Imovel::whereIn('imobiliaria_id', $imobiliarias)->pluck('id');
+        $imobiliariasIds = array_column($imobiliarias->toArray(), 'id');
+        return Imovel::whereIn('imobiliaria_id', $imobiliariasIds)->pluck('id');
     }
 
     /**

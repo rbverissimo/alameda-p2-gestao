@@ -33,6 +33,38 @@ class PainelInquilinoController extends Controller
 {
     private $titulo = 'Painel do Inquilino: '; 
 
+    public function lista() {
+
+        $titulo = 'Lista de Inquilinos';
+        $id_imoveis = ImoveisService::getImoveisTodasImobiliarias();
+        $inquilinos_ativos = InquilinosService::getListaInquilinosAtivosTodosImoveis($id_imoveis);
+        $imoveis = ImoveisService::getListaImoveisSelect();
+
+        return view('app.listar-inquilinos', compact('titulo', 'inquilinos_ativos', 'imoveis'));
+    }
+
+    public function filtrarLista(Request $request){
+        try {
+            $filtros = [
+            'nome' => $request->query('nome'),
+            'situacao' => $request->query('situacao'),
+            'imovel' => $request->query('imovel') 
+            ];
+
+            $whereClause = array_filter($filtros, function($k, $v){
+                if($k === 'imovel'){
+                    if($v !== null) { return ['salas.imovelcodigo' => $v ]; }
+                } else {
+                    if($v !== null){ return ['inquilinos'.$k => $v]; }
+                }
+            }, ARRAY_FILTER_USE_BOTH);
+
+            return response()->json(json_encode($whereClause));
+        } catch (\Throwable $th) {
+            return response('Não foi possível filtrar os inquilinos. Erros: '.$th->getMessage(), 500);
+        }
+    }
+
     public function painel_inquilino($id){
 
         $inquilino = InquilinosService::getInfoPainelInquilino($id);

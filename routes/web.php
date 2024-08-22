@@ -51,9 +51,9 @@ Route::controller(LoginController::class)->group(function(){
 Route::middleware('autenticacao')->get('/painel-principal', [PainelPrincipalController::class, 'index'])
     ->name('painel-principal');
 
-Route::middleware('autenticacao')
-    ->get('/listar-inquilinos', [ListaInquilinosController::class, 'lista'])
-    ->name('listar-inquilinos');
+Route::middleware('autenticacao')->group(function(){
+    Route::get('/listar-inquilinos', [PainelInquilinoController::class, 'lista'])->name('listar-inquilinos');
+});
 
 
 Route::middleware('autenticacao')->controller(CalculoContasController::class)->group(function(){
@@ -80,6 +80,7 @@ Route::prefix('inquilino')->middleware('autenticacao')->group(function(){
     Route::put('/conta/e/{idConta}/', [PainelInquilinoController::class, 'editarContaInquilino'])->name('editar-conta-inquilino');
     Route::get('/conta/e/{idConta}/', [PainelInquilinoController::class, 'editarContaInquilino'])->name('editar-conta-inquilino');
     Route::get('/ls/select/by-imovel/{id}', [PainelInquilinoController::class, 'listarInquilinosSelectByImovel'])->name('listar-inquilinos-imovel');
+    Route::get('/ls/filtrar-lista-inquilinos/f/search/by', [PainelInquilinoController::class, 'filtrarLista'])->name('filtrar-lista-inquilinos');
 });
 
 
