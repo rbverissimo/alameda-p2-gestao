@@ -43,8 +43,10 @@ ativosInativosSelect.addEventListener('change', (event) => {
 searchInquilinoNome.addEventListener('keydown', apenasLetras);
 searchInquilinoNome.addEventListener('change', (event) => {
     filtro.nome = event.target.value;
+    query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
 });
 
 imovelSearchInput.addEventListener('change', (event) => {
     filtro.imovel = event.target.value;
+    query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
 });

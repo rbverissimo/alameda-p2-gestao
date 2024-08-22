@@ -51,7 +51,22 @@ class PainelInquilinoController extends Controller
             'imovel' => $request->query('imovel') 
             ];
 
-            return response();
+            $whereClause = [];
+            foreach ($filtros as $key => $value) {
+                if($value !== 'null'){
+                    if($key === 'imovel'){
+                        $whereClause[] = ['salas.imovelcodigo', $value];
+                    } else if($key === 'nome'){
+                        $whereClause[] = ['inquilinos.nome', 'like', $value.'%'];
+                    } else if($key === 'situacao'){
+                        $whereClause[] = ['inquilinos.situacao', $value];
+                    }
+                }
+            }
+
+            $inquilinos = InquilinosService::getListaInquilinosFiltros($whereClause);
+
+            return response()->json(["inquilinos" => $inquilinos->toArray()]);
         } catch (\Throwable $th) {
             return response('Não foi possível filtrar os inquilinos. Erros: '.$th->getMessage(), 500);
         }

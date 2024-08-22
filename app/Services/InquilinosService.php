@@ -382,6 +382,20 @@ class InquilinosService {
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where($whereClause)
             ->get();
+
+            /* 
+            Inquilino::select('inquilinos.id','inquilinos.nome',
+                        DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
+                              WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE INQUILINO = INQUILINOS.ID)) as valorAluguel'))
+                        ->join('salas', 'salas.id','inquilinos.salacodigo')
+                        ->where([
+                              ['inquilinos.situacao', 'A'],
+                              ['inquilinos.nome', 'like','A%'], 
+                              ['salas.imovelcodigo', 1]
+                        ])
+                        ->get();
+            
+            */
       }
 
       public static function getSalaImovelBy($inquilino){

@@ -18,9 +18,6 @@ export async function call(url, ...params){
     try {
         const response = await fetch(`${pathUrl}`);
         const data = await response.json();
-        
-        console.log(response);
-
         if(!response.ok){
             const error = new Error(`Ocorreram erros de conexão com o servidor. Status: ${response.statusText}`);
             error.response = data.mensagem;
@@ -34,6 +31,15 @@ export async function call(url, ...params){
 
 }
 
+/**
+ * Esse método recebe uma URL e uma query string apenas.
+ * Ambas são concatenadas e enviadas em uma chamada método call() sem parâmetros.
+ * Dessa forma, é possível fazer uma requisição ao back-end usando query params
+ * para buscar resultados de forma mais dinâmica. 
+ * 
+ * @param {*} url 
+ * @param {*} queryString 
+ */
 export async function query(url, queryString){
     call(`${url}?${queryString}`);
 }
