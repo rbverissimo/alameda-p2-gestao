@@ -51,15 +51,7 @@ class PainelInquilinoController extends Controller
             'imovel' => $request->query('imovel') 
             ];
 
-            $whereClause = array_filter($filtros, function($k, $v){
-                if($k === 'imovel'){
-                    if($v !== null) { return ['salas.imovelcodigo' => $v ]; }
-                } else {
-                    if($v !== null){ return ['inquilinos'.$k => $v]; }
-                }
-            }, ARRAY_FILTER_USE_BOTH);
-
-            return response()->json(json_encode($whereClause));
+            return response();
         } catch (\Throwable $th) {
             return response('Não foi possível filtrar os inquilinos. Erros: '.$th->getMessage(), 500);
         }
