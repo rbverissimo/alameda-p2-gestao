@@ -11,12 +11,6 @@
         </select>
     </div>
     <div class="col-4">
-        @php
-            $imoveis = [
-                ['value' => '1',
-                'view' => 'Apenas teste']
-            ];
-        @endphp
         <x-forms.select
             label-text=""
             pattern-name="imovel"

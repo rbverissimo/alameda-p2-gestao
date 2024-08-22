@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquilino;
+use App\Services\ImobiliariasService;
+use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Services\UsuarioService;
 
 class ListaInquilinosController extends Controller
 {
-    public  function lista() {
+    public function lista() {
 
         $titulo = 'Lista de Inquilinos';
-        $usuario = UsuarioService::getUsuarioLogado();
-        $imoveis = UsuarioService::getImoveisBy($usuario);
+        $id_imoveis = ImoveisService::getImoveisTodasImobiliarias();
+        $inquilinos_ativos = InquilinosService::getListaInquilinosAtivosTodosImoveis($id_imoveis);
+        $imoveis = ImoveisService::getListaImoveisSelect();
 
-        $inquilinos_ativos = InquilinosService::getListaInquilinosAtivosTodosImoveis($imoveis);
-
-        return view('app.listar-inquilinos', compact('titulo', 'inquilinos_ativos'));
+        return view('app.listar-inquilinos', compact('titulo', 'inquilinos_ativos', 'imoveis'));
     }
 }

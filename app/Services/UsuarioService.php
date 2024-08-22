@@ -21,10 +21,11 @@ class UsuarioService {
 
       /**
        * Retorna um array com os ID de todos os imóveis que um usuário possui
+       * @deprecated os imóveis devem ser filtrados através da imobiliária
        */
-      public static function getImoveisBy($user){
+      public static function getImoveisBy($usuario){
             $usuario_imoveis = UsuarioImovel::select('idImovel')
-                  ->where('idUsuario', $user)
+                  ->where('idUsuario', $usuario)
                   ->groupBy('idImovel')
                   ->get();
             return $usuario_imoveis->pluck('idImovel')->toArray();

@@ -19,7 +19,8 @@
                         Inquilinos cadastrados:
                   </div>
                   <div class="row">
-                        @include('app.layouts._partials.topo-lista-inquilinos')
+                        @component('app.layouts._partials.topo-lista-inquilinos', 'imoveis')
+                        @endcomponent
                   </div>
                   <div class="row">
                         <div class="col-12">

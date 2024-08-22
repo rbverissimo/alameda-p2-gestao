@@ -8,6 +8,11 @@ use App\ValueObjects\SelectOptionVO;
 class ImobiliariasService {
 
 
+    public static function getImobiliarias()
+    {
+        $usuario = UsuarioService::getUsuarioLogado();
+        return Imobiliaria::where('usuario_id', $usuario)->get();
+    }
 
     /**
      * Esse método retorna todos as imobiliárias de um determinado 

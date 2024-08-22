@@ -17,12 +17,7 @@ class ImoveisService {
      * Retorna dos imóveis ligados àquele usuário logado
      */
     public static function getImoveisByUsuarioLogado(){
-        $user = UsuarioService::getUsuarioLogado();
-        $usuario_imoveis = UsuarioImovel::select('idImovel')
-        ->where('idUsuario', $user)
-        ->groupBy('idImovel')
-        ->get();
-        return $usuario_imoveis->pluck('idImovel')->toArray();
+        return ImoveisService::getImoveisTodasImobiliarias(); 
     }
 
     /**
@@ -59,8 +54,10 @@ class ImoveisService {
      * Esse método retorna uma lista de imóveis de acordo
      * com o usuário logado no sistema
      * @return array 
+     * @deprecated substituir esse método pelo getImoveisTodasImobiliarias()
      */
-    public static function getImoveis(){
+    public static function getImoveis()
+    {
         $usuarioLogado = UsuarioService::getUsuarioLogado();
         $imoveis_usuario = UsuarioImovel::with('imoveis')
             ->where('idUsuario', $usuarioLogado)
@@ -76,6 +73,18 @@ class ImoveisService {
         }
 
         return $imoveis;
+    }
+
+    /**
+     * Esse método busca o ID de todas os imóveis pertencentes a todos 
+     * as imobiliárias do usuário logado no sistema. 
+     * Ele é uma substituição direta do método getImoveis() que está deprecado
+     * @return array
+     */
+    public static function getImoveisTodasImobiliarias()
+    {
+        $imobiliarias = ImobiliariasService::getImobiliarias();
+        return Imovel::whereIn('imobiliaria_id', $imobiliarias)->pluck('id');
     }
 
     /**
