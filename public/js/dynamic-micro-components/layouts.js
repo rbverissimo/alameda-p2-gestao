@@ -79,6 +79,7 @@ export function td(text, ...cssClasses){
 export function tableRow(dataParams, acoesElements){
 
     const tr = document.createElement('tr');
+    tr.classList.add('table-row');
     dataParams.forEach((el) => {
         tr.appendChild(td(el.text, el.cssClasses.split(',')));
     });
@@ -89,10 +90,9 @@ export function tableRow(dataParams, acoesElements){
 
 export function tableAcoesListaInquilinos(idInquilino){
     const td = document.createElement('td');
-    td.innerHTML = '<img class="crud-icon" src="{{asset("icons/info-icon.svg")}}" alt="mais informações">' 
-    + '<img class="crud-icon" src="{{asset("icons/edit-icon.svg")}} alt="detalhar inquinlino">';
-    
-    console.log(td.childNodes);
+    td.innerHTML = '<img class="crud-icon" src="/icons/edit-icon.svg" alt="mais informações">' 
+    + '<img class="crud-icon" src="/icons/info-icon.svg" alt="detalhar inquinlino">';
+
     const imgInfo = td.childNodes[0];
     imgInfo.addEventListener('click', () => {
         redirecionarPara(`/inquilino/${idInquilino}`);

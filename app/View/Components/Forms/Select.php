@@ -8,6 +8,7 @@ class Select extends Component
 {
     public string $display;
     public string $patternName;
+    public ?string $classes;
     public string $labelText;
     public array $collection;
     public ?string $selectedValue;
@@ -18,11 +19,12 @@ class Select extends Component
      *
      * @return void
      */
-    public function __construct(string $display = 'block', string $patternName, string $labelText = '', 
+    public function __construct(string $display = 'block', string $patternName, ?string $classes = null, string $labelText = '', 
         array $collection, ?string $selectedValue = null, ?string $verificador = null)
     {
         $this->display = $display;
         $this->patternName = $patternName;
+        $this->classes = $classes;
         $this->labelText = $labelText;
         $this->collection = $collection;
         $this->selectedValue = $selectedValue;

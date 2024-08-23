@@ -5,7 +5,7 @@ import { writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasLetras } from "../validators/view-validation.js";
 
 class FilterParams {
-    constructor(nome = null, situacao = null, imovel = null){
+    constructor(nome = '', situacao = '', imovel = ''){
         this.nome = nome;
         this.situacao = situacao;
         this. imovel = imovel; 
@@ -24,11 +24,10 @@ class FilterParams {
 }
 
 const valorAluguelElements = document.getElementsByClassName('valor-aluguel-lista-inquilinos');
-const ativosInativosSelect = document.getElementById('ativos-inativos-select');
+const searchInquilino = document.getElementsByClassName('search-inquilino');
 const searchInquilinoNome = document.getElementById('search-inquilino-nome');
-const imovelSearchInput = document.getElementById('imovel-search-input');
-
 const conteudoTableWrapper = document.getElementById('conteudo-table-wrapper');
+const table = conteudoTableWrapper.childNodes[1];
 
 const filtro = new FilterParams();
 
@@ -38,30 +37,37 @@ document.addEventListener('DOMContentLoaded', function(){
         });
 });
 
-ativosInativosSelect.addEventListener('change', async (event) => {
-    filtro.situacao = event.target.value;
-    const data = await query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+Array.from(searchInquilino).forEach(e => e.addEventListener('change', async (event) => {
+    const value = event.target.value;
+    switch(event.target.name){
+        case 'nome':
+            filtro.nome = value;
+            break;
+        case 'situacao':
+            filtro.situacao = value;
+            break;
+        case 'imovel-search':
+            filtro.imovel = value;
+            break;
+        default:
+            return;
+    }
 
-    data['inquilinos'].forEach((el) => {
+    const data = await query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+    const tableBody = table.childNodes[1];
+   
+    Array.from(tableBody.childNodes)
+        .filter(node => node !== tableBody.firstChild)
+    .forEach(node => { tableBody.removeChild(node)});
+
+    data['inquilinos'].forEach(async (el) => {
         const params = [{ text: el.nome, cssClasses: 'table-link'}, 
             { text: el.valorAluguel, cssClasses: 'table-link,valor-aluguel-lista-inquilinos' }];
         const acoes = tableAcoesListaInquilinos(el.id);
         const tr = tableRow(params, acoes);
-        conteudoTableWrapper.appendChild(tr);
+        tableBody.appendChild(tr);
     });
 
-});
+}));
 
 searchInquilinoNome.addEventListener('keydown', apenasLetras);
-searchInquilinoNome.addEventListener('change', async (event) => {
-    filtro.nome = event.target.value;
-    const data = await query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
-    dataMap = [];
-
-
-});
-
-imovelSearchInput.addEventListener('change', (event) => {
-    filtro.imovel = event.target.value;
-    query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
-});

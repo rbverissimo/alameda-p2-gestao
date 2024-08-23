@@ -1,3 +1,5 @@
+import { BUSCAR_ICONE } from "../routes.js";
+
 /**
  * Esse método faz uma chamada assíncrona ao banco de dados de acordo com a URL
  * e os parâmetros passados no chamada do método. O retorno é o JSON retornado pelo
@@ -32,7 +34,7 @@ export async function call(url, ...params){
 }
 
 /**
- * Esse método recebe uma URL e uma query string apenas.
+ * Este método recebe uma URL e uma query string apenas.
  * Ambas são concatenadas e enviadas em uma chamada método call() sem parâmetros.
  * Dessa forma, é possível fazer uma requisição ao back-end usando query params
  * para buscar resultados de forma mais dinâmica. 
@@ -42,6 +44,29 @@ export async function call(url, ...params){
  */
 export async function query(url, queryString){
     return call(`${url}?${queryString}`);
+}
+
+/**
+ * Este método busca um ícone em formato SVG no servidor. 
+ * O parâmetro recebido pela função indicada seu nome. 
+ * @param {*} iconeNome 
+ */
+export async function icon(iconeNome){
+    const url = `${BUSCAR_ICONE}?icone=${iconeNome}`;
+
+    try {
+        const response = await fetch(`${url}`);
+        const data = await response.blob();
+        if(!response.ok){
+            const error = new Error(`Ocorreram erros de conexão com o servidor ao buscar um ícone. Status: ${response.statusText}`);
+            error.response = data.mensagem;
+            throw error;
+        }
+        return data;
+    } catch (error) {
+        console.error('Erros encontrados: ', error.response);
+        throw error;
+    }
 }
 
 export async function deliver(url, payload){

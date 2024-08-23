@@ -5,6 +5,7 @@ use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ComprovantesTransferenciaController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\IconesController;
 use App\Http\Controllers\ImoveisController;
 use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LogErroController;
@@ -53,6 +54,10 @@ Route::middleware('autenticacao')->get('/painel-principal', [PainelPrincipalCont
 
 Route::middleware('autenticacao')->group(function(){
     Route::get('/listar-inquilinos', [PainelInquilinoController::class, 'lista'])->name('listar-inquilinos');
+});
+
+Route::prefix('icones')->group(function(){
+    Route::get('/', [IconesController::class, 'icone'])->name('buscar-icone');
 });
 
 

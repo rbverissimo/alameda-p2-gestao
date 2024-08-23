@@ -7,5 +7,6 @@ export const LISTAR_IMOVEIS_IMOBILIARIA = '/imoveis/listar/l/';
 export const LISTAR_TIPOS_TELEFONES = '/telefones/ls';
 export const LOG_ERROS = '/erros/log';
 
-
 export const FILTAR_LISTA_INQUILINOS = '/inquilino/ls/filtrar-lista-inquilinos/f/search/by';
+
+export const BUSCAR_ICONE = '/icones';

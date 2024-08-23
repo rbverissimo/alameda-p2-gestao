@@ -54,7 +54,7 @@ class PainelInquilinoController extends Controller
 
             $whereClause = [];
             foreach ($filtros as $key => $value) {
-                if($value !== 'null'){
+                if(!($value === '' || $value === null || $value === 'null')){
                     switch($key){
                         case 'imovel':
                             $whereClause[] = ['salas.imovelcodigo', $value];
@@ -71,7 +71,7 @@ class PainelInquilinoController extends Controller
 
             $inquilinos = InquilinosService::getListaInquilinosFiltros($whereClause);
 
-            return response()->json(["inquilinos" => $inquilinos->toArray()]);
+            return response()->json(["inquilinos" => $inquilinos->toArray(), "filtros" => $filtros, "whereClause" => $whereClause]);
         } catch (\Throwable $th) {
             return response('Não foi possível filtrar os inquilinos. Erros: '.$th->getMessage(), 500);
         }
