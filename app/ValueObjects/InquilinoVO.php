@@ -5,26 +5,28 @@ namespace App\ValueObjects;
 class InquilinoVO {
 
     private string $nome;
-    private string $cpf;
+    private ?string $cpf;
 
     /**
-     * @var array de App\Models\Telefone
+     * @var array [ 'telefone' => (62)99898-0001, 'tipo' => 1]
      */
     private array $telefones;
     private ?EnderecoVO $endereco_trabalho;
 
+    private string $imobiliaria;
     /**
      * @var int id do App\Models\Imovel
      */
-    private int $imovel;
-    private float $fator_divisor;
+    private string $imovel;
+    private string $sala;
+    private ?float $fator_divisor;
 
     public function getNome(): string
     {
         return $this->nome;
     }
 
-    public function getCpf(): string
+    public function getCpf(): ?string
     {
         return $this->cpf;
     }
@@ -39,9 +41,19 @@ class InquilinoVO {
         return $this->endereco_trabalho;
     }
 
-    public function getImovel(): int
+    public function getImobiliaria(): string
+    {
+        return $this->imobiliaria;
+    }
+
+    public function getImovel(): string
     {
         return $this->imovel;
+    }
+
+    public function getSala(): string
+    {
+        return $this->sala;
     }
 
     public function getFatorDivisor(): float
@@ -54,7 +66,7 @@ class InquilinoVO {
         $this->nome = $nome;
     }
 
-    public function setCpf(string $cpf): void
+    public function setCpf(?string $cpf): void
     {
         $this->cpf = $cpf;
     }
@@ -69,12 +81,22 @@ class InquilinoVO {
         $this->endereco_trabalho = $enderecoTrabalho;
     }
 
-    public function setImovel(int $imovel): void
+    public function setImobiliaria(string $imobiliaria): void
+    {
+        $this->imobiliaria = $imobiliaria;
+    }
+
+    public function setImovel(string $imovel): void
     {
         $this->imovel = $imovel;
     }
 
-    public function setFatorDivisor(float $fatorDivisor): void
+    public function setSala(string $sala): void
+    {
+        $this->sala = $sala;
+    }
+
+    public function setFatorDivisor(?float $fatorDivisor): void
     {
         $this->fator_divisor = $fatorDivisor;
     }
