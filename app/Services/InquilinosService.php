@@ -96,13 +96,12 @@ class InquilinosService {
       }
 
       /**
-       * Busca no banco de dados os dados do inquilino junto de seu fator divisor
+       * Busca no banco de dados os dados da tabela de inquilinos 
+       * junto de seu fator divisor se ele exisitr
        * 
        */
       public static function getDetalhesInquilino($id){
-            return Inquilino::join('inquilinos_fator_divisor', 'inquilinos_fator_divisor.id', 'inquilinos.id')
-                  ->where('inquilinos.id', $id)
-                  ->first();
+            return Inquilino::with('fator_divisor', 'telefone')->find($id);
       }
 
       /**
@@ -163,6 +162,7 @@ class InquilinosService {
             return Inquilino::with([
                   'sala',
                   'fator_divisor',
+                  'telefone',
                   'aluguel' => function($query){
                         $query->with('contrato')->orderBy('id', 'desc')->limit(1);
                   }
@@ -359,7 +359,10 @@ class InquilinosService {
 
             $inquilinos_ativos = Inquilino::select('inquilinos.id', 'inquilinos.nome',
                   DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
-                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
+                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'),
+                  DB::raw('(SELECT (t.ddd || t.telefone) as telefone_celular from TELEFONES t 
+                        JOIN INQUILINOS_TELEFONES it on it.telefone_id = t.id
+                        WHERE it.inquilino_id = inquilinos.id AND t.tipo_telefone = 1010 limit 1) as telefone_celular'))
               ->join('salas', 'salas.id', 'inquilinos.salacodigo')
               ->whereIn('salas.imovelcodigo', $imoveis)
               ->where('inquilinos.situacao', '=', 'A')

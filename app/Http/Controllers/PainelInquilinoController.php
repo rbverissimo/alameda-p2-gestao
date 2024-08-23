@@ -13,6 +13,7 @@ use App\Models\Inquilino;
 use App\Models\InquilinoAluguel;
 use App\Models\InquilinoFatorDivisor;
 use App\Models\InquilinoSaldo;
+use App\Models\Telefone;
 use App\Services\ComprovantesService;
 use App\Services\ImobiliariasService;
 use App\Services\ImoveisService;
@@ -162,12 +163,12 @@ class PainelInquilinoController extends Controller
                 $telefones = CollectionUtils::getAssociativeArray($request->all(), '-', 3, 'd-i-telefone-'); //d-i- dynamic-input
                 $tipos_telefones = CollectionUtils::getAssociativeArray($request->all(), '-', 2, 'telefone-select-');
                 $telefones_data = CollectionUtils::mergirArraysByChaves($telefones, $tipos_telefones, 'telefone', 'tipo');
-                $telefone_dto = (new TelefoneDTOBuilder())->getDto($telefones_data);
+                $telefones_dto = (new TelefoneDTOBuilder())->getDto($telefones_data);
 
                 $regras_feedback = InquilinoBO::getRegrasValidacao();
                 $request->validate($regras_feedback['regras'], $regras_feedback['feedback']);
                 
-                DB::transaction(function($closure) use ($request, $telefone_dto){
+                DB::transaction(function($closure) use ($request, $telefones_dto){
 
                     $inquilino = Inquilino::create([
                         "nome" => $request->input('nome'),
@@ -181,6 +182,14 @@ class PainelInquilinoController extends Controller
                         ProjectUtils::getReferenciaFromDate(ProjectUtils::normalizarData($request->input('data-expiracao'), Operacao::NORMALIZAR)) : null;
                     
                     $inquilino_id_inserido = DB::getPdo()->lastInsertId(); // snapshot desse momento    
+
+                    foreach ($telefones_dto as $dto) {
+                        Telefone::create([
+                            'ddd' => $dto->getDdd(),
+                            'telefone' => $dto->getTelefone(),
+                            'tipo_telefone' => $dto->getTipo()
+                        ]);
+                    }
 
                     $inquilino_aluguel = InquilinoAluguel::create([
                         'inquilino' => $inquilino_id_inserido, 
