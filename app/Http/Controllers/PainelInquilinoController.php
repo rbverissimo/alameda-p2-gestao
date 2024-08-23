@@ -45,6 +45,7 @@ class PainelInquilinoController extends Controller
 
     public function filtrarLista(Request $request){
         try {
+
             $filtros = [
             'nome' => $request->query('nome'),
             'situacao' => $request->query('situacao'),
@@ -54,12 +55,16 @@ class PainelInquilinoController extends Controller
             $whereClause = [];
             foreach ($filtros as $key => $value) {
                 if($value !== 'null'){
-                    if($key === 'imovel'){
-                        $whereClause[] = ['salas.imovelcodigo', $value];
-                    } else if($key === 'nome'){
-                        $whereClause[] = ['inquilinos.nome', 'like', $value.'%'];
-                    } else if($key === 'situacao'){
-                        $whereClause[] = ['inquilinos.situacao', $value];
+                    switch($key){
+                        case 'imovel':
+                            $whereClause[] = ['salas.imovelcodigo', $value];
+                        break;
+                        case 'nome':
+                            $whereClause[] = ['inquilinos.nome', 'like', $value.'%'];
+                        break;
+                        case 'situacao':
+                            $whereClause[] = ['inquilinos.situacao', $value];
+                        default:
                     }
                 }
             }

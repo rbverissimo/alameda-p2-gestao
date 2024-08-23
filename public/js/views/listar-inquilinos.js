@@ -1,3 +1,4 @@
+import { tableAcoesListaInquilinos, tableRow } from "../dynamic-micro-components/layouts.js";
 import { query } from "../dynamic-micro-components/reactive.js";
 import { FILTAR_LISTA_INQUILINOS } from "../routes.js";
 import { writeMascaraValorDinheiro } from "../validators/view-masks.js";
@@ -27,6 +28,8 @@ const ativosInativosSelect = document.getElementById('ativos-inativos-select');
 const searchInquilinoNome = document.getElementById('search-inquilino-nome');
 const imovelSearchInput = document.getElementById('imovel-search-input');
 
+const conteudoTableWrapper = document.getElementById('conteudo-table-wrapper');
+
 const filtro = new FilterParams();
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -35,15 +38,27 @@ document.addEventListener('DOMContentLoaded', function(){
         });
 });
 
-ativosInativosSelect.addEventListener('change', (event) => {
+ativosInativosSelect.addEventListener('change', async (event) => {
     filtro.situacao = event.target.value;
-    query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+    const data = await query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+
+    data['inquilinos'].forEach((el) => {
+        const params = [{ text: el.nome, cssClasses: 'table-link'}, 
+            { text: el.valorAluguel, cssClasses: 'table-link,valor-aluguel-lista-inquilinos' }];
+        const acoes = tableAcoesListaInquilinos(el.id);
+        const tr = tableRow(params, acoes);
+        conteudoTableWrapper.appendChild(tr);
+    });
+
 });
 
 searchInquilinoNome.addEventListener('keydown', apenasLetras);
-searchInquilinoNome.addEventListener('change', (event) => {
+searchInquilinoNome.addEventListener('change', async (event) => {
     filtro.nome = event.target.value;
-    query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+    const data = await query(FILTAR_LISTA_INQUILINOS, filtro.queryParams().toString());
+    dataMap = [];
+
+
 });
 
 imovelSearchInput.addEventListener('change', (event) => {

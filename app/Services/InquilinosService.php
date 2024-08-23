@@ -357,15 +357,9 @@ class InquilinosService {
        */
       public static function getListaInquilinosAtivosTodosImoveis($imoveis){
 
-            /* A subquery contida no DB::raw faz a busca do valorAluguel de acordo com o maior ID disponível 
-               para aquele inquilino identificado pelo ID
-            */
             $inquilinos_ativos = Inquilino::select('inquilinos.id', 'inquilinos.nome',
                   DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
-                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'),
-                  DB::raw('(SELECT (t.ddd || t.telefone) as telefone_celular from TELEFONES t 
-                        JOIN INQUILINOS_TELEFONES it on it.telefone_id = t.id
-                        WHERE it.inquilino_id = inquilinos.id AND t.tipo_telefone = 1010 limit 1) as telefone_celular'))
+                        WHERE id = (SELECT MAX(id) FROM inquilinos_alugueis WHERE inquilino = inquilinos.id)) as valorAluguel'))
               ->join('salas', 'salas.id', 'inquilinos.salacodigo')
               ->whereIn('salas.imovelcodigo', $imoveis)
               ->where('inquilinos.situacao', '=', 'A')
@@ -375,6 +369,13 @@ class InquilinosService {
             return $inquilinos_ativos;
       }
 
+      /**
+       * Este é um método flexível usado para filtrar inquilinos através de uma where clause passada
+       * no parâmetro. Não é impossível, mas também não é recomendado, usar este método para buscar múltiplos
+       * valores do mesmo parâmetro (similar ao WHERE IN ). 
+       * @param whereClause array com cláusulas que servirão de filtro para query
+       * 
+       */
       public static function getListaInquilinosFiltros($whereClause){
             return Inquilino::select('inquilinos.id', 'inquilinos.nome',
             DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
@@ -382,20 +383,6 @@ class InquilinosService {
                   ->join('salas', 'salas.id', 'inquilinos.salacodigo')
                   ->where($whereClause)
             ->get();
-
-            /* 
-            Inquilino::select('inquilinos.id','inquilinos.nome',
-                        DB::raw('(SELECT valoraluguel FROM inquilinos_alugueis 
-                              WHERE id = (SELECT MAX(id) FROM INQUILINOS_ALUGUEIS WHERE INQUILINO = INQUILINOS.ID)) as valorAluguel'))
-                        ->join('salas', 'salas.id','inquilinos.salacodigo')
-                        ->where([
-                              ['inquilinos.situacao', 'A'],
-                              ['inquilinos.nome', 'like','A%'], 
-                              ['salas.imovelcodigo', 1]
-                        ])
-                        ->get();
-            
-            */
       }
 
       public static function getSalaImovelBy($inquilino){

@@ -66,6 +66,46 @@ export function spanErrors(id){
     return span;
 }
 
+export function td(text, ...cssClasses){
+    const td = document.createElement('td');
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.classList.add(...cssClasses); 
+
+    td.appendChild(span);
+    return td;
+}
+
+export function tableRow(dataParams, acoesElements){
+
+    const tr = document.createElement('tr');
+    dataParams.forEach((el) => {
+        tr.appendChild(td(el.text, el.cssClasses.split(',')));
+    });
+
+    tr.appendChild(acoesElements);
+    return tr;
+}
+
+export function tableAcoesListaInquilinos(idInquilino){
+    const td = document.createElement('td');
+    td.innerHTML = '<img class="crud-icon" src="{{asset("icons/info-icon.svg")}}" alt="mais informações">' 
+    + '<img class="crud-icon" src="{{asset("icons/edit-icon.svg")}} alt="detalhar inquinlino">';
+    
+    console.log(td.childNodes);
+    const imgInfo = td.childNodes[0];
+    imgInfo.addEventListener('click', () => {
+        redirecionarPara(`/inquilino/${idInquilino}`);
+    });
+    const imgEdit = td.childNodes[1];
+    imgEdit.addEventListener('click', () => {
+        redirecionarPara(`/inquilino/detalhe/${idInquilino}`);
+    });
+
+
+    return td; 
+}
+
 /**
  * Esse é um atalho para construir um label, input e span em conjunto
  * para serem renderizados dinamicamente na tela. Esse método segue algumas conveções

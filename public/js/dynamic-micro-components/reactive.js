@@ -41,7 +41,7 @@ export async function call(url, ...params){
  * @param {*} queryString 
  */
 export async function query(url, queryString){
-    call(`${url}?${queryString}`);
+    return call(`${url}?${queryString}`);
 }
 
 export async function deliver(url, payload){
