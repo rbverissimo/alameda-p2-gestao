@@ -17,6 +17,10 @@ class ServicosTomadosBO {
         return $this->REGRAS_VALIDACAO;
     }
 
+    public function getDto($inputs){
+        dd($inputs);
+    }
+
     public function getPainelServicosLista(){
         $imobiliarias = UsuarioService::getImobiliarias();
         return ServicosTomadosService::getPainelListaServicos($imobiliarias);

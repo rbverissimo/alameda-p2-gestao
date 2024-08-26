@@ -4,7 +4,7 @@
             <x-forms.input 
             pattern-name="{{$patternName}}"
             data-input="{{$dataInput}}"
-            attr-name="{{$attrName}}"
+            attr-name="{{$attrName}}-{{$verificador}}"
             readonly="{{$readonlyInput}}"
             />
         </div>

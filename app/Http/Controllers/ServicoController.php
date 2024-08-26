@@ -134,6 +134,11 @@ class ServicoController extends Controller
             $servico = CadastroServicoVO::buildVO($model);
             $imobiliarias = $servico->getImobiliariasSelect();
 
+            if($request->isMethod('PUT')){
+                $bo = new ServicosTomadosBO();
+                $bo->getDto($request->input());
+            }
+
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));
         } catch (\Throwable $th) {
             redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
