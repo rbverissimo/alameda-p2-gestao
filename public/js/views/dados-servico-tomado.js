@@ -36,6 +36,9 @@ const nomeServicoInputLabel = document.getElementById('label-input-nome-servico'
 const nomeServicoInputSpanErrors = document.getElementById('span-errors-nome-servico');
 const nomeServicoInput = document.getElementById('form-nome-servico');
 
+const delBtns = document.getElementsByClassName('d-info-i');
+const infoBtns = document.getElementsByClassName('i-info-i');
+
 valorServicoInput.addEventListener('input', mascaraValorDinheiro);
 valorServicoInput.addEventListener('blur', (event) => {
     inputStateValidation(labelValorServicoInput, valorServicoInput, spanErrorsValorServicoInput, 
@@ -98,6 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     valorServicoInput.value = writeMascaraValorDinheiro(valorServicoInput.value);
     
+    Array.from(delBtns).forEach(delBtn => {
+        const patterName = delBtn.id.split('-')[3];
+        const verificador = delBtn.id.split('-')[4];
+        const container = document.getElementById(`ii-container-${patterName}-${verificador}`);
+        delBtn.addEventListener('click', (event) => {
+            prestadorContainer.removeChild(container);
+        });
+    });
 
 });
 
