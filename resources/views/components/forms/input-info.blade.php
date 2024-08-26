@@ -5,6 +5,7 @@
             pattern-name="{{$patternName}}"
             data-input="{{$dataInput}}"
             attr-name="{{$attrName}}"
+            readonly="{{$readonlyInput}}"
             />
         </div>
         <div class="col-3">

@@ -68,6 +68,7 @@
             <x-forms.input-info
               pattern-name="prestadores"
               attr-name="prestador-servico"
+              :readonly-input="true"
               :verificador="$verificador"
               :data-input="$dataInput"
             />  

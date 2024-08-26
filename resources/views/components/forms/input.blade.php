@@ -3,6 +3,9 @@
             @if ($required)
                 required
             @endif
+            @if ($readonly)
+                readonly
+            @endif
             type="text" 
             name="{{$attrName}}" 
             placeholder="{{$placeholder}}" 

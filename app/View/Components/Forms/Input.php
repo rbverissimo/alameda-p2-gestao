@@ -14,6 +14,7 @@ class Input extends Component
     public ?string $classes;
     public ?string $dataInput;
     public bool $required; 
+    public bool $readonly;
 
     /**
      * Create a new component instance.
@@ -21,7 +22,7 @@ class Input extends Component
      * @return void
      */
     public function __construct(?string $labelText = null, ?string $placeholder = null,
-         string $patternName, string $attrName, ?string $classes = null, ?string $dataInput = null, bool $required = true)
+         string $patternName, string $attrName, ?string $classes = null, ?string $dataInput = null, bool $required = true, bool $readonly = false)
     {
         $this->labelText = $labelText;
         $this->placeholder = $placeholder;
@@ -30,6 +31,7 @@ class Input extends Component
         $this->classes = $classes;
         $this->dataInput = $dataInput;
         $this->required = $required;
+        $this->readonly = $readonly;
     }
 
     /**

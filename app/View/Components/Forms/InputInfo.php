@@ -13,6 +13,7 @@ class InputInfo extends Component
     public ?string $dataInput;
     public string $infoButtonText;
     public string $deletarButtonText;
+    public bool $readonlyInput;
 
     /**
      * Create a new component instance.
@@ -20,7 +21,7 @@ class InputInfo extends Component
      * @return void
      */
     public function __construct(string $patternName, string $attrName, ?int $verificador = null, ?string $dataInput = null, 
-        string $infoButtonText = 'Info', string $deletarButtonText = 'Deletar')
+        string $infoButtonText = 'Info', string $deletarButtonText = 'Deletar', bool $readonlyInput = false)
     {
         $this->patternName = $patternName;
         $this->attrName = $attrName;
@@ -28,6 +29,7 @@ class InputInfo extends Component
         $this->dataInput = $dataInput;
         $this->infoButtonText = $infoButtonText;
         $this->deletarButtonText = $deletarButtonText;
+        $this->readonlyInput = $readonlyInput;
     }
 
     /**
