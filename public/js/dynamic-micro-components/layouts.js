@@ -159,19 +159,15 @@ export function gerarInputAcoes(inputName, verificador, required, readonly){
  * @returns 
  */
 export function findElements(tagToFind, element){
-
     const foundElArr = [];
     if(element.nodeType === Node.ELEMENT_NODE){
         if(element.tagName.toLowerCase() === tagToFind){
             foundElArr.push(element);
         }
     }
-
     for (let i = 0; i < element.childNodes.length; i++) {
         foundElArr.push(...findElements(tagToFind, element.childNodes[i]));
         
     }
-
     return foundElArr;
-
 }

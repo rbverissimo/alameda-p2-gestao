@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if('prestadores_servicos' === event.dominio){
             const prestadorSelecionado = event.detail;
             if(isPrestadorJaSelecionado(event.detail.nome)){
-                showMensagem('O prestador selecionado já foi adicionado ao serviço', 'falha', 6000);
+                showMensagem('O prestador selecionado já foi adicionado ao serviço', 'falha', 5000);
             } else {
                 renderPrestadorSelecionado(prestadorSelecionado);
             }
@@ -113,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
             prestadorContainer.removeChild(container);
         });
     });
+
+    Array.from(findElements('input', prestadorContainer)).forEach(el => {
+        el.addEventListener('keydown', (event) => {
+            event.preventDefault();
+        });
+    })
 
 });
 
