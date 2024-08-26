@@ -191,10 +191,12 @@ input:focus {
 
 #mensagem-container {
       display: none;
+      justify-content: center;
+      align-items: center;
       z-index: 3;
       position: absolute;
-      width: 33vw;
-      left: 33vw;
+      width: 40vw;
+      left: 30vw;
       text-align: center;
       padding: 20px;
       border-radius: 5px;

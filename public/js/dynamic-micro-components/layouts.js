@@ -149,3 +149,29 @@ export function gerarInputAcoes(inputName, verificador, required, readonly){
 
     return newRow;
 }
+
+/**
+ * Esse método busca de forma recursiva por uma tag como <input> <select> <textarea> 
+ * passada no primeiro parâmetro a partir de um elemento passado no segundo parâmetro.
+ * 
+ * @param {*} tagToFind 
+ * @param {*} element 
+ * @returns 
+ */
+export function findElements(tagToFind, element){
+
+    const foundElArr = [];
+    if(element.nodeType === Node.ELEMENT_NODE){
+        if(element.tagName.toLowerCase() === tagToFind){
+            foundElArr.push(element);
+        }
+    }
+
+    for (let i = 0; i < element.childNodes.length; i++) {
+        foundElArr.push(...findElements(tagToFind, element.childNodes[i]));
+        
+    }
+
+    return foundElArr;
+
+}

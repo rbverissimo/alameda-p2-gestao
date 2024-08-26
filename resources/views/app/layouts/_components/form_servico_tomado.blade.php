@@ -60,15 +60,16 @@
           $prestadores = isset($servico) ? $servico->getPrestadores() : null; 
       @endphp
       @isset($prestadores)
-          @php
-              $verificador = rand(1000, 99999);
-          @endphp
           @foreach ($prestadores as $prestador)
+            @php
+                $verificador = rand(1000, 99999);
+                $dataInput = $prestador['nome'];
+            @endphp
             <x-forms.input-info
               pattern-name="prestadores"
               attr-name="prestador-servico"
               :verificador="$verificador"
-              :data-input="$prestador['nome']"
+              :data-input="$dataInput"
             />  
           @endforeach
       @endisset

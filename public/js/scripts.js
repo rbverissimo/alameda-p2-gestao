@@ -57,7 +57,7 @@ export function showMensagem(mensagem, tipo, temporizador = 4000){
 
 function showMensagemContainer(temporizador) {
       const messageContainer = document.getElementById('mensagem-container');
-      messageContainer.style.display = 'block';
+      messageContainer.style.display = 'flex';
 
       setTimeout(() => {
             messageContainer.style.display = 'none';

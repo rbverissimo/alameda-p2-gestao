@@ -1,12 +1,12 @@
 import {  gerarFocusState, gerarKeyUp } from "../components/search-input.js";
-import { gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
+import { findElements, gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
 import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasNumeros, inputStateValidation, isDataValida, isRequired, isValorDinheiroValido } from "../validators/view-validation.js";
 
-let prestadores = []; 
+let prestadores = [];
 const searchEl = document.getElementById('search');
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 const prestadorContainer = document.getElementById('prestador-container');
@@ -84,7 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('onSearchInputSelected', (event) => {
         if('prestadores_servicos' === event.dominio){
             const prestadorSelecionado = event.detail;
-            renderPrestadorSelecionado(prestadorSelecionado);
+            if(isPrestadorJaSelecionado(event.detail.nome)){
+                showMensagem('O prestador selecionado já foi adicionado ao serviço', 'falha', 6000);
+            } else {
+                renderPrestadorSelecionado(prestadorSelecionado);
+            }
             searchEl.value = '';
         }
     });
@@ -142,3 +146,12 @@ searchEl.addEventListener('keyup', debounce( async (event) => {
     const param = event.target.value;
     gerarKeyUp(param, LISTAR_PRESTADORES, prestadores, 'nome', dominio);
 }, 400));
+
+
+function isPrestadorJaSelecionado(nomePrestador){
+    const inputEls = findElements('input', prestadorContainer);
+    const matches = Array.from(inputEls).filter(el => { 
+        return el.value.trim() === nomePrestador.trim(); 
+    });
+    return matches.length > 0;
+}
