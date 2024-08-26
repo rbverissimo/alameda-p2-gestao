@@ -17,7 +17,7 @@
         <div class="col-4">
             @php
                 $selectedImovel = isset($servico) ? $servico->getImovel() : null;
-                $collectionImovel = isset($servico) ? $servico->getListaImoveis() : [];
+                $collectionImovel = isset($servico) ? $servico->getImoveisSelect() : [];
             @endphp
             <x-forms.select 
                 display="none"
@@ -29,7 +29,7 @@
         <div class="col-4">
             @php
                 $selectedSala = isset($servico) ? $servico->getSala() : null;
-                $collectionSalas = isset($servico) ? $servico->getListaSalas() : [];
+                $collectionSalas = isset($servico) ? $servico->getSalasSelect() : [];
             @endphp
             <x-forms.select
                 display="none"
@@ -105,11 +105,9 @@
             <textarea name="descricao-servico" 
                 id="descricao-servico-input" 
                 placeholder="Escreva aqui comentários relevantes sobre o serviço realizado"
-                rows="3">@if(isset($servico))
-                {{ $servico->getDescricao() !== null ? 
-                    old('descricao-servico',$servico->getDescricao())
-                    : old('descricao-servico')}}
-                @endif</textarea>
+                rows="3">@if(isset($servico)){{ $servico->getDescricao() !== null ? 
+                old('descricao-servico',$servico->getDescricao())
+                : old('descricao-servico')}}@endif</textarea>
         </div>
     </div>
 </div>

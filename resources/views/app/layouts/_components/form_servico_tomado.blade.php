@@ -59,6 +59,14 @@
       @php
           $prestadores = isset($servico) ? $servico->getPrestadores() : null; 
       @endphp
+      @isset($prestadores)
+          @php
+              $verificador = 1000;
+          @endphp
+          @foreach ($prestadores as $prestador)
+            <x-forms.input-info/>  
+          @endforeach
+      @endisset
     </div>
 
     <div class="row center-itens">

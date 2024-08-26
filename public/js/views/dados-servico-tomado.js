@@ -3,7 +3,7 @@ import { gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
 import {  debounce } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
 import { LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
-import { dataMascara, mascaraValorDinheiro } from "../validators/view-masks.js";
+import { dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasNumeros, inputStateValidation, isDataValida, isRequired, isValorDinheiroValido } from "../validators/view-validation.js";
 
 let prestadores = []; 
@@ -91,6 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
             prestadores = event.detail;
         }
     });
+
+    Array.from(dataInput).forEach(data => {
+        data.value = writeDataMascara(data.value);
+    });
+
+    valorServicoInput.value = writeMascaraValorDinheiro(valorServicoInput.value);
     
 
 });
