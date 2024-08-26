@@ -61,10 +61,15 @@
       @endphp
       @isset($prestadores)
           @php
-              $verificador = 1000;
+              $verificador = rand(1000, 99999);
           @endphp
           @foreach ($prestadores as $prestador)
-            <x-forms.input-info/>  
+            <x-forms.input-info
+              pattern-name="prestadores"
+              attr-name="prestador-servico"
+              :verificador="$verificador"
+              :data-input="$prestador['nome']"
+            />  
           @endforeach
       @endisset
     </div>
