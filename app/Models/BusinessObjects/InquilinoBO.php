@@ -7,8 +7,9 @@ use App\Services\ImoveisService;
 use App\Services\InquilinosService;
 use App\Utils\ProjectUtils;
 use App\ValueObjects\DescricaoValorContaVO;
+use App\ValueObjects\MultiSelectVO;
 use App\ValueObjects\ResultadoCalculoContasVO;
-use App\ValueObjects\SelectOptionVO;
+use App\ValueObjects\SelectVO;
 
 class InquilinoBO {
 
@@ -22,6 +23,18 @@ class InquilinoBO {
        */
       public static function getDetalhesInquilino($idInquilino){
             $inquilino = InquilinosService::getDetalhesInquilino($idInquilino);
+
+            $telefonesBO = new TelefonesBO();
+            $telefones_options = $telefonesBO->getListaSelect();
+
+            $inquilino->telefones = array_map(function($tel) use ($telefones_options){
+                  $telefone = $tel['ddd'].$tel['telefone'];
+                  $selectVo = new SelectVO($tel['tipo_telefone'], $telefones_options);
+                  $multiselectVo = new MultiSelectVO($telefone, $selectVo);
+
+                  return $multiselectVo->getJson();
+            }, $inquilino->getRelation('telefone')->toArray());
+
             $inquilino->imovel = ImoveisService::getImovelBySala($inquilino->salacodigo);
     
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();

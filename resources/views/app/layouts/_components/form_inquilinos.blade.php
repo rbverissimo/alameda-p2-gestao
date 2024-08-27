@@ -57,13 +57,17 @@
         </div>
     </div>
     <div class="row">
+        @php
+            $collection = isset($inquilino->id) ?? $inquilino->telefones;
+        @endphp
         <x-forms.multi-select
             header-text="Telefones do inquilino: "
             button-text="Adicionar telefone"
             pattern-name="telefone-select"
             input-attr-name="d-i-telefone"
             input-label-text="Digite o telefone:"
-            :columns-division="[5, 4, 3]"
+            :columns-division="[5, 4, 3]" 
+            :collection="$collection"
         >
     
         </x-forms.multi-select>

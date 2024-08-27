@@ -4,10 +4,10 @@ namespace App\ValueObjects;
 
 class MultiSelectVO {
 
-    private mixed $dataInput; 
+    private string $dataInput; 
     private SelectVO $select;
 
-    public function __construct(mixed $dataInput, SelectVO $select) {
+    public function __construct(string $dataInput, SelectVO $select) {
         $this->dataInput = $dataInput;
         $this->select = $select;
     }
@@ -19,4 +19,8 @@ class MultiSelectVO {
         ];
     }
 
+    public function getDataInput(): string 
+    {
+        return $this->dataInput;
+    }
 }

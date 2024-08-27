@@ -25,19 +25,19 @@
                                 :pattern-name="$patternName"
                                 :attr-name="$inputAttrName.$verificador_aleatorio"
                                 :label-text="$inputLabelText"
-                                :data-input="$multiSelectVO->dataInput"
-                            >
-                            </x-forms.input>
+                                :data-input="$multiSelectVO['dataInput']"
+                            />
+                            
                         </div>
                     @endif
                     @if ($mode === 'INPUT-SELECT' || $mode === 'SELECTION')    
                         <div class="col-{{$columnsDivision[1]}}">
                             <x-forms.select
-                                :collection="$multiSelectVO->select['options']" 
+                                :collection="$multiSelectVO['select']['options']" 
                                 :label-text="$labelText"
                                 :pattern-name="$patternName"
                                 :verificador="$verificador_aleatorio"
-                                :selected-value="$multiSelectVO->select['selectedValue']"></x-forms.select>
+                                :selected-value="$multiSelectVO['select']['selectedValue']" />
                         </div>
                     @endif
                     <div class="col-{{$columnsDivision[2]}}">
