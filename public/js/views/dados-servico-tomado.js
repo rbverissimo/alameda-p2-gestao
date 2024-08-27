@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function renderPrestadorSelecionado(prestador){
     const verificador = ++counter;
-    const newDiv = gerarInputAcoes('prestador', verificador, false, true);
+    const newDiv = gerarInputAcoes('prestador-servico', verificador, false, true);
 
     const nestedDiv = newDiv.children[0];
     const inputPrestador = nestedDiv.children[0];

@@ -69,7 +69,7 @@ class ServicoController extends Controller
 
                 
                 // idetificador => nome_prestador
-                $prestadores = CollectionUtils::getAssociativeArray($request->input(), '-', 1, 'prestador');
+                $prestadores = CollectionUtils::getAssociativeArray($request->input(), '-', 2, 'prestador-servico');
 
 
                 $servico_dto = (new ServicoDTOBuilder)
@@ -136,7 +136,7 @@ class ServicoController extends Controller
 
             if($request->isMethod('PUT')){
                 $bo = new ServicosTomadosBO();
-                $bo->getDto($request->input());
+                $bo->getDto($request->input(), $idServico);
             }
 
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));

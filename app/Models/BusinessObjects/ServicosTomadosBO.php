@@ -4,6 +4,7 @@ namespace App\Models\BusinessObjects;
 
 use App\Services\ServicosTomadosService;
 use App\Services\UsuarioService;
+use App\Utils\CollectionUtils;
 
 class ServicosTomadosBO {
 
@@ -17,8 +18,17 @@ class ServicosTomadosBO {
         return $this->REGRAS_VALIDACAO;
     }
 
-    public function getDto($inputs){
-        dd($inputs);
+    public function getDto($inputs, $idServico){
+        $old_model = $this->getServicoBy($idServico);
+        
+        $prestadores_old = array_map(function($prestador){
+            return $prestador['nome'];
+        }, $old_model->getRelation('prestadores')->toArray());
+        
+        $prestadores_update = array_values(CollectionUtils::getAssociativeArray($inputs, '-', 2, 'prestador-servico'));
+        
+        dd($inputs, $prestadores_old, $prestadores_update);
+
     }
 
     public function getPainelServicosLista(){

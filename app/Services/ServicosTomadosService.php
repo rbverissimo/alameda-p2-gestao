@@ -42,6 +42,13 @@ class ServicosTomadosService {
         }
     }
 
+    /**
+     * Este método busca um model da tabela de serviços junto com
+     * os prestadores que prestaram aquele serviço e estão registrados
+     * na tabela de prestadores_servicos_prestados
+     * 
+     * 
+     */
     public static function getServicosBy($idServico){
         return Servico::with('prestadores')->find($idServico);
     }
