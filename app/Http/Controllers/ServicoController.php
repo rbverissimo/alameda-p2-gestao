@@ -23,6 +23,7 @@ use App\ValueObjects\MensagemVO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ServicoController extends Controller
 {
@@ -136,12 +137,25 @@ class ServicoController extends Controller
 
             if($request->isMethod('PUT')){
                 $bo = new ServicosTomadosBO();
-                $bo->getDto($request->input(), $idServico);
+
+                $request->validate($bo->getRegrasValidacao());
+                $servico_dto = $bo->getDto($request->input(), $idServico);
+
+                dd($servico_dto);
+                /*
+                    TODO: abrir a transaction para atualizar os registros no banco
+                */
             }
 
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));
         } catch (\Throwable $th) {
-            redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+            
+            if($th instanceof ValidationException){
+                return redirect()->back()->with('erros', 'O formulário está inválido. ');
+            }
+            
+            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+
         }
     }
 

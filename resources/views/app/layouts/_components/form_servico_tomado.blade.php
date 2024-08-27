@@ -78,7 +78,13 @@
 
     <div class="row center-itens">
       <div class="col-4">
-            <button class="button confirmacao-button" type="submit">Cadastrar serviço</button>
+            <button class="button confirmacao-button" type="submit"> 
+            @if (isset($servico))
+              Atualizar serviço    
+            @else  
+              Cadastrar serviço
+            @endif 
+          </button>
       </div>
     </div>
 </form>

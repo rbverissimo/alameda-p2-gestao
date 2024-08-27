@@ -16,26 +16,30 @@
         @endisset 
         <div class="col-4">
             @php
-                $selectedImovel = isset($servico) ? $servico->getImovel() : null;
+                $selectedImovel = isset($servico) ?? $servico->getImovel();
                 $collectionImovel = isset($servico) ? $servico->getImoveisSelect() : [];
+                $displayImovel = isset($selectedImovel) ? 'block' : 'none';
             @endphp
             <x-forms.select 
-                display="none"
+                :display="$displayImovel"
                 label-text="Indique um imóvel: "
                 pattern-name="imovel-select"
                 :collection="$collectionImovel"
+                :selected-value="$selectedImovel"
             />
         </div>
         <div class="col-4">
             @php
-                $selectedSala = isset($servico) ? $servico->getSala() : null;
+                $selectedSala = isset($servico) ?? $servico->getSala();
                 $collectionSalas = isset($servico) ? $servico->getSalasSelect() : [];
+                $displaySala = isset($selectedSala) ? 'block' : 'none';
             @endphp
             <x-forms.select
-                display="none"
+                :display="$displaySala"
                 label-text="Indique a sala: "
                 pattern-name="sala-select"
                 :collection="$collectionSalas"
+                :selected-value="$selectedSala"
             />
         </div>
     </div>
