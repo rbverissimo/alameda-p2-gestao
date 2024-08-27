@@ -20,14 +20,19 @@ class ServicosTomadosBO {
 
     public function getDto($inputs, $idServico){
         $old_model = $this->getServicoBy($idServico);
+
+        $excluirAdicionar = CollectionUtils::getValoresAdicionarExcluir(
+            array_map(function($prestador){
+                return $prestador['nome'];
+            }, 
+                $old_model->getRelation('prestadores')->toArray()), 
+            array_values(CollectionUtils::getAssociativeArray($inputs, '-', 2, 'prestador-servico'))
+        );
+
+        $prestadores_excluir = $excluirAdicionar['excluir'];
+        $prestadores_adicionar = $excluirAdicionar['adicionar'];
         
-        $prestadores_old = array_map(function($prestador){
-            return $prestador['nome'];
-        }, $old_model->getRelation('prestadores')->toArray());
-        
-        $prestadores_update = array_values(CollectionUtils::getAssociativeArray($inputs, '-', 2, 'prestador-servico'));
-        
-        dd($inputs, $prestadores_old, $prestadores_update);
+        dd($inputs);
 
     }
 

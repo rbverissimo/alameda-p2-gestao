@@ -64,6 +64,12 @@ class ServicoDTOBuilder {
         return $this;
     }
 
+    public function withPrestadoresExcluir(?array $prestadores_excluir): self
+    {
+        $this->dto->setPrestadoresExcluir($prestadores_excluir);
+        return $this;
+    }
+
     public function build(): ServicoDTO
     {
         return $this->dto;

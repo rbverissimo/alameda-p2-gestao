@@ -13,6 +13,7 @@ class ServicoDTO {
     private int $sala;
     private int $tipo;
     private array $prestadores;
+    private ?array $prestadores_excluir;
 
     // Getters
     public function getCodigo(): int
@@ -60,6 +61,11 @@ class ServicoDTO {
         return $this->prestadores;
     }
 
+    public function getPrestadoresExcluir(): ?array
+    {
+        return $this->prestadores_excluir;
+    }
+
     // Setters
     public function setCodigo(int $codigo): void
     {
@@ -104,5 +110,10 @@ class ServicoDTO {
     public function setPrestadores(array $prestadores): void
     {
         $this->prestadores = $prestadores;
-    }    
+    }  
+    
+    public function setPrestadoresExcluir(?array $prestadores_excluir): void
+    {
+        $this->prestadores_excluir = $prestadores_excluir;
+    } 
 }
