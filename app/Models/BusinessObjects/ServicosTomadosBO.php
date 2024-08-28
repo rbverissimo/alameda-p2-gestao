@@ -16,12 +16,23 @@ class ServicosTomadosBO {
 
 
     private array $REGRAS_VALIDACAO = [
-        'ud_codigo' => 'unique:servicos',
-        'ud_nome' => 'unique:servicos'
+        'ud_codigo' => 'unique:servicos,ud_codigo|required',
+        'ud_nome' => 'unique:servicos,ud_nome|required'      
+    ];
+
+    private array $MENSAGENS_VALIDACAO = [
+        'ud_codigo.unique' => 'O código não pode ser utilizado.',
+        'ud_nome.unique' => 'O nome não pode ser utilizado.',
+        
+        'required' => 'O :attribute deve ser preenchido'
     ];
     
     public function getRegrasValidacao(){
         return $this->REGRAS_VALIDACAO;
+    }
+
+    public function getMensagensValidacao(){
+        return $this->MENSAGENS_VALIDACAO;
     }
 
     public function getDto($inputs, $idServico): ServicoDTO

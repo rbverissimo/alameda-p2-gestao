@@ -16,7 +16,7 @@
         @endisset 
         <div class="col-4">
             @php
-                $selectedImovel = isset($servico) ?? $servico->getImovel();
+                $selectedImovel = isset($servico) ? $servico->getImovel() : null;
                 $collectionImovel = isset($servico) ? $servico->getImoveisSelect() : [];
                 $displayImovel = isset($selectedImovel) ? 'block' : 'none';
             @endphp
@@ -30,7 +30,7 @@
         </div>
         <div class="col-4">
             @php
-                $selectedSala = isset($servico) ?? $servico->getSala();
+                $selectedSala = isset($servico) ? $servico->getSala() : null;
                 $collectionSalas = isset($servico) ? $servico->getSalasSelect() : [];
                 $displaySala = isset($selectedSala) ? 'block' : 'none';
             @endphp

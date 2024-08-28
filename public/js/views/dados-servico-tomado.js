@@ -1,12 +1,16 @@
 import {  gerarFocusState, gerarKeyUp } from "../components/search-input.js";
 import { findElements, gerarInputAcoes } from "../dynamic-micro-components/layouts.js";
-import {  debounce } from "../dynamic-micro-components/reactive.js";
+import {  debounce, query } from "../dynamic-micro-components/reactive.js";
 import { getSelectOptions } from "../dynamic-micro-components/select-option.js";
-import { LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
+import { CHECAR_CODIGO_NOME, LISTAR_IMOVEIS_IMOBILIARIA, LISTAR_PRESTADORES, LISTAR_SALAS } from "../routes.js";
 import { dataMascara, mascaraValorDinheiro, writeDataMascara, writeMascaraValorDinheiro } from "../validators/view-masks.js";
 import { apenasNumeros, inputStateValidation, isDataValida, isRequired, isValorDinheiroValido } from "../validators/view-validation.js";
 
 let prestadores = [];
+
+let nomeServicoOriginal = '';
+let codigoServicoOriginal = '';
+
 const searchEl = document.getElementById('search');
 const dominio = document.getElementById('dominio').getAttribute('data-dominio');
 const prestadorContainer = document.getElementById('prestador-container');
@@ -45,17 +49,38 @@ valorServicoInput.addEventListener('blur', (event) => {
         event.target.value, isValorDinheiroValido, 'O valor declarado não é válido. ');
 });
 
-nomeServicoInput.addEventListener('blur', (event) => {
+nomeServicoInput.addEventListener('blur', async (event) => {
     inputStateValidation(nomeServicoInputLabel, nomeServicoInput, nomeServicoInputSpanErrors,
         event.target.value, isRequired, 'O nome do serviço é obrigatório.'
-    )
+    );
+});
+
+nomeServicoInput.addEventListener('change', async (event) => {
+
+    if(event.target.value.trim() === nomeServicoOriginal.trim()){
+        return;
+    }
+    const json = await query(CHECAR_CODIGO_NOME, `param=${event.target.value}`);
+    if(!json.parametroPermitido){
+        showMensagem('O nome escolhido para o serviço não é permitido', 'falha');
+    }
 });
 
 codigoServicoInput.addEventListener('keydown', apenasNumeros);
-codigoServicoInput.addEventListener('blur', (event) => {
+codigoServicoInput.addEventListener('blur', async (event) => {
     inputStateValidation(codigoServicoInputLabel, codigoServicoInput, codigoServicoInputSpanErrors,
         event.target.value, isRequired, 'O código do serviço é obrigatório. '
-    )
+    );
+});
+
+codigoServicoInput.addEventListener('change', async(event) => {
+    if(event.target.value.trim() === codigoServicoOriginal.trim()){
+        return;
+    }
+    const json = await query(CHECAR_CODIGO_NOME, `param=${event.target.value}`);
+    if(!json.parametroPermitido){
+        showMensagem('O código escolhido para o serviço não é permitido', 'falha');
+    }
 });
 
 
@@ -118,8 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('keydown', (event) => {
             event.preventDefault();
         });
-    })
+    });
 
+    nomeServicoOriginal = nomeServicoInput.value;
+    codigoServicoOriginal = codigoServicoInput.value;
 });
 
 function renderPrestadorSelecionado(prestador){

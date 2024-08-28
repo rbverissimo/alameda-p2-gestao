@@ -23,6 +23,7 @@ use App\ValueObjects\MensagemVO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class ServicoController extends Controller
@@ -138,7 +139,6 @@ class ServicoController extends Controller
             if($request->isMethod('PUT')){
                 $bo = new ServicosTomadosBO();
 
-                $request->validate($bo->getRegrasValidacao());
                 $servico_dto = $bo->getDto($request->input(), $idServico);
 
 
@@ -196,12 +196,18 @@ class ServicoController extends Controller
         }
     }
 
-    public function checarCodigoNome($param){
+    /**
+     * O intuito deste método é retornar ao front-end uma checagem se o código ou nome
+     * definido pelo usuário para o serviço são válidos e podem ser usados
+     */
+    public function checarCodigoNome(Request $request){
 
         try {
+            $param = $request->query('param');
+
             $isCodigo = ProjectUtils::isStringNumerica($param);
             $encontrado = $isCodigo ? ServicosTomadosService::existsBy('ud_codigo', $param) : ServicosTomadosService::existsBy('ud_nome', $param);
-            return response('Sucesso na requisição', 200)->json(['parametroPermitido' => !$encontrado]);
+            return response()->json(['parametroPermitido' => !$encontrado]);
 
         } catch (\Throwable $th) {
 
@@ -210,7 +216,7 @@ class ServicoController extends Controller
                 'param' => $param,
             ];
             LogErrosService::salvarErrosPassandoParametrosManuais(
-                './servicos/c/cn/'.$param,
+                '/servicos/c/cn/permit'.$param,
                 $th->getMessage(),
                 json_encode($json_array),
                 'GET'

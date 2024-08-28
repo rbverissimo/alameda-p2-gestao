@@ -154,7 +154,7 @@ Route::prefix('servicos')->middleware('autenticacao')->group(function(){
     Route::post('/c', [ServicoController::class, 'cadastrar'])->name('cadastrar-servico');
     Route::get('/e/{id}', [ServicoController::class, 'editar'])->name('editar-servico');
     Route::put('/e/{id}', [ServicoController::class, 'editar'])->name('editar-servico');
-    Route::get('/c/cn/{param}', [ServicoController::class, 'checarCodigoNome'])->name('checar-codigo-nome');
+    Route::get('/c/cn/permit', [ServicoController::class, 'checarCodigoNome'])->name('checar-codigo-nome');
 });
 
 Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function(){
