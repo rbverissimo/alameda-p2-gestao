@@ -17,7 +17,8 @@
                         onclick="redirecionarPara('{{route('editar-servico', $servico->getId())}}')"    
                         src="{{asset('icons/edit-icon.svg')}}" 
                         alt="edit">
-                    <img class="crud-icon" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
+                    @csrf
+                    <img class="crud-icon del-servico-icon" data-registro="{{$servico->getId()}}" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
                 </td>
           </tr>
     @endforeach

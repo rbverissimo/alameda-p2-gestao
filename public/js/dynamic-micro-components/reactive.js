@@ -69,18 +69,41 @@ export async function icon(iconeNome){
     }
 }
 
-export async function deliver(url, payload){
+export async function deliver(url, payload, csrf){
     try {
         const response = await fetch(`${url}`, {
             method: 'POST',
             headers: {
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : csrf
             },
             body: JSON.stringify(payload)
         });
         return response.json();
     } catch (error) {
         console.error('Erros encontrados : ', error);
+    }
+}
+
+export async function off(url, queryString, csrf){
+    const offTo = `${url}?${queryString}`; 
+    try {
+        const response = await fetch(`${offTo}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrf
+            }
+        });
+        const data = response.json();
+        if(!response.ok){
+            const error = new Error(`Ocorrem erros na requisição para deletar registros. Status: ${response.status}`);
+            error.response = data.mensagem;
+            throw error;
+        }
+        return data;
+    } catch (error) {
+        console.log('Erros encontrados: ', error.response);
+        throw error;
     }
 }
 

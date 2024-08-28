@@ -155,6 +155,7 @@ Route::prefix('servicos')->middleware('autenticacao')->group(function(){
     Route::get('/e/{id}', [ServicoController::class, 'editar'])->name('editar-servico');
     Route::put('/e/{id}', [ServicoController::class, 'editar'])->name('editar-servico');
     Route::get('/c/cn/permit', [ServicoController::class, 'checarCodigoNome'])->name('checar-codigo-nome');
+    Route::delete('/deletar', [ServicoController::class, 'deletar'])->name('deletar-servico');
 });
 
 Route::prefix('prestadores-servico')->middleware('autenticacao')->group(function(){

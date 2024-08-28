@@ -31,7 +31,7 @@ class ServicosTomadosBO {
         'codigo-servico.unique' => 'O código não pode ser utilizado.',
         'nome-servico.unique' => 'O nome não pode ser utilizado.',
         
-        'required' => 'O :attribute deve ser preenchido'
+        'data-fim.required' => 'A data do término deve ser preenchida'
     ];
 
     private array $MENSAGENS_VALIDACAO_EDICAO = [

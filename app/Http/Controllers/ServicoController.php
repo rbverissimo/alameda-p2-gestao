@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ServicoController extends Controller
 {
@@ -197,6 +198,15 @@ class ServicoController extends Controller
             
             return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados ');
 
+        }
+    }
+
+    public function deletar(Request $request){
+        $idServico = $request->query('id');
+        try {
+            return response()->json(['chegamos' => $idServico]);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 

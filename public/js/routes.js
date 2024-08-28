@@ -12,6 +12,7 @@ export const LISTAR_INQUILINOS_IMOVEL = '/inquilino/ls/select/by-imovel/';
 
 /* SERVIÇOS */
 export const CHECAR_CODIGO_NOME = '/servicos/c/cn/permit';
+export const DELETAR_SERVICO = '/servicos/deletar'
 
 /* UTILITÁRIOS */
 export const BUSCAR_ICONE = '/icones';
