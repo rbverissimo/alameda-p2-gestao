@@ -176,7 +176,8 @@ class ServicoController extends Controller
                 $mensagem_vo = new MensagemVO('sucesso', 'O serviço foi atualizado com sucesso!');
                 $mensagem = $mensagem_vo->getJson();
 
-                $servico = $bo->getServicoBy($idServico);
+                $newModel = $bo->getServicoBy($idServico);
+                $servico = CadastroServicoVO::buildVO($newModel);
             }
 
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));
