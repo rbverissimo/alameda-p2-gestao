@@ -52,13 +52,17 @@ class ServicoController extends Controller
             $mensagem = null;
             $tipos_servicos = TiposServicosService::getListaTiposServicos();
             $imobiliarias = ImobiliariasService::getListaImobiliariasSelect();
+            $servico = null;
 
             if($request->isMethod('POST')){
 
                 $bo = new ServicosTomadosBO();
                 $regras = $bo->getRegrasValidacao();
 
-                $request->validate($regras);
+                $validator = Validator::make($request->input(), $regras, $bo->getMensagensValidacao());
+                if($validator->fails()){
+                    return redirect()->back()->withErrors($validator)->with('erros', 'Informações inválidas');
+                }
 
                 $codigoServico = $request->input('codigo-servico');
                 $nomeServico = $request->input('nome-servico');
@@ -117,14 +121,14 @@ class ServicoController extends Controller
 
             }
 
-            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias'));
+            return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));
         } catch (\Throwable $th) {
 
             $request_params = new RequestParamsDTO($request);
             $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
             $log_erros_bo->salvar();
 
-            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados ');
         }
     }
     public function editar(Request $request, $idServico){

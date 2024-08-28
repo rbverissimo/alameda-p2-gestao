@@ -11,28 +11,53 @@ use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class ServicosTomadosBO {
 
 
-    private array $REGRAS_VALIDACAO = [
-        'ud_codigo' => 'unique:servicos,ud_codigo|required',
-        'ud_nome' => 'unique:servicos,ud_nome|required'      
+    private array $REGRAS_VALIDACAO_CADASTRO = [
+        'codigo-servico' => 'unique:servicos,ud_codigo|required|max:9',
+        'nome-servico' => 'unique:servicos,ud_nome|required|min:4|max:40',
+        'data-fim' => 'required'      
     ];
 
-    private array $MENSAGENS_VALIDACAO = [
-        'ud_codigo.unique' => 'O código não pode ser utilizado.',
-        'ud_nome.unique' => 'O nome não pode ser utilizado.',
+    private array $REGRAS_VALIDACAO_EDICAO = [
+        'codigo-servico' => 'required|max:9',
+        'nome-servico' => 'required|min:4|max:40' 
+    ];
+
+    private array $MENSAGENS_VALIDACAO_CADASTRO = [
+        'codigo-servico.unique' => 'O código não pode ser utilizado.',
+        'nome-servico.unique' => 'O nome não pode ser utilizado.',
+        
+        'required' => 'O :attribute deve ser preenchido'
+    ];
+
+    private array $MENSAGENS_VALIDACAO_EDICAO = [
         
         'required' => 'O :attribute deve ser preenchido'
     ];
     
-    public function getRegrasValidacao(){
-        return $this->REGRAS_VALIDACAO;
+    
+    public function getRegrasValidacao($operacao = 'cadastrar'){
+        if($operacao === 'cadastrar'){
+            return $this->REGRAS_VALIDACAO_CADASTRO;
+        } else if($operacao === 'editar') {
+            return $this->REGRAS_VALIDACAO_EDICAO;
+        } else {
+            throw new InvalidArgumentException("Regras de validação não especificadas corretamente. ");
+        }
     }
 
-    public function getMensagensValidacao(){
-        return $this->MENSAGENS_VALIDACAO;
+    public function getMensagensValidacao($operacao = 'cadastrar'){
+        if($operacao === 'cadastrar'){
+            return $this->MENSAGENS_VALIDACAO_CADASTRO;
+        } else if($operacao === 'editar') {
+            return $this->MENSAGENS_VALIDACAO_EDICAO;
+        } else {
+            throw new InvalidArgumentException("Mensagens de validação não especificadas corretamente. ");
+        }
     }
 
     public function getDto($inputs, $idServico): ServicoDTO
