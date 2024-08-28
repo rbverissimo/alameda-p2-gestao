@@ -141,20 +141,56 @@ class ServicoController extends Controller
                 $request->validate($bo->getRegrasValidacao());
                 $servico_dto = $bo->getDto($request->input(), $idServico);
 
-                dd($servico_dto);
-                /*
-                    TODO: abrir a transaction para atualizar os registros no banco
-                */
+
+                DB::transaction(function () use ($servico_dto, $idServico, $bo){
+                    $servico_old = $bo->getServicoBy($idServico);
+
+                    $servico_old->ud_codigo = $servico_dto->getCodigo();
+                    $servico_old->ud_nome = $servico_dto->getNome();
+                    $servico_old->descricao = $servico_dto->getDescricao();
+                    $servico_old->dataFim = $servico_dto->getDataFim();
+                    $servico_old->dataInicio = $servico_dto->getDataInicio();
+                    $servico_old->valor = $servico_dto->getValor();
+                    $servico_old->salacodigo = $servico_dto->getSala();
+                    $servico_old->tipo_servico = $servico_dto->getTipo();
+
+                    $sql = 'INSERT INTO PRESTADORES_SERVICOS_PRESTADOS (idPrestador, idServico, created_at, updated_at) VALUES(?, ?, ?, ?)';
+
+                    foreach ($servico_dto->getPrestadores() as $nomePrestador) {
+                        $idPrestador = PrestadorServicoService::getIdPrestadorBy($nomePrestador);
+                        $timestamp = Carbon::now()->toDateTimeString();
+                        $bindings = [$idPrestador, $servico_old->id, $timestamp, $timestamp];
+                        DB::insert($sql, $bindings);
+                    }
+
+                    $sql = 'DELETE FROM PRESTADORES_SERVICOS_PRESTADOS WHERE IDPRESTADOR = ? AND IDSERVICO = ?';
+
+                    foreach ($servico_dto->getPrestadoresExcluir() as $nomePrestador) {
+                        $idPrestador = PrestadorServicoService::getIdPrestadorBy($nomePrestador);
+                        $bindings = [$idPrestador, $servico_old->id];
+                        DB::delete($sql, $bindings);
+                    }
+                    $servico_old->save();
+                });
+
+                $mensagem_vo = new MensagemVO('sucesso', 'O serviço foi atualizado com sucesso!');
+                $mensagem = $mensagem_vo->getJson();
+
+                $servico = $bo->getServicoBy($idServico);
             }
 
             return view('app.cadastro-servico', compact('titulo', 'mensagem', 'tipos_servicos', 'imobiliarias', 'servico'));
         } catch (\Throwable $th) {
-            
+
+            $request_params = new RequestParamsDTO($request);
+            $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
+            $log_erros_bo->salvar();
+
             if($th instanceof ValidationException){
                 return redirect()->back()->with('erros', 'O formulário está inválido. ');
             }
             
-            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados '.$th->getMessage());
+            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados ');
 
         }
     }

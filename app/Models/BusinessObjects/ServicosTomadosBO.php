@@ -3,6 +3,7 @@
 namespace App\Models\BusinessObjects;
 
 use App\Constants\Operacao;
+use App\Http\Dto\ServicoDTO;
 use App\Http\Dto\ServicoDTOBuilder;
 use App\Services\ServicosTomadosService;
 use App\Services\UsuarioService;
@@ -23,7 +24,8 @@ class ServicosTomadosBO {
         return $this->REGRAS_VALIDACAO;
     }
 
-    public function getDto($inputs, $idServico){
+    public function getDto($inputs, $idServico): ServicoDTO
+    {
         try {
 
             $prestadores_atualizar = array_values(CollectionUtils::getAssociativeArray($inputs, '-', 2, 'prestador-servico'));
@@ -65,15 +67,10 @@ class ServicosTomadosBO {
                 ->withPrestadoresExcluir($prestadores_excluir)
             ->build();
 
-
-            dd($inputs, $servico_dto);
             return $servico_dto;
         } catch (\Throwable | ValidationException $th) {
             throw $th;
         }
-        
-        
-
     }
 
     /**
