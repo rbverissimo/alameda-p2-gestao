@@ -6,6 +6,7 @@ use App\Http\Dto\LogErroDTO;
 use App\Http\Dto\RequestParamsDTO;
 use App\Services\LogErrosService;
 use App\Services\UsuarioService;
+use Throwable;
 
 class LogErrosBO {
 
@@ -23,6 +24,18 @@ class LogErrosBO {
 
     public function salvar(){
         LogErrosService::salvarErro($this->dto);
+    }
+
+    /**
+     * Este método é um caminho mais curto para cadastrar um erro passando apenas a requisição e a exception.
+     * No cliente, é necessário fazer um new RequestParamsDTO($request) passando-o no parâmetro desse método.
+     * 
+     * @return void
+     */
+    public static function salvarErros(RequestParamsDTO $request_params, Throwable $th): void
+    {
+        $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
+        $log_erros_bo->salvar();
     }
 
 }

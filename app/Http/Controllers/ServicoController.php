@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Constants\Operacao;
 use App\Http\Dto\RequestParamsDTO;
-use App\Http\Dto\ServicoDTO;
 use App\Http\Dto\ServicoDTOBuilder;
 use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\BusinessObjects\ServicosTomadosBO;
 use App\Models\Servico;
 use App\Services\ImobiliariasService;
-use App\Services\ImoveisService;
 use App\Services\LogErrosService;
 use App\Services\PrestadorServicoService;
 use App\Services\ServicosTomadosService;
@@ -25,7 +23,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ServicoController extends Controller
 {

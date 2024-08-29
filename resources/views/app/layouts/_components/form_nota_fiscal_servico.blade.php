@@ -27,16 +27,18 @@
     </div>
     <div class="col-12">
         @php
-            $mockCollection = [
-                [ 'identifier' => 101, 'secondParam' => 'Serviço 1'],
-                [ 'identifier'=> 102, 'secondParam' => 'Serviço 2']
-            ];
+            $collection = isset($servicos_prestados) ? array_map(function($servico){
+                return [
+                    'identifier' => $servico['codigo'],
+                    'secondParam' => $servico['nome']
+                ];
+            }, $servicos_prestados) : [];
         @endphp
         <x-forms.modal-picker 
             pattern-name="pick-servicos"
             header-text="Serviços prestados: "
             :columns-names="['', 'Código', 'Serviço']"
-            :collection="$mockCollection"
+            :collection="$collection"
         />
 
     </div>

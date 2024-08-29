@@ -29,4 +29,10 @@ class PrestadorServicoBO {
             throw $th;
         }  
     }
+
+    public function getServicosPrestados($idPrestador)
+    {
+        $prestador = PrestadorServicoService::getPrestadorBy($idPrestador);
+        return $prestador->getRelation('servicos');
+    }
 }

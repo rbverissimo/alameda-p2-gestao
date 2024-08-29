@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Dto\RequestParamsDTO;
+use App\Models\BusinessObjects\LogErrosBO;
 use App\Models\BusinessObjects\NotasFiscaisServicosBO;
+use App\Models\BusinessObjects\PrestadorServicoBO;
 use App\Services\LogErrosService;
 use App\Services\PrestadorServicoService;
 use App\Services\TiposServicosService;
@@ -40,6 +43,15 @@ class NotasFiscaisServicoController extends Controller
         $mensagem = null;
         $tipos_servicos = TiposServicosService::getListaTiposServicos();
         
+        $prestador_servico_bo = new PrestadorServicoBO();
+
+        $servicos_prestados = array_map(function($servico){
+            return [
+                'nome' => $servico['ud_nome'],
+                'codigo' => $servico['ud_codigo']
+            ];
+        }, $prestador_servico_bo->getServicosPrestados($idPrestador)->toArray());
+        
         try {
             $nota = null;
 
@@ -49,9 +61,10 @@ class NotasFiscaisServicoController extends Controller
                 
             }
 
-            return view('app.cadastro-nota-servico', compact('titulo', 'mensagem', 'idPrestador', 'nota', 'tipos_servicos'));
+            return view('app.cadastro-nota-servico', compact('titulo', 'mensagem', 'idPrestador', 'nota', 'tipos_servicos', 'servicos_prestados'));
         } catch (\Throwable $th) {
-            //throw $th;
+            LogErrosBO::salvarErros(new RequestParamsDTO($request), $th);
+            return redirect()->back()->with('erros', 'Não foi possível cadastrar a nota informada para o prestador de serviço');
         }   
     }
 

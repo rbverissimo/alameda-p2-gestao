@@ -17,7 +17,7 @@
     </div>
 </div>
 <div class="row">
-    @include('app.layouts._components.form_nota_fiscal_servico', compact('nota', 'idPrestador'))
+    @include('app.layouts._components.form_nota_fiscal_servico', compact('nota', 'idPrestador', 'servicos_prestados'))
 </div>
 <div class="row">
     <div class="whitespace-end-page"></div>

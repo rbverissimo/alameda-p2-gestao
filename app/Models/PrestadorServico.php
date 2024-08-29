@@ -45,4 +45,9 @@ class PrestadorServico extends Model
     {
         return $this->belongsTo(Telefone::class, 'telefone');
     }
+
+    public function servicos(): BelongsToMany
+    {
+        return $this->belongsToMany(Servico::class, 'prestadores_servicos_prestados', 'idPrestador', 'idServico');
+    }
 }

@@ -21,9 +21,8 @@ class PrestadorServicoService {
     }
 
     public static function getPrestadorBy($idPrestador){
-        return PrestadorServico::with('endereco', 'tipo', 'telefone', 'imobiliaria')
-            ->where('id', $idPrestador)
-            ->first();
+        return PrestadorServico::with('endereco', 'tipo', 'telefone', 'imobiliaria', 'servicos')
+            ->find($idPrestador);
     }
 
     public static function getListaTiposPrestadores()
