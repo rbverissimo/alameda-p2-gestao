@@ -19,17 +19,25 @@ class NotasFiscaisServicoController extends Controller
 
     }
 
-    public function cadastrarNota($idPrestador){
+    public function cadastrarNota(Request $request, $idPrestador){
         $titulo = 'Cadastro de NFS-e';
         $mensagem = null;
         
         try {
             $nota = null;
+
+            if($request->isMethod('POST')){
+                
+            }
+
             return view('app.cadastro-nota-servico', compact('titulo', 'mensagem', 'idPrestador', 'nota'));
         } catch (\Throwable $th) {
             //throw $th;
-        }
-        
+        }   
+    }
+
+    public function editarNota(Request $request, $id){
+
     }
 
 }
