@@ -57,7 +57,7 @@ class NotasFiscaisServicoController extends Controller
 
             if($request->isMethod('POST')){
                 
-                dd($request);
+                
                 
             }
 
