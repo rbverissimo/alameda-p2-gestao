@@ -117,6 +117,10 @@ class ServicosTomadosBO {
      */
     private function validarPrestadores($prestadores_nao_validados): void
     {
+        if(count($prestadores_nao_validados) < 1){
+            throw new InvalidArgumentException("É necessário declarar ao menos um prestador de serviço para o serviço tomado.");
+        }
+
         $regras = [];
         foreach ($prestadores_nao_validados as $key => $value) {
             $regras[$key] = 'exists:prestadores_servicos,nome';

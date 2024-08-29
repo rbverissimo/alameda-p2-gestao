@@ -62,7 +62,7 @@ class ServicoController extends Controller
 
                 $validator = Validator::make($request->input(), $regras, $bo->getMensagensValidacao());
                 if($validator->fails()){
-                    return redirect()->back()->withErrors($validator)->with('erros', 'Informações inválidas');
+                    return redirect()->back()->withErrors($validator)->with('erros', 'Informações inválidas.');
                 }
 
                 $codigoServico = $request->input('codigo-servico');
@@ -129,7 +129,7 @@ class ServicoController extends Controller
             $log_erros_bo = new LogErrosBO($request_params, $th->getMessage());
             $log_erros_bo->salvar();
 
-            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados ');
+            return redirect()->back()->with('erros', 'Não foi possiível cadastrar o serviço tomado. ');
         }
     }
     public function editar(Request $request, $idServico){
@@ -196,7 +196,7 @@ class ServicoController extends Controller
                 return redirect()->back()->with('erros', 'O formulário está inválido. ');
             }
             
-            return redirect()->back()->with('erros', 'Não foi cadastrar os serviços tomados ');
+            return redirect()->back()->with('erros', 'Não foi possível editar o serviço tomado.'.$th->getMessage());
 
         }
     }
