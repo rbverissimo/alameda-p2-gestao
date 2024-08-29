@@ -27,10 +27,11 @@ export function divCol(columns){
     return div; 
 }
 
-export function lightDashboard(){
+export function lightDashboard(...cssClasses){
     const div = document.createElement('div');
     div.classList.add('dashboard');
     div.classList.add('light-dashboard');
+    cssClasses.forEach(css => div.classList.add(css));
     return div;
 }
 
@@ -64,6 +65,14 @@ export function spanErrors(id){
     span.classList.add('errors-highlighted');
     span.id = id;
     return span;
+}
+
+export function button(id = '', ...cssClasses){
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.id = id;
+    cssClasses.forEach(css => button.classList.add(css));
+    return button;
 }
 
 export function td(text, ...cssClasses){
@@ -148,6 +157,73 @@ export function gerarInputAcoes(inputName, verificador, required, readonly){
     newRow.appendChild(divDelIcon);
 
     return newRow;
+}
+
+/**
+ * Este método cria um modal com um texto e dois botões. 
+ * 
+ * @param {*} text texto que será exibido no modal
+ * @param {*} handlerConfirmar método que será executado ao confirmar o modal
+ * @param {*} textConfirmar texto do botão de confirmar
+ * @param {*} textCancelar texto do botão de cancelar
+ * @returns um container contendo o modal com seu overlay
+ */
+export function renderSimpleModal(text, handlerConfirmar, textConfirmar = 'Sim', textCancelar = 'Cancelar'){
+
+    const container = document.createElement('div');
+    container.id = 'simple-modal-container';
+
+    const divOverlay = overlay('simple-modal-shade-overlay');
+    divOverlay.style.display = 'block';
+    
+    const divModal = lightDashboard('dashboard-modal', 'big-modal');
+    divModal.id = 'dashboard-modal-wrapper';
+    divModal.style.display = 'block';
+
+    const divRowWrapper = divRow();
+
+    const textWrapper = divCol(12);
+    textWrapper.id = 'mensagem-modal'
+    textWrapper.style.textAlign = 'center';
+    textWrapper.textContent = text;
+
+    divRowWrapper.appendChild(textWrapper);
+
+
+    const divRowButtons = divRow('center-itens');
+
+    const confirmarWrapper = divCol(3);
+    const confirmarButton = button('botao-confirmar-modal', 'button', 'confirmacao-button');
+    confirmarButton.textContent = textConfirmar;
+
+    confirmarButton.addEventListener('click', handlerConfirmar);
+    confirmarWrapper.appendChild(confirmarButton);
+    
+
+    const cancelarWrapper = divCol(3);
+    const cancelarButton = button('botao-cancelar-modal', 'button', 'cancelar-button');
+    cancelarButton.textContent = textCancelar;
+
+    cancelarButton.addEventListener('click', (event) => {
+        container.remove();
+    });
+
+    cancelarWrapper.appendChild(cancelarButton);
+
+    divRowButtons.append(confirmarWrapper, cancelarWrapper)/
+
+
+    divModal.append(divRowWrapper, divRowButtons);
+    container.append(divOverlay, divModal);
+
+    return container;
+}
+
+function overlay(id){
+    const divOverlay = document.createElement('div');
+    divOverlay.classList.add('overlay');
+    divOverlay.id = id;
+    return divOverlay;
 }
 
 /**

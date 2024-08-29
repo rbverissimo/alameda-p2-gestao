@@ -28,7 +28,7 @@ export function loadSimpleModal(textMensagemModal, textConfirmar = 'Sim', textCa
  * O modo simples recebe dois parâmetros: o texto do modal e o handler do confirmar
  * Esse método é direcionado ao caso de uso em que o modal carregado na view terá apenas
  * um propósito e não será necessário ficar montando e desmontando o modal a cada clique em
- * um botão. Para esse fim, use o método loadSimpleModal que é mais reflexível e seguro em relação
+ * um botão. Para esse fim, use o método loadSimpleModal que é mais flexível e seguro em relação
  * ao bubbling do evento de clique
  * 
  * @param {*} textMensagemModal 

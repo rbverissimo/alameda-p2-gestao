@@ -18,7 +18,10 @@
                         src="{{asset('icons/edit-icon.svg')}}" 
                         alt="edit">
                     @csrf
-                    <img class="crud-icon del-servico-icon" data-registro="{{$servico->getId()}}" src="{{asset('icons/delete-icon.svg')}}" alt="delete">
+                    <img class="crud-icon del-servico-icon" data-nome="{{$servico->getNome()}}" 
+                        data-registro="{{$servico->getId()}}" 
+                        src="{{asset('icons/delete-icon.svg')}}" 
+                        alt="delete">
                 </td>
           </tr>
     @endforeach
