@@ -2,6 +2,12 @@
 
 namespace App\ValueObjects;
 
+/**
+ * Essa classe não deve ser usada. Ela ainda existe apenas para manter partes do sistema
+ * que ainda possam depender dela funcionando. Ela será removida em versões futuras. 
+ * 
+ * @deprecated
+ */
 class PessoaVO {
 
       private string $nome;

@@ -14,6 +14,9 @@ export const LISTAR_INQUILINOS_IMOVEL = '/inquilino/ls/select/by-imovel/';
 export const CHECAR_CODIGO_NOME = '/servicos/c/cn/permit';
 export const DELETAR_SERVICO = '/servicos/deletar'
 
+/*NOTAS FISCAIS SERVIÇOS */
+export const DELETAR_NFSE = '/nfse/deletar';
+
 /* UTILITÁRIOS */
 export const BUSCAR_ICONE = '/icones';
 export const LOG_ERROS = '/erros/log';

@@ -54,7 +54,7 @@
         <div class="col-8">
             @php
                 $servico = isset($nota) ? $nota->getTipoServico() : null;
-                $tipos_servicos = [];
+                $tipos_servicos = isset($tipos_servicos) ? $tipos_servicos : [];
             @endphp
             <x-forms.select
                 label-text="Selecione o tipo do serviço prestado: "

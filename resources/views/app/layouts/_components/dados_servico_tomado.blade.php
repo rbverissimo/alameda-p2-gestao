@@ -85,22 +85,17 @@
                 <span id="span-errors-valor-servico-input" class="errors-highlighted">{{ $errors->has('valor-servico') ? $errors->first('valor-servico') : '' }}</span>    
         </div>
         <div class="col-8">
-            <label for="tipo-servico-select" id="label-tipo-servico-select">Indique o tipo de serviço tomado: </label>
-            <select name="tipo-servico" 
-                required
-                id="tipo-servico-select">
-                @foreach ($tipos_servicos as $tipo)
-                    <option value="{{$tipo->codigo}}"
-                        @isset($servico->tipo_servico)
-                            @if ($servico->tipo_servico == $tipo->codigo)
-                                selected
-                            @endif
-                        @endisset
-                        >
-                        {{ $tipo->tipo }}
-                    </option>
-                @endforeach
-            </select>
+            @php
+                $collection = isset($tipos_servicos) ? $tipos_servicos : [];
+                $selectedValue = isset($servico) ? $servico->getTipo() : null;
+            @endphp
+            <x-forms.select
+                label-text="Indique o tipo de serviço tomado:"
+                pattern-name="tipo-servico"
+                :required="true"
+                :collection="$collection"
+                :selected-value="$selectedValue"
+            />
         </div>
     </div>
     <div class="row">

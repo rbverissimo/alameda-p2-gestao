@@ -13,6 +13,7 @@ class Select extends Component
     public array $collection;
     public ?string $selectedValue;
     public ?string $verificador;
+    public bool $required;
 
     /**
      * Create a new component instance.
@@ -20,7 +21,7 @@ class Select extends Component
      * @return void
      */
     public function __construct(string $display = 'block', string $patternName, ?string $classes = null, string $labelText = '', 
-        array $collection, ?string $selectedValue = null, ?string $verificador = null)
+        array $collection, ?string $selectedValue = null, ?string $verificador = null, bool $required = false)
     {
         $this->display = $display;
         $this->patternName = $patternName;
@@ -29,6 +30,7 @@ class Select extends Component
         $this->collection = $collection;
         $this->selectedValue = $selectedValue;
         $this->verificador = $verificador;
+        $this->required = $required;
     }
 
     /**

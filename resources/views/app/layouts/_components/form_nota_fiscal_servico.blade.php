@@ -1,14 +1,15 @@
 <form action="{{ $nota === null ? route('cadastrar-nota-servico', ['idPrestador' => $idPrestador ]) : 
     route('editar-nota-servico', ['idPrestador' => $idPrestador ])}}" 
     method="POST" enctype="multipart/form-data">
-    @isset($nota)
+    @csrf
+    @if ($nota !== null)
         @method('PUT')
-    @endisset
+    @endif
 
     <div class="dashboard light-dashboard">
         <div class="row">
             <div class="col-12">
-                @component('app.layouts._components.dados_nota_fiscal_servico', compact('nota'))
+                @component('app.layouts._components.dados_nota_fiscal_servico', compact('nota', 'tipos_servicos'))
                     
                 @endcomponent
             </div>
@@ -16,7 +17,11 @@
         <div id="selection-container"></div>
         <div class="row center-itens">
             <div class="col-3">
-                <button class="button confirmacao-button">Salvar</button>
+                <button class="button confirmacao-button">@if ($nota === null)
+                    Salvar nota
+                @else
+                    Atualizar nota
+                @endif</button>
             </div>
         </div>
     </div>

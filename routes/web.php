@@ -7,10 +7,8 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\IconesController;
 use App\Http\Controllers\ImoveisController;
-use App\Http\Controllers\ListaInquilinosController;
 use App\Http\Controllers\LogErroController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\NotaFiscalServicoController;
 use App\Http\Controllers\NotasFiscaisServicoController;
 use App\Http\Controllers\PainelInquilinoController;
 use App\Http\Controllers\PainelPrincipalController;
@@ -21,7 +19,6 @@ use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TelefonesController;
 use App\Http\Controllers\TiposContasController;
-use App\Models\Fornecedor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -172,6 +169,8 @@ Route::prefix('nfse')->middleware('autenticacao')->group(function(){
     Route::get('/c/cadastro/{idPrestador}', [NotasFiscaisServicoController::class, 'cadastrarNota'])->name('cadastrar-nota-servico');
     Route::post('/c/cadastro/{idPrestador}', [NotasFiscaisServicoController::class, 'cadastrarNota'])->name('cadastrar-nota-servico');
     Route::get('/e/editar/{idPrestador}', [NotasFiscaisServicoController::class, 'editarNota'])->name('editar-nota-servico');
+    Route::put('/e/editar/{id}', [NotasFiscaisServicoController::class, 'editarNota'])->name('editar-nota-servico');
+    Route::delete('/deletar', [NotasFiscaisServicoController::class, 'deletar'])->name('deletar-nota-servico');
 });
 
 Route::middleware('autenticacao')->group(function(){

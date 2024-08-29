@@ -141,8 +141,9 @@ class ServicosTomadosBO {
         return ServicosTomadosService::getServicosBy($idServico);
     }
 
-    public function deletarServico($idServico){
-        $validar = false;
+    public function deletarServico($idServico): bool
+    {
+        $deletado = false;
         $notas = ServicosTomadosService::getNotas($idServico);
         if(count($notas->toArray()) > 0){
             throw new InvalidArgumentException('O serviço possui notas cadastradas. 
@@ -152,7 +153,7 @@ class ServicosTomadosBO {
         $sql = 'DELETE FROM PRESTADORES_SERVICOS_PRESTADOS WHERE IDSERVICO = ?';
         $bindings = [$idServico];
 
-        $validar = DB::transaction(function() use ($sql, $bindings, $idServico){
+        $deletado = DB::transaction(function() use ($sql, $bindings, $idServico){
 
             $servico_old = ServicosTomadosService::getServicosBy($idServico);
 
@@ -168,6 +169,6 @@ class ServicosTomadosBO {
             return true;
         });
 
-        return $validar;
+        return $deletado;
     }
 }
