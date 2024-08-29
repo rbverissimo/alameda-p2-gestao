@@ -5,7 +5,7 @@ import { writeMascaraValorDinheiro } from "../validators/view-masks.js";
 
 const valores = document.getElementsByClassName('lista-servicos-valor');
 const delIcons = document.getElementsByClassName('del-servico-icon');
-const csrf  = document.getElementsByName('_token')[0].value;
+const csrf  = document.getElementsByName('_token')[0]?.value;
 const conteudoWrapper = document.getElementsByClassName('conteudo-wrapper')[0];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     async () => {
                         const id = icon.getAttribute('data-registro');
                         const response = await off(DELETAR_SERVICO, `id=${id}`, csrf);
-                        console.log(response);
+                        if(response.deletado){
+                            showMensagem(`O serviço "${nomeServico}" foi deletado com sucesso!`, 'sucesso');
+                            document.getElementById('simple-modal-container').remove();
+                            location.reload();
+                        }
                 }));
             });
         });

@@ -52,4 +52,13 @@ class ServicosTomadosService {
     public static function getServicosBy($idServico){
         return Servico::with('prestadores')->find($idServico);
     }
+
+    /**
+     * Este método busca a relation 'notas' do \App\Models\Servico no banco de dados
+     */
+    public static function getNotas($idServico)
+    {
+        $servico = Servico::with('notas')->find($idServico);
+        return $servico->getRelation('notas');
+    }
 }

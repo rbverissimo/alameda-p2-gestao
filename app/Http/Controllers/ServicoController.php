@@ -204,9 +204,17 @@ class ServicoController extends Controller
     public function deletar(Request $request){
         $idServico = $request->query('id');
         try {
-            return response()->json(['chegamos' => $idServico]);
+
+            $bo = new ServicosTomadosBO();
+            $deletado = $bo->deletarServico($idServico);
+
+            return response()->json(['deletado' => $deletado], 200);
         } catch (\Throwable $th) {
-            //throw $th;
+
+            $mensagem_vo = new MensagemVO('falha', $th->getMessage());
+            $mensagem = $mensagem_vo->getJson();
+
+            return response()->json($mensagem, 500);
         }
     }
 

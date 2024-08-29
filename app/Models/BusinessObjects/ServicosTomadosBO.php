@@ -9,9 +9,12 @@ use App\Services\ServicosTomadosService;
 use App\Services\UsuarioService;
 use App\Utils\CollectionUtils;
 use App\Utils\ProjectUtils;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
+use SQLite3Exception;
 
 class ServicosTomadosBO {
 
@@ -132,5 +135,35 @@ class ServicosTomadosBO {
 
     public function getServicoBy($idServico){
         return ServicosTomadosService::getServicosBy($idServico);
+    }
+
+    public function deletarServico($idServico){
+        $validar = false;
+        $notas = ServicosTomadosService::getNotas($idServico);
+        if(count($notas->toArray()) > 0){
+            throw new InvalidArgumentException('O serviço possui notas cadastradas. 
+                É necessário excluir essas notas antes de excluir o serviço dos registros.');
+        }
+
+        $sql = 'DELETE FROM PRESTADORES_SERVICOS_PRESTADOS WHERE IDSERVICO = ?';
+        $bindings = [$idServico];
+
+        $validar = DB::transaction(function() use ($sql, $bindings, $idServico){
+
+            $servico_old = ServicosTomadosService::getServicosBy($idServico);
+
+            $registros_deletados = DB::delete($sql, $bindings);
+            if(!$registros_deletados > -1){
+                throw new SQLite3Exception('Erro ao processar a requisição de excluir os prestadores dos serviços');
+            }
+
+            if(!$servico_old->delete()){
+                throw new Exception('Não foi possível excluir o registro do serviço tomado');
+            };
+
+            return true;
+        });
+
+        return $validar;
     }
 }

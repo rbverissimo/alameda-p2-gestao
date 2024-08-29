@@ -33,4 +33,9 @@ class Servico extends Model
     {
         return $this->belongsToMany(PrestadorServico::class, 'prestadores_servicos_prestados', 'idServico', 'idPrestador');
     }
+
+    public function notas(): HasMany
+    {
+        return $this->hasMany(NotalFiscalServico::class, 'servico_id');
+    }
 }

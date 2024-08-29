@@ -27,7 +27,6 @@ class PrestadorServicoBO {
         } catch (\Throwable $th) {
             
             throw $th;
-        }
-        
+        }  
     }
 }
