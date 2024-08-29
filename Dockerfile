@@ -6,7 +6,7 @@ COPY composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
 COPY composer.json composer.lock ./
-RUN composer install
+RUN composer install --no-scripts --no-dev
 
 COPY . .
 
@@ -20,3 +20,5 @@ RUN  chown -R www-data:www-data /var/www/app
 RUN  chmod -R 775 /var/www/app/storage
 
 EXPOSE 9000
+
+CMD [ "php-fpm" ]
